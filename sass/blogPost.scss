@@ -150,6 +150,16 @@ body
                     width: 90%;
                 }
             }
+            #content a {
+                text-decoration: underline;
+                color: $dark;
+                font-weight: bold;
+            }
+            #content a:hover
+            {
+                background-color: $dark;
+                color: $light;
+            }
         }
     }
     #footer-container{

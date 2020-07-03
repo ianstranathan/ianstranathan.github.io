@@ -102,6 +102,13 @@ body {
           margin-right: auto;
           border-radius: 12px;
           width: 90%; }
+      .grid-container #archive-container #archive-list #content a {
+        text-decoration: underline;
+        color: #333333;
+        font-weight: bold; }
+      .grid-container #archive-container #archive-list #content a:hover {
+        background-color: #333333;
+        color: #f0eeee; }
   .grid-container #footer-container {
     background-color: #333333;
     color: rgba(240, 238, 238, 0.6);
@@ -122,4 +129,4 @@ body {
   .grid-container #archive-container #archive-list {
     width: 35%; } }
 
-/*# sourceMappingURL=smin.css.map */
+/*# sourceMappingURL=blogPost.css.map */
