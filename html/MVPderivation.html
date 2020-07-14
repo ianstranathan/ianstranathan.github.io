@@ -1,0 +1,151 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>What I cannot create, I do not understand</title>
+    <!-- FontAwesome -->
+    <script src="https://use.fontawesome.com/2fc622a3be.js"></script>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="../css/blogPost.css">
+    
+    <!-- jqMath lib-->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+    <link rel="stylesheet" href="../middleware/mathscribe/jqmath-0.4.3.css">
+    <script src="../middleware/mathscribe/jquery-1.4.3.min.js"></script>
+    <script src="../middleware/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+
+    <!-- highlight.js for code formatting -->
+    <link rel="stylesheet" href="../middleware/highlight/styles/night-owl.css">
+    <script src="../middleware/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body>
+    <div class="grid-container">
+        <div id="header-container">
+            <div id="name-holder">
+                <p>
+                    <a href="../index.html">
+                        <h1>
+                            Ian Stranathan
+                        </h1>
+                    </a>
+                </p>
+            </div>
+            <div id=menu-bar>
+                <div id="archive-btn-container">
+                    <a href="../index.html">Archive</a>
+                </div>
+                <div id="icon-btns-container">
+                    <a href="mailto:ian@wabisoft.io"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                    <a href="https://github.com/stranathan"><i class="fa fa-github" aria-hidden="true"></i></a>
+                    <a href="https://www.linkedin.com/in/ianstranathan/"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                    <a href="../misc/ Stranathan_Resume_06.22.20.pdf"><i class="fa fa-file" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+        <div id="archive-container">
+            <div id="archive-list">
+                <div id="content">
+                    <!-- Model Derivation and Discussion -->
+
+                    <!-- View Derivation and Discussion -->
+
+                    <!-- Projection Derivation and Discussion -->
+                    <img src="../misc/MVPAppletImages/cameraSpaceToUnitCube.png" class="diagram"></img>
+                    <p>
+                        I never want to skip steps, but since both expressions are identical up to just changing variable letters,
+                        You can directly see that both $x$ and $y$ have the same mapping. 
+                    </p>
+                    <p>
+                        So now we need to pause and think about this.
+                    </p>
+                    <p>
+                        The derived expressions both have $z$ dependence 
+                        and we need to ask ourselves, does this makes sense?
+                    <p>
+                        Let's consider two points in the frustrum with identical $x$ values, but different $z$ values
+                    </p>
+                    <p>
+                        $x_1 = x_2; z_1 < z_2$
+                    </p>
+                    <p>
+                        We need to check the limiting cases of either one and a general comparison of the two.
+                        Remember we did all that work to situate the frustrum along the negative z axis.
+                        So $z$ can range from the near plane value, $n$, to far plane value, $f$.
+                    </p>
+                    <p>
+                        For a given point:
+                        <br>
+                        As z approaches n, the x value goes to just its x value, so that makes perfect sense.
+                        <br>
+                        As z approaches f, the x value goes to some fraction of x, $n/f$, anything more and it's clipped.
+                        This is kind of inconclusive at first blush for me, so let's compare.
+                        <br>
+                        Comparison:
+                        <br>
+                        The point with greater z value will always be smaller, closer to z axis for an identical x value as n is constant.
+                        So closer points seem "larger", spread further from the camera axis (z axis), and further points seem "smaller" closer
+                        to the camera axis (z axis).
+                        Again The expression for the projected y value is identical and an identical argument would be made. 
+                    </p>
+                    <p>
+                        Quick recap:
+                        <br>
+                        We know from the beginning of the conversation that we can represent any arbitrary linear transformation as a matrix.
+                        By augmenting the 3D position vector of our vertices to 4D we can hit it with a 4x4 matrix that simultaneously
+                        scales, rotates and translates our vector. In turn, for the sake of expediting and standardizing the projection and clipping processes,
+                        we transformed this now 4x1 vector (the product of the model and position vector) with another 4x4 transformation, the view transformation.
+                        The resulted in another 4x1 vector, now said to be in camera/ eye space. We did the math by hand and showed how to go from this point
+                        to the cannonical view volume where such things like the Sutherland-Hodgman clipping algorithm are executed.
+                    </p>
+                    <p>
+                        Now the question is, how to represent this as a matrix so we can concatenate it with our view and model transformation?
+                    </p>
+                    <p>
+                        Let's see what we got one more time for my poor short term memory's sake:
+                    </p>
+                    <p>
+                        ${2nx}/{(r - l)z} - {(r + l)}/{(r - l)}$
+                    </p>
+                    <p>
+                        ${2ny}/{(t - b)z} - {(t + b)}/{(t - b)}$
+                    </p>
+                    <p>
+                        Now the question is, how to represent this as a matrix so we can concatenate it with our view and model transformation?
+                    </p>
+                    <p>
+                        Maybe you try to work it out partially on paper to get a feel for it, but I don't think this is fair to you or worth your time.
+                        After the vertex shader is run, a number of other transformations and fixed function operations are executed. One of them being perspective division.
+                         
+                    </p>
+                    <p>
+                        This problem is very representative of working with a complicated API in general. It has all sorts of small details
+                        that are there, silently working away, always for good or necessary reasons, but fairly opaque unless you're an initiate.
+                    </p>
+                    <p>
+                        It’s as simple as that; this is the final expression derived to project to a screen plane
+                        the necessary z division is done under the hood, 
+                        among a number of other transformations and fixed function stuff, 
+                        in the perspective division stage of the 
+                        <a href="https://www.khronos.org/opengl/wiki/Vertex_Post-Processing">
+                            vertex post processing
+                        </a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer-container">
+            <div id="footer-content">
+                <p>Copyright © 2020 Ian Stranathan</p>
+            </div>   
+        </div>
+    </div> 
+</body>
+</html>
