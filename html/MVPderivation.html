@@ -52,12 +52,593 @@
         <div id="archive-container">
             <div id="archive-list">
                 <div id="content">
-                    <!-- Model Derivation and Discussion -->
+                    <!-- Title -->
+                    <h2 style="text-align: center;">The "MVP" Matrix:</h2>
+                    <h3 style="text-align: center;">In gory detail:</h3>
+                    <span id="le-line"></span>
 
+                    
+                    
+                    <p>
+                        <!-- Intro -->
+                        This is a little dive into the so called MVP matrix (model, view, projection).
+                        it's really more of collection of my own thoughts while learning this stuff than anything.
+                    </p>
+                    <p>
+                        I think this fundamental process is really poorly explained (or even assumed as a given and just presented to you) in most popular textbooks (e.g. Real Time Rendering 3rd Edition)
+                        and online tutorials (learnopengl) and it gives the impression that it's more complicated than it really is. WIth each discussion and derivation
+                        I try to give a minimal example that you can recreate, so you can ultimately convince yourself
+                    </p>
+                    <p>
+                        It's hard to hit the basics when there are so many shiny, advanced things out there, but
+                        the more energy and time you spend learning and mastering them, the stronger you'll eventually become.
+                        Also, have heart, there is always merit in figuring something out; and depsite the time lost, if certain wheels are fundamental enough, 
+                        there is no other option but to occasionally remake them in the interest of understanding because there is a deep difference between knowing something and 
+                        <a href="https://www.youtube.com/watch?v=NM-zWTU7X-k&t=0s">
+                        understanding 
+                        </a> it.
+                    </p>
+                    <p> 
+                        <span style="font-weight: bold; text-decoration: underline;">Quick Caveat:</span>
+                        <br>
+                        I try my best to explain as many underlying details as I can, but if you're using this to derive these matrices on your own,
+                        it would be helpful to have had some exposure to vector math and matrices.
+                        <br>
+                        
+                        There are myriad resources to learn linear algebra, most of them are terrible. For a quick recap or to get some fast intuition
+                        check out this <a href="https://www.youtube.com/watch?v=IrggOvOSZr4&t=0">video on matrix transformations</a>.
+                        Also people seem to like this <a href="https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">series</a>.
+                        <br>
+                        You should also know the basics of working with your graphics API of choice.
+                        (I'm using WebGL, check out <a href="https://webgl2fundamentals.org/">WebGLFundamentals</a> if you would like to use that) 
+                        as I don't explain how to set up a rendering pipeline used to test our math and understanding (which you absolutely should do for your own benefit)
+                    </p>
+                    <p>
+                        Now, Let's try to "touch" what's going on and figure this stuff out.
+                    </p>
+                    <!-- Model Matrix and Discussion -->
+                    <p> 
+                        <span style="font-weight: bold; text-decoration: underline;">A Very Short Vector and Matrix Primer:</span>
+                        <br>
+                        A point in three dimensional space can be represented by a set of three numbers.
+                        We represent these points by a vector. 
+                        Each vector can be thought of as a sum of vectors pointed in different dimensions called basis vectors
+                        <br><br>
+                        $<3, 10, 5> = 3<1, 0, 0> + 10<0, 1, 0> + 5<0, 0, 1>$
+                    </p>
+                    <p>
+                        If we were to transform these building block vectors, say stretch, shrink or flip them:
+                        <br>
+                        stretch: $2 * 3<1, 0, 0> +$ shrink: $(1/2) * 10<0, 1, 0> +$  flip: $ -1 * 5<0, 0, 1> = <6, 5, -5>$
+                        <br>
+                        The resultant vector is the same regardless whether we add them before or after the transformation.
+                    </p>
+                    <p>
+                        This is the definition of a linear transformation
+                        <br>
+                        <br>
+                        $T ( u + v )= T ( u )+ T ( v )$
+                        <br>
+                        $T ( cu )= cT ( u )$
+                    </p>
+                    <p>
+                        Any linear transformation can be represented by a matrix.
+                    </p>
+                    <p>
+                        The matrix is the stretching, shrinking or flipping of the basis vectors.  
+                    </p>
+                    <p>
+                        $(\table \1, \0, \0; 
+                                 \0, \1, \0;
+                                 \0, \0, \1;)
+                        (\table \3; 
+                                 \10;
+                                 \5;) = (\table \3; 
+                                 \10;
+                                 \5;)$
+                    </p>
+                    <p>
+                        $(\table \2, \0, \0; 
+                                 \0, \ {1/2}, \0;
+                                 \0, \0, \-1;)
+                        (\table \3; 
+                                 \10;
+                                 \5;) = 
+                        (\table \6; 
+                        \5;
+                        \-5;)$
+                    </p>
+                    <p>
+                        The matrix is a transformation of the basis vectors, a transformation of the "vector space", 
+                        the span of all possible points that the linear combination of the basis vectors can yield.
+                    </p>
+                    <p>
+                        Scale and rotation is thus encapsulated in a matrix, but what about translation?
+                    </p>
+                    <p>
+                        Well, not only can a matrix slice, it can dice too.
+                        <br>
+                        If we augment a matrix to have one more dimension than dimensions we need to manipulate, we can use that extra dimension to hold our translatation.
+                    </p>
+                    <p>
+                        $(\table \1, \0, \0, \T_x; 
+                                 \0, \1, \0, \T_y;
+                                 \0, \0, \1, \T_z;
+                                 \0, \0, \0, \1)
+                        (\table \3; 
+                                 \10;
+                                 \5;
+                                 \1) = 
+                        (\table \3 + T_x; 
+                                \10 + T_y;
+                                \5 + T_z;)$
+                    </p>
+                    <p>
+                        You can see a potentially more interesting further discussion about this <a href="https://www.youtube.com/watch?v=vQ60rFwh2ig">here</a>
+                    </p>
+                    
+                    <p>
+                        <span style=" font-weight: bold; text-decoration: underline;">On the "Model" transform:</span>
+                        <br>
+                        A vertex shader processes vertices, simple enough, but no matter what we do, at the end of the day, we're just turning
+                         knobs on a complicated state machine that rasterizes stuff on a screen. 
+                        The ultimate <a href="https://www.youtube.com/watch?v=t7Ztio8cwqM&t=0s">rasterization</a> entrails are not controllable, but how
+                        we map points in three-dimensions onto a two-dimensional plane for them to be rasterized is up to us.
+                        The wizard beards of yore tackled these issues and set up a cannonical solution, the MVP matrix (and a lot of other stuff, as always)
+                    </p>
+                    <p>
+                        Say we have a collection of points (vertices) that are ordered intelligently to allow for rasterization (a mesh). These points all have positions that are defined with respect to a local origin.
+                        A model matrix is simply a 4x4 matrix (so as discussed before, it contains the information for position, rotation and scale) that places that mesh in the shared vector space of all the meshes (world space).
+                    </p>
+                    <p>
+                        As an example, taken from <a href="http://www.codinglabs.net/article_world_view_projection_matrix.aspx">Marco Alamia</a>, 
+                        here are three different meshes (instances of same mesh) with three different world positions.
+                        I think it's slightly confusing to even have a seperate "model space". Intuitively, I think it makes more 
+                        sense to imagine all of these superimposed on each other at the world's origin and then simply, scaled, rotated and translated as desired
+                    </p>
+                    <img src="../misc/MVPAppletImages/diagrams/ModelSpace.png" class="diagram"></img>
+                    <img src="../misc/MVPAppletImages/diagrams/WorldSpace.png" class="diagram"></img>
+                    <p>
+                        <span style=" font-weight: bold; text-decoration: underline;">Testing the "Model" transform:</span>
+                        <br>
+                        Now for the more interesting part, let's write a simple model matrix to check our understanding in our graphics API.
+                        The "Hello, World!" for me, a mere mortal, is the screen quad, so two triangles
+                        that cover the screen. However you want to process them down, they're just 4  different vertices 
+                        <br><code>
+                        [-1, +1, 0
+                        -1, -1, 0
+                        +1, -1, 0
+                        +1, +1, 0
+                        ]
+                        </code> 
+                        <br>
+                        I'll color it with shadertoy's default vec3 col to ease the monotony of using a primary color.
+                        <br>
+                        <code>
+                            vec3 col = 0.5 + 0.5*cos(t +uv.xyx + vec3(0,2,4));
+                        </code>          
+                    </p>
+                    <img src="../misc/MVPAppletImages/diagrams/screenQuad1.png" class="diagram"></img>
+                    <p>
+                        Let's scale it by a half and make it translate in a circle. But how to write a matrix that our shader can understand?
+                    </p>
+                    <p>
+                        A final "gotcha" for wanting to test this is out is the confusion between how matrices are represented mathematically and how they're
+                        laid out in an array to be processed by the API.
+                        It's doubly confusing when seeing different resources that are geared toward a specific API that will use a different matrix writing convention,
+                         for example OpenGL or D3D/XNA (Column-major notation vs. Row-major notation respectively).
+                    </p>
+                    <p>
+                        The Column-major notation matrix notation used in OpenGL documentation does not describe in-memory layout for OpenGL matrices 
+                        OpenGL matrices have the same memory layout as DirectX matrices.
+                        OpenGL matrices are 16-value arrays with base vectors laid out contiguously in memory. You can read about this 
+                        <a href="https://www.opengl.org/archives/resources/faq/technical/transformations.htm">here</a>
+                        <pre>
+                            <code>
+// Please note this is kind of pseudo code.
+// I'm using WebGL, so you need to make this into
+// a Float32Array, and send uniforms accordingly
+[0.5,           0,            0,       0,
+ 0,             0.5,          0,       0,
+ 0,             0,            0.5,     0,
+ 0.5 * sin(t),  0.5 * cos(t), 0,       1]);
+
+ //... in vertex shader ...
+ gl_Position = model * vec4(vertexPos, 1.);
+
+                            </code>
+                        </pre>
+                        <img src="../misc/MVPAppletImages/diagrams/screenQuad2.png" class="diagram"></img>
+                        And that's pretty much it, really. If you're comfortable with using 4x4 matrices to encode any rigid transformation, there's nothing more to it.
+                        <br>
+                        This was of course a very simple example, but any arbitrary position and orientation could be expressed with a model matrix.
+                        We're limited right now in what we can test by our ability to see it. The rendering context will only show whatever is in the normalized device coordinates.
+                        This bring us to our next object, how to match our scene geometry to this rendering constraint.
+                        <br> Enter the view transformation.
+                    </p>
+                    
                     <!-- View Derivation and Discussion -->
+                    <p>
+                        <span style=" font-weight: bold; text-decoration: underline;">On the "View" transform:</span>
+                        <br>
+                        This is really where things become less obvious and most resources fail to sufficiently explain what's going.
+                        See <a href="https://learnopengl.com/Getting-started/Camera">this</a> for example
+                        
+                        This brings me to I think the most unecessary and confusing aspect of using these different transformations.
+                        Textbooks and tutorials are constantly talking about different spaces and transforming from one space to another and while this
+                        has some merit in it, there really is only one coordinate space.
 
+                        The often invoked authority of the wizard beards have deign this to be a good solution: Take everything that exists in the coordinate space
+                        and bring in front of a another thing in the coordinate system called the camera, 
+                        then project it onto a plane facing that camera, then map it to a unit volume 
+                        that in turn maps to a viewport and rasterize.
+                        That's an over simplification, but that's what's happening.
+                        
+                        The previous link says "When we're talking about camera/view space we're talking about all the vertex coordinates as seen from the camera's perspective as the origin of the scene"
+                        <br>
+                        And then they go on to talk about the Gram-Schmidt process and give a magical lookAt matrix, explaining 
+                        " A great thing about matrices is that if you define a coordinate space using 3 perpendicular (or non-linear) 
+                        axes you can create a matrix with those 3 axes plus a translation vector and you can transform any 
+                        vector to that coordinate space by multiplying it with this matrix.".
+                        <br>
+                        This is technically true, but why it's true is not explained and I find that misleading.
+                    </p>
+                    <p>
+                        First, very clearly, all we're trying to do is transform the virtual camera/ pinhole palceholder
+                        such that it's centered at the origin and pointing down an axis. (by convention: $-z$ in OpenGL, $+z$ in D3D/XNA but it really could be whatever if the API were constructed differently).
+                    </p>
+                    <p>
+                        That's it.
+                    </p>
+                    <p>
+                        Of course if we do that, everything else needs to correspondingly transform to keep the congruence of space, because that's how reality works.
+                        The relative position of something to the camera does not change.    
+                    </p>
+                    <p>
+                        So how and why are we doing this?
+                    </p>
+                    <p> 
+                        <span style="font-weight: bold; text-decoration: underline;">Why do we do this?:</span>
+                        <br>
+                        Very breifly, this is done to simplify and standardized fundamental graphics processes and the math involved, like projection (Which we're coming to next)
+                        and clipping among other things.
+                    </p>
+                    <p>   
+                        <span style="font-weight: bold; text-decoration: underline;">How do we do this?:</span>
+                        <br>
+                        The easiest part is to just translate the camera to the origin. This is straightforward since we know how to translate with homogenous matrices.
+                    </p>
+                    <p>
+                        For camera: $c↖{→}$
+                        <br>
+                        $(\table 
+                        \1, \0, \0, - \c_x↖{→};
+                        \0, \1, \0, - \c_y↖{→};
+                        \0, \0, \1, - \c_z↖{→};
+                        \0, \0, \0, \1;
+                        )$ translates us back to origin$θ$.
+                        <br>
+                        Now, how to rotate to align with standard basis? 
+                        <br>
+                        As said before, any linear transformation can be represented by a matrix and  
+                        that transformation matrix is really just encoded basis vectors. The inverse of that matrix is another matrix such that (for some matrix $A$):
+                        $AA^{-1} = I$ where $I$ is the identity matrix (i.e. the standard basis vectors, or whatever orthonormal basis we agree on being the standard)
+                    </p>
+                    <p>
+                        Remember, the matrix is how the basis vectors change, multiplying a matrix of strange basis vectors (the transformation of the camera let's say) by its inverse would give the normal $x, y, z$ basis vectors, the identity.
+                        This means that given a certain transformation, we can undo or invert it by multiplying it with its inverse.
+                    </p>
+                    <p>
+                        So how do we find an inverse?
+                        There are few general means of inverting a matrix and they take up a fair bit of tedious time in an undergraduate linear algebra class doing them by hand
+                        like Gauss-Jordan elimination, Gaussian elimination, or LU decomposition.
+                    </p>
+                    <p>
+                        But a convenient fact for our sake is that
+                        if a matrix is <a href="https://en.wikipedia.org/wiki/Orthogonal_matrix">orthogonal</a>
+                        (i.e. a square matrix whose columns and rows are orthogonal unit vectors (orthonormal vectors)),
+                        then it's inverse is it's transpose.
+                        This means, if we use the Gram-Schmidt process to create set of orthogonal basis vectors and ensure that those vectors are normalized, we can
+                        trivially invert it's transformation matrix. 
+                        (this is why the previous learnopengl link had a transposed matrix whose basis vectors
+                         are the orthonormal set generated by the Gram-Schmidt process.... too bad they didn't explain that though)
+                    </p>
+                    <p>
+                        Ok, so what is the Gram-Schmidt process?
+                        <br>
+                        It's the process of generating a set of orthogonal vectors using the cross product.
+                    </p>
+                    <p> 
+                        <span style="font-weight: bold; text-decoration: underline;">Cross product aside:</span>
+                        (from wikipedia):
+                        <br>
+                        Given two linearly independent vectors $a↖{→}$ and $b↖{→}$, the cross product, a × b ("a cross b"), 
+                        is a vector that is perpendicular to both $a↖{→}$ and $b↖{→}$ and thus normal to the plane containing them.
+                        <br>
+                        (Linearly independent meaning that there is dimensionality or directionality in one that cannot be represented by the other.
+                        There is no amount of the traditional $y$ that will add to the traditional $x$ for example.)
+                    </p>
+                    <img src="../misc/MVPAppletImages/diagrams/righthandRule.png" class="diagram"></img>
+                    <p>
+                        This means we can generate a set of orthogonal vectors from a starting vector and an arbitrary "seeding" vector.
+                        
+                    </p>
+                    <p> 
+                        As an example, take the camera's "front" vector: $c_f↖{→}$, 
+                        so the unit vector in the direction the camera is facing.
+                        (For our concrete example, to hardcode everything to check our understanding and to see if our math is right, let's take the camera to be at
+                        $<2, 2, 2>$ and pointing at the origin, I picked this fully arbitrarily)
+                    </p>
+                    <p>
+                        The camera's position vector: $c↖{→} = <2, 2, 2>$
+                    </p>
+                    <p>
+                        The vector from the camera to the origin: $c↖{→} = <0, 0, 0> - <2, 2, 2> = <-2, -2, -2>$
+                    </p>
+                    <p>
+                        The "front" vector is just this made into a unit vector by dividing by its magnitude $√12 = 2√3$
+                        $⇒ c_f↖{→} = <-1/√3, -1/√3, -1/√3>$
+                    </p>
+                    <p>
+                        We can then cross this with an arbitrary non co-linear vector, traditionally the "world up" vector is chosen:  $<0, 1, 0>$
+                    </p>  
+                    <p>
+                        This gives us our "right" vector: $c_r↖{→} = <1/√3, 0, -1/√3>$
+                    </p>
+                    <p>
+                        This isn't normalized however, and we need orthonormal basis vectors.
+                    </p>
+                    <p>
+                        Normalizing: just divide by the magnitude like always: $c_r↖{→} = <1/√2, 0, -1/√2>$
+                    </p>
+                    <p>
+                        Crossing the "front" vector with this "right" vector then gives us our "up" vector
+                        $c_u↖{→} = <1/√6, -√{2/3}, 1/√6>$
+                    </p>
+                    <p>
+                        This "up" vector is already normalized so we're done.
+                    </p>
+                    <p>
+                        Maybe the cross product circle pneumonic will aide your credulity (check to see if this pattern holds with our generated vectors):
+                        <br>
+                        "right" cross "up" yields "front", "up" cross "front" yields "right", 
+                        and "front" cross "right" yields "up".
+                        (due to the anit-commutative nature of cross products
+                        $a↖{→}$ × $b↖{→}$ = - $b↖{→}$ × $a↖{→}$, it's negative if you reverse the direction of the circle)
+                    </p>
+                    <img src="../misc/MVPAppletImages/diagrams/crossProductCircle.png" class="diagram" style="width: 50%"></img>
+                    </p>
+                    <p>
+                        Here are a couple of different perspectives to give you a feel for it. 
+                        But you should always convince yourself, you can just recreate it yourself very quickly in the app. e.g. c = (2, 2, 2)
+                    </p>
+                    <img src="../misc/MVPAppletImages/diagrams/gramSchmidt1.png" class="diagram"></img>
+                    <img src="../misc/MVPAppletImages/diagrams/gramSchmidt2.png" class="diagram"></img>
+                    <p>
+                        These were generated with <a href="https://www.geogebra.org/3d">Geogebra</a>, 
+                        and unfortunately the convention in math circles is to have the $z$ axis pointing up
+                        instead of the $y$ axis as in graphics programming circles, so you'll will have to reorient mentally yourself
+                        ; it's still probably better than my poorly hand drawn diagrams, sorry about that.
+                        I usually use <a href="https://www.desmos.com/calculator">desmos</a> for shader development, it seems more intutive than Geogebra, but doesn't have 3D viewing.
+                        I'm not complaining though, they're both very nice, free tools.
+                    </p>
+                    <p>
+                        But wait you say, won't you get different results if you generated it with a different "seeding" vector?
+                    </p>
+                    <p>
+                        And you're right, kind of.
+                        The choice of the front vector wasn't arbitrary, it was determined with vector math and our choice of target (in this case the origin).
+                        The other basis vectors were to a degree arbitrary, but their arbitrariness comes out in the wash because the inverse of the transformation that these camera basis vectors define
+                        will always get us back to origin (with an inversion of z because we defined the front vector to be the opposite direction of the original position vector)
+                    </p>
+                    <p>
+                        Now for the (slightly) more exciting part. Let's prove it using our graphics API
+                    </p>
+                    <p>
+                        <span style=" font-weight: bold; text-decoration: underline;">Testing the "View" transform:</span>
+                        <br>
+                        Let's create a screen quad like before, but instead of being hardcoded to be in the APIs ndc range, let's make it in front of our camera's position which is very clearly outside
+                        that ndc "space"
+                    </p>
+                    <p>
+                        To make a square around the camera, we're going start at $c↖{→}$, go $c_f↖{→}$  in away from the camera and then go to all the combinations of
+                         $c_r↖{→}$ and $c_u↖{→}$ to get the corner vertices.
+                    </p>
+                    <img src="../misc/MVPAppletImages/diagrams/viewTransformTestQuad.png" class="diagram"></img>
+                    <p>
+                        Our new screen quad:
+                        <br>
+                        vertex 0: $c↖{→} + c_f↖{→} + c_r↖{→} + c_u↖{→} ≈ 2.538, 0.606, 1.124$
+                        <br>
+                        vertex 1: $c↖{→} + c_f↖{→} + c_r↖{→} - c_u↖{→} ≈ 1.722, 2.239, 0.307$
+                        <br>
+                        vertex 2: $c↖{→} + c_f↖{→} - c_r↖{→} + c_u↖{→} ≈ 0.307, 2.239, 1.721$
+                        <br>
+                        vertex 3: $c↖{→} + c_f↖{→} - c_r↖{→} - c_u↖{→} ≈ 1.124, 0.606, 2.538$
+                    </p>
+                    <p>
+                        Visualized in Geogrebra again (black is still the camera):
+                    </p>
+                    <img src="../misc/MVPAppletImages/diagrams/testQuadGraph1.png" class="diagram"></img>
+                    <img src="../misc/MVPAppletImages/diagrams/testQuadGraph2.png" class="diagram"></img>
+                    <p>
+                        Let's write down the final view matrix:
+                        <br>
+                        Our basis vectors again for our mind's eye's convenience:
+                        <br>
+                        $c_f↖{→} = <-1/√3, -1/√3, -1/√3>$
+                        <br>
+                        $c_r↖{→} = <1/√2, 0, -1/√2>$
+                        <br>
+                        $c_u↖{→} = <1/√6, -√{2/3}, 1/√6>$
+                        <br>
+                        Our camera's inverse transform (note that we need to concatenate with it's inverse translation):
+                        <br>
+                        $(\table 
+                        \1/√2,  \0,       \-1/√2, \0;
+                        \1/√6,  \0,       \-1/√2, \0;
+                        \-1/√3, \-√{2/3}, \ 1/√6, \0;
+                        \0,     \0,       \0,     \1;
+                        )
+                        (\table 
+                        \1, \0, \0, \-2;
+                        \0, \1, \0, \-2;
+                        \0, \0, \1, \-2;
+                        \0, \0, \0, \1;
+                        )$
+                        <br>
+                        $= (\table 
+                        \1/√2,  \0,       \-1/√2, \0;
+                        \1/√6,  \0,       \-1/√2, \0;
+                        \-1/√3, \-√{2/3}, \ 1/√6, \2√3;
+                        \0,     \0,       \0,     \1;
+                        )$
+                    </p>
+                    <p>
+                        Testing out each of our quads points with the transform (rounding the nearest 10th):
+                    </p>
+                    <p>
+                        Vertex 0:
+                        <br>
+                        $ (\table 
+                        \1/√2,  \0,       \-1/√2, \0;
+                        \1/√6,  \0,       \-1/√2, \0;
+                        \-1/√3, \-√{2/3}, \ 1/√6, \2√3;
+                        \0,     \0,       \0,     \1;
+                        )
+                        (\table 
+                        \2.538;
+                        \0.606;
+                        \1.124;
+                        \1;
+                        )                    
+                        ≈ 
+                        (\table 
+                        \1;
+                        \1;
+                        \1;
+                        \1;
+                        )  $
+                    </p>
+                    <p>
+                        Vertex 1:
+                        <br>
+                        $ (\table 
+                        \1/√2,  \0,       \-1/√2, \0;
+                        \1/√6,  \0,       \-1/√2, \0;
+                        \-1/√3, \-√{2/3}, \ 1/√6, \2√3;
+                        \0,     \0,       \0,     \1;
+                        )
+                        (\table 
+                        \1.722;
+                        \2.239;
+                        \0.307;
+                        \1;
+                        )                    
+                        ≈ 
+                        (\table 
+                        \1;
+                        \-1;
+                        \1;
+                        \1;
+                        )  $ 
+                    </p>
+                    <p>
+                        Vertex 2:
+                        <br>
+                        $ (\table 
+                        \1/√2,  \0,       \-1/√2, \0;
+                        \1/√6,  \0,       \-1/√2, \0;
+                        \-1/√3, \-√{2/3}, \ 1/√6, \2√3;
+                        \0,     \0,       \0,     \1;
+                        )
+                        (\table 
+                        \0.307;
+                        \2.239;
+                        \1.721;
+                        \1;
+                        )                    
+                        ≈ 
+                        (\table 
+                        \1;
+                        \-1;
+                        \-1;
+                        \1;
+                        )  $ 
+                    </p>
+                    <p>
+                        Vertex 3:
+                        <br>
+                        $ (\table 
+                        \1/√2,  \0,       \-1/√2, \0;
+                        \1/√6,  \0,       \-1/√2, \0;
+                        \-1/√3, \-√{2/3}, \ 1/√6, \2√3;
+                        \0,     \0,       \0,     \1;
+                        )
+                        (\table 
+                        \1.124;
+                        \0.606;
+                        \2.538;
+                        \1;
+                        )                    
+                        ≈ 
+                        (\table 
+                        \1;
+                        \-1;
+                        \1;
+                        \1;
+                        )  $ 
+                    </p>
+                    <p>
+                        We got back our NDC corners and we can see that the metric is held, they're all still $√3$ away from the camera, I think it works.
+                    </p>
+                    <p>
+                        So, let's see this in action.
+                        We'll keep the same model transform and color in our shaders, we'll just change the vertex data to be these cooridinates
+                        and of course add a view transform. There should be no difference between our model test and this view test.
+                        <br>
+                        Don't forget that the basis vectors are contiguous in memory!
+                        <pre style="font-size: 0.9em;">
+                            <code>
+// Please note this is kind of pseudo code.
+// I'm using WebGL, so you need to make this into
+// a Float32Array, and send uniforms accordingly
+model = 
+[
+             0.5,             0,   0, 0,
+               0,           0.5,   0, 0,
+               0,             0, 0.5, 0,
+    0.5 * sin(t),  0.5 * cos(t),   0, 1
+];
+
+view = 
+[
+ 1 / Math.sqrt(2), 1 / Math.sqrt(6), -1 / Math.sqrt(3), 0,
+                0,  -Math.sqrt(2/3), -1 / Math.sqrt(3), 0,
+-1 / Math.sqrt(2), 1 / Math.sqrt(6), -1 / Math.sqrt(3), 0,
+                0,                 0, 2 * Math.sqrt(3), 1
+];
+
+//... in vertex shader ...
+gl_Position = view * model * vec4(vertexPos, 1.);
+                            </code>
+                        </pre>
+                    
+                    <span style="text-decoration: underline; text-align: center ">
+                        identical results to our model test!
+                    </span>
+                    <img src="../misc/MVPAppletImages/diagrams/viewTestQuadFinal.png" class="diagram"></img>
                     <!-- Projection Derivation and Discussion -->
-                    <img src="../misc/MVPAppletImages/cameraSpaceToUnitCube.png" class="diagram"></img>
+                    </p>
+
+                    <p>
+                        This picture is taken from a very good resource, <a href="http://www.songho.ca/">Song Ho Ahn</a>
+                    </p>
+                    <img src="../misc/MVPAppletImages/diagrams/gl_projectionmatrix01.png" class="diagram"></img>
+                    <img src="../misc/MVPAppletImages/diagrams/pointInFrustum.png" class="diagram"></img>
+                    <img src="../misc/MVPAppletImages/diagrams/similarTriangles.png" class="diagram"></img>
+                    <img src="../misc/MVPAppletImages/diagrams/similarTrianglesMath.png" class="diagram"></img>
+                    <img src="../misc/MVPAppletImages/diagrams/cameraSpaceToUnitCube.png" class="diagram"></img>
                     <p>
                         I never want to skip steps, but since both expressions are identical up to just changing variable letters,
                         You can directly see that both $x$ and $y$ have the same mapping. 
@@ -72,7 +653,7 @@
                         Let's consider two points in the frustrum with identical $x$ values, but different $z$ values
                     </p>
                     <p>
-                        $x_1 = x_2; z_1 < z_2$
+                        $(x_1, y_1, z_1)$ & $(x_2, y_2, z_2)$ such that $x_1 = x_2; z_1 < z_2$
                     </p>
                     <p>
                         We need to check the limiting cases of either one and a general comparison of the two.
@@ -108,34 +689,117 @@
                         Now the question is, how to represent this as a matrix so we can concatenate it with our view and model transformation?
                     </p>
                     <p>
-                        Let's see what we got one more time for my poor short term memory's sake:
+                        Let's see what we got one more for convenience:
                     </p>
                     <p>
-                        ${2nx}/{(r - l)z} - {(r + l)}/{(r - l)}$
+                        $x_{projected} = {2nx}/{(r - l)z} - {(r + l)}/{(r - l)}$
                     </p>
                     <p>
-                        ${2ny}/{(t - b)z} - {(t + b)}/{(t - b)}$
+                        $y_{projected} = {2ny}/{(t - b)z} - {(t + b)}/{(t - b)}$
                     </p>
                     <p>
                         Now the question is, how to represent this as a matrix so we can concatenate it with our view and model transformation?
                     </p>
                     <p>
-                        Maybe you try to work it out partially on paper to get a feel for it, but I don't think this is fair to you or worth your time.
-                        After the vertex shader is run, a number of other transformations and fixed function operations are executed. One of them being perspective division.
-                         
+                        Working from first principles like this, the expressions seem inextricabley mixed or indeterminate. 
+                        After the vertex shader is run, it's final output is recorded (transform feedback) and a number of other transformations and fixed function operations are executed
+                        in <a href="https://www.khronos.org/opengl/wiki/Vertex_Post-Processing">
+                            vertex post processing
+                        </a>, one of them being perspective division.
+                        Whatever the final 4x1 vector after the concatenated transformations is: $(\table \x; \y; \z; \w)$
+                        $x, y, z, w$ values are divided by its $w$ value.
+                        $(\table \x/w; \y/w; \z/w; \1)$
                     </p>
                     <p>
+                        Trying to square the geometrically derived results with a projection matrix as seen in a textbook was really confusing until I read about this.
                         This problem is very representative of working with a complicated API in general. It has all sorts of small details
                         that are there, silently working away, always for good or necessary reasons, but fairly opaque unless you're an initiate.
+                        I can only offer my commiserations to you and the wasted time we'll both spend trying to learn similar things in the future.
                     </p>
                     <p>
-                        It’s as simple as that; this is the final expression derived to project to a screen plane
-                        the necessary z division is done under the hood, 
-                        among a number of other transformations and fixed function stuff, 
-                        in the perspective division stage of the 
-                        <a href="https://www.khronos.org/opengl/wiki/Vertex_Post-Processing">
-                            vertex post processing
-                        </a>.
+                        It's kind of circular, I'm sure the wizard beards who came before me made this Vertex Post-Processing step because of hariness
+                        of the projected expressions; but for our sake trying to work backwards, to get the correct result,
+                        if we're going to divide by $w$ no matter what, then we need to make sure whatever is in divisor of $x$ expression ($z$)
+                        is the value that $w$ will take on after the transformation.
+                        Since $w$ up until this point will be $1$, we need only set the $z$ column of the $w$ row to be $1$
+                    </p>
+                    <p>
+                        That is to say:
+                        <br>
+                        $(\table \-, -, -, -; \-, -, -, -; \-, -, -, -; \0, 0, 1, 0)(\table \x; \y; \z; \1) = (\table \-; \-; \-; \z)$
+                    </p>
+                    <p>
+                        Where I've left the other elements blank, because there is no way to reason about this before establishing this point.
+                    </p>
+                    <p>
+                        Equipped with that bit of knowledge, we can see how the expressions for $x$ and $y$ will fit in the matrix.
+                        <br>
+                        Let's see them again for our mind's eye's convenience:
+                    </p>
+                    <p>
+                        $x_{projected}  = {2nx}/{(r - l)z} - {(r + l)}/{(r - l)}$
+                    </p>
+                    <p>
+                        $y_{projected} = {2ny}/{(t - b)z} - {(t + b)}/{(t - b)}$
+                    </p>
+                    <p>
+                        Thus we can construct:
+                        <br>
+                        $(\table \ {2n}/(r-l), \ 0, \ {(r + l)}/{(r - l)}, \ 0;
+                                 \ 0, \ {2n}/(t-b), \ {(t + b)}/{(t - b)}, \ 0;
+                                 \ -, \ -, \ -, \ -;
+                                 \ 0, \ 0, \ 1, \ 0)
+                        (\table \x; \y; \z; \1) 
+                        =
+                        (\table \ (2nx)/(r-l) + {(r+l)z}/(r-l); \ (2ny)/(t-b) + {(t+b)z}/(t-b); \-; \z) $
+                    </p>
+                    <p>
+                        And it's clear that with the vertex post-processing $w$ division, we get back the projected expressions
+                        for our 4x1 resultant vector's $x$ and $y$ values
+                    </p>
+                    <p>
+                        $(\table \ (2nx)/{(r-l)z} + (r+l)/(r-l); \ (2ny)/{(t-b)z} + (t+b)/(t-b); \-; \1) $
+                    </p>
+                    <p>
+                        Good progress, but what about an expression for $z$?
+                    </p>
+                    <p>
+                        We can play the same game of linearly mapping from the view frustrum to the cnanonical vieww volume, but we need
+                        to remember that we'll be dividing by the $w$ value eventually and that the $w$ value takes on whatever the original $z$ value was.
+                    </p>
+                    <p>
+                        A linear mapping is of the form $z^' = mz + b$
+                        <br>
+                        This is really all we want,
+                        but whatever our mapped $z$ value is will eventually be divided by the $w$ value, that is to say the $z$ value
+                        , so for the sake of constructing a matrix, we must offset this by changing the expression to be $z^'z = mz + b$
+                        
+                    </p>
+                    <img src="../misc/MVPAppletImages/diagrams/cam2CubeZ.png" class="diagram"></img>
+                    <p>
+                        Our finished Perspective matrix:
+                        <br>
+                        $(\table \ {2n}/(r-l), \ 0, \ {(r + l)}/{(r - l)}, \ 0;
+                                 \ 0, \ {2n}/(t-b), \ {(t + b)}/{(t - b)}, \ 0;
+                                 \ 0, \ 0, \ {(f + n)}/{(f - n)}, -\ {2fn}/(f-n);
+                                 \ 0, \ 0, \ 1, \ 0)
+                        (\table \x; \y; \z; \1) 
+                        =
+                        (\table \ (2nx)/(r-l) + {(r+l)z}/(r-l); \ (2ny)/(t-b) + {(t+b)z}/(t-b); \ {(f + n)z}/{(f - n)} - {2fn}/(f-n); \z) $
+                    </p>
+                    <p>
+                        And after the $w$ division, our final 4x1 vector:
+                    </p>
+                    <p>
+                        $(\table \ (2nx)/{(r-l)z} + (r+l)/(r-l); \ (2ny)/{(t-b)z} + (t+b)/(t-b); \ {(f + n)}/{(f - n)} - {2fn}/{(f-n)z}; \1) $
+                    </p>
+                    <p>
+                        It’s as simple as that; let's try to implement it.
+                    </p>
+                    <p>
+                        I think the big conceptual take aways is to realize there is only one coridinate space. 
+                        I think it's a mistake in the educational literature to present different spaces with cannonical names to the student.
+                        There is just a lot of small mathematical steps based on well established approaches to represent three dimensions on a screen in real time.
                     </p>
                 </div>
             </div>
