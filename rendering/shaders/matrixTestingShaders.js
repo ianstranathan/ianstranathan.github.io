@@ -9,7 +9,7 @@ uniform float time;
 // transformation matrices:
 
 uniform mat4 view;
-//uniform mat4 projection;
+uniform mat4 projection;
 uniform mat4 model;
 
 out vec3 v_Barycentric;
@@ -19,9 +19,14 @@ void main()
     //v_Barycentric = vec3(0.0);
     //v_Barycentric[int(mod(float(gl_VertexID), 3.0))] = 1.0;
     //gl_Position = projection * view * model * vec4(vertexPos, 1.0);
-    vec4 pos = view * model * vec4(vertexPos, 1.0);
+
+    // view test
+    //vec4 pos = view * model * vec4(vertexPos, 1.0);
+    //gl_Position = vec4(pos.x, pos.y, 0., 1.);
+
+    // projection test
+    vec4 pos = projection * view * model * vec4(vertexPos, 1.0);
     gl_Position = vec4(pos.x, pos.y, 0., 1.);
-    //gl_Position = model * vec4(vertexPos, 1.);
 }
 `
 

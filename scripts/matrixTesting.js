@@ -35,6 +35,7 @@ function main()
 
     var modelUniformLocation = gl.getUniformLocation(program, "model");
     var viewUniformLocation = gl.getUniformLocation(program, "view");
+    var projectionUniformLocation = gl.getUniformLocation(program, "projection");
 
     // Create a buffer
     var positionBuffer = gl.createBuffer();
@@ -131,10 +132,26 @@ function main()
     
     // doesn't matter until it can dynamically change
     //var camPos = [2, 2, 2];
+    let view = new Float32Array(
+        [
+            -1 / Math.sqrt(2), 1 / Math.sqrt(6),  1 / Math.sqrt(3), 0,
+                            0,  -Math.sqrt(2/3),  1 / Math.sqrt(3), 0,
+             1 / Math.sqrt(2), 1 / Math.sqrt(6),  1 / Math.sqrt(3), 0,
+                            0,                0, -2 * Math.sqrt(3), 1
+        ]);
 
+    let projection = new Float32Array(
+        [
+            -0.15,     0,     0, 0,
+                0, -0.15,     0, 0,
+                0,     0, 1.061, 1,
+                0,     0, 0.619, 0
+        ]);
 
     // -------------- START GAME LOOP --------------
     window.requestAnimationFrame(renderLoop);
+
+    
 
     function renderLoop(timeStamp)
     {
@@ -148,31 +165,14 @@ function main()
 
         gl.uniform1f(timeUniformLocation, seconds);
 
-        // Let's recreate this
-        // let model = mat4.create();
-        // mat4.scale(model, model, [0.5, 0.5, 0.5]);
-        // mat4.rotateZ(model, model, seconds / 2);
-
-        //aMat4.translate([0.3 *  Math.sin(seconds), 0.3 * Math.cos(seconds), 0.]);
-        //let model = aMat4.matrix;
-        //let view = aMat4.myHardcodedInverse;
-
         let model = new Float32Array([0.5,                      0,                       0,       0,
                                       0,                        0.5,                     0,       0,
                                       0,                        0,                       0.5,     0,
                                       0.5 * Math.sin(seconds),  0.5 * Math.cos(seconds), 0,       1]);
 
-
-        let view = new Float32Array(
-            [
-                1 / Math.sqrt(2),  1 / Math.sqrt(6),   -1 / Math.sqrt(3), 0,
-                0,                  -Math.sqrt(2/3),   -1 / Math.sqrt(3), 0,
-               -1 / Math.sqrt(2),  1 / Math.sqrt(6),   -1 / Math.sqrt(3), 0,
-                               0,                 0,    2 * Math.sqrt(3), 1]);
-
         gl.uniformMatrix4fv(modelUniformLocation, false, model);
-
         gl.uniformMatrix4fv(viewUniformLocation, false, view);
+        gl.uniformMatrix4fv(projectionUniformLocation, false, projection);
 
         // draw
         gl.drawElements(primitiveType, vertCount, indexType, drawOffset);

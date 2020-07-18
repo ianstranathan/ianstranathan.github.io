@@ -62,18 +62,16 @@
                     <p>
                         <!-- Intro -->
                         This is a little dive into the so called MVP matrix (model, view, projection).
-                        it's really more of collection of my own thoughts while learning this stuff than anything.
+                        it's really more of a collection of my own thoughts while learning this stuff than anything.
                     </p>
                     <p>
-                        I think this fundamental process is really poorly explained (or even assumed as a given and just presented to you) in most popular textbooks (e.g. Real Time Rendering 3rd Edition)
-                        and online tutorials (learnopengl) and it gives the impression that it's more complicated than it really is. WIth each discussion and derivation
-                        I try to give a minimal example that you can recreate, so you can ultimately convince yourself
+                        I think this fundamental process is rather poorly explained (or even assumed as a given and just presented to you) in most popular textbooks (e.g. Real Time Rendering)
+                        and online tutorials (learnopengl.com).  With each discussion and derivation
+                        I try to give a minimal example that you can recreate, so you can ultimately convince yourself.
                     </p>
                     <p>
-                        It's hard to hit the basics when there are so many shiny, advanced things out there, but
-                        the more energy and time you spend learning and mastering them, the stronger you'll eventually become.
-                        Also, have heart, there is always merit in figuring something out; and depsite the time lost, if certain wheels are fundamental enough, 
-                        there is no other option but to occasionally remake them in the interest of understanding because there is a deep difference between knowing something and 
+                        There is always merit in figuring something out; and depsite the time lost, if certain wheels are fundamental enough, 
+                        in the interest of understanding, there is no other option but to occasionally remake them, because there is indeed a deep difference between knowing something and 
                         <a href="https://www.youtube.com/watch?v=NM-zWTU7X-k&t=0s">
                         understanding 
                         </a> it.
@@ -203,7 +201,7 @@
                         <br>
                         Now for the more interesting part, let's write a simple model matrix to check our understanding in our graphics API.
                         The "Hello, World!" for me, a mere mortal, is the screen quad, so two triangles
-                        that cover the screen. However you want to process them down, they're just 4  different vertices 
+                        that cover the screen. However you want to process them, arrayed or index drawing, there are 4  different vertices 
                         <br><code>
                         [-1, +1, 0
                         -1, -1, 0
@@ -284,7 +282,7 @@
                         This is technically true, but why it's true is not explained and I find that misleading.
                     </p>
                     <p>
-                        First, very clearly, all we're trying to do is transform the virtual camera/ pinhole palceholder
+                        First, very clearly, all we're trying to do is transform the virtual camera/ pinhole camera placeholder
                         such that it's centered at the origin and pointing down an axis. (by convention: $-z$ in OpenGL, $+z$ in D3D/XNA but it really could be whatever if the API were constructed differently).
                     </p>
                     <p>
@@ -306,7 +304,7 @@
                     <p>   
                         <span style="font-weight: bold; text-decoration: underline;">How do we do this?:</span>
                         <br>
-                        The easiest part is to just translate the camera to the origin. This is straightforward since we know how to translate with homogenous matrices.
+                        The easiest part is to position the camera at the origin. This is nothing but a translation and we know how to translate with homogenous matrices.
                     </p>
                     <p>
                         For camera: $c↖{→}$
@@ -318,7 +316,7 @@
                         \0, \0, \0, \1;
                         )$ translates us back to origin$θ$.
                         <br>
-                        Now, how to rotate to align with standard basis? 
+                        Now, how to correct its orientation to align with the standard axes? 
                         <br>
                         As said before, any linear transformation can be represented by a matrix and  
                         that transformation matrix is really just encoded basis vectors. The inverse of that matrix is another matrix such that (for some matrix $A$):
@@ -330,18 +328,21 @@
                     </p>
                     <p>
                         So how do we find an inverse?
-                        There are few general means of inverting a matrix and they take up a fair bit of tedious time in an undergraduate linear algebra class doing them by hand
+                        There are a few general means of inverting a matrix and they take up a fair bit of tedious time in an undergraduate linear algebra class doing them by hand
                         like Gauss-Jordan elimination, Gaussian elimination, or LU decomposition.
                     </p>
                     <p>
                         But a convenient fact for our sake is that
                         if a matrix is <a href="https://en.wikipedia.org/wiki/Orthogonal_matrix">orthogonal</a>
                         (i.e. a square matrix whose columns and rows are orthogonal unit vectors (orthonormal vectors)),
-                        then it's inverse is it's transpose.
-                        This means, if we use the Gram-Schmidt process to create set of orthogonal basis vectors and ensure that those vectors are normalized, we can
-                        trivially invert it's transformation matrix. 
+                        then it's inverse is it's transpose. (a transpose is where the columns in matrix become its rows and vice versa)
+                        <br>
+                        This means, if we can find a way of creating set of orthogonal basis vectors and ensure that those vectors are normalized, we can
+                        trivially invert it's transformation matrix.
                         (this is why the previous learnopengl link had a transposed matrix whose basis vectors
                          are the orthonormal set generated by the Gram-Schmidt process.... too bad they didn't explain that though)
+                        <br>
+                        Again, conveniently for us, just such a process exist and is calle the Gram-Schmidt process.
                     </p>
                     <p>
                         Ok, so what is the Gram-Schmidt process?
@@ -363,33 +364,56 @@
                         This means we can generate a set of orthogonal vectors from a starting vector and an arbitrary "seeding" vector.
                         
                     </p>
-                    <p> 
-                        As an example, take the camera's "front" vector: $c_f↖{→}$, 
-                        so the unit vector in the direction the camera is facing.
-                        (For our concrete example, to hardcode everything to check our understanding and to see if our math is right, let's take the camera to be at
-                        $<2, 2, 2>$ and pointing at the origin, I picked this fully arbitrarily)
+                    <p>
+                       How we generate the set of basis vectors will be different for different coordinate system conventions.  
+                    </p>
+                    <img src="../misc/MVPAppletImages/diagrams/coordSystemWithHands.png" class="diagram"></img>
+                    <p>
+                        Remember the goal, we just want to put the camera at the origin and point it down an axis 
+                        (for left handed coordinate systems (D3D/XNA) it will point down $+z$, for right handed cooridinate systems (OpenGL) it will point down $-z$)
+                        <br>
+                        This difference of where we want things in front of the camera to end up changes what our front vector will be and the results of sucessive cross products with it.
                     </p>
                     <p>
-                        The camera's position vector: $c↖{→} = <2, 2, 2>$
+                        If we invert the orthonormal basis of the camera, its basis vectors will align with the standard basis vectors.
                     </p>
                     <p>
-                        The vector from the camera to the origin: $c↖{→} = <0, 0, 0> - <2, 2, 2> = <-2, -2, -2>$
+                        This means its "front" axis will go to the $z$ axis, so whatever is in front of the camera will have positive $z$ values.
+                        If you're using a left handed coordinate system, that's great and what intuitively feels and looks like the "front" basis vector is indeed the "front" basis vector.
+                        <br>
+                        If you're using a right handed coordinate system however, we want the opposite of this. Whatever is in front of the camera should end up with a negative $z$ value.
+                        So we must align the vector pointing away from the camera with the $z$ axis, this is the same thing as aligning the negative of the visually intutive "front" basis vector.
                     </p>
                     <p>
-                        The "front" vector is just this made into a unit vector by dividing by its magnitude $√12 = 2√3$
+                        Note, for the sake of my small brain, the concrete examples will all be done with the camera at $<2, 2, 2>$ looking at the origin.
+                        The front vector would normally be the unit vector of the relative position vector from the camera to the target.
+                        $⇒ c↖{→} = <0, 0, 0 > - <2, 2, 2> = <-2, -2, -2>$
+                        <br>
+                        Dividing by its magnitude to give the unit vector gives us the front vector ($f$ for front):
+                        <br>
                         $⇒ c_f↖{→} = <-1/√3, -1/√3, -1/√3>$
-                    </p>
+                        <br>
+                        This is by definition normalized, so we don't need to check this
+                        <br>
+                        This vector added to the camera's position is indeed the intuitive looking front vector, but
+                        this is where our paths may diverge as I'm using WebGL and its right handed coordinate system. 
+                        Don't worry, the process is identical, we'll just have negative front and right basis vectors of each other (try both out to prove it yourself).
+                        Because I want everything in front of the camera to be in the negative $z$ I must align the negative of this front vector instead of the the front vector
+                        <br>
+                        $⇒ c_f↖{→} = <1/√3, 1/√3, 1/√3>$
                     <p>
-                        We can then cross this with an arbitrary non co-linear vector, traditionally the "world up" vector is chosen:  $<0, 1, 0>$
+                        Now we can start the series of succesive cross products (Gram-Schmidt process).
+                        <br>
+                        We cross our front vector with an arbitrary non co-linear vector, traditionally the "world up" vector is chosen:  $<0, 1, 0>$
                     </p>  
                     <p>
-                        This gives us our "right" vector: $c_r↖{→} = <1/√3, 0, -1/√3>$
+                        This gives us our "right" vector: $c_r↖{→} = <-1/√3, 0, 1/√3>$
                     </p>
                     <p>
-                        This isn't normalized however, and we need orthonormal basis vectors.
+                        This isn't normalized however, and a condition for finding our inverse is having orthonormal basis vectors.
                     </p>
                     <p>
-                        Normalizing: just divide by the magnitude like always: $c_r↖{→} = <1/√2, 0, -1/√2>$
+                        Normalizing: just divide by the magnitude like always: $c_r↖{→} = <-1/√2, 0, 1/√2>$
                     </p>
                     <p>
                         Crossing the "front" vector with this "right" vector then gives us our "up" vector
@@ -412,13 +436,16 @@
                         Here are a couple of different perspectives to give you a feel for it. 
                         But you should always convince yourself, you can just recreate it yourself very quickly in the app. e.g. c = (2, 2, 2)
                     </p>
-                    <img src="../misc/MVPAppletImages/diagrams/gramSchmidt1.png" class="diagram"></img>
-                    <img src="../misc/MVPAppletImages/diagrams/gramSchmidt2.png" class="diagram"></img>
+                    <img src="../misc/MVPAppletImages/diagrams/gramSchmidtCorrected1.png" class="diagram">
+                    <p>
+
+                    </p>
+                    <img src="../misc/MVPAppletImages/diagrams/gramSchmidtCorrected2.png" class="diagram">
                     <p>
                         These were generated with <a href="https://www.geogebra.org/3d">Geogebra</a>, 
                         and unfortunately the convention in math circles is to have the $z$ axis pointing up
                         instead of the $y$ axis as in graphics programming circles, so you'll will have to reorient mentally yourself
-                        ; it's still probably better than my poorly hand drawn diagrams, sorry about that.
+                        ; it's still probably better than my hand drawn diagrams, sorry about that.
                         I usually use <a href="https://www.desmos.com/calculator">desmos</a> for shader development, it seems more intutive than Geogebra, but doesn't have 3D viewing.
                         I'm not complaining though, they're both very nice, free tools.
                     </p>
@@ -427,9 +454,9 @@
                     </p>
                     <p>
                         And you're right, kind of.
-                        The choice of the front vector wasn't arbitrary, it was determined with vector math and our choice of target (in this case the origin).
+                        The choice of the front vector wasn't arbitrary, it was determined with vector math, our choice of target (in this case the origin), and our coordinate system convention.
                         The other basis vectors were to a degree arbitrary, but their arbitrariness comes out in the wash because the inverse of the transformation that these camera basis vectors define
-                        will always get us back to origin (with an inversion of z because we defined the front vector to be the opposite direction of the original position vector)
+                        will always get us back to origin.
                     </p>
                     <p>
                         Now for the (slightly) more exciting part. Let's prove it using our graphics API
@@ -441,20 +468,20 @@
                         that ndc "space"
                     </p>
                     <p>
-                        To make a square around the camera, we're going start at $c↖{→}$, go $c_f↖{→}$  in away from the camera and then go to all the combinations of
+                        To make a square around the camera, we're going start at $c↖{→}$, go $-c_f↖{→}$  in away from the camera and then go to all the combinations of
                          $c_r↖{→}$ and $c_u↖{→}$ to get the corner vertices.
                     </p>
                     <img src="../misc/MVPAppletImages/diagrams/viewTransformTestQuad.png" class="diagram"></img>
                     <p>
                         Our new screen quad:
                         <br>
-                        vertex 0: $c↖{→} + c_f↖{→} + c_r↖{→} + c_u↖{→} ≈ 2.538, 0.606, 1.124$
+                        vertex 0: $c↖{→} - c_f↖{→} + c_r↖{→} + c_u↖{→} ≈ 2.538, 0.606, 1.124$
                         <br>
-                        vertex 1: $c↖{→} + c_f↖{→} + c_r↖{→} - c_u↖{→} ≈ 1.722, 2.239, 0.307$
+                        vertex 1: $c↖{→} - c_f↖{→} + c_r↖{→} - c_u↖{→} ≈ 1.722, 2.239, 0.307$
                         <br>
-                        vertex 2: $c↖{→} + c_f↖{→} - c_r↖{→} + c_u↖{→} ≈ 0.307, 2.239, 1.721$
+                        vertex 2: $c↖{→} - c_f↖{→} - c_r↖{→} + c_u↖{→} ≈ 0.307, 2.239, 1.721$
                         <br>
-                        vertex 3: $c↖{→} + c_f↖{→} - c_r↖{→} - c_u↖{→} ≈ 1.124, 0.606, 2.538$
+                        vertex 3: $c↖{→} - c_f↖{→} - c_r↖{→} - c_u↖{→} ≈ 1.124, 0.606, 2.538$
                     </p>
                     <p>
                         Visualized in Geogrebra again (black is still the camera):
@@ -466,19 +493,19 @@
                         <br>
                         Our basis vectors again for our mind's eye's convenience:
                         <br>
-                        $c_f↖{→} = <-1/√3, -1/√3, -1/√3>$
+                        $c_f↖{→} = <1/√3, 1/√3, 1/√3>$
                         <br>
-                        $c_r↖{→} = <1/√2, 0, -1/√2>$
+                        $c_r↖{→} = <-1/√2, 0, 1/√2>$
                         <br>
                         $c_u↖{→} = <1/√6, -√{2/3}, 1/√6>$
                         <br>
-                        Our camera's inverse transform (note that we need to concatenate with it's inverse translation):
+                        Our camera's inverse transform, the transpose of the basis vectors from the Gram-Schmidt process (note that we need to concatenate with it's inverse translation):
                         <br>
                         $(\table 
-                        \1/√2,  \0,       \-1/√2, \0;
-                        \1/√6,  \0,       \-1/√2, \0;
-                        \-1/√3, \-√{2/3}, \ 1/√6, \0;
-                        \0,     \0,       \0,     \1;
+                        \-1/√2, \0,       \1/√2, \0;
+                        \1/√6,  \-√{2/3}, \1/√6, \0;
+                        \1/√3,  \1/√3,    \1/√3, \0;
+                        \0,     \0,       \0,    \1;
                         )
                         (\table 
                         \1, \0, \0, \-2;
@@ -488,9 +515,9 @@
                         )$
                         <br>
                         $= (\table 
-                        \1/√2,  \0,       \-1/√2, \0;
-                        \1/√6,  \0,       \-1/√2, \0;
-                        \-1/√3, \-√{2/3}, \ 1/√6, \2√3;
+                        \-1/√2, \0,       \1/√2,  \0;
+                        \1/√6,  \-√{2/3}, \1/√6, \0;
+                        \1/√3,  \1/√3,    \1/√3, \-2√3;
                         \0,     \0,       \0,     \1;
                         )$
                     </p>
@@ -501,9 +528,9 @@
                         Vertex 0:
                         <br>
                         $ (\table 
-                        \1/√2,  \0,       \-1/√2, \0;
-                        \1/√6,  \0,       \-1/√2, \0;
-                        \-1/√3, \-√{2/3}, \ 1/√6, \2√3;
+                        \-1/√2, \0,       \1/√2,  \0;
+                        \1/√6,  \-√{2/3}, \1/√6, \0;
+                        \1/√3,  \1/√3,    \1/√3, \-2√3;
                         \0,     \0,       \0,     \1;
                         )
                         (\table 
@@ -514,9 +541,9 @@
                         )                    
                         ≈ 
                         (\table 
+                        \-1;
                         \1;
-                        \1;
-                        \1;
+                        \-1;
                         \1;
                         )  $
                     </p>
@@ -524,9 +551,9 @@
                         Vertex 1:
                         <br>
                         $ (\table 
-                        \1/√2,  \0,       \-1/√2, \0;
-                        \1/√6,  \0,       \-1/√2, \0;
-                        \-1/√3, \-√{2/3}, \ 1/√6, \2√3;
+                        \-1/√2, \0,       \1/√2,  \0;
+                        \1/√6,  \-√{2/3}, \1/√6, \0;
+                        \1/√3,  \1/√3,    \1/√3, \-2√3;
                         \0,     \0,       \0,     \1;
                         )
                         (\table 
@@ -537,9 +564,9 @@
                         )                    
                         ≈ 
                         (\table 
-                        \1;
                         \-1;
-                        \1;
+                        \-1;
+                        \-1;
                         \1;
                         )  $ 
                     </p>
@@ -547,9 +574,9 @@
                         Vertex 2:
                         <br>
                         $ (\table 
-                        \1/√2,  \0,       \-1/√2, \0;
-                        \1/√6,  \0,       \-1/√2, \0;
-                        \-1/√3, \-√{2/3}, \ 1/√6, \2√3;
+                        \-1/√2, \0,       \1/√2,  \0;
+                        \1/√6,  \-√{2/3}, \1/√6, \0;
+                        \1/√3,  \1/√3,    \1/√3, \-2√3;
                         \0,     \0,       \0,     \1;
                         )
                         (\table 
@@ -570,9 +597,9 @@
                         Vertex 3:
                         <br>
                         $ (\table 
-                        \1/√2,  \0,       \-1/√2, \0;
-                        \1/√6,  \0,       \-1/√2, \0;
-                        \-1/√3, \-√{2/3}, \ 1/√6, \2√3;
+                        \-1/√2, \0,       \1/√2,  \0;
+                        \1/√6,  \-√{2/3}, \1/√6, \0;
+                        \1/√3,  \1/√3,    \1/√3, \-2√3;
                         \0,     \0,       \0,     \1;
                         )
                         (\table 
@@ -583,9 +610,9 @@
                         )                    
                         ≈ 
                         (\table 
-                        \1;
+                        \ 1;
+                        \ 1;
                         \-1;
-                        \1;
                         \1;
                         )  $ 
                     </p>
@@ -594,10 +621,10 @@
                     </p>
                     <p>
                         So, let's see this in action.
-                        We'll keep the same model transform and color in our shaders, we'll just change the vertex data to be these cooridinates
+                        We'll keep the same model transform and color in our shaders, we'll just change the vertex data to be these coordinates
                         and of course add a view transform. There should be no difference between our model test and this view test.
                         <br>
-                        Don't forget that the basis vectors are contiguous in memory!
+                        Don't forget that the basis vectors are contiguous in memory.
                         <pre style="font-size: 0.9em;">
                             <code>
 // Please note this is kind of pseudo code.
@@ -613,38 +640,79 @@ model =
 
 view = 
 [
- 1 / Math.sqrt(2), 1 / Math.sqrt(6), -1 / Math.sqrt(3), 0,
-                0,  -Math.sqrt(2/3), -1 / Math.sqrt(3), 0,
--1 / Math.sqrt(2), 1 / Math.sqrt(6), -1 / Math.sqrt(3), 0,
-                0,                 0, 2 * Math.sqrt(3), 1
+ -1 / Math.sqrt(2), 1 / Math.sqrt(6),  1 / Math.sqrt(3), 0,
+                 0,  -Math.sqrt(2/3),  1 / Math.sqrt(3), 0,
+  1 / Math.sqrt(2), 1 / Math.sqrt(6),  1 / Math.sqrt(3), 0,
+                0,                 0, -2 * Math.sqrt(3), 1
 ];
 
 //... in vertex shader ...
-gl_Position = view * model * vec4(vertexPos, 1.);
+vec4 pos = view * model * vec4(vertexPos, 1.0);
+gl_Position = vec4(pos.x, pos.y, 0., 1.);
                             </code>
                         </pre>
-                    
                     <span style="text-decoration: underline; text-align: center ">
                         identical results to our model test!
                     </span>
                     <img src="../misc/MVPAppletImages/diagrams/viewTestQuadFinal.png" class="diagram"></img>
                     <!-- Projection Derivation and Discussion -->
                     </p>
-
                     <p>
-                        This picture is taken from a very good resource, <a href="http://www.songho.ca/">Song Ho Ahn</a>
+                        Note that I've hardcoded the $z$ value to be $0$, anything outside the cannonical view volume 
+                        (the unit cube whose extreme points are $(1, 1, 1)$ and $(-1, -1, -1)$ See picture below) is clipped or culled.
+                        And we can't be certain where our z is ending up until we project to a 2D screen.
+                        This brings us to our next task, projection. 
+                    </p>
+                    <p>
+                        This picture is taken from <a href="http://www.songho.ca/">Song Ho Ahn</a>
                     </p>
                     <img src="../misc/MVPAppletImages/diagrams/gl_projectionmatrix01.png" class="diagram"></img>
+                    <p>
+                        This is a very clean picture, but the $z$ axis is turned around and it doesn't reinforce that there really is only one
+                        coordinate system. Perspective project just employs the mathematical object of a frustum, 
+                        the portion of a solid that lies between one or two (in our case, "near" and "far" planes) parallel planes cutting it.
+                        <br>
+                        All that previous work was to get it along the $z$ axis to aide in projecting and clipping along these frustum planes
+                    </p>
+                    
+                    <span style="text-align: center">
+                        Consider an arbitrary point in a frustum
+                    </span>
                     <img src="../misc/MVPAppletImages/diagrams/pointInFrustum.png" class="diagram"></img>
+                    <p>
+
+                    </p>
+                    <span style="text-align: center">
+                        Looking closer, the projected intersection point with the near plane
+                    </span>
+                    <img src="../misc/MVPAppletImages/diagrams/pointInFrustumAlone.png" class="diagram"></img>
+                    <p>
+
+                    </p>
+                    <span style="text-align: center">
+                        The XZ plane of our intersection diagram:
+                    </span>
                     <img src="../misc/MVPAppletImages/diagrams/similarTriangles.png" class="diagram"></img>
+                    <p>
+
+                    </p>
+                    <span style="text-align: center">
+                        Deriving the $x$ and $y$ coordinates of our projected point
+                    </span>
                     <img src="../misc/MVPAppletImages/diagrams/similarTrianglesMath.png" class="diagram"></img>
+                    <p>
+
+                    </p>
+                    <span style="text-align: center">
+                        Making a linear mapping from a frustum's projected point to the cannonical view volume.
+                    </span>
                     <img src="../misc/MVPAppletImages/diagrams/cameraSpaceToUnitCube.png" class="diagram"></img>
                     <p>
-                        I never want to skip steps, but since both expressions are identical up to just changing variable letters,
-                        You can directly see that both $x$ and $y$ have the same mapping. 
+                        Note that both expressions are identical up to a change of variable name, so
+                        you can directly see that both $x$ and $y$ have the same mapping. 
                     </p>
                     <p>
-                        So now we need to pause and think about this.
+                        Let's pause and think about this for a minute.
                     </p>
                     <p>
                         The derived expressions both have $z$ dependence 
@@ -667,7 +735,8 @@ gl_Position = view * model * vec4(vertexPos, 1.);
                         <br>
                         As z approaches f, the x value goes to some fraction of x, $n/f$, anything more and it's clipped.
                         This is kind of inconclusive at first blush for me, so let's compare.
-                        <br>
+                    </p>
+                    <p>
                         Comparison:
                         <br>
                         The point with greater z value will always be smaller, closer to z axis for an identical x value as n is constant.
@@ -686,10 +755,10 @@ gl_Position = view * model * vec4(vertexPos, 1.);
                         to the cannonical view volume where such things like the Sutherland-Hodgman clipping algorithm are executed.
                     </p>
                     <p>
-                        Now the question is, how to represent this as a matrix so we can concatenate it with our view and model transformation?
+                        How to represent this as a matrix so we can concatenate it with our view and model transformation?
                     </p>
                     <p>
-                        Let's see what we got one more for convenience:
+                        Let's see what we got once more for convenience:
                     </p>
                     <p>
                         $x_{projected} = {2nx}/{(r - l)z} - {(r + l)}/{(r - l)}$
@@ -698,16 +767,17 @@ gl_Position = view * model * vec4(vertexPos, 1.);
                         $y_{projected} = {2ny}/{(t - b)z} - {(t + b)}/{(t - b)}$
                     </p>
                     <p>
-                        Now the question is, how to represent this as a matrix so we can concatenate it with our view and model transformation?
+                        Working from first principles like this, the expressions seem inextricabley mixed or indeterminate, but we have a way out, namely we need to take in consideration what the API is doing more fully.
                     </p>
-                    <p>
-                        Working from first principles like this, the expressions seem inextricabley mixed or indeterminate. 
-                        After the vertex shader is run, it's final output is recorded (transform feedback) and a number of other transformations and fixed function operations are executed
+                    <p> 
+                        After the vertex shader is run, it's final output is recorded (called transform feedback) and a number of other transformations and fixed function operations are executed
                         in <a href="https://www.khronos.org/opengl/wiki/Vertex_Post-Processing">
                             vertex post processing
                         </a>, one of them being perspective division.
+                    </p>
+                    <p>
                         Whatever the final 4x1 vector after the concatenated transformations is: $(\table \x; \y; \z; \w)$
-                        $x, y, z, w$ values are divided by its $w$ value.
+                         the  vectors values are divided by its $w$ value.
                         $(\table \x/w; \y/w; \z/w; \1)$
                     </p>
                     <p>
@@ -717,9 +787,9 @@ gl_Position = view * model * vec4(vertexPos, 1.);
                         I can only offer my commiserations to you and the wasted time we'll both spend trying to learn similar things in the future.
                     </p>
                     <p>
-                        It's kind of circular, I'm sure the wizard beards who came before me made this Vertex Post-Processing step because of hariness
+                        It's kind of circular, I'm sure the wizard beards who came before me made this Vertex Post-Processing step because of the hariness
                         of the projected expressions; but for our sake trying to work backwards, to get the correct result,
-                        if we're going to divide by $w$ no matter what, then we need to make sure whatever is in divisor of $x$ expression ($z$)
+                        if we're going to divide by $w$ no matter what, then we need to make sure whatever is in the divisor of $x$ expression ($z$)
                         is the value that $w$ will take on after the transformation.
                         Since $w$ up until this point will be $1$, we need only set the $z$ column of the $w$ row to be $1$
                     </p>
@@ -729,7 +799,7 @@ gl_Position = view * model * vec4(vertexPos, 1.);
                         $(\table \-, -, -, -; \-, -, -, -; \-, -, -, -; \0, 0, 1, 0)(\table \x; \y; \z; \1) = (\table \-; \-; \-; \z)$
                     </p>
                     <p>
-                        Where I've left the other elements blank, because there is no way to reason about this before establishing this point.
+                        Where I've left the other elements blank, because there is no way to reason about them before establishing this point.
                     </p>
                     <p>
                         Equipped with that bit of knowledge, we can see how the expressions for $x$ and $y$ will fit in the matrix.
@@ -737,28 +807,28 @@ gl_Position = view * model * vec4(vertexPos, 1.);
                         Let's see them again for our mind's eye's convenience:
                     </p>
                     <p>
-                        $x_{projected}  = {2nx}/{(r - l)z} - {(r + l)}/{(r - l)}$
+                        $x_{unit-cube}  = {2nx}/{(r - l)z} - {(r + l)}/{(r - l)}$
                     </p>
                     <p>
-                        $y_{projected} = {2ny}/{(t - b)z} - {(t + b)}/{(t - b)}$
+                        $y_{unit-cube} = {2ny}/{(t - b)z} - {(t + b)}/{(t - b)}$
                     </p>
                     <p>
                         Thus we can construct:
                         <br>
-                        $(\table \ {2n}/(r-l), \ 0, \ {(r + l)}/{(r - l)}, \ 0;
-                                 \ 0, \ {2n}/(t-b), \ {(t + b)}/{(t - b)}, \ 0;
+                        $(\table \ {2n}/(r-l), \ 0, \ -{(r + l)}/{(r - l)}, \ 0;
+                                 \ 0, \ {2n}/(t-b), \ -{(t + b)}/{(t - b)}, \ 0;
                                  \ -, \ -, \ -, \ -;
                                  \ 0, \ 0, \ 1, \ 0)
                         (\table \x; \y; \z; \1) 
                         =
-                        (\table \ (2nx)/(r-l) + {(r+l)z}/(r-l); \ (2ny)/(t-b) + {(t+b)z}/(t-b); \-; \z) $
+                        (\table \ (2nx)/(r-l) - {(r+l)z}/(r-l); \ (2ny)/(t-b) - {(t+b)z}/(t-b); \-; \z) $
                     </p>
                     <p>
                         And it's clear that with the vertex post-processing $w$ division, we get back the projected expressions
                         for our 4x1 resultant vector's $x$ and $y$ values
                     </p>
                     <p>
-                        $(\table \ (2nx)/{(r-l)z} + (r+l)/(r-l); \ (2ny)/{(t-b)z} + (t+b)/(t-b); \-; \1) $
+                        $(\table \ (2nx)/{(r-l)z} - (r+l)/(r-l); \ (2ny)/{(t-b)z} - (t+b)/(t-b); \-; \1) $
                     </p>
                     <p>
                         Good progress, but what about an expression for $z$?
@@ -777,29 +847,43 @@ gl_Position = view * model * vec4(vertexPos, 1.);
                     </p>
                     <img src="../misc/MVPAppletImages/diagrams/cam2CubeZ.png" class="diagram"></img>
                     <p>
-                        Our finished Perspective matrix:
+                        Our finished Perspective matrix (This agrees with figure 4.68 in Real Time Rendering 3rd Ed.):
                         <br>
-                        $(\table \ {2n}/(r-l), \ 0, \ {(r + l)}/{(r - l)}, \ 0;
-                                 \ 0, \ {2n}/(t-b), \ {(t + b)}/{(t - b)}, \ 0;
+                        <br>
+                        $(\table \ {2n}/(r-l), \ 0, \ -{(r + l)}/{(r - l)}, \ 0;
+                                 \ 0, \ {2n}/(t-b), \ -{(t + b)}/{(t - b)}, \ 0;
                                  \ 0, \ 0, \ {(f + n)}/{(f - n)}, -\ {2fn}/(f-n);
                                  \ 0, \ 0, \ 1, \ 0)
                         (\table \x; \y; \z; \1) 
                         =
-                        (\table \ (2nx)/(r-l) + {(r+l)z}/(r-l); \ (2ny)/(t-b) + {(t+b)z}/(t-b); \ {(f + n)z}/{(f - n)} - {2fn}/(f-n); \z) $
+                        (\table \ (2nx)/(r-l) - {(r+l)z}/(r-l); \ (2ny)/(t-b) - {(t+b)z}/(t-b); \ {(f + n)z}/{(f - n)} - {2fn}/(f-n); \z) $
                     </p>
                     <p>
                         And after the $w$ division, our final 4x1 vector:
                     </p>
                     <p>
-                        $(\table \ (2nx)/{(r-l)z} + (r+l)/(r-l); \ (2ny)/{(t-b)z} + (t+b)/(t-b); \ {(f + n)}/{(f - n)} - {2fn}/{(f-n)z}; \1) $
+                        $(\table \ (2nx)/{(r-l)z} - (r+l)/(r-l); \ (2ny)/{(t-b)z} - (t+b)/(t-b); \ {(f + n)}/{(f - n)} - {2fn}/{(f-n)z}; \1) $
                     </p>
                     <p>
-                        It’s as simple as that; let's try to implement it.
+                        It’s as simple as that; now, let's try to implement it.
                     </p>
                     <p>
-                        I think the big conceptual take aways is to realize there is only one coridinate space. 
-                        I think it's a mistake in the educational literature to present different spaces with cannonical names to the student.
+                        We're going to take the same transformations as before, but now add the projection matrix. 
+                        We choose our near plane to be at $z = -0.5$ and our far plane to be at $z = -10$
+                        We choose square, symetrical right and left, top and bottom of $2, -2$ so the z terms of matrix will be zero.
+                        Remember once more, don't forget that basis vectors are contiguous in memory.
+                    </p>
+                    <p>
+                        Man, that was a lot longer than I thought it was going to be. I think this will really only help someone new to this stuff, 
+                        but it definitely helped me think about this clearly and in the off chance this will help someone, I'll be satisfied.
+                    </p>
+                        I think the big conceptual take aways is to realize there is only one coordinate space, math is universal and unchanging, it's
+                        just a matter of making it work with the design choice you've already inherited.
+                        I really do think it's a  mistake in the literature to present different spaces with cannonical names to the student.
                         There is just a lot of small mathematical steps based on well established approaches to represent three dimensions on a screen in real time.
+                    </p>
+                    <p>
+                        As always, thank you for reading. Cheers.
                     </p>
                 </div>
             </div>
