@@ -139,15 +139,15 @@ function main()
              1 / Math.sqrt(2), 1 / Math.sqrt(6),  1 / Math.sqrt(3), 0,
                             0,                0, -2 * Math.sqrt(3), 1
         ]);
-
     let projection = new Float32Array(
-        [
-            -0.15,     0,     0, 0,
-                0, -0.15,     0, 0,
-                0,     0, 1.061, 1,
-                0,     0, 0.619, 0
-        ]);
+    [
+        -1, 0, 0, 0,
+        0, -1, 0, 0,
+        0, 0, 11/9, 1,
+        0, 0, 2.22, 0
+    ]);
 
+    console.log(projection);
     // -------------- START GAME LOOP --------------
     window.requestAnimationFrame(renderLoop);
 
@@ -165,11 +165,25 @@ function main()
 
         gl.uniform1f(timeUniformLocation, seconds);
 
-        let model = new Float32Array([0.5,                      0,                       0,       0,
-                                      0,                        0.5,                     0,       0,
-                                      0,                        0,                       0.5,     0,
-                                      0.5 * Math.sin(seconds),  0.5 * Math.cos(seconds), 0,       1]);
-
+        //model and view transform
+        // let model = new Float32Array(
+        // [
+        //     0.25 * Math.cos(seconds),   0.25 * Math.sin(seconds),   0,    0,
+        //     -0.25 * Math.sin(seconds),  0.25 * Math.cos(seconds),   0,    0,
+        //     0,  0,   1,    0,
+        //     0.5 * Math.sin(0.5 * seconds),  0.5 * Math.cos(0.5 * seconds),    0,    1
+        // ]
+        // );
+        let cs = Math.cos(seconds);
+        let sn = Math.sin(seconds);
+        let model = new Float32Array(
+            [
+                cs,   0,   -sn,    0,
+                0,  1,   0,    0,
+                sn,  0,   cs,    0,
+                0,  0,    0,    1
+            ]
+            );
         gl.uniformMatrix4fv(modelUniformLocation, false, model);
         gl.uniformMatrix4fv(viewUniformLocation, false, view);
         gl.uniformMatrix4fv(projectionUniformLocation, false, projection);

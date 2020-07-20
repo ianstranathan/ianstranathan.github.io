@@ -54,23 +54,20 @@
                 <div id="content">
                     <!-- Title -->
                     <h2 style="text-align: center;">The "MVP" Matrix:</h2>
-                    <h3 style="text-align: center;">In gory detail:</h3>
+                    <h3 style="text-align: center;">no magic, just math</h3>
                     <span id="le-line"></span>
 
-                    
-                    
                     <p>
                         <!-- Intro -->
                         This is a little dive into the so called MVP matrix (model, view, projection).
-                        it's really more of a collection of my own thoughts while learning this stuff than anything.
                     </p>
                     <p>
                         I think this fundamental process is rather poorly explained (or even assumed as a given and just presented to you) in most popular textbooks (e.g. Real Time Rendering)
-                        and online tutorials (learnopengl.com).  With each discussion and derivation
-                        I try to give a minimal example that you can recreate, so you can ultimately convince yourself.
+                        and online tutorials (learnopengl.com) so I dug into it a little bit to understand what's going on, hopefully I can share some of that understanding with you.
+                        With each discussion and derivation I try to give a minimal example that you can recreate, so you can ultimately convince yourself.
                     </p>
                     <p>
-                        There is always merit in figuring something out; and depsite the time lost, if certain wheels are fundamental enough, 
+                        There is always merit in figuring something out; and despite the time lost, if certain wheels are fundamental enough, 
                         in the interest of understanding, there is no other option but to occasionally remake them, because there is indeed a deep difference between knowing something and 
                         <a href="https://www.youtube.com/watch?v=NM-zWTU7X-k&t=0s">
                         understanding 
@@ -83,13 +80,14 @@
                         it would be helpful to have had some exposure to vector math and matrices.
                         <br>
                         
-                        There are myriad resources to learn linear algebra, most of them are terrible. For a quick recap or to get some fast intuition
+                        There are a lot of resources to learn linear algebra, most of them are terrible. For a quick recap or to get some fast intuition
                         check out this <a href="https://www.youtube.com/watch?v=IrggOvOSZr4&t=0">video on matrix transformations</a>.
                         Also people seem to like this <a href="https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">series</a>.
                         <br>
                         You should also know the basics of working with your graphics API of choice.
-                        (I'm using WebGL, check out <a href="https://webgl2fundamentals.org/">WebGLFundamentals</a> if you would like to use that) 
-                        as I don't explain how to set up a rendering pipeline used to test our math and understanding (which you absolutely should do for your own benefit)
+                        I don't explain how to set up a rendering pipeline used to test our math and understanding (which you absolutely should do for your own benefit)
+                        For the sake of writing these little online articles I'm using WebGL because it is the only cross platform solution for producing real-time, 3D computer graphics that I can easily share with you.
+                        (I can recommend <a href="https://webgl2fundamentals.org/">WebGLFundamentals</a> and <a href=http://learnwebgl.brown37.net/index.html)>Wayne Brown</a> if you'd like to learn yourself)
                     </p>
                     <p>
                         Now, Let's try to "touch" what's going on and figure this stuff out.
@@ -202,26 +200,40 @@
                         Now for the more interesting part, let's write a simple model matrix to check our understanding in our graphics API.
                         The "Hello, World!" for me, a mere mortal, is the screen quad, so two triangles
                         that cover the screen. However you want to process them, arrayed or index drawing, there are 4  different vertices 
-                        <br><code>
-                        [-1, +1, 0
-                        -1, -1, 0
-                        +1, -1, 0
-                        +1, +1, 0
-                        ]
-                        </code> 
                         <br>
-                        I'll color it with shadertoy's default vec3 col to ease the monotony of using a primary color.
-                        <br>
+                    </p>
+                    <pre>
                         <code>
-                            vec3 col = 0.5 + 0.5*cos(t +uv.xyx + vec3(0,2,4));
-                        </code>          
-                    </p>
-                    <img src="../misc/MVPAppletImages/diagrams/screenQuad1.png" class="diagram"></img>
+vertexPositions = 
+[
+    -1, +1, 0
+    -1, -1, 0
+    +1, -1, 0
+    +1, +1, 0
+]
+                        </code> 
+                    </pre>
                     <p>
-                        Let's scale it by a half and make it translate in a circle. But how to write a matrix that our shader can understand?
+                        I'll color it with shadertoy's default vec3 col to ease the monotony of using a primary color.
+                        <br>     
                     </p>
+                    <pre>
+                        <code>
+vec3 col = 0.5 + 0.5*cos(t +uv.xyx + vec3(0,2,4));
+                        </code>   
+                    </pre>
+                    <video class="diagram" controls>
+                        <source src="../misc/MVPAppletImages/clips/helloQuad.mp4" type="video/mp4">
+                    </video>
                     <p>
-                        A final "gotcha" for wanting to test this is out is the confusion between how matrices are represented mathematically and how they're
+                        As a simple test, let's scale the $xy$ plane down to a quarter, translate circularly in the plane and spin around the $z$ axis.
+                        I think the circular translation should be pretty obvious, but the rotation matrix is slightly more msyterious and because we're all about first principles, here is a derivation of it (necessary trig derivation included).
+                        (Note, this is only a rotation around a principal axis, namely the $z$ axis, this is analogous to any other rotation around either $x$ or $y$)
+                    </p>
+                    <img src="../misc/MVPAppletImages/diagrams/rotationMatrixDerivation.png" class="diagram"></img>
+                    <img src="../misc/MVPAppletImages/diagrams/doubleAngle.png" class="diagram"></img>
+                    <p>
+                        Math is nice, but how to write a matrix that our shader program can understand? A real "gotcha" for wanting to test this is out is the confusion between how matrices are represented mathematically and how they're
                         laid out in an array to be processed by the API.
                         It's doubly confusing when seeing different resources that are geared toward a specific API that will use a different matrix writing convention,
                          for example OpenGL or D3D/XNA (Column-major notation vs. Row-major notation respectively).
@@ -231,22 +243,27 @@
                         OpenGL matrices have the same memory layout as DirectX matrices.
                         OpenGL matrices are 16-value arrays with base vectors laid out contiguously in memory. You can read about this 
                         <a href="https://www.opengl.org/archives/resources/faq/technical/transformations.htm">here</a>
-                        <pre>
-                            <code>
-// Please note this is kind of pseudo code.
-// I'm using WebGL, so you need to make this into
-// a Float32Array, and send uniforms accordingly
-[0.5,           0,            0,       0,
- 0,             0.5,          0,       0,
- 0,             0,            0.5,     0,
- 0.5 * sin(t),  0.5 * cos(t), 0,       1]);
+                    </p>
+                    <pre style="font-size: 0.9em; overflow:hidden;">
+                        <code>
+// Please note this is pseudo-ish code.
+model = 
+[
+0.25 * Math.cos(t),  -0.25 * Math.sin(t),           0,    0,
+0.25 * Math.sin(t),   0.25 * Math.cos(t),           0,    0,
+                 0,                    0,           1,    0,
+ 0.5 * Math.sin(0.5 * t),  0.5 * Math.cos(0.5 * t), 0,    1
+];
 
  //... in vertex shader ...
- gl_Position = model * vec4(vertexPos, 1.);
+ gl_Position =  model * vec4(vertexPos, 1.0);
 
-                            </code>
-                        </pre>
-                        <img src="../misc/MVPAppletImages/diagrams/screenQuad2.png" class="diagram"></img>
+                        </code>
+                    </pre>
+                    <video class="diagram" controls>
+                        <source src="../misc/MVPAppletImages/clips/modelTest.mp4" type="video/mp4">
+                    </video>
+                    <p>
                         And that's pretty much it, really. If you're comfortable with using 4x4 matrices to encode any rigid transformation, there's nothing more to it.
                         <br>
                         This was of course a very simple example, but any arbitrary position and orientation could be expressed with a model matrix.
@@ -262,7 +279,7 @@
                         This is really where things become less obvious and most resources fail to sufficiently explain what's going.
                         See <a href="https://learnopengl.com/Getting-started/Camera">this</a> for example
                         
-                        This brings me to I think the most unecessary and confusing aspect of using these different transformations.
+                        This brings me to, I think, the most unecessary and confusing aspect of using these different transformations.
                         Textbooks and tutorials are constantly talking about different spaces and transforming from one space to another and while this
                         has some merit in it, there really is only one coordinate space.
 
@@ -314,7 +331,7 @@
                         \0, \1, \0, - \c_y↖{→};
                         \0, \0, \1, - \c_z↖{→};
                         \0, \0, \0, \1;
-                        )$ translates us back to origin$θ$.
+                        )$ translates us back to the origin.
                         <br>
                         Now, how to correct its orientation to align with the standard axes? 
                         <br>
@@ -522,7 +539,7 @@
                         )$
                     </p>
                     <p>
-                        Testing out each of our quads points with the transform (rounding the nearest 10th):
+                        Testing out each of our quads points with the transform (just barely rounding):
                     </p>
                     <p>
                         Vertex 0:
@@ -621,47 +638,47 @@
                     </p>
                     <p>
                         So, let's see this in action.
-                        We'll keep the same model transform and color in our shaders, we'll just change the vertex data to be these coordinates
-                        and of course add a view transform. There should be no difference between our model test and this view test.
+                        We'll keep the same model transform and color in our shaders, we'll just change the original vertex data to be the camera quad coordinates we've just made
+                        and of course we'll add a view transform. 
+                        If we multiply the vertices first by the view transform and then the model transform, there should be no difference between our model test and this view test.
                         <br>
                         Don't forget that the basis vectors are contiguous in memory.
-                        <pre style="font-size: 0.9em;">
-                            <code>
-// Please note this is kind of pseudo code.
-// I'm using WebGL, so you need to make this into
-// a Float32Array, and send uniforms accordingly
+                    </p>
+                    <pre style="font-size: 0.9em;">
+                        <code>
+// Please note this is pseudo code.
 model = 
 [
-             0.5,             0,   0, 0,
-               0,           0.5,   0, 0,
-               0,             0, 0.5, 0,
-    0.5 * sin(t),  0.5 * cos(t),   0, 1
+0.25 * Math.cos(t),   0.25 * Math.sin(t),           0,    0,
+-0.25 * Math.sin(t),   0.25 * Math.cos(t),           0,    0,
+                 0,                    0,           1,    0,
+ 0.5 * Math.sin(0.5 * t),  0.5 * Math.cos(0.5 * t), 0,    1
 ];
 
 view = 
 [
- -1 / Math.sqrt(2), 1 / Math.sqrt(6),  1 / Math.sqrt(3), 0,
-                 0,  -Math.sqrt(2/3),  1 / Math.sqrt(3), 0,
-  1 / Math.sqrt(2), 1 / Math.sqrt(6),  1 / Math.sqrt(3), 0,
-                0,                 0, -2 * Math.sqrt(3), 1
+-1 / Math.sqrt(2), 1 / Math.sqrt(6),  1 / Math.sqrt(3), 0,
+                0,  -Math.sqrt(2/3),  1 / Math.sqrt(3), 0,
+1 / Math.sqrt(2), 1 / Math.sqrt(6),  1 / Math.sqrt(3), 0,
+            0,                 0, -2 * Math.sqrt(3), 1
 ];
 
 //... in vertex shader ...
-vec4 pos = view * model * vec4(vertexPos, 1.0);
-gl_Position = vec4(pos.x, pos.y, 0., 1.);
-                            </code>
-                        </pre>
+gl_Position =  model * round(view * vec4(vertexPos, 1.0));
+
+                        </code>
+                    </pre>
                     <span style="text-decoration: underline; text-align: center ">
-                        identical results to our model test!
+                        Identical results to our model test, that's encouraging :)
                     </span>
-                    <img src="../misc/MVPAppletImages/diagrams/viewTestQuadFinal.png" class="diagram"></img>
+                    <video class="diagram" controls>
+                        <source src="../misc/MVPAppletImages/clips/viewTest.mp4" type="video/mp4">
+                    </video>
+                   
                     <!-- Projection Derivation and Discussion -->
-                    </p>
                     <p>
-                        Note that I've hardcoded the $z$ value to be $0$, anything outside the cannonical view volume 
-                        (the unit cube whose extreme points are $(1, 1, 1)$ and $(-1, -1, -1)$ See picture below) is clipped or culled.
-                        And we can't be certain where our z is ending up until we project to a 2D screen.
-                        This brings us to our next task, projection. 
+                        Note that I've rounded the $z$ value to its closest integer (one of the vertices' $z$ value is like -1.005  or something and just barely gets clipped
+                        , anything outside the cannonical view volume gets clipped or culled, see picture below.
                     </p>
                     <p>
                         This picture is taken from <a href="http://www.songho.ca/">Song Ho Ahn</a>
@@ -690,7 +707,7 @@ gl_Position = vec4(pos.x, pos.y, 0., 1.);
 
                     </p>
                     <span style="text-align: center">
-                        The XZ plane of our intersection diagram:
+                        The $xz$ plane of our intersection diagram:
                     </span>
                     <img src="../misc/MVPAppletImages/diagrams/similarTriangles.png" class="diagram"></img>
                     <p>
@@ -868,22 +885,92 @@ gl_Position = vec4(pos.x, pos.y, 0., 1.);
                         It’s as simple as that; now, let's try to implement it.
                     </p>
                     <p>
-                        We're going to take the same transformations as before, but now add the projection matrix. 
-                        We choose our near plane to be at $z = -0.5$ and our far plane to be at $z = -10$
-                        We choose square, symetrical right and left, top and bottom of $2, -2$ so the z terms of matrix will be zero.
-                        Remember once more, don't forget that basis vectors are contiguous in memory.
+                        Let's keep things nice and simple. Let's choose our near plane to be -1 and our far plane to be -10.
+                        Likewise, let's keep a square near plane so the sbtractive terms goes to zero, say -1 and 1 for right and left and top and bottom respectively.
                     </p>
                     <p>
-                        Man, that was a lot longer than I thought it was going to be. I think this will really only help someone new to this stuff, 
-                        but it definitely helped me think about this clearly and in the off chance this will help someone, I'll be satisfied.
+                        Plugging in our chosen parameters, we get our projection matrix
                     </p>
+                    <pre style="font-size: 0.9em; overflow:hidden;">
+                        <code>
+projection = [
+   -1,  0,    0, 0,
+    0, -1,    0, 0,
+    0,  0, 11/9, 1,
+    0,  0, 2.22, 0
+]);
+
+                        </code>
+                    </pre>
+                    <p>
+                        Excited, we immedediately hook it up to our vertex shader and.... nothing happens
+                    </p>
+                    <p> 
+                        We've already discussed the inherit difficulties of working with a complicated API, but if you naively try this in your vertex shader, you won't get  the result back you think.
+                        I ran into a real snag trying to naively put in our derived matrix into my vertex shader. 
+                        There is yet more post-processing I was unaware of, see the OpenGL matrix in Real Time Rendering for a further discussion (equation 4.69 in the third edition) 
+                    </p>
+                    <p>
+                        There is always a solution. Debugging, we can manually make our vertex shader coord what we mathematically think should be and get our perspective that way.
+                    </p>
+                    <pre style="font-size: 0.9em; overflow:hidden;">
+                        <code>
+//... in vertex shader ...
+vec4 pos =  round(view * vec4(vertexPos, 1.0));
+pos.z -= 5. * abs(sin(0.2 * time)) + 1.;
+vec4 projPos = projection * pos;
+projPos /= projPos.w;
+gl_Position = projPos;
+                        </code>
+                    </pre>
+                    <p>
+                        And we have perspective, I've never been more exited about a rectangle in my life.
+                    </p>
+                    <video class="diagram" controls>
+                        <source src="../misc/MVPAppletImages/clips/firstPersepctive.mp4" type="video/mp4">
+                    </video>
+                    <p>
+                        Just to really prove it, let's spin it around the $y$ axis while we do the same translation
+                    </p>
+                    <pre style="font-size: 0.9em; overflow:hidden;">
+                        <code>
+// Please note this is pseudo-ish code.
+translationX = 0.5 * sin(0.5 * t);
+translationY = 0.5 * Math.cos(0.5 * t);
+model = 
+[
+    cos(t), 0,  sin(t), 0,
+         0, 1,       0, 0,
+    sin(t), 0,  cos(t), 0,
+    
+    translationX,  translationY, 0, 1
+];
+
+ //... in vertex shader ...
+ vec4 pos =   model * round(view * vec4(vertexPos, 1.0));
+ pos.z -= 5. * abs(sin(0.2 * time)) + 1.;
+ vec4 projPos = projection * pos;
+ projPos /= projPos.w;
+ gl_Position = projPos;
+                        </code>
+                    </pre>
+                    <video class="diagram" controls>
+                        <source src="../misc/MVPAppletImages/clips/finalPersepctive.mp4" type="video/mp4">
+                    </video>
+                    <p>
+                        And that's it I guess. Man, that was a lot longer than I thought it was going to be.
+                    </p>
+                    <p>
+                        This was all done for educational purposes, in practice there are very mature and optimized libraries for this kind of thing. (glm, glmatrix etc)
+                    </p>
+                    <p>
                         I think the big conceptual take aways is to realize there is only one coordinate space, math is universal and unchanging, it's
                         just a matter of making it work with the design choice you've already inherited.
                         I really do think it's a  mistake in the literature to present different spaces with cannonical names to the student.
                         There is just a lot of small mathematical steps based on well established approaches to represent three dimensions on a screen in real time.
                     </p>
                     <p>
-                        As always, thank you for reading. Cheers.
+                        That was a lot of work for so little, nevertheless, this exercise has been really interesting and helpful for me, and I hope for you as well. Thank you for reading. Cheers.
                     </p>
                 </div>
             </div>
