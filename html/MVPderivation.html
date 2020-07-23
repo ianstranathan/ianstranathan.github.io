@@ -62,21 +62,22 @@
                         This is a little dive into the so called MVP matrix (model, view, projection).
                     </p>
                     <p>
-                        I think this fundamental process is rather poorly explained (or even assumed as a given and just presented to you) in most popular textbooks (e.g. Real Time Rendering)
-                        and online tutorials (learnopengl.com) so I dug into it a little bit to understand what's going on, hopefully I can share some of that understanding with you.
-                        With each discussion and derivation I try to give a minimal example that you can recreate, so you can ultimately convince yourself.
+                        The fundamentals of rasterization is such a solved knowledge domain that this foundational first step of the pipeline really isn't much more than a side note most of the time.
+                        Accordingly, most resources, including popular textbooks like Real Time Rendering do a rather poor job in explaining why and how this process happens, 
+                        often even assuming it as a given and just baldly presenting you with an obscure looking expression. 
+                        If you're anything like me, you have some trouble using tools that you don't understand. Of course, we're not super interested in rolling our own mathematics library if we don't have to, but
+                        being able to use the correct solution (using a tool like OpenGL Mathematics or something similar) and understanding it are not the same thing; there is indeed a deep difference between knowing something and 
+                        <a href="https://www.youtube.com/watch?v=NM-zWTU7X-k&t=0s">
+                        understanding
+                        </a> it.
                     </p>
                     <p>
-                        There is always merit in figuring something out; and despite the time lost, if certain wheels are fundamental enough, 
-                        in the interest of understanding, there is no other option but to occasionally remake them, because there is indeed a deep difference between knowing something and 
-                        <a href="https://www.youtube.com/watch?v=NM-zWTU7X-k&t=0s">
-                        understanding 
-                        </a> it.
+                        With each derivation and discussion I try to give some minimal examples that you can recreate, so you can ultimately convince yourself.
                     </p>
                     <p> 
                         <span style="font-weight: bold; text-decoration: underline;">Quick Caveat:</span>
                         <br>
-                        I try my best to explain as many underlying details as I can, but if you're using this to derive these matrices on your own,
+                        If you're using this to derive these matrices on your own,
                         it would be helpful to have had some exposure to vector math and matrices.
                         <br>
                         
@@ -86,7 +87,7 @@
                         <br>
                         You should also know the basics of working with your graphics API of choice.
                         I don't explain how to set up a rendering pipeline used to test our math and understanding (which you absolutely should do for your own benefit)
-                        For the sake of writing these little online articles I'm using WebGL because it is the only cross platform solution for producing real-time, 3D computer graphics that I can easily share with you.
+                        For the sake of writing these little online articles I'm using WebGL because it is the only cross platform solution for producing computer graphics that I can easily share with you.
                         (I can recommend <a href="https://webgl2fundamentals.org/">WebGLFundamentals</a> and <a href=http://learnwebgl.brown37.net/index.html)>Wayne Brown</a> if you'd like to learn yourself)
                     </p>
                     <p>
@@ -222,9 +223,11 @@ vertexPositions =
 vec3 col = 0.5 + 0.5*cos(t +uv.xyx + vec3(0,2,4));
                         </code>   
                     </pre>
-                    <video class="diagram" controls>
-                        <source src="../misc/MVPAppletImages/clips/helloQuad.mp4" type="video/mp4">
-                    </video>
+                    <p style="text-align:center">
+                        Here is our <a href="MVPDerivationTests/helloQuad.html">
+                            Hello Quad
+                        </a>
+                    </p>
                     <p>
                         As a simple test, let's scale the $xy$ plane down to a quarter, translate circularly in the plane and spin around the $z$ axis.
                         I think the circular translation should be pretty obvious, but the rotation matrix is slightly more msyterious and because we're all about first principles, here is a derivation of it (necessary trig derivation included).
@@ -260,9 +263,11 @@ model =
 
                         </code>
                     </pre>
-                    <video class="diagram" controls>
-                        <source src="../misc/MVPAppletImages/clips/modelTest.mp4" type="video/mp4">
-                    </video>
+                    <p style="text-align:center">
+                        Here is our <a href="MVPDerivationTests/modelTest.html">
+                            Model Test
+                        </a>
+                    </p>
                     <p>
                         And that's pretty much it, really. If you're comfortable with using 4x4 matrices to encode any rigid transformation, there's nothing more to it.
                         <br>
@@ -668,13 +673,16 @@ gl_Position =  model * round(view * vec4(vertexPos, 1.0));
 
                         </code>
                     </pre>
-                    <span style="text-decoration: underline; text-align: center ">
-                        Identical results to our model test, that's encouraging :)
-                    </span>
-                    <video class="diagram" controls>
-                        <source src="../misc/MVPAppletImages/clips/viewTest.mp4" type="video/mp4">
-                    </video>
-                   
+                    
+                    <p style="text-align:center">
+                        Here is our <a href="MVPDerivationTests/viewTest.html">
+                            View Test
+                        </a>
+                        <br>
+                    </p>
+                    <p>
+                        As you can see, we have identical results to our model test as expected, that's definitely encouraging :)
+                    </p>
                     <!-- Projection Derivation and Discussion -->
                     <p>
                         Note that I've rounded the $z$ value to its closest integer (one of the vertices' $z$ value is like -1.005  or something and just barely gets clipped
@@ -924,11 +932,13 @@ gl_Position = projPos;
                         </code>
                     </pre>
                     <p>
-                        And we have perspective, I've never been more exited about a rectangle in my life.
+                        And we have perspective, I've never been more excited about a rectangle in my life.
                     </p>
-                    <video class="diagram" controls>
-                        <source src="../misc/MVPAppletImages/clips/firstPersepctive.mp4" type="video/mp4">
-                    </video>
+                    <p style="text-align:center">
+                        Our first <a href="MVPDerivationTests/firstProjectionTest.html">
+                            Projection Test
+                        </a>
+                    </p>
                     <p>
                         Just to really prove it, let's spin it around the $y$ axis while we do the same translation
                     </p>
@@ -954,9 +964,11 @@ model =
  gl_Position = projPos;
                         </code>
                     </pre>
-                    <video class="diagram" controls>
-                        <source src="../misc/MVPAppletImages/clips/finalPersepctive.mp4" type="video/mp4">
-                    </video>
+                    <p style="text-align:center">
+                        Our Second <a href="MVPDerivationTests/secondProjectionTest.html">
+                            Projection Test
+                        </a>
+                    </p>
                     <p>
                         And that's it I guess. Man, that was a lot longer than I thought it was going to be.
                     </p>
