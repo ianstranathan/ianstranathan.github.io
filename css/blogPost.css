@@ -92,7 +92,8 @@ body {
         font-size: 1.2em;
         line-height: 1.2em;
         display: grid;
-        grid-template-columns: auto; }
+        grid-template-columns: auto;
+        overflow: scroll; }
         .grid-container #archive-container #archive-list #content #le-line {
           border: none;
           height: 1px;
@@ -119,7 +120,7 @@ body {
   .grid-container #footer-content {
     font-size: 0.8em; }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 1200px) {
   .grid-container #header-container #name-holder {
     width: 35%; }
   .grid-container #header-container #menu-bar {

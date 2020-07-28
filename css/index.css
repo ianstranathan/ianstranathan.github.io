@@ -10,9 +10,18 @@ body {
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: 17% auto 5%;
-  background-color: #0876d1;
+  background-color: rgba(0, 0, 0, 0);
   font-size: 1em;
   grid-gap: 0px 0px; }
+  .grid-container #background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    border: none;
+    pointer-events: none; }
   .grid-container #header-container {
     color: #f0eeee;
     background-color: #333333;
@@ -71,7 +80,8 @@ body {
       .grid-container #header-container #menu-bar #icon-btns-container a:hover {
         color: #f0eeee; }
   .grid-container #archive-container {
-    background-color: slategrey;
+    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0);
     grid-row: 2/ span 1;
     grid-column: 1 / span 1; }
     .grid-container #archive-container #archive-list {
