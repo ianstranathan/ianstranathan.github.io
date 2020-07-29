@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <!-- css -->
     <link rel="stylesheet" type="text/css" href="../css/blogPost.css">
-    
+
     <!-- jqMath lib-->
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=UnifrakturMaguntia">
 		<link rel="stylesheet" href="../middleware/mathscribe/jqmath-0.4.3.css">
@@ -63,12 +63,12 @@
                         It's a foundational technique to get natural looking shapes because nature is continuous (At least that's what they told me in school anyway) and a simple union of two shapes is not.
                     </p>
                     <p style="text-align: center; font-style:italic">
-                        "The first time you see something it's a trick, the second time it's a technique" <span style="font-weight: bold;">-Richard Foote<span>
+                        "The first time you see something it's a trick, the second time it's a technique"
+                        <span style="font-weight: bold;">-Richard Foote<span>
                     </p>
                     <p>
                         I'm writing this for anyone that is trying to learn this stuff and for whom it's still a trick.
-                    </p>
-                    <p>
+                        <br>
                         This is also a great way to catalogue my own thoughts, I can only reluctantly use some derived result if I don't understand where it's coming from. (Incidentally, this made undergraduate physics and math work a little unbearable.)<br>
                         It was difficult to follow Iq's derivation in his article, surely the material is just so obvious to him that the terseness with which his derivation was written wasn't intentional.
                         In my opinion, especially for the beginner like me, derivations are not the place for compactness, especially for something so foundational. <br>
@@ -92,8 +92,8 @@
                     </p>
                     <p>
                         Our functions; $f(x) = x^2$ and  $g(x) = e^(-x)$
-                    </p>                
-                    <img src="../misc/smin/smin0.png" class="diagram">  
+                    </p>
+                    <img src="../misc/smin/smin0.png" class="diagram">
                     <p>
                         The simple union of our two functions
                     </p>
@@ -103,13 +103,13 @@
                         when the functions are sufficiently close to their intersection.
                         But what does sufficiently close mean more precisely, $i.e$ where should the constructed function stop being $f$ and start being $g$?
                     </p>
-                    
+
                     <p>
                         Our functions with their difference $d = f(x) - g(x)$
                     </p>
                     <img src="../misc/smin/smin2.png" class="diagram">
                     <p>
-                        Now for a reasonably useless aside: 
+                        Now for a reasonably useless aside:
                     <br>
                     <br>
                         At first blush, it's not obvious to me how to make a meaningful relationship or constraint between the two functions
@@ -188,7 +188,7 @@
                         ⇒ $ℓ =$ max(0, min($1$,  ℓ)<br>
                         in GLSL: $ℓ =$ clamp(ℓ, $0$, $1$)
                     </p>
- 
+
                     <p>
                         Just using a linear interpolation with the correctly mapped interval gives us a pretty good result:
                     </p>
@@ -209,18 +209,67 @@
                         So what is ξ's derivative?
                     </p>
                     <p>
-                        $ξ = (1-ℓ)f + ℓg$ <br><br>
+                        $
+                        ξ = (1-ℓ)f + ℓg
+                        $
+                        <br>
+                        <br>
                         by the product rule:<br>
-                        $d/{dx}ξ = d/{dx}(1-ℓ)*f + d/{dx}f* (1-ℓ) + d/{dx}ℓ*g + d/{dx}g *ℓ$ <br><br>
-                        ${dξ}/{dx} = {-dℓ}/{dx}f + {df}/{dx}(1-ℓ) + {dℓ}/{dx}g + {dg}/{dx}ℓ$ <br><br>
-                        collecting like terms:<br>
-                        ${dξ}/{dx} = {dℓ}/{dx}(g - f) + {df}/{dx}(1-ℓ)$
-                        $ + {dg}/{dx}ℓ$ <br><br>
-                        at $f - g = -k$:<br>
-                        $g - f = k$ and $ℓ = 0$<br><br>
-                        ⇒${dξ}/{dx} = {dℓ}/{dx}k+{df}/{dx}$<br><br>
+                        $
+                        d/{dx}ξ = d/{dx}(1-ℓ)*f + d/{dx}f* (1-ℓ)
+                        $
+                        $
+                         + d/{dx}ℓ*g + d/{dx}g *ℓ$
+                        $
+                        <br>
+                        <br>
+                        $
+                        {dξ}/{dx} = {-dℓ}/{dx}f + {df}/{dx}(1-ℓ)
+                        $
+                        $
+                        + {dℓ}/{dx}g + {dg}/{dx}ℓ
+                        $
+                        <br>
+                        <br>
+                        collecting like terms:
+                        <br>
+
+                        $
+                        {dξ}/{dx} = {dℓ}/{dx}(g - f)
+                        $
+
+                        $
+                        + {df}/{dx}(1-ℓ)
+                        $
+
+
+                        $
+                        + {dg}/{dx}ℓ$
+                        $
+                        <br><br>
+                        at
+                        $
+                        f - g = -k
+                        $
+                        :<br>
+                        $
+                        g - f = k
+                        $
+                        and
+                        $
+                        ℓ = 0
+                        $
+
+                        <br>
+                        <br>
+                        ⇒
+                        $
+                        {dξ}/{dx} = {dℓ}/{dx}k+{df}/{dx}
+                        $
+                        <br>
+                        <br>
                     </p>
-                      
+
                     <p>
                         But we know that ξ's derivative must equal $f$'s derivative at this boundary<br>
                         Thus we must subtract this extra term from our original expression for $ξ$'s derivative to compensate
@@ -236,7 +285,7 @@
                         $g - f = -k$ and $ℓ = 1$<br><br>
                         ⇒${dξ}/{dx} = -2{dℓ}/{dx}k + {dg}/{dx}$
                     </p>
-                    
+
                     <p>
                     ξ's derivative must equal $g$'s derivative at this boundary, so we must now add this extra term to our expression for ξ's derivative to compensate<br>
                     </p>
@@ -251,23 +300,40 @@
                     We're in luck though; just such a term exists and has already been used by us, namely, ℓ.<br>
                     ℓ by design is just such a term, so if we multiply this corrective term by ℓ, it will do precisely what we want it to.
                     </p>
-                     
+
                     <p>
                         ⇒${dξ}/{dx} = {dℓ}/{dx}(g - f) + {df}/{dx}(1-ℓ)$
                         $ + {dg}/{dx}ℓ - {dℓ}/{dx}k + {dℓ}/{dx}2kℓ$
                     </p>
-                    
+
                     <p>
                         Whew, that already feels like clever enough work to stop, but we want the function, not its derivative.<br>
                         So how to integrate this thing? A couple terms are trivial, but let's regroup some of them to make it more obvious
                     </p>
-                     
+
                     <p>
-                        ${dξ}/{dx} = {dℓ}/{dx}g + {dg}/{dx}ℓ-({dℓ}/{dx}f + {df}/{dx}ℓ) + {df}/{dx} - {dℓ}/{dx}k+ {dℓ}/{dx}2kℓ$
+                        $
+                        {dξ}/{dx} = {dℓ}/{dx}g + {dg}/{dx}ℓ-({dℓ}/{dx}f
+                        $
+                        $
+                        + {df}/{dx}ℓ) + {df}/{dx}
+                        $
+                        $
+                         - {dℓ}/{dx}k+ {dℓ}/{dx}2kℓ
+                        $
                         <br>
                         <br>
-                        $∫{dξ}/{dx}dx = ∫({dℓ}/{dx}g + {dg}/{dx}ℓ)dx -∫({dℓ}/{dx}f + {df}/{dx}ℓ)dx + ∫{df}/{dx}dx - ∫{dℓ}/{dx}kdx$ 
-                        $+ ∫{dℓ}/{dx}2kℓdx$
+                        $∫{dξ}/{dx}dx = ∫({dℓ}/{dx}g + {dg}/{dx}ℓ)dx
+                        $
+                        $
+                        -∫({dℓ}/{dx}f + {df}/{dx}ℓ)dx
+                        $
+                        $
+                         + ∫{df}/{dx}dx - ∫{dℓ}/{dx}kdx
+                        $
+                        $
+                        + ∫{dℓ}/{dx}2kℓdx
+                        $
                         <br>
                         <br>
                         reversing the product rule and carrying out the simple integrals
@@ -279,7 +345,7 @@
                         <br>
                         <br>
                         This is exactly iq's function (mix is just GLSL hardware accelerated linear interpolation)
-                        <pre style="margin: 0px; padding: 0px; overflow: hidden;">
+                        <pre style="overflow: scroll;">
                           <code class="language-GLSL">
 // polynomial smooth min (k = 0.1);
 float smin( float a, float b, float k )
@@ -325,8 +391,8 @@ float smin( float a, float b, float k )
         <div id="footer-container">
             <div id="footer-content">
                 <p>Copyright © 2020 Ian Stranathan</p>
-            </div>   
+            </div>
         </div>
-    </div> 
+    </div>
 </body>
 </html>
