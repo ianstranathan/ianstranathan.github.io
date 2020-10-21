@@ -6,11 +6,23 @@ $light: rgb(240, 238, 238);
 $light-with-transparency: rgba(240, 238, 238, 0.6);
 $left-indent: 5%;
 
+$size-of-footer: 40px;
+html 
+{
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    height: 100%;
+    overscroll-behavior: none;
+}
 body
 {
+    overflow: auto;
+    height: 100%;
+    overscroll-behavior: none;
     line-height: $defualt-line-height;
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
     font-family: 'Lato', sans-serif;
 }
 .grid-container
@@ -164,6 +176,7 @@ body
         }
     }
     #footer-container{
+        overflow:hidden;
         background-color: $dark;
         color: $light-with-transparency;
         grid-row: 3/ span 1;
@@ -173,7 +186,7 @@ body
     }
     #footer-content
     {
-        font-size: 0.8em;
+        font-size: 0.7em;
     }
 }
 

@@ -1,4 +1,12 @@
+html {
+  overflow: hidden;
+  height: 100%;
+  overscroll-behavior: none; }
+
 body {
+  overflow: auto;
+  height: 100%;
+  overscroll-behavior: none;
   line-height: 1;
   margin: 0;
   padding: 0;
@@ -122,6 +130,7 @@ body {
         text-decoration: none;
         color: #333333; }
   .grid-container #footer-container {
+    overflow: hidden;
     background-color: #333333;
     color: rgba(240, 238, 238, 0.6);
     grid-row: 3/ span 1;
@@ -129,7 +138,7 @@ body {
     text-align: center;
     align-content: center; }
   .grid-container #footer-content {
-    font-size: 0.8em; }
+    font-size: 0.7em; }
 
 @media only screen and (min-width: 800px) {
   .grid-container #header-container #name-holder {
