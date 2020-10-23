@@ -104,6 +104,26 @@ body {
         display: grid;
         grid-template-columns: auto;
         overflow: scroll; }
+        .grid-container #archive-container #archive-list #content #toc_container {
+          padding-top: 20%;
+          background: #f9f9f9 none repeat scroll 0 0;
+          border: 1px solid #aaa;
+          display: table;
+          font-size: 95%;
+          margin-bottom: 1em;
+          padding: 20px;
+          width: auto; }
+        .grid-container #archive-container #archive-list #content #toc_container a {
+          text-decoration: none;
+          color: blue;
+          background-color: #f0eeee; }
+        .grid-container #archive-container #archive-list #content #toc_container a:hover {
+          text-decoration: underline; }
+        .grid-container #archive-container #archive-list #content .toc_title {
+          font-weight: 700;
+          text-align: center; }
+        .grid-container #archive-container #archive-list #content #toc_container li, .grid-container #archive-container #archive-list #content #toc_container ul, .grid-container #archive-container #archive-list #content #toc_container ul li {
+          list-style: outside none none !important; }
         .grid-container #archive-container #archive-list #content #le-line {
           border: none;
           height: 1px;

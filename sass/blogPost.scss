@@ -5,8 +5,8 @@ $dark-with-transparancy: rgba(51, 51, 51, 0.6);
 $light: rgb(240, 238, 238);
 $light-with-transparency: rgba(240, 238, 238, 0.6);
 $left-indent: 5%;
+$table-of-contents-color: blue;
 
-$size-of-footer: 40px;
 html 
 {
     margin: 0px;
@@ -148,6 +148,35 @@ body
                 grid-template-columns: auto;
                 overflow: scroll;
 
+                #toc_container {
+                    padding-top: 20%;
+                    background: #f9f9f9 none repeat scroll 0 0;
+                    border: 1px solid #aaa;
+                    display: table;
+                    font-size: 95%;
+                    margin-bottom: 1em;
+                    padding: 20px;
+                    width: auto;
+                }
+                #toc_container a
+                {
+                    text-decoration: none;
+                    color: $table-of-contents-color;
+                    background-color: $light;
+                }
+                #toc_container a:hover
+                {
+                    text-decoration: underline;
+                }
+                .toc_title {
+                    font-weight: 700;
+                    text-align: center;
+                }
+                
+                #toc_container li, #toc_container ul, #toc_container ul li{
+                    list-style: outside none none !important;
+                }
+                
                 #le-line{
                     border:none;
                     height:1px;
