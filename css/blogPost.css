@@ -2,13 +2,11 @@ html {
   margin: 0px;
   padding: 0px;
   overflow: hidden;
-  height: 100%;
-  overscroll-behavior: none; }
+  height: 100%; }
 
 body {
   overflow: auto;
   height: 100%;
-  overscroll-behavior: none;
   line-height: 1;
   margin: 0px;
   padding: 0px;
@@ -102,21 +100,20 @@ body {
         font-size: 1.2em;
         line-height: 1.2em;
         display: grid;
-        grid-template-columns: auto;
-        overflow: scroll; }
+        grid-template-columns: auto; }
         .grid-container #archive-container #archive-list #content #toc_container {
           padding-top: 20%;
-          background: #f9f9f9 none repeat scroll 0 0;
+          background: #f9f9f9;
           border: 1px solid #aaa;
           display: table;
-          font-size: 95%;
+          font-size: 1em;
           margin-bottom: 1em;
           padding: 20px;
           width: auto; }
         .grid-container #archive-container #archive-list #content #toc_container a {
           text-decoration: none;
           color: blue;
-          background-color: #f0eeee; }
+          background-color: #f9f9f9; }
         .grid-container #archive-container #archive-list #content #toc_container a:hover {
           text-decoration: underline; }
         .grid-container #archive-container #archive-list #content .toc_title {
@@ -141,15 +138,17 @@ body {
         background-color: #333333;
         color: #f0eeee; }
   .grid-container #footer-container {
+    display: grid;
     overflow: hidden;
     background-color: #333333;
     color: rgba(240, 238, 238, 0.6);
     grid-row: 3/ span 1;
     grid-column: 1 / span 1;
     text-align: center;
-    align-content: center; }
+    align-content: center;
+    align-items: center; }
   .grid-container #footer-content {
-    font-size: 0.7em; }
+    font-size: 0.9em; }
 
 @media only screen and (min-width: 1200px) {
   .grid-container #header-container #name-holder {

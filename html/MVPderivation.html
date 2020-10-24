@@ -62,7 +62,52 @@
                 <div id="content">
                     <h2 style="text-align: center;">MVP Derivation:</h2>
                     <span id="le-line"></span>
-
+                    <p>  </p>
+                    <div id="toc_container">
+                        <p class="toc_title">Contents</p>
+                        <ul class="toc_list">
+                            <li>
+                                <a href="#math-primer-link">
+                                    <span style="color: black;">
+                                        1
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Very Brief Math Primer
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#model-link">
+                                    <span style="color: black;">
+                                        2
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Model Transform
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#view-link">
+                                    <span style="color: black;">
+                                        3
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        View Transform
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#projection-link">
+                                    <span style="color: black;">
+                                        4
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Projection Transform
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                     <p>
                         This is a little dive into the so called MVP matrix (model, view, projection).
                     </p>
@@ -101,7 +146,7 @@
                         Now, Let's try to "touch" what's going on and figure this stuff out.
                     </p>
 
-                    <p>
+                    <p id="math-primer-link">
                         <span style="font-weight: bold; text-decoration: underline;">A Very Short Vector and Matrix Primer:</span>
                         <br>
                         A point in three dimensional space can be represented by a set of three numbers.
@@ -259,7 +304,7 @@
                         You can see a potentially more interesting further discussion about this <a href="https://www.youtube.com/watch?v=vQ60rFwh2ig">here</a>
                     </p>
 
-                    <p>
+                    <p id="model-link">
                         <span style=" font-weight: bold; text-decoration: underline;">On the "Model" transform:</span>
                         <br>
                         A vertex shader processes vertices, simple enough, but no matter what we do, at the end of the day, we're just turning
@@ -364,7 +409,7 @@ model =
                         This bring us to our next object, how to match our scene geometry to this rendering constraint.
                         <br> Enter the view transformation.
                     </p>
-                    <p>
+                    <p id="view-link">
                         <span style=" font-weight: bold; text-decoration: underline;">On the "View" transform:</span>
                         <br>
                         This is really where things become less obvious and most resources fail to sufficiently explain what's going.
@@ -820,15 +865,16 @@ gl_Position =  model * round(view * vec4(vertexPos, 1.0));
                     <img src="../misc/MVPAppletImages/diagrams/gl_projectionmatrix01.png" class="diagram"></img>
                     <p>
                         This is a very clean picture, but the $z$ axis is turned around and it doesn't reinforce that there really is only one
-                        coordinate system. Perspective project just employs the mathematical object of a frustum,
+                        coordinate system. Perspective projection just employs the mathematical object of a frustum,
                         the portion of a solid that lies between one or two (in our case, "near" and "far" planes) parallel planes cutting it.
                         <br>
                         All that previous work was to get it along the $z$ axis to aide in projecting and clipping along these frustum planes
                     </p>
-
-                    <span style="text-align: center">
-                        Consider an arbitrary point in a frustum
-                    </span>
+                    <p id="projection-link">
+                        <span style="text-align: center">
+                            Consider an arbitrary point in a frustum
+                        </span>
+                    </p>
                     <img src="../misc/MVPAppletImages/diagrams/pointInFrustum.png" class="diagram"></img>
                     <p>
 

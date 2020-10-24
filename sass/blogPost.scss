@@ -13,13 +13,11 @@ html
     padding: 0px;
     overflow: hidden;
     height: 100%;
-    overscroll-behavior: none;
 }
 body
 {
     overflow: auto;
     height: 100%;
-    overscroll-behavior: none;
     line-height: $defualt-line-height;
     margin: 0px;
     padding: 0px;
@@ -146,14 +144,14 @@ body
                 line-height: 1.2em;
                 display: grid;
                 grid-template-columns: auto;
-                overflow: scroll;
+                //overflow: scroll;
 
                 #toc_container {
                     padding-top: 20%;
-                    background: #f9f9f9 none repeat scroll 0 0;
+                    background: #f9f9f9;
                     border: 1px solid #aaa;
                     display: table;
-                    font-size: 95%;
+                    font-size: 1em;
                     margin-bottom: 1em;
                     padding: 20px;
                     width: auto;
@@ -162,7 +160,7 @@ body
                 {
                     text-decoration: none;
                     color: $table-of-contents-color;
-                    background-color: $light;
+                    background-color: #f9f9f9;
                 }
                 #toc_container a:hover
                 {
@@ -205,6 +203,7 @@ body
         }
     }
     #footer-container{
+        display: grid;
         overflow:hidden;
         background-color: $dark;
         color: $light-with-transparency;
@@ -212,10 +211,11 @@ body
         grid-column: 1 / span 1;
         text-align: center;
         align-content: center;
+        align-items: center;
     }
     #footer-content
     {
-        font-size: 0.7em;
+        font-size: 0.9em;
     }
 }
 

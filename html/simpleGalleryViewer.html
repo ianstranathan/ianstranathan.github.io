@@ -52,34 +52,129 @@
         <div id="archive-container">
             <div id="archive-list">
                 <div id="content">
-
-                    <h2 style="text-align: center;">Towards a Model Viewer</h2>
+                    <h2 style="text-align: center;">Making a Simple Model Viewer</h2>
                     <span id="le-line"></span>
                     <p>  </p>
                     <div id="toc_container">
                         <p class="toc_title">Contents</p>
                         <ul class="toc_list">
-                          <li>
-                            <a href="#First_Point_Header" style="text-decoration: none">
-                                1
-                                <span style="color: blue;">
-                                Loading a model
-                                </span>
-                            </a>
-                          <ul>
-                            <li><a href="#First_Sub_Point_1">1.1 First Sub Point 1</a></li>
-                            <li><a href="#First_Sub_Point_2">1.2 First Sub Point 2</a></li>
-                          </ul>
-                        </li>
-                        <li><a href="#Second_Point_Header">2 Second Point Header</a></li>
-                        <li><a href="#Third_Point_Header">3 Third Point Header</a></li>
+                            <li>
+                                <a href="#loading-a-model-link">
+                                    <span style="color: black;">
+                                        1
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Loading a model
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#basic-shading-link">
+                                    <span style="color: black;">
+                                        2
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Lighting and Basic Shading
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#trackball-camera-link">
+                                    <span style="color: black;">
+                                        3
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Making a trackball camera
+                                    </span>
+                                    <ul>
+                                        <li>
+                                            <a href="#quaternions-link">
+                                                <span style="color: black;">
+                                                    3.1
+                                                </span>
+                                                <span style="padding-left: 1em;">
+                                                    Coming soon... Quaternions
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#shadows-mapping-link">
+                                    <span style="color: black;">
+                                        4
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Shadows
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#deferred-lighting-link">
+                                    <span style="color: black;">
+                                        5
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Coming Soon... Deferred Shading
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#ssao-link">
+                                    <span style="color: black;">
+                                        6
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Coming Soon... Screen Space Ambient Occlusion
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#pbr-link">
+                                    <span style="color: black;">
+                                    7
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Coming Soon... trying out physically based rendering
+                                    </span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
-                    
-                    <p>
-                        It's remarkable, but these techniques and hueristics are actually from the late 1970's.
+                    <p id="Loading a Model">
+                        <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Loading a model to work with:</span>
+                        <br>
+                        In the course of learning low level graphics stuff, everyone reaches a point where they need to work with something a little more sophisticated
+                        than the endless wax on / wax off style primitives you intially start with.
                     </p>
-                     
+                    <p> 
+                        There are endless choices for an inital model, but the most cannonical model, often considered the "Hello, World!" equivalent in graphics, is probably the 
+                        <a href="https://en.wikipedia.org/wiki/Utah_teapot">"Utah Teapot".</a>
+                        I think it's a particularly good starting point as it can project shadows on itself, and isn't terrribly ugly without applying textures to it. 
+                    </p>
+                    <p>
+                        It's hard to imagine, but the mesh data for the original model was actually made by hand by a 
+                        <a href="https://en.wikipedia.org/wiki/Martin_Newell_(computer_scientist)">graphics researcher</a> at the university of Utah, <a href="http://nautil.us/blog/the-most-important-object-in-computer-graphics-history-is-this-teapot">check it out.</a>
+                        I'm reminded of a time I asked a better programmer (basically coding from correcting compiler errors), what did people do before they had debuggers or things like intellisense and code completion?
+                        The curt reply was that they were making these assistive tool. Analogously, I guess that's what the graphics wizard beards of yore were up to among other things, making modeling software.
+                        I will never complain about unfriendly UI in blender again (it's free too... what a time to be alive)
+                    </p>
+                    <p>
+                        Let's get the mesh data <a href="https://graphics.cs.utah.edu/courses/cs6620/fall2013/?prj=5">straight from the horse's mouth.</a> Scroll down to "Test Scenes".
+                    </p>
+                    <p id="basic-shading-link">
+                        <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Basic Shading:</span>
+                    </p>
+                    <p>
+                        It's pretty amazing, but these techniques and hueristics are actually from the late 1970's.
+                    </p>
+                    <p id="trackball-camera-link">
+                        <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Making a trackball camera:</span>
+                    </p>
+                    <p id="shadow-mapping-link">
+                        <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Making a trackball camera:</span>
+                    </p>
                 </div>
             </div>
         </div>
