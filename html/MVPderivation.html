@@ -68,17 +68,17 @@
                         <ul class="toc_list">
                             <li>
                                 <a href="#math-primer-link">
-                                    <span style="color: black;">
+                                    <span style="color: black; text-decoration-color: black;">
                                         1
                                     </span>
                                     <span style="padding-left: 1em;">
-                                        Very Brief Math Primer
+                                        Small Math Primer
                                     </span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#model-link">
-                                    <span style="color: black;">
+                                    <span style="color: black; text-decoration-color: black;">
                                         2
                                     </span>
                                     <span style="padding-left: 1em;">
@@ -88,17 +88,17 @@
                             </li>
                             <li>
                                 <a href="#view-link">
-                                    <span style="color: black;">
+                                    <span style="color: black; text-decoration-color: black;">
                                         3
                                     </span>
-                                    <span style="padding-left: 1em;">
+                                    <span style="padding-left: 1em; text-decoration-color: black;">
                                         View Transform
                                     </span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#projection-link">
-                                    <span style="color: black;">
+                                    <span style="color: black; text-decoration-color: black;">
                                         4
                                     </span>
                                     <span style="padding-left: 1em;">
@@ -414,28 +414,31 @@ model =
                         <br>
                         This is really where things become less obvious and most resources fail to sufficiently explain what's going.
                         See <a href="https://learnopengl.com/Getting-started/Camera">this</a> for example
-
+                        <br>
                         This brings me to, I think, the most unecessary and confusing aspect of using these different transformations.
+                        <br>
                         Textbooks and tutorials are constantly talking about different spaces and transforming from one space to another and while this
                         has some merit in it, there really is only one coordinate space.
-
-                        The often invoked authority of the wizard beards have deign this to be a good solution: Take everything that exists in the coordinate space
-                        and bring in front of a another thing in the coordinate system called the camera,
-                        then project it onto a plane facing that camera, then map it to a unit volume
+                        <br>
+                        The now often invoked authority of the wizard beards of yore deigned this to be a good solution: 
+                        Take everything that exists in the coordinate space
+                        and bring it in front of a another thing in the coordinate system called the camera,
+                        then project it all onto a plane facing that camera, then map it to a unit volume
                         that in turn maps to a viewport and rasterize.
+                        <br>
                         That's an over simplification, but that's what's happening.
-
+                        <br>
                         The previous link says "When we're talking about camera/view space we're talking about all the vertex coordinates as seen from the camera's perspective as the origin of the scene"
                         <br>
-                        And then they go on to talk about the Gram-Schmidt process and give a magical lookAt matrix, explaining
-                        " A great thing about matrices is that if you define a coordinate space using 3 perpendicular (or non-linear)
+                        And then they go on to talk about the Gram-Schmidt process and give a magical thing called a lookAt matrix, explaining
+                        "A great thing about matrices is that if you define a coordinate space using 3 perpendicular (or non-linear)
                         axes you can create a matrix with those 3 axes plus a translation vector and you can transform any
                         vector to that coordinate space by multiplying it with this matrix.".
                         <br>
-                        This is technically true, but why it's true is not explained and I find that misleading.
+                        This is technically true, but what's really happening is not all clear and why this is true is not explained.
                     </p>
                     <p>
-                        First, very clearly, all we're trying to do is transform the virtual camera/ pinhole camera placeholder
+                        Very clearly, all we're trying to do is transform the virtual camera/ pinhole camera placeholder
                         such that it's centered at the origin and pointing down an axis. (by convention: $-z$ in OpenGL, $+z$ in D3D/XNA but it really could be whatever if the API were constructed differently).
                     </p>
                     <p>
@@ -451,7 +454,7 @@ model =
                     <p>
                         <span style="font-weight: bold; text-decoration: underline;">Why do we do this?:</span>
                         <br>
-                        Very breifly, this is done to simplify and standardized fundamental graphics processes and the math involved, like projection (Which we're coming to next)
+                        Very breifly, this is done to simplify and standardize fundamental graphics processes and the math involved, like projection (Which we're coming to next)
                         and clipping among other things.
                     </p>
                     <p>
