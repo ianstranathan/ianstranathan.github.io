@@ -1,0 +1,325 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>What I cannot create, I do not understand</title>
+    <!-- FontAwesome -->
+    <script src="https://use.fontawesome.com/2fc622a3be.js"></script>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="../css/blogPost.css">
+
+    <!-- jqMath lib-->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+    <link rel="stylesheet" href="../middleware/mathscribe/jqmath-0.4.3.css">
+    <script src="../middleware/mathscribe/jquery-1.4.3.min.js"></script>
+    <script src="../middleware/mathscribe/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- highlight.js for code formatting -->
+    <link rel="stylesheet" href="../middleware/highlight/styles/night-owl.css">
+    <script src="../middleware/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body>
+    <div class="grid-container">
+        <div id="header-container">
+            <div id="name-holder">
+                <p>
+                    <a href="../index.html">
+                        <h1>
+                            Ian Stranathan
+                        </h1>
+                    </a>
+                </p>
+            </div>
+            <div id=menu-bar>
+                <div id="archive-btn-container">
+                    <a href="../index.html">Archive</a>
+                </div>
+                <div id="icon-btns-container">
+                    <a href="mailto:ian@wabisoft.io"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                    <a href="https://github.com/stranathan"><i class="fa fa-github" aria-hidden="true"></i></a>
+                    <a href="https://www.linkedin.com/in/ianstranathan/"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                    <a href="../misc/IanStranathanResume.pdf"><i class="fa fa-file" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+        <div id="archive-container">
+            <div id="archive-list">
+                <div id="content">
+                    <h2 style="text-align: center;">Making a Simple Model Viewer</h2>
+                    <span id="le-line"></span>
+                    <p>  </p>
+                    <div id="toc_container">
+                        <p class="toc_title">Contents</p>
+                        <ul class="toc_list">
+                            <li>
+                                <a href="#loading-a-model-link">
+                                    <span style="color: black;">
+                                        1
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Loading a model
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#basic-shading-link">
+                                    <span style="color: black;">
+                                        2
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Basic Shading
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#trackball-camera-link">
+                                    <span style="color: black;">
+                                        3
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Making a trackball camera
+                                    </span>
+                                    <ul>
+                                        <li>
+                                            <a href="#quaternions-link">
+                                                <span style="color: black;">
+                                                    3.1
+                                                </span>
+                                                <span style="padding-left: 1em;">
+                                                    Coming soon... Quaternions
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#shadow-mapping-link">
+                                    <span style="color: black;">
+                                        4
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Shadows
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#deferred-lighting-link">
+                                    <span style="color: black;">
+                                        5
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Coming Soon... Deferred Shading
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#ssao-link">
+                                    <span style="color: black;">
+                                        6
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Coming Soon... Screen Space Ambient Occlusion
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#pbr-link">
+                                    <span style="color: black;">
+                                    7
+                                    </span>
+                                    <span style="padding-left: 1em;">
+                                        Coming Soon... trying out physically based rendering
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p style="text-align: center;">
+                        TL, DR: try it out <a href=#>here</a>
+                    </p>
+                    <p>
+                        <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Intro:</span>
+                        <br>
+                        In the course of learning low level graphics stuff, everyone reaches a point where they need to work with something a little more sophisticated
+                        than the endless “wax on, wax off” style primitives you intially start with. The goal of this article is to explain the few things necessary to set a simple model viewing program to play around with lighting math and other fun things in.
+                        This article assumes some comfort with your API of choice and doesn't go into details how to initilize your rendering pipeline.
+                        Also, it assumes general comfort with matrix and vector math, if you for whatever reason you lack conceptual understanding about the matrix transformations or cross products involved, please see this 
+                        <a href="https://ianstranathan.com/html/MVPderivation.html">overly long article</a> I wrote that explains them in gory detail.
+                    </p>
+                    <p> 
+                        There are endless choices for an inital model, a stanford dragon/ bunny, a suzanne monkey, that weird armadillo creature I always see these days, the list goes on; I think the most cannonical model however, traditionally considered the "Hello, World!" equivalent in graphics, is probably the 
+                        <a href="https://en.wikipedia.org/wiki/Utah_teapot">"Utah Teapot".</a> Personally, it was the model used to demonstrate the power and flexibility of programmable shaders (check out figure 3.9 in the third edition) that I saw when I first cracked open Real Time Rendering, so I just like it. 
+                        More objectively, I think it's a good starting point as it can project shadows on itself and it isn't terrribly ugly even if you don't apply textures to it.
+                    </p>
+                    <p>
+                        It's hard to imagine, but the mesh data for the original model was actually made by hand by a 
+                        <a href="https://en.wikipedia.org/wiki/Martin_Newell_(computer_scientist)">graphics researcher</a> at the university of Utah, <a href="http://nautil.us/blog/the-most-important-object-in-computer-graphics-history-is-this-teapot">check it out.</a>
+                        I'm reminded of a time I asked a better programmer than myself (after coding for a while one day basically according to compiler complaints), what did people do before they had debuggers or things like intellisense and code completion?
+                        The curt reply was that they were busy making these assistive tools. Similarly, 3D graphics must have been quite a task before modeling programs were made and I guess the wizard beards of yore were busy making these tools too.
+                        I will never complain about unfriendly UI in Blender again (it's free too... what a time to be alive)
+                    </p>
+                    <p id="loading-a-model-link">
+                        <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Loading a model to work with:</span>
+                        <br>
+                        Without further ado, Let's get the mesh data <a href="https://graphics.cs.utah.edu/courses/cs6620/fall2013/?prj=5">straight from the horse's mouth.</a> 
+                        Scroll down to "Test Scenes" and probably start with the lower resolution file.
+                    </p>
+                    <p>
+                        So what are we even looking at? After a cursory internet search based on the repeating categories, we find that it's a OBJ file.
+                    </p>
+                    <p>
+                        From the Wavefront_.obj_file wikipedia page: 
+                        <br>
+                        "The OBJ file format is a simple data-format that represents 3D geometry alone — namely, the position of each vertex, the UV position of each texture coordinate vertex, vertex normals, 
+                        and the faces that make each polygon defined as a list of vertices, and texture vertices”
+                        <br>
+                        So each line is a vertex, normal or texture coordinate (starting with v, vn, or vt respectively) and then face lines
+                        representing the interleaved vertex array data (with corresponding indices to the earlier lines). 
+                        Be careful while parsing, they're mostly quads but there are triangles in there too.
+                    </p>
+                    <p>
+                        I will save you some debugging pain.
+                        <br>
+                        Sadly, just copying and pasting the data into a text file to parse it results in extra whitespace at the end of each face line 
+                        and after every “v” in the vertex lines. 
+                        This isn't standard obj formatting and I encourage you to check; just export a OBJ file from your modeling software of choice 
+                        and you can compare directly. You could compensate for this in your parser, but since it’s an exception, I chose to rid of this with a quick Python script straight away.
+
+                    </p>
+                    <p>
+                        Unfortunately, due to modern browsers’ safety protocols, we can't access the text file directly and will need to set up
+                        a server to parse it. This also means that we'll have to account for asynchronous programming and load this within a XMLHttpRequest call back. 
+                    </p>
+                    <p>
+                        Let's use python again:
+                        <br>
+                        For Python 3.x:
+                        <br>
+                        python -m http.server
+                        <br>
+                        This will serve files from the current directory at localhost under port 8000:  http://localhost:8000/
+                    </p>
+                    <p>
+                        I'll save you the effort of looking at convoluted/ overly complicated code that I wrote to parse an obj file, as I'm sure you can do better, 
+                        but if you'd like to see my implementation (including the brutal python file) 
+                        for whatever reason, you can reference it <a href="https://github.com/Stranathan/WebGLFun/tree/master/GalleryViewer/utils">here.</a>
+                    </p>
+                    <p>
+                        There's nothing special about this vertex array information.
+                        It's no different from the simple primitives you're familar with beyond that instead of like
+                        36 vertices to draw, there are many thousands and instead of the vertex data being set mathematically 
+                        (although this is also nice and still extendable) it was set via a 3D modeling program.
+                        <br>
+                        Just be sure to define the vertex attributes according to the interleaved data we're getting back from our parser and you're set.
+                    </p>
+                    <p>
+                        With the appropriate choice of a camera position looking at the world origin and the necessary view and projection matrices, you should be able to
+                        feed the vertex shader from the respective attribute and an unshaded utah teapot should be yours. It's so satisfying to see the 3241 vertices coherently exist, even if it's just a solid color
+                    </p>
+                    <p id="basic-shading-link">
+                        <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Basic Shading:</span>
+                        <br>
+                        Once vertex positions and normals are available in your vertex shader, we can introduce basic surface shading.
+                        None of this is lighting in a strict sense, but rather carefully designed hacks/ heuristics,
+                        If objects largely do not have a color change with a change in viewpoint their appearance is 
+                        described as matte and their shading model is called diffuse light. 
+                        Mathematically this is modeled with <a href="https://en.wikipedia.org/wiki/Lambertian_reflectance">Lambertian reflectance.</a>
+                        
+                        I don't think I can do a better job in explaining this than the resources available 
+                        <a href="http://learnwebgl.brown37.net/09_lights/lights_diffuse.html">here</a> 
+                        and <a href="https://learnopengl.com/Lighting/Basic-Lighting">here</a>
+                        <br>
+                    </p>
+                    <p>
+                        These resources are great, and I really shouldn't expect any one source to explain everything, but I do take issue with low level work not explaining foundational equations/ steps/ conceptual perspectives. And the halfway vector is just baldly presented to you.
+                        It wasn't obvious to me how the halfway vector took the expression that it did. Trying it <a href="https://www.desmos.com/calculator/zzfqe3rljp">naively out numerically</a> shows that it clearly fails. (you can drag the vector points around in the graph)
+                        This is was true everywhere I looked (wikipedia, Peter Shirley's excellent Fundamentals of Computer Graphics (4th), Real Time Rendering (5.7 in third edition) )
+                        Maybe it's because it's exactly what it says it is and it's trivial for their long wizard beards.
+                    </p>
+                    <p>
+                        For your benefit though: For any two vectors $$ \vec{a} , \vec{c} $$ 
+                        their angle bisector is defined as $$\vec{b} = \| \vec{a} \| \vec{c} + \| \vec{c} \| \vec{a}$$
+                        Here are both algebraic and geometric <a href="https://proofwiki.org/wiki/Angle_Bisector_Vector">proofs</a>, I would recommend trying out the algebraic one, it's straight forward and it's not dependent on any lemmas or anything.
+                        <br>
+                        So for the case of our light and viewing position vectors: $$ \vec{l} , \vec{v} $$ 
+                        $$\vec{h} = \| \vec{l} \| \vec{v} + \| \vec{v} \| \vec{l}$$
+                        If we say that both light and viewing vectors are both normalized then their magnitude is one.
+                        $$\implies \vec{h} = \vec{v} + \vec{l}$$
+                        If we then define $$ \vec{H} $$ as the normalized version of that, it exactly equals the given expression for the halfway vector.
+                        $$\vec{h} = \frac {\vec{v} + \vec{l}} {\| \vec{l} + \vec{v}\|}$$
+                        Trying it out again <a href="https://www.desmos.com/calculator/pe0lqzlayg">numerically</a> normalizing the vectors, I buy it. (you can no longer drag the vector points around in the graph as they're dependent on other calculations)
+                    </p>
+                    <p id="trackball-camera-link">
+                        <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Making a trackball camera:</span>
+                        <br>
+                    </p>
+                    <p>
+                        A track ball camera is the ability to revolve around the targetPos/ anchor point of our view matrix (lookAt matrix).
+                        <br>
+                        I'm sure there are better ways to do this, but my implementation is to create a rotation around the cross product (perpendicular vector) of ray casts from the mouse.
+                        (on click down, save ray cast, on mouse move, save raycast, take cross product to get rotation axis, 
+                        create transformation around this axis - search rotation around arbitrary axis to make your own handmade solution, or use a vector/matrix library)
+                        I'm using glMatrix.js for my vector & matrix library, so it's as simple as saving the camera as a vec4 and hitting it with the generated rotation transform from this cross product.
+                        It was a hard lesson learned for me (it should have been obvious...) but you also need to rotate the original seedining up vector used for the gram-schmidt process when making your camera.
+                    </p>
+                    <p>
+                        Against the advice of one of the absolute greats, John Carmak, 
+                        I will temporarily continue with Euler angles for the sake 
+                        of trying to put this article up in a timely fashion
+                    </p>
+                    <img src="../misc/ToyModelViewer/carmackEulerAngles.png" class="diagram">
+                    <p>
+                        This particular toy project ballooned to be larger than I anticipated and I'm actually in the process of refactoring to make it all a bit more systemic/ modular.
+                        Quaternions are on the to do list, so check back soon!
+                    </p>
+                    <p id="shadow-mapping-link">
+                        <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Adding Shadows</span>
+                        <br>
+                        Light and it’s compliments are a fundamental part of spatial processing.
+                        So much of our lives are spent unconsciously, it’s always strange to see pictures of prosaic objects without the normal behavior of light
+                    </p>
+                    <p>
+                        There is conflicting advice about culling with respect to shadow mapping 
+                        Microsoft says <a href="https://docs.microsoft.com/en-us/windows/win32/dxtecharts/common-techniques-to-improve-shadow-depth-maps"
+                        >Shadow maps should be rendered with standard back-face culling
+                        </a>,
+                        <a>Learnopengl's opinion</a>
+                    </p>
+                    <img src="../misc/ToyModelViewer/shadow_mapping_with_without.png" class="diagram">
+                    <p>
+                        <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Wrapping Up:</span>
+                        This is old stuff, but it's deeply satisfying seeing it all work coherently in real time.
+                        To me, this is what's awesome about computer graphics and programming and modeling in general. 
+                        Mimicing nature from first principles, however (very, very!) far it falls from reality, gives a feeling akin to scientic observation and discovery. It's just so cool.
+                        
+                        As always, working with anything low level-ish it's not very productive, but highly educative. Worth it? ¯\_(ツ)_/¯ I think so most of the time.
+                        Hopefully it's been helpful for you too.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer-container">
+            <div id="footer-content">
+                <p>Copyright © 2020 Ian Stranathan</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

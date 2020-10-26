@@ -186,6 +186,7 @@ body
         }
     }
     #footer-container{
+        display: grid;
         overflow:hidden;
         background-color: $dark;
         color: $light-with-transparency;
@@ -193,10 +194,11 @@ body
         grid-column: 1 / span 1;
         text-align: center;
         align-content: center;
+        align-items: center;
     }
     #footer-content
     {
-        font-size: 0.7em;
+        font-size: 0.8em;
     }
 }
 
