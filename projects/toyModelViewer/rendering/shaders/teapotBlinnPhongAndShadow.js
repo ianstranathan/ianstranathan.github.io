@@ -65,7 +65,7 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 
     // opengl-tutorial.org
     float cosTheta = clamp(dot(normal, lightDir), 0., 1.);
-    float bias = 0.003*tan(acos(cosTheta)); // cosTheta is dot( n,l ), clamped between 0 and 1
+    float bias = 0.002*tan(acos(cosTheta)); // cosTheta is dot( n,l ), clamped between 0 and 1
     bias = clamp(bias, 0. , 0.01);
 
     // PCF
