@@ -107,7 +107,7 @@ void main()
 
     // specular
     vec3 viewDir = normalize(viewPos - FragPos);
-    vec3 reflectDir = reflect(-lightDir, normal);
+    //vec3 reflectDir = reflect(-lightDir, normal);
 
     vec3 halfwayDir = normalize(lightDir + viewDir);
 
