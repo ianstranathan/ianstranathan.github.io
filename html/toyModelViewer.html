@@ -94,18 +94,6 @@
                                     <span style="padding-left: 1em;">
                                         Making a trackball camera
                                     </span>
-                                    <ul>
-                                        <li>
-                                            <a href="#quaternions-link">
-                                                <span style="color: black;">
-                                                    3.1
-                                                </span>
-                                                <span style="padding-left: 1em;">
-                                                    Coming soon... Quaternions
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </a>
                             </li>
                             <li>
@@ -121,21 +109,21 @@
                         </ul>
                     </div>
                     <p style="text-align: center;">
-                        TL, DR: try it out <a href=#>here</a>
+                        TL, DR: try it out <a href="https://ianstranathan.com/projects/toyModelViewer/index.html"></a>
                     </p>
                     <p>
                         <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Intro:</span>
                         <br>
-                        In the course of learning low level graphics stuff, everyone reaches a point where they need to work with something a little more sophisticated
-                        than the endless “wax on, wax off” style primitives you intially start with. 
-                        The goal of this article is to explain the few things necessary to set up a simple model viewing scene to play around with lighting math and other fun things in.
+                        In the course of learning low level-ish graphics stuff, everyone reaches a point where they need to work with something a little more sophisticated
+                        than the endless “wax on, wax off” style primitives they intially start with. 
+                        This article is more or less a summary of what I needed to understand to set up a simple model viewing scene with a trackball camera.
                         This article assumes some comfort with your graphics API of choice and doesn't go into details about how to initilize your rendering pipeline.
                         Also, it assumes general comfort with matrix and vector math, if you for whatever reason lack conceptual understanding about the matrix transformations or cross products involved, please see this 
                         <a href="https://ianstranathan.com/html/MVPderivation.html">overly long article</a> I wrote that explains them in gory detail.
                     </p>
                     <p> 
                         There are endless choices for an inital model, a stanford dragon/ bunny, a suzanne monkey, that weird armadillo creature I always seem to see around these days, the list goes on; I think the most cannonical model however, traditionally considered the "Hello, World!" equivalent in graphics, is probably the 
-                        <a href="https://en.wikipedia.org/wiki/Utah_teapot">"Utah Teapot".</a> Personally, it was the model used to demonstrate the power and flexibility of programmable shaders (check out figure 3.9 in the third edition) that I saw when I first cracked open Real Time Rendering, so I just like it. 
+                        <a href="https://en.wikipedia.org/wiki/Utah_teapot">"Utah Teapot".</a> Personally, it was the model I first saw used to demonstrate the power and flexibility of programmable shaders (check out figure 3.9 in Real Time Rendering 3rd edition), so I just like it. 
                         More objectively, I think it's a good starting point as it can project simple shadows on itself and it isn't terrribly ugly even if you don't apply textures to it.
                     </p>
                     <p>
@@ -152,7 +140,7 @@
                         Scroll down to "Test Scenes" and probably start with the lower resolution file.
                     </p>
                     <p>
-                        So what are we even looking at? After a cursory internet search based on the repeating categories, we find that it's a OBJ file, one of many many 3D file formats.
+                        So what are we even looking at? After a cursory internet search based on the repeating categories, we find that it's a OBJ file, one of many, many 3D file formats.
                     </p>
                     <p>
                         From the Wavefront_.obj_file wikipedia page: 
@@ -165,9 +153,8 @@
                         Be careful while parsing, they're mostly quads but there are triangles in there too.
                     </p>
                     <p>
-                        I will save you some debugging pain.
-                        <br>
-                        Sadly, just copying and pasting the data into a text file to parse it results in extra whitespace at the end of each face line 
+                        I will save you some debugging pain,
+                        sadly, just copying and pasting the data into a text file to parse results in extra whitespace at the end of each face line 
                         and after every “v” in the vertex lines. 
                         This isn't standard obj formatting and I encourage you to check; just export a OBJ file from your modeling software of choice 
                         and you can compare directly. You could compensate for this in your parser, but since it’s an exception, I chose to rid of this with a quick Python script straight away.
@@ -187,7 +174,7 @@
                         This will serve files from the current directory at localhost under port 8000:  http://localhost:8000/
                     </p>
                     <p>
-                        I'll save you the effort of looking at convoluted/ overly complicated code that I wrote to parse an obj file, as I'm sure you can do better, 
+                        The goal of this exercise isn't to build a totally awesome, general mesh loading framework, so I'll save you the effort of looking at convoluted/ overly complicated code that I wrote to parse an obj file, as I'm sure you can do better, 
                         but if you'd like to see my implementation (including the brutal python file) 
                         for whatever reason, you can reference it <a href="https://github.com/Stranathan/WebGLFun/tree/master/GalleryViewer/utils">here.</a>
                     </p>
@@ -206,26 +193,31 @@
                     <p id="basic-shading-link">
                         <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Basic Shading:</span>
                         <br>
-                        Once vertex positions and normals are available in your vertex shader, we can pass them along and introduce basic surface shading.
+                        Once vertex positions and normals are available in your vertex shader, we can pass them along to be interpolated and introduce basic per fragment surface shading.
                         I call it shading and not lighting as it's not lighting in a strict sense, but rather carefully designed hacks/ heuristics.
                     </p>
                     <p>
-                        It's hard to believe but these heuristics are all the way from the 1970's and tutorials for them is well trodden territory.
+                        It's hard to believe but these heuristics are all the way from the 1970's. Accordingly, tutorials for them are pretty well played out.
+                        I don't think any of the numerous tutorials are wholly original presentations and I don't want to contribute to any more noise, especially for things I merely implemented. 
                         Please see these two useful resources I used to make my simple shading model.
-                        <a href="http://learnwebgl.brown37.net/09_lights/lights_diffuse.html">http://learnwebgl.brown37.net</a> 
-                        and <a href="https://learnopengl.com/Lighting/Basic-Lighting">https://learnopengl.com/</a>
                         <br>
-                        The gist is that diffuse light is approximated with clamped
-                        <a href="https://en.wikipedia.org/wiki/Lambertian_reflectance">Lambertian reflectance.</a> 
-                        and specular highlights are modeled either by the Phong model (check out the derivation given by 
+                        <a href="http://learnwebgl.brown37.net/09_lights/lights_diffuse.html">learnwebgl.brown37.net</a> 
+                        <br>
+                        <a href="https://learnopengl.com/Lighting/Basic-Lighting">learnopengl.com</a>.
+                    </p>
+                    <p>
+                        In broad strokes, diffuse light is imitated with clamped
+                        <a href="https://en.wikipedia.org/wiki/Lambertian_reflectance">Lambertian reflectance</a>, so it's proportional to the clamped cosine between the normal and light vector. 
+                        and specular highlights are modeled either by the <a href="https://en.wikipedia.org/wiki/Phong_reflection_model">Phong reflection model</a>
+                        (check out the derivation given by 
                         <a href="http://learnwebgl.brown37.net/09_lights/lights_specular.html">learn.brown37.net</a> 
-                        (reflection vector is calculated by hand for the interpolated fragment position. Note: there is a hardware acclerated function reflect(vec3 pos) for this very purpose which is what is used in most tutorials I think)
-                        or the Blinn-Phong model (substituting the relationship between the reflection vector and the viewing vector with the )                
+                        (the reflection vector is calculated by hand for the interpolated fragment position. Note: there is a hardware acclerated function reflect(vec3 pos) for this very purpose which is what is used in most tutorials I think)
+                        or the <a href="https://en.wikipedia.org/wiki/Blinn%E2%80%93Phong_reflection_model">Blinn-Phong reflection model</a> (substituting the relationship between the reflection vector and the viewing vector with the )                
                         I don't think I can do a better job in explaining these concepts than these guys, so I'll leave you with them, with one small caveat: 
                         <br>
                         I don't expect any one source to explain everything (no one knows everything and 
                         you're only enrichened by being forced to drill down on your own from many different resources) 
-                        but I do expect the fundamentals for low level work to explain foundational equations/ steps/ conceptual perspectives and unfortunately the halfway vector is just baldly presented to you in the linked tutorials. 
+                        but I do expect the fundamentals for lower level work to explain foundational equations/ steps/ conceptual perspectives and unfortunately the halfway vector is just baldly presented to you in the linked tutorials. 
                         (This is was also true everywhere else I looked (wikipedia, Peter Shirley's excellent Fundamentals of Computer Graphics (4th), Real Time Rendering (5.7 in third edition, clearly too trivial for long wizard beards.)
                         It wasn't obvious to me at first blush how the halfway vector took the expression that it did. If you try it <a href="https://www.desmos.com/calculator/zzfqe3rljp"> out naively numerically</a> it clearly fails. (you can drag the vector points around in the graph)
                         And it's equally not obvious if you try to derive it geometrically.
@@ -240,63 +232,153 @@
                         If we say that both light and viewing vectors are both normalized then their magnitude is one.
                         $$\implies \vec{h} = \vec{v} + \vec{l}$$
                         If we then define $$ \vec{H} $$ as the normalized version of that, it exactly equals the given expression for the halfway vector.
-                        $$\vec{h} = \frac {\vec{v} + \vec{l}} {\| \vec{l} + \vec{v}\|}$$
+                        $$\vec{H} = \frac {\vec{v} + \vec{l}} {\| \vec{l} + \vec{v}\|}$$
                         Trying it out again <a href="https://www.desmos.com/calculator/pe0lqzlayg">numerically</a> normalizing the vectors, you can see that it is indeed the halfway vector. (you can no longer drag the vector points around in the graph as they're dependent on other calculations)
-                        Whether or not it isomorphically replaces (it seems to even correct some artifacts) the reflection relationship isn't certain though, but ars longa, vita brevis (and rasterization techniques are going the way of the dodo due to ray tracing, so I'll stop here.)
+                        Whether or not it isomorphically replaces (it actually corrects some artifacts) the reflection relationship isn't absolutely certain though, but ars longa, vita brevis (and rasterization techniques are going the way of the dodo due to ray tracing, so I'll stop here.)
                     </p>
                     <p id="trackball-camera-link">
                         <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Making a trackball camera:</span>
                         <br>
-                    </p>
-                    <p>
-                        A track ball camera is just the ability to revolve around the targetPos/ anchor point of our view matrix (lookAt matrix). Again see my <a href="https://ianstranathan.com/html/MVPderivation.html">overly long article</a> for more.
+                        A track ball camera is just the ability to revolve the camera's position around the target position/ view anchor point of our view matrix (lookAt matrix). Again see my <a href="https://ianstranathan.com/html/MVPderivation.html">overly long article</a> for more.
                         <br>
-                        I'm sure there are better ways to do this, but my implementation is to create a rotation transform around the cross product (perpendicular vector) of ray casts from the mouse.
-                        (on click down, save ray cast, on mouse move, save raycast, take cross product to get rotation axis, 
-                        create transformation around this axis - search rotating around arbitrary axis to make your own handmade solution, or use a vector/matrix library)
-                        I'm using glMatrix.js for my vector & matrix library, so it's as simple as saving the camera as a vec4 and hitting it with the generated rotation transform from this cross product.
-                        It was a hard lesson learned for me (it should have been obvious...) but you also need to rotate the original up vector used to seed the gram-schmidt process when rotating your camera.
+                        Maybe there are better ways to do this, but my implementation is to create a rotation transform around the cross product (perpendicular vector) of ray casts from the mouse.
+                        <br>
+                        This is a great resource to learn how to implement ray casts, <a href="https://antongerdelan.net/opengl/raycasting.html">check it out</a>. A <a href="https://ianstranathan.com/html/raySphereIntersection.html">previous article I wrote</a> also talked about rays that you might like.
+                        <br>
+                        The logic is:
+                        <br>
+                        on click down, save ray cast; on mouse move, save raycast; take the cross product to get rotation axis;
+                        create transformation around this axis - search rotating around arbitrary axis to make your own handmade solution, or use a vector/matrix library - update the first raycast to be the second raycast and repeat.
+                        <br>
+                        I'm using glMatrix.js for my vector & matrix library, so it's as simple as saving the camera as a vec4 and hitting it with this generated rotation transform.
+                        It was a hard lesson learned for me (it should have been obvious...) but you also need to rotate the original up vector used to seed the gram-schmidt process for your view matrix when rotating your camera.
+                        <br>
+                        Additionally, you should probably make some easing or interpolating function for the angle that you're rotating with (it should scale with respect to how far away you are from your viewing target/ anchor point).
                     </p>
                     <p>
-                        Against the advice of one of the absolute greats, John Carmak, 
+                        With respect to panning, it's hard to see initially, but just try out panning in something like Blender or Maya and you'll see the target position/ view anchor point of our view matrix (lookAt matrix) another heu just moving along a principal axis of the camera.
+                        My <a href="https://ianstranathan.com/html/MVPderivation.html">overly long article</a> covers the gram-schmidt process in painful, gory detail, so I won't repeat that here. 
+                        Just use this relationship to find the principal axes of your camera and add some adjusted translation to one of them from the relative position vector of mouse input. (the difference between the second raycasted vector and the first)
+                        <br>
+                        After comparing it with Blender's panning, the vertical panning still seems somehow off and hopefully I can fix this in a future addendum
+                    </p>
+                    <p>
+                        With respect to zooming, you just want to translate the camera along the vector between it and the target. 
+                    </p>
+                    <p>
+                        Against the advice of one of the greats, John Carmak, 
                         I will temporarily continue with Euler angles for the sake 
                         of trying to put this article up in a timely fashion
                     </p>
                     <img src="../misc/ToyModelViewer/carmackEulerAngles.png" class="diagram">
                     <p>
-                        This particular toy project ballooned to be larger than I anticipated and I'm actually in the process of refactoring to make it all a bit more systemic/ modular.
-                        Quaternions are on the short term to do list, so check back soon!
+                        Hopefully I will be able to write an article on Quaternions soon.
                     </p>
                     <p id="shadow-mapping-link">
                         <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Adding Shadows</span>
                         <br>
-                        Light and it’s compliments are a fundamental part of spatial processing.
-                        So much of our lives are spent unconsciously, it’s always strange to see pictures of prosaic objects without the normal behavior of light
-                        <img src="../misc/ToyModelViewer/shadow_mapping_with_without.png" class="diagram">
+                        It's amazing how funadamental light's compliments are to our general spatial processing.
+                        So much of our lives are spent unconsciously, it’s always strange to see pictures of prosaic objects without the normal behavior of light.
+                        <br>
+                        I was going to settle for no shadows for this little toy viewer until I saw this picture on learnopengl.com
+                    </p>
+                    <img src="../misc/ToyModelViewer/shadow_mapping_with_without.png" class="diagram">
+                    <p>
+                        It's from a tutorial for how to implement shadow mapping. <a href="https://en.wikipedia.org/wiki/Shadow_mapping">Shadow mapping is another heuristic</a>  
+                        from the 70's and it mimics shadows by saving the depth buffer value of a render pass as seen from the light's POV and saving those values to a texture. 
+                        That texture is then sampled in a the fragment shader of a normal render pass (view-projection in vertex shader was from camera's point of view) and compared to the fragment depth.
+                        <br>
+                        This is done by transforming a copy of the normal pass vertex position by the same view-projection transform that was used in the first, depth texture pass and then passing it to the fragment shader (interpolated per fragment)
+                        If it's less than what's available in the texture, it's behind something and in shadow. Since the depth texture was created relative to a certain view-projection matrix, it can either be orthographic (directional light) or perspective (spotlight) accordingly.
+                        As with basic shading models, there are numerous online tutorials on shadow mapping. These are the ones I can recommend:
+                        <br>
+                        <a href="https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping">learnopengl.com</a>
+                        <br>
+                        <a href="http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/">opengl-tutorial.org</a>
+                        <br>
+                        <a href="http://learnwebgl.brown37.net/11_advanced_rendering/shadows.html">learnwebgl.brown37.net</a>
                     </p>
                     <p>
-                        Shadow mapping is another heuristic from the 70's and it mimicks shadows by saving the depth buffer value of a render pass as seen from the light's POV and saving those values to a texture. 
-                        That texture is then sampled and compared to the fragment depth as being processed relative to the camera by multiplying by the same view-projection matrix used in creating the light.
-                        If it's less than what's available in the texture, it's behind something and in shadow.
-                    </p>
-                    <p>
-                        Getting shadow mapping with acceptable looking results is hard. There is limited precision in the texture sample and is thus very susceptible to aliasing.
+                        In general, getting shadow mapping with acceptable looking results is hard.
+                        <br>
+                        This article from <a href="https://docs.microsoft.com/en-us/windows/win32/dxtecharts/common-techniques-to-improve-shadow-depth-maps">Microsoft</a> was the most useful document I found for best practices and common mistakes
+                        There is limited precision in the texture sample and is thus very susceptible to aliasing.
                         The limited precision also leads to Moire like patterns as multiple fragments can sample the same value from the depth map when they're relatively far away from the light source
-                        To correct this, a bias/threshold for sampling is introduced which leads to another source of frustation
-                        There is conflicting advice about culling with respect to shadow mapping 
-                        Microsoft says <a href="https://docs.microsoft.com/en-us/windows/win32/dxtecharts/common-techniques-to-improve-shadow-depth-maps"
-                        >Shadow maps should be rendered with standard back-face culling
-                        </a> and it's what I used. Learn OpenGL had a different opinion (ironically their page also links the same microsoft page that has the oppoisite opinion... confusing stuff)
-                        <a href="https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping">Learnopengl's opinion</a>
-
+                        To correct this, a bias/threshold for sampling is introduced which leads to another source of frustation, Peter panning (the recommended bias from Learnopengl resulted in my shadows near the handle being detached).
+                        There are many best practices to reduce all this, keep light frustum as tightly knit to viewing frustum as possible, have a variable bias as a function of curvature, have shadow mapping friendly geoemetry, selectively cull based on pass, the list goes on.
+                        There is conflicting advice on some of these topics, for example:
+                        Microsoft says shadow maps should be rendered with standard back-face culling
+                        and it's what I used, but Learn OpenGL had the opposite opinion (ironically their page also links the same microsoft page that has the oppoisite opinion... confusing stuff)
                     </p>
+                    <p>
+                        Some small, hoepffully helpful things I can say about personal implementation:
+                        <br>
+                    </pre>
+                    <br>
+                    Most broadly, you should make sure that the attribute layouts agree across shader programs or have a general dynamic method of correctly setting them. This should save you some unnecessary debugging time.
+                    As usual with learning things, austere best practices are to be eschewed (at least for me) so instead of keeping things D.R.Y, I hardcoded the attribute layout for all shaders to be absolutely certain that they’re compatible across multiple shader programs. (If one program doesn't need all attributes the attributes they do need will still be assigned to the same locations)
+                    <br>
+                    So concretely this means I'm not generating an integer binding points with the API, but rather defining all glsl shaders to have the same binding points. For example:
+                    <pre style="overflow: scroll;">
+                        <code class="language-GLSL">
+layout (location=0) in vec3 vertexPos;
+layout (location=1) in vec3 vertexTex;
+layout (location=2) in vec3 vertexNormal;
+                        </code>
+                    </pre>
+                    And initializing attributes with these numbers in main program
+                    <pre style="overflow: scroll;">
+                        <code class="language-GLSL">
+// Note this is webgl syntax
+gl.vertexAttribPointer(correspondingNumberToGLSLcode, size, type, normalize, stride, offset);
+gl.enableVertexAttribArray(correspondingNumberToGLSLcode);
+                        </code>
+                    </pre>
+                        Another really important thing is modify the bias according to the curvature, this helped reduce peter panning a lot.
+                        <pre style="overflow: scroll;">
+                            <code class="language-GLSL">
+// ... in the shadow comparison
+// see the opengl-tutorial.org
+float cosTheta = clamp(dot(normal, lightDir), 0., 1.);
+float bias = 0.003*tan(acos(cosTheta));
+bias = clamp(bias, 0. , 0.01);
+                            </code>
+                        </pre>
+                        <br>
+                        Another useful tip I found that seemed to help was to create a front face bias in the depth texture together in slope based bias in the per fragment comparison.
+                        <pre style="overflow: scroll;">
+                            <code class="language-GLSL">
+// ... in empty fragment shader of depth texture pass
+#define BIAS (0.005)
+
+void main()
+{
+    // gl_FragDepth = gl_FragCoord.z;
+
+    gl_FragDepth = gl_FragCoord.z;
+    gl_FragDepth += gl_FrontFacing ? BIAS : 0.0;
+}
+                            </code>
+                        Finally, the percentage base filtering (PCF) to anti alias shadows could be sped up with a hardware depth comparison using a sampler2DShadow I think, none of the linked resources uses this.
+                        (I find it odd that learnopengl had previously used a hardware accelerated function (reflect) when explaining specular reflection, it then does simple PCF by hand. Tutorials of tutorials most likely, I'm grateful either way)
+                    </p>
+                    <p>
+                        Wrapping up, it's not totally dynamic and there are some problems when things start moving that I need to think about, but overall the visual quality came out fairly ok I think.
+                        It looks more or less like the final result for CS 5610/ 6610 at the University of Utah. I think they're using a nicer PCF algorithm than the one I took from Learnopengl (maybe the hardware accelerated one?). 
+                        They're also using a persepctive light which I haven't tried out yet.
+                    </p>
+                    <img src="../misc/ToyModelViewer/CS_5610_6610.jpg" class="diagram">
                     <p>
                         <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Wrapping Up:</span>
-                        This is old stuff, shadow mapping is from 1978 and the original phong per pixel shading model is from 1975, but it's still deeply satisfying seeing it all work coherently in real time.
+                        This is all old stuff, shadow mapping is from 1978 and the original phong per pixel shading model is from 1975, but it's still deeply satisfying seeing it all work coherently in real time.
                         To me, this is what's awesome about computer graphics and programming and modeling in general: 
-                        mimicking nature from first principles, however (very, very, very!) far it falls from reality, gives a feeling akin to scientic observation and discovery. It's just so cool.
+                        Mimicking nature from first principles, however (very, very, very!) far it falls from reality, gives a feeling akin to scientic observation and discovery. It's just so cool.
                         <br>
-                        As always, working with anything low level-ish it's not very productive, but highly educative. Hopefully it's been helpful for you too.
+                        As always, working with anything low level-ish is not very productive, but that's the trade off for being highly educative.
+                        I just wanted to make a little model area where I could play around with graphics concepts in. Hopefully this can be a basis for more interesting things like playing around with the math and physics involved in physically based rendering in the near future.
+                        Hopefully my mistakes and misteps have consolidated some of the resources I found and helped someone else out.
+                        <br>
+                        Cheers.
                     </p>
                 </div>
             </div>
