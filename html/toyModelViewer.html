@@ -109,15 +109,15 @@
                         </ul>
                     </div>
                     <p style="text-align: center;">
-                        TL, DR: try it out <a href="https://ianstranathan.com/projects/toyModelViewer/index.html"></a>
+                        TL, DR: try it out <a href="https://ianstranathan.com/projects/toyModelViewer/index.html">here</a>
                     </p>
                     <p>
                         <span style=" font-weight: bold; font-size: x-large; text-decoration: underline;">Intro:</span>
                         <br>
                         In the course of learning low level-ish graphics stuff, everyone reaches a point where they need to work with something a little more sophisticated
                         than the endless “wax on, wax off” style primitives they intially start with. 
-                        This article is more or less a summary of what I needed to understand to set up a simple model viewing scene with a trackball camera.
-                        This article assumes some comfort with your graphics API of choice and doesn't go into details about how to initilize your rendering pipeline.
+                        This article is just a small write up of what I needed to understand to set up a simple model viewing scene with a trackball camera.
+                        I assume some comfort with your graphics API of choice and don't go into details about how to initilize your rendering pipeline.
                         Also, it assumes general comfort with matrix and vector math, if you for whatever reason lack conceptual understanding about the matrix transformations or cross products involved, please see this 
                         <a href="https://ianstranathan.com/html/MVPderivation.html">overly long article</a> I wrote that explains them in gory detail.
                     </p>
@@ -301,11 +301,11 @@
                     <p>
                         In general, getting shadow mapping with acceptable looking results is hard.
                         <br>
-                        This article from <a href="https://docs.microsoft.com/en-us/windows/win32/dxtecharts/common-techniques-to-improve-shadow-depth-maps">Microsoft</a> was the most useful document I found for best practices and common mistakes
+                        <a href="https://docs.microsoft.com/en-us/windows/win32/dxtecharts/common-techniques-to-improve-shadow-depth-maps">This article from Microsoft</a> was the most useful document I found for best practices and common mistakes
                         There is limited precision in the texture sample and is thus very susceptible to aliasing.
                         The limited precision also leads to Moire like patterns as multiple fragments can sample the same value from the depth map when they're relatively far away from the light source
                         To correct this, a bias/threshold for sampling is introduced which leads to another source of frustation, Peter panning (the recommended bias from Learnopengl resulted in my shadows near the handle being detached).
-                        There are many best practices to reduce all this, keep light frustum as tightly knit to viewing frustum as possible, have a variable bias as a function of curvature, have shadow mapping friendly geoemetry, selectively cull based on pass, the list goes on.
+                        There are many best practices to reduce all this, keep light frustum as tightly knit to viewing frustum as possible, have a variable bias as a function of curvature, have shadow mapping friendly geometry (thick, straight), selectively cull based on pass, the list goes on.
                         There is conflicting advice on some of these topics, for example:
                         Microsoft says shadow maps should be rendered with standard back-face culling
                         and it's what I used, but Learn OpenGL had the opposite opinion (ironically their page also links the same microsoft page that has the oppoisite opinion... confusing stuff)
@@ -359,13 +359,14 @@ void main()
     gl_FragDepth += gl_FrontFacing ? BIAS : 0.0;
 }
                             </code>
+                        </pre>
                         Finally, the percentage base filtering (PCF) to anti alias shadows could be sped up with a hardware depth comparison using a sampler2DShadow I think, none of the linked resources uses this.
                         (I find it odd that learnopengl had previously used a hardware accelerated function (reflect) when explaining specular reflection, it then does simple PCF by hand. Tutorials of tutorials most likely, I'm grateful either way)
                     </p>
                     <p>
                         Wrapping up, it's not totally dynamic and there are some problems when things start moving that I need to think about, but overall the visual quality came out fairly ok I think.
-                        It looks more or less like the final result for CS 5610/ 6610 at the University of Utah. I think they're using a nicer PCF algorithm than the one I took from Learnopengl (maybe the hardware accelerated one?). 
-                        They're also using a persepctive light which I haven't tried out yet.
+                        It looks more or less like the final result for <a href="https://graphics.cs.utah.edu/courses/cs6610/spring2019/?prj=7">CS 5610/ 6610 at the University of Utah.</a> The only real difference is that they're using a persepctive light projection and 
+                        a nicer PCF algorithm than the one I took from Learnopengl (maybe their using hardware acceleration like I mentioned before?). 
                     </p>
                     <img src="../misc/ToyModelViewer/CS_5610_6610.jpg" class="diagram">
                     <p>
