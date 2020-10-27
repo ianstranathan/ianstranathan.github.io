@@ -281,8 +281,8 @@ function main()
     // ------------------ Check for Mesh Loading Init ------------------
     var teaPotMeshCount = 0;
     //loadMesh("../rendering/models/wavefrontOBJ/lowResUtahTeapot.txt");
-    loadMesh("../rendering/models/wavefrontOBJ/highResUtahTeapot.txt");
-    
+    //loadMesh("../rendering/models/wavefrontOBJ/highResUtahTeapot.txt");
+    loadMesh("https://ianstranathan.com/projects/toyModelViewer/rendering/models/wavefrontOBJ/highResUtahTeapot.txt")
     // ------------------ Start Render Loop ------------------
     window.requestAnimationFrame(renderLoop);
 
