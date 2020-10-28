@@ -82,7 +82,7 @@
                                         2
                                     </span>
                                     <span style="padding-left: 1em;">
-                                        Basic Shading
+                                        Basic shading
                                     </span>
                                 </a>
                             </li>
@@ -280,21 +280,28 @@
                         It's amazing how funadamental light's compliments are to our general spatial processing.
                         So much of our lives are spent unconsciously, it’s always strange to see pictures of prosaic objects without the normal behavior of light.
                         <br>
-                        This picture is from learnopengl's shadow mapping tutorial.
+                        This picture is from learnopengl's shadow mapping tutorial, linked below.
                     </p>
                     <img src="../misc/ToyModelViewer/shadow_mapping_with_without.png" class="diagram">
                     <p>
-                        <a href="https://en.wikipedia.org/wiki/Shadow_mapping"></a>Shadow mapping</a>  is another heuristic
+                        Here is another interesting picture to show this unconscious dependence from Peter Shirley's raytracing in one weekend.
+                        The glass balls don’t really have shadows which makes them look like they are floating which is physically accurate but unintuitive and strange nonetheless.
+                    </p>
+                    <img src="../misc/ToyModelViewer/raytracingInOneWeekend.jpg" class="diagram">
+                    <p>
+                        <a href="https://en.wikipedia.org/wiki/Shadow_mapping">Shadow mapping</a> is another heuristic
                         from the 70's believe it or not. It mimics shadows by saving the depth buffer value of a render pass as seen by light (view-projection in vertex shader is from light's point of view) and saving those values to a texture; 
                         that texture is then sampled in a the fragment shader of a normal render pass (view-projection in vertex shader is from camera's point of view) and compared to the fragment depth, if it's greater than the depth from the texture, it's in shadow.
                         <br>
                         The comparison in the render pass fragment shader is made possible by transforming a copy of the normal render pass vertex position by the same view-projection transform that was used in the first, depth texture pass.
                         <pre style="overflow: scroll;">
                             <code class="language-GLSL">
-                                uniform mat4 lightVP;
-                                // ... in vertex shader
-                                fragPosRelativeToLight = lightVP * model * vec4(vertexPos, 1.0);
-                                gl_Position = projection * view * model * vec4(vertexPos, 1.0);
+// ... in vertex shader
+
+uniform mat4 lightVP;
+
+fragPosRelativeToLight = lightVP * model * vec4(vertexPos, 1.0);
+gl_Position = projection * view * model * vec4(vertexPos, 1.0);
                             </code>
                         </pre>
                         As with the basic shading models, there are numerous online tutorials on shadow mapping. These are the ones I can recommend:
@@ -318,7 +325,7 @@
                         and it's what I used, but Learn OpenGL had the opposite opinion (ironically their page also links the same microsoft page that has the oppoisite opinion... confusing stuff)
                     </p>
                     <p>
-                        Some small, hoepffully helpful things I can say about personal implementation:
+                        Some small, hopefully helpful things I can say about my personal implementation:
                         <br>
                     </pre>
                     <br>
@@ -341,7 +348,7 @@ gl.vertexAttribPointer(correspondingNumberToGLSLcode, size, type, normalize, str
 gl.enableVertexAttribArray(correspondingNumberToGLSLcode);
                         </code>
                     </pre>
-                        Another really important thing is modify the bias according to the curvature, this helped reduce peter panning a lot.
+                        Another really important thing is to modify the bias according to the curvature, this helped reduce peter panning a lot.
                         <pre style="overflow: scroll;">
                             <code class="language-GLSL">
 // ... in the shadow comparison
@@ -352,7 +359,7 @@ bias = clamp(bias, 0. , 0.01);
                             </code>
                         </pre>
                         <br>
-                        Another useful tip I found that seemed to help was to create a front face bias in the depth texture together in slope based bias in the per fragment comparison.
+                        Another useful tip I found that seemed to help was to create a front face bias in the depth texture together with the slope based bias in the per fragment comparison.
                         <pre style="overflow: scroll;">
                             <code class="language-GLSL">
 // ... in empty fragment shader of depth texture pass
@@ -368,7 +375,7 @@ void main()
                             </code>
                         </pre>
                         Finally, the percentage base filtering (PCF) to anti alias shadows could be sped up with a hardware depth comparison using a sampler2DShadow I think, none of the linked resources uses this.
-                        (I find it odd that learnopengl had previously used a hardware accelerated function (reflect) when explaining specular reflection, it then does simple PCF by hand. Tutorials of tutorials most likely, I'm grateful either way)
+                        (I find it odd that learnopengl, who had previously used a hardware accelerated function (reflect) when explaining specular reflection, then chose to do PCF by hand with potentially worse results. Tutorials of tutorials most likely, I'm grateful either way, it's a great resource.)
                     </p>
                     <p>
                         It's not totally dynamic and there are some problems when things start moving that I need to think about, but overall the visual quality came out fairly ok I think.
