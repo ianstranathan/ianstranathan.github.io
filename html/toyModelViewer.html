@@ -280,17 +280,24 @@
                         It's amazing how funadamental light's compliments are to our general spatial processing.
                         So much of our lives are spent unconsciously, it’s always strange to see pictures of prosaic objects without the normal behavior of light.
                         <br>
-                        I was going to settle for no shadows for this little toy viewer until I saw this picture on learnopengl.com
+                        This picture is from learnopengl's shadow mapping tutorial.
                     </p>
                     <img src="../misc/ToyModelViewer/shadow_mapping_with_without.png" class="diagram">
                     <p>
-                        It's from a tutorial for how to implement shadow mapping. <a href="https://en.wikipedia.org/wiki/Shadow_mapping">Shadow mapping is another heuristic</a>  
-                        from the 70's and it mimics shadows by saving the depth buffer value of a render pass as seen from the light's POV and saving those values to a texture. 
-                        That texture is then sampled in a the fragment shader of a normal render pass (view-projection in vertex shader was from camera's point of view) and compared to the fragment depth.
+                        <a href="https://en.wikipedia.org/wiki/Shadow_mapping"></a>Shadow mapping</a>  is another heuristic
+                        from the 70's believe it or not. It mimics shadows by saving the depth buffer value of a render pass as seen by light (view-projection in vertex shader is from light's point of view) and saving those values to a texture; 
+                        that texture is then sampled in a the fragment shader of a normal render pass (view-projection in vertex shader is from camera's point of view) and compared to the fragment depth, if it's greater than the depth from the texture, it's in shadow.
                         <br>
-                        This is done by transforming a copy of the normal pass vertex position by the same view-projection transform that was used in the first, depth texture pass and then passing it to the fragment shader (interpolated per fragment)
-                        If it's less than what's available in the texture, it's behind something and in shadow. Since the depth texture was created relative to a certain view-projection matrix, it can either be orthographic (directional light) or perspective (spotlight) accordingly.
-                        As with basic shading models, there are numerous online tutorials on shadow mapping. These are the ones I can recommend:
+                        The comparison in the render pass fragment shader is made possible by transforming a copy of the normal render pass vertex position by the same view-projection transform that was used in the first, depth texture pass.
+                        <pre style="overflow: scroll;">
+                            <code class="language-GLSL">
+                                uniform mat4 lightVP;
+                                // ... in vertex shader
+                                fragPosRelativeToLight = lightVP * model * vec4(vertexPos, 1.0);
+                                gl_Position = projection * view * model * vec4(vertexPos, 1.0);
+                            </code>
+                        </pre>
+                        As with the basic shading models, there are numerous online tutorials on shadow mapping. These are the ones I can recommend:
                         <br>
                         <a href="https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping">learnopengl.com</a>
                         <br>
@@ -366,7 +373,7 @@ void main()
                     <p>
                         It's not totally dynamic and there are some problems when things start moving that I need to think about, but overall the visual quality came out fairly ok I think.
                         It looks more or less like the final result for <a href="https://graphics.cs.utah.edu/courses/cs6610/spring2019/?prj=7">CS 5610/ 6610 at the University of Utah.</a> The only real difference is that they're using a persepctive light projection and 
-                        a nicer PCF algorithm than the one I took from Learnopengl (maybe their using hardware acceleration like I mentioned before?). 
+                        a nicer PCF algorithm than the one I took from Learnopengl (maybe they're using hardware acceleration pcf like I mentioned before). 
                     </p>
                     <img src="../misc/ToyModelViewer/CS_5610_6610.jpg" class="diagram">
                     <p>
