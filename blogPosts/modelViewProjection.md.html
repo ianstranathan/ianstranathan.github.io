@@ -1,11 +1,13 @@
 
 1. [Small Math Primer](#smallMathPrimer)
 2. [Model Transform](#modelTransform)
-  * Model Demo
+  * [Hello Demo](#helloQuad)
+  * [Model Demo](#modelDemo)
 3. [View Transform](#viewTransform)
-  * Model Demo
+  * [View Demo](#viewDemo)
 1. [Projection Transform](#projectionTransform)
-  * Projection Demo
+  * [Projection Demo 1](#projectionDemo1)
+  * [Projection Demo 2](#projectionDemo2)
 
 This is a little dive into the so called model-view-projection matrix.
 
@@ -226,7 +228,10 @@ I'll color it with shadertoy's default vec3 col to ease the monotony of using a 
 vec3 col = 0.5 + 0.5*cos(t +uv.xyx + vec3(0,2,4));
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
+<p style="text-align:center">
+<a id="helloQuad"></a>
 Our <a href="demos/MVPDerivationTests/helloQuad.html">Hello Quad </a>
+</p>
 
 As a simple test, let's scale the $xy$ plane down to a quarter, translate circularly in the plane and spin around the $z$ axis.
 I think the circular translation should be pretty obvious, but the rotation matrix is slightly more msyterious and because we're all about first principles, here is a derivation of it (necessary trig derivation included).
@@ -267,6 +272,7 @@ gl_Position =  model * vec4(vertexPos, 1.0);
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+<a id="modelDemo"></a>
 Here is our <a href="demos/MVPDerivationTests/modelTest.html">Model Test</a>
 
 And that's pretty much it, really. If you're comfortable with using 4x4 matrices to encode any rigid transformation, there's nothing more to it.
@@ -689,6 +695,8 @@ gl_Position =  model * round(view * vec4(vertexPos, 1.0));
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+<a id="viewDemo"></a>
+
 <p style="text-align:center">
 Here is our <a href="demos/MVPDerivationTests/viewTest.html">
 View Test
@@ -921,11 +929,11 @@ We can play the same game of linearly mapping from the view frustrum to the cnan
 to remember that we'll be dividing by the $w$ value eventually and that the $w$ value takes on whatever the original $z$ value was.
 
 
-A linear mapping is of the form $z^' = mz + b$
+A linear mapping is of the form $z^‎{\prime} = mz + b$
 
 This is really all we want,
 but whatever our mapped $z$ value is will eventually be divided by the $w$ value, that is to say the $z$ value
-, so for the sake of constructing a matrix, we must offset this by changing the expression to be $z^'z = mz + b$
+, so for the sake of constructing a matrix, we must offset this by changing the expression to be $z^‎{\prime}z = mz + b$
 
 ![](images/MVPAppletImages/diagrams/cam2CubeZ.png)
 
@@ -1023,6 +1031,7 @@ gl_Position = projPos;
 
 And we have perspective, I've never been more excited about a rectangle in my life.
 
+<a id="projectionDemo1"></a>
 <p style="text-align:center">
 Our first <a href="demos/MVPDerivationTests/firstProjectionTest.html">
 Projection Test
@@ -1052,6 +1061,7 @@ gl_Position = projPos;
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+<a id="projectionDemo2"></a>
 <p style="text-align:center">
 Our Second <a href="demos/MVPDerivationTests/secondProjectionTest.html">
 Projection Test
