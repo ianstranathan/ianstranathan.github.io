@@ -1,6 +1,6 @@
 
 
-TL;DR: Live shader <a href="demos/sminLive.html">here</a>.
+TL;DR: Live shader <a href="../demos/sminLive.html">here</a>.
 
 Iñigo Quilez, hallowed be his name, wrote a function for blending distance field primitives to procedurally model organic shapes.
 He wrote a very nice article about it <a href="https://www.iquilezles.org/www/articles/smin/smin.htm">here</a>.
@@ -24,9 +24,9 @@ Looking at iq's article, the example of the polynomial smin seems to be getting 
 some decreasing exponential and a sinusoid. That seems a little hard to think about right now with it's many intersection points to account for, so let's just look at a decreasing exponential with one intersection
 
 
-![Our functions; $f(x) = x^2$ and  $g(x) = e^{-x}$](images/polynomialSmin/smin0.png)
+![Our functions; $f(x) = x^2$ and  $g(x) = e^{-x}$](../images/polynomialSmin/smin0.png)
 
-![The simple union of our two functions](images/polynomialSmin/smin1.png)
+![The simple union of our two functions](../images/polynomialSmin/smin1.png)
 
 
 Looking at this hard minimum, we can imagine a smooth curve in its place that connects $f$ and $g$
@@ -37,7 +37,7 @@ But what does sufficiently close mean more precisely, $i.e$ where should the con
 
 Our functions with their difference $d = f(x) - g(x)$
 
-![](images/polynomialSmin/smin2.png)
+![](../images/polynomialSmin/smin2.png)
 
 Now for a reasonably useless aside:
 
@@ -47,7 +47,7 @@ beyond that they're equal to each other at their intersection. This gives us a p
 Looking at a given  $ε$  neighborhood around this point, you can see that $d$ must be on the interval $[d(x-ε), d(x+ε)]$
 which are small, not necessarily identical values.
 
-![](images/polynomialSmin/sminEpsilon.png)
+![](../images/polynomialSmin/sminEpsilon.png)
 
 Well, now we're at loss about how to generalize along this line of thinking.
 
@@ -59,7 +59,7 @@ A helpful observation is to note that this $ε$ could be made arbitrarily small,
 $[d(x-ε), d(x+ε)]$
 is smaller than our original epsilon.
 
-![](images/polynomialSmin/sminEpsilon2.png)
+![](../images/polynomialSmin/sminEpsilon2.png)
 
 It's also helpful to note that the difference between two polynomials is also a polynomial and that polynomials are continuous everywhere.
 So, by the intermediate value theorem, for some small value say $k$, $d∈ [-k, k]$.
@@ -112,9 +112,9 @@ Just using a linear interpolation between our functions with the correctly mappe
 $ξ = (1-ℓ)f + ℓg$;
 $ℓ = d / {2k} + 1/2$ and $k ≈ 0.1$
 
-![**As expected, our interpolated curve is equal to $f$ and $g$ when $d = -k$ and $d = k$ respectively.**](images/polynomialSmin/firstApproxNaive.png)
+![**As expected, our interpolated curve is equal to $f$ and $g$ when $d = -k$ and $d = k$ respectively.**](../images/polynomialSmin/firstApproxNaive.png)
 
-![**This is improved by limiting our ℓ value to only ever be between $0$ and $1$ as reasoned before**](images/polynomialSmin/firstApproxWithClamp.png)
+![**This is improved by limiting our ℓ value to only ever be between $0$ and $1$ as reasoned before**](../images/polynomialSmin/firstApproxWithClamp.png)
 
 What now and how do we improve on this? Well, before we go racking our brains for something more creative, what other constraints exist for our curve?<br>
 Not only must ξ evaluate to $f$ & $g$ at the "closeness" interval boundaries, but since it's supposed to be smooth,
@@ -196,7 +196,7 @@ float smin( float a, float b, float k )
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-![Our smooth minimum](images/polynomialSmin/sminFinal.png)
+![Our smooth minimum](../images/polynomialSmin/sminFinal.png)
 
 ---
 
@@ -206,7 +206,7 @@ This was a little dive into shader flavored spline interpolation; we took a nice
 The function itself, as said by iq, is only $C^1$ continous, but we could extend this with our same approach to be whatever order continuous we like at the expense of performance.
 Shaders are performance sensitive and the first order polynomial smin is what you mostly see perusing shadertoy.
 
-Live shader can be found <a href="demos/sminLive.html">here.</a>
+Live shader can be found <a href="../demos/sminLive.html">here.</a>
 
 If you're curious how I made this shader, the big picture is that I'm using the "over operator" to make a graph of functions which is a really common technique, see <a href="https://thebookofshaders.com/05/">this well known resource </a> for more on that.
 Additionally, I am using a handmade easing function that is interpolating over the functions' derivatives' values to make the lines more uniform  with some functional conditionals to help out.<br>

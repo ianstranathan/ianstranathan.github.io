@@ -203,8 +203,8 @@ here are three different meshes (instances of same mesh) with three different wo
 I think it's slightly confusing to even have a seperate "model space". Intuitively, I think it makes more
 sense to imagine all of these superimposed on each other at the world's origin and then simply, scaled, rotated and translated as desired
 
-![**The three possible ray-sphere intersections**](images/MVPAppletImages/diagrams/ModelSpace.png)
-![**The three possible ray-sphere intersections**](images/MVPAppletImages/diagrams/WorldSpace.png)
+![**The three possible ray-sphere intersections**](../images/MVPAppletImages/diagrams/ModelSpace.png)
+![**The three possible ray-sphere intersections**](../images/MVPAppletImages/diagrams/WorldSpace.png)
 
 Testing the "Model" transform:
 
@@ -230,15 +230,15 @@ vec3 col = 0.5 + 0.5*cos(t +uv.xyx + vec3(0,2,4));
 
 <p style="text-align:center">
 <a id="helloQuad"></a>
-Our <a href="demos/MVPDerivationTests/helloQuad.html">Hello Quad </a>
+Our <a href="../demos/MVPDerivationTests/helloQuad.html">Hello Quad </a>
 </p>
 
 As a simple test, let's scale the $xy$ plane down to a quarter, translate circularly in the plane and spin around the $z$ axis.
 I think the circular translation should be pretty obvious, but the rotation matrix is slightly more msyterious and because we're all about first principles, here is a derivation of it (necessary trig derivation included).
 (Note, this is only a rotation around a principal axis, namely the $z$ axis, this is analogous to any other rotation around either $x$ or $y$)
 
-![**The three possible ray-sphere intersections**](images/MVPAppletImages/diagrams/rotationMatrixDerivation.png)
-![**The three possible ray-sphere intersections**](images/MVPAppletImages/diagrams/doubleAngle.png)
+![**The three possible ray-sphere intersections**](../images/MVPAppletImages/diagrams/rotationMatrixDerivation.png)
+![**The three possible ray-sphere intersections**](../images/MVPAppletImages/diagrams/doubleAngle.png)
 
 Math is nice, but how to write a matrix that our shader program can understand? A real "gotcha" for wanting to test this is out is the confusion between how matrices are represented mathematically and how they're
 laid out in an array to be processed by the API.
@@ -273,7 +273,7 @@ gl_Position =  model * vec4(vertexPos, 1.0);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 <a id="modelDemo"></a>
-Here is our <a href="demos/MVPDerivationTests/modelTest.html">Model Test</a>
+Here is our <a href="../demos/MVPDerivationTests/modelTest.html">Model Test</a>
 
 And that's pretty much it, really. If you're comfortable with using 4x4 matrices to encode any rigid transformation, there's nothing more to it.
 
@@ -395,13 +395,13 @@ is a vector that is perpendicular to both $a↖{→}$ and $b↖{→}$ and thus n
 (Linearly independent meaning that there is dimensionality or directionality in one that cannot be represented by the other.
 There is no amount of the traditional $y$ that will add to the traditional $x$ for example.)
 
-![](images/MVPAppletImages/diagrams/righthandRule.png)
+![](../images/MVPAppletImages/diagrams/righthandRule.png)
 
 This means we can generate a set of orthogonal vectors from a starting vector and an arbitrary "seeding" vector.
 
 How we generate the set of basis vectors will be different for different coordinate system conventions.
 
-![](images/MVPAppletImages/diagrams/coordSystemWithHands.png)
+![](../images/MVPAppletImages/diagrams/coordSystemWithHands.png)
 
 Remember the goal, we just want to put the camera at the origin and point it down an axis
 (for left handed coordinate systems (D3D/XNA) it will point down $+z$, for right handed cooridinate systems (OpenGL) it will point down $-z$)
@@ -459,13 +459,13 @@ and "front" cross "right" yields "up".
 (due to the anit-commutative nature of cross products
 $a↖{→}$ × $b↖{→}$ = - $b↖{→}$ × $a↖{→}$, it's negative if you reverse the direction of the circle)
 
-![](images/MVPAppletImages/diagrams/crossProductCircle.png)
+![](../images/MVPAppletImages/diagrams/crossProductCircle.png)
 
 Here are a couple of different perspectives to give you a feel for it.
 But you should always convince yourself, you can just recreate it yourself very quickly in the app. e.g. c = (2, 2, 2)
 
-![](images/MVPAppletImages/diagrams/gramSchmidtCorrected1.png)
-![](images/MVPAppletImages/diagrams/gramSchmidtCorrected2.png)
+![](../images/MVPAppletImages/diagrams/gramSchmidtCorrected1.png)
+![](../images/MVPAppletImages/diagrams/gramSchmidtCorrected2.png)
 
 These were generated with <a href="https://www.geogebra.org/3d">Geogebra</a>,
 and unfortunately the convention in math circles is to have the $z$ axis pointing up
@@ -494,7 +494,7 @@ To make a square around the camera, we're going start at the camera, go
 in a unit length away from in and then go to all the combinations of our right and up unit vectors to get our new corner vertices:
 $$ \overrightarrow{c} - \hat{c_f} ± \hat{c_r} ± \hat{c_f}$$
 
-![](images/MVPAppletImages/diagrams/viewTransformTestQuad.png)
+![](../images/MVPAppletImages/diagrams/viewTransformTestQuad.png)
 
 Our new screen quad:
 
@@ -510,8 +510,8 @@ vertex 3: $c↖{→} - c_f↖{→} - c_r↖{→} - c_u↖{→} ≈ 1.124, 0.606,
 
 Visualized in Geogrebra again (black is still the camera):
 
-![](images/MVPAppletImages/diagrams/testQuadGraph2.png)
-![](images/MVPAppletImages/diagrams/viewTransformTestQuad.png)
+![](../images/MVPAppletImages/diagrams/testQuadGraph2.png)
+![](../images/MVPAppletImages/diagrams/viewTransformTestQuad.png)
 
 Let's write down the final view matrix:
 
@@ -698,7 +698,7 @@ gl_Position =  model * round(view * vec4(vertexPos, 1.0));
 <a id="viewDemo"></a>
 
 <p style="text-align:center">
-Here is our <a href="demos/MVPDerivationTests/viewTest.html">
+Here is our <a href="../demos/MVPDerivationTests/viewTest.html">
 View Test
 </a>
 
@@ -717,7 +717,7 @@ Note that I've rounded the $z$ value to its closest integer (one of the vertices
 
 This picture is taken from <a href="http://www.songho.ca/">Song Ho Ahn</a>
 
-![](images/MVPAppletImages/diagrams/gl_projectionmatrix01.png)
+![](../images/MVPAppletImages/diagrams/gl_projectionmatrix01.png)
 
 This is a very clean picture, but the $z$ axis is turned around and it doesn't reinforce that there really is only one
 coordinate system. Perspective projection just employs the mathematical object of a frustum,
@@ -728,27 +728,27 @@ All that previous work was to get it along the $z$ axis to aide in projecting an
 
 Consider an arbitrary point in a frustum
 
-![](images/MVPAppletImages/diagrams/pointInFrustum.png)
+![](../images/MVPAppletImages/diagrams/pointInFrustum.png)
 
 <span style="text-align: center">
 Looking closer, the projected intersection point with the near plane
 </span>
 
-![](images/MVPAppletImages/diagrams/pointInFrustumAlone.png)
+![](../images/MVPAppletImages/diagrams/pointInFrustumAlone.png)
 
 <span style="text-align: center">
 The $xz$ plane of our intersection diagram:
 </span>
 
-![Deriving the $x$ and $y$ coordinates of our projected point](images/MVPAppletImages/diagrams/similarTriangles.png)
+![Deriving the $x$ and $y$ coordinates of our projected point](../images/MVPAppletImages/diagrams/similarTriangles.png)
 
 Deriving the $x$ and $y$ coordinates of our projected point
 
-![linear mapping from a frustum's projected point to the cannonical view volume](images/MVPAppletImages/diagrams/similarTrianglesMath.png)
+![linear mapping from a frustum's projected point to the cannonical view volume](../images/MVPAppletImages/diagrams/similarTrianglesMath.png)
 
 Making a linear mapping from a frustum's projected point to the cannonical view volume.
 
-![](images/MVPAppletImages/diagrams/cameraSpaceToUnitCube.png)
+![](../images/MVPAppletImages/diagrams/cameraSpaceToUnitCube.png)
 
 Note that both expressions are identical up to a change of variable name, so
 you can directly see that both $x$ and $y$ have the same mapping.
@@ -935,7 +935,7 @@ This is really all we want,
 but whatever our mapped $z$ value is will eventually be divided by the $w$ value, that is to say the $z$ value
 , so for the sake of constructing a matrix, we must offset this by changing the expression to be $z^‎{\prime}z = mz + b$
 
-![](images/MVPAppletImages/diagrams/cam2CubeZ.png)
+![](../images/MVPAppletImages/diagrams/cam2CubeZ.png)
 
 Our finished Perspective matrix (This agrees with figure 4.68 in Real Time Rendering 3rd Ed.):
 $$
@@ -1033,7 +1033,7 @@ And we have perspective, I've never been more excited about a rectangle in my li
 
 <a id="projectionDemo1"></a>
 <p style="text-align:center">
-Our first <a href="demos/MVPDerivationTests/firstProjectionTest.html">
+Our first <a href="../demos/MVPDerivationTests/firstProjectionTest.html">
 Projection Test
 </a>
 
@@ -1063,7 +1063,7 @@ gl_Position = projPos;
 
 <a id="projectionDemo2"></a>
 <p style="text-align:center">
-Our Second <a href="demos/MVPDerivationTests/secondProjectionTest.html">
+Our Second <a href="../demos/MVPDerivationTests/secondProjectionTest.html">
 Projection Test
 </a>
 
