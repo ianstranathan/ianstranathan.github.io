@@ -5,15 +5,17 @@ function main()
     var canvas = document.getElementById("cc");
     var gl = canvas.getContext('webgl2');
     
-    var numShaders = 3;
-    var rnd = Math.floor(Math.random() * numShaders);
-    
     var shaderSourceContainer = 
     [
         [rayMarchOneVS, rayMarchOneFS],
         [noiseOneVS, noiseOneFS],
-        [trefoilVS, trefoilFS]
+        [trefoilVS, trefoilFS],
+        [gaussianWaveVS, gaussianWaveFS]
     ];
+
+    var numShaders = shaderSourceContainer.length;
+    var rnd = Math.floor(Math.random() * numShaders);
+
     // ---------------- Basis Vectors Init ----------------
     var renderables = [];
 
