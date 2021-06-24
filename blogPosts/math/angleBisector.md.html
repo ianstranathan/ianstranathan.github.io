@@ -1,4 +1,4 @@
-*Reference derivation for the halfway vector.*
+*Reference derivation for the halfway vector in graphics.*
 
 ---
 
@@ -10,6 +10,13 @@ let a bisecting vector be $$\xi = \lvert \lvert \vec a \rvert \rvert \vec b
     $$
 
 Here is a helpful [desmos visualization](https://www.desmos.com/calculator/flokdplftr)
+
+This is rather arbitrarily presented, but if you construct it for yourself, 
+you'll see the gemoetric motivation for the expression in the parallelogram it forms.
+
+If you're satisfied by this, remembering properties of parallelograms, then you can stop here.
+
+Algebraically showing that the angles are the same is pretty straightforward:
 
 An expression for each of the angles (let's say ${\theta}_1$ is the angle between
 $ \vec a $ and $\xi$ and ${\theta}_2$ is the angle between $ \vec b $ and $\xi$) can be given by the dot
@@ -62,13 +69,13 @@ both original cosine expressions are identical up to swapping $\vec a$ & $\vec b
 
 Thus, repeating the process for ${\theta}_2$ will yield the same expression
 
-The only way for two cosine expressions to equal each other (in the same quadrant) is if their arguments equal each other.
+The only way for two cosine expressions to equal each other is if their arguments are the 
+same or if they're negative versions of each other as cosine is an even function
 
 Thus our expression $\xi$ is the true bisecting vector.
 
 ---
 
-(This is nice and quick proof, really just checked to make me believe in the expression for the halfway vector often encountered in graphics, but it just isn't quite a full proof)
-See [proofwiki](https://proofwiki.org/wiki/Angle_Bisector_Vector) for further discussion.
+See [proofwiki](https://proofwiki.org/wiki/Angle_Bisector_Vector).
 
 <style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
