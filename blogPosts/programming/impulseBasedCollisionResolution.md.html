@@ -1,21 +1,20 @@
-*While toying around with a little 2D physics project, I was unable to follow a popular online explanation of impulse
+*While toying around with a small 2D physics project, I was unable to follow a popular online explanation of impulse
 based collision resolution*
 
-Contents
+<!-- Contents
 ===================================================
 
-1. Overview
-2. Impulse Derivation
-3. Problem Setup
-4. Code example
+* Overview
+* Impulse Derivation
+* Problem Setup
+* Code example -->
 
 Overview
 ===================================================
 The change in motion of objects in a collision is caused by the forces generated at the collision point by compression and deformation.
-This compression and deformation is too fast to simulate frame by for a rigid body.
+This compression and deformation is too fast to simulate frame by frame for a rigid body.
 Infinitesimal collision time allows us to assume an impulse model -- instantaneous change in velocity due to the collision.
-
-Thus the movement after the collision can be calculated from the movement before the collision with an addition of an impulse.
+Thus the movement after the collision can be calculated from the movement before the collision with the consideration of some math and physical parameters.
 
 Impulse Derivation
 ===================================================
@@ -41,6 +40,9 @@ $$\vec v_2 = \vec v_1+ \frac{\vec p_2 - \vec p_1}{m}$$
 
 $$\vec v_2 = \vec v_1+ \frac{\vec J}{m}$$
 
+I tend to use prime notation for after a collision, so let's change that to stay consistent:
+
+$${\vec v}^\prime = \vec v+ \frac{\vec J}{m}$$
 
 Problem Setup
 ===================================================
@@ -48,16 +50,16 @@ Problem Setup
 Consider two colliding objects, the shape is arbitrary, 
 what's important is that a collision has somehow been detected and that a collision normal can be established.
 
-![](../images/impulseBasedCollisionResolution/one.jpg)
+![](../images/impulseBasedCollisionResolution/one.png)
 
 From properties of dot products and normalized vectors, the magnitude of the velocities of the respective bodies along the relative position vector is:
 
 $$\vec V_A \cdot \hat {\left( \vec r_B - \vec r_A \right)}$$
 $$\vec V_B \cdot \hat {\left( \vec r_A - \vec r_B \right)}$$
 
-![The magnitudes of respective velocities along relative position](../images/impulseBasedCollisionResolution/two.jpg)
+![The magnitudes of respective velocities along relative position](../images/impulseBasedCollisionResolution/two.png)
 
-Remembering that the sign of a dot prodct evinces the comparative direction of two vectors;
+Remembering that the sign of a dot product evinces the comparative direction of two vectors;
 it's clear that if the sum of these two dot products is negative, the objects, although colliding during this frame, are moving 
 away from each other, similarly, if the sum is positive then they're moving towards each other and the collision has to be resolved.
 
@@ -66,65 +68,130 @@ $\implies$ moving away from each other
 $$\vec V_A \cdot \hat {\left( \vec r_B - \vec r_A \right)} + \vec V_B \cdot \hat {\left( \vec r_A - \vec r_B \right)} > 0$$
 $\implies$ moving toward each other
 
-This value is called the closing velocity in the literature $v_c$
+This value is called the closing velocity, $v_c$ in the literature. 
 
 This is sloppy naming as it's a scalar value, but I'll stick with it for consistency.
 
-In condensed form:
+Rewritten:
 
-$$v_c = -\left( \vec v_A - \vec v_B \right) \cdot \left( \vec r_A - \vec v_B \right)$$
+$$v_c = -\left( \vec v_A - \vec v_B \right) \cdot \hat {\left( \vec r_A - \vec v_B \right)}$$
 
 It's negation is often used instead, called the seperating velocity $v_s$ and its implications change accordingly.
 
-$$v_s = \left( \vec v_A - \vec v_B \right) \cdot \left( \vec r_A - \vec v_B \right)$$
+$$v_s = \left( \vec v_A - \vec v_B \right) \cdot  \hat {\left( \vec r_A - \vec v_B \right)}$$
 
 $v_s > 0 \implies$ moving away from each other.
 
 $v_s < 0 \implies$ moving toward each other.
 
-Recall that for a 
-$$e = \frac {\lvert \vec v_2 \rvert}{\lvert \vec v_1 \rvert}$$
+Deriving an expression for the velocity after the collision
+---
+Recall from the above derivation of impulse that a velocity after collision is of the following form:
+$${\vec v}^\prime = \vec v+ \frac{\vec J}{m}$$
 
-<p style="text-align: center;">[Wiki article for coefficient of restitution](https://en.wikipedia.org/wiki/Coefficient_of_restitution)
-</p>
+This is unfortunately underconstrained/ underdetermined and another equation is needed to solve for the impulse, fortunately there are more relationships to mine.
 
+From physics, we know the coefficient of restitution (denoted by $e$) is the ratio of the final to initial relative velocity between two objects after they collide.
+It ranges from $0$ to $1$ where $1$ would be a perfectly elastic collision and $0$ a perfectly inelastic collision ([Wiki article for coefficient of restitution](https://en.wikipedia.org/wiki/Coefficient_of_restitution))
 
+$$e = \frac {{v_s}^\prime}{v_s}$$
 
-I think this is more or less a case of poisson's hypothesis.
+By Newton's third law and the restitution relationship:
 
-~~~C
-void ResolveCollision( A, B, MTV)
+$${v_s}^\prime = -e v_s$$
+
+To ease the notation, I would also like to make a substitution for the normalized relative position vector
+$\hat {\left( \vec r_A - \vec v_B \right)}$
+as this is the same thing as the "contact normal", $\hat n_c$
+
+$$\implies v_s = \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$$
+
+Substituting this into our restitution expresion
+$${v_s}^\prime = -e v_s = -e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$$
+
+${v_s}^\prime$ is the seperating velocity (magnitude) after the collision whose constituents must agree with our impulse expression:
+
+$$ {v_s}^\prime = \left( {\vec v_A}^\prime - {\vec v_B}^\prime  \right) \cdot \hat n_c$$
+$${\vec v_A}^\prime = \vec v_A+ \frac{\vec J}{m_A}$$
+$${\vec v_B}^\prime = \vec v_B+ \frac{\vec J}{m_B}$$
+
+$$\implies {v_s}^\prime = \left( \vec v_A+ \frac{\vec J}{m_A} - \vec v_B - \frac{\vec J}{m_B} \right) \cdot  \hat n_c$$
+
+Which can be substituted into our restitution expresion
+$$\left( \vec v_A+ \frac{\vec J}{m_A} - \vec v_B - \frac{\vec J}{m_B} \right) \cdot  \hat n_c
+=
+-e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$$
+
+Using the same algebraic properties of the dot product:
+
+$$\left( \vec v_A - \vec v_B +  \vec J \left( \frac{1}{m_A} - \frac{1}{m_B}\right) \right) \cdot  \hat n_c
+=
+-e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$$
+
+$$\left( \vec v_A - \vec v_B \right)\cdot  \hat n_c +  \vec J \left( \frac{1}{m_A} - \frac{1}{m_B} \right) \cdot  \hat n_c
+=
+-e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$$
+
+$$\vec J \left( \frac{1}{m_A} - \frac{1}{m_B} \right) \cdot  \hat n_c =
+
+-\left(1 + e\right) \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c
+$$
+
+$$\vec J \cdot \hat n_c = 
+\frac{-\left(1 + e\right) \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c}{\left( \frac{1}{m_A} - \frac{1}{m_B} \right)}
+$$
+
+This is, by definition of projection with a normalized vector, the part of the impulse in the direction of the contact normal, which is what we wanted.
+
+<!-- I think this is a reiteration of Poisson's hypothesis and could be more succinctly given. -->
+
+Code Example
+===================================================
+
+~~~javascript
+
+/**
+ * Example function in JavaScript
+ * A, B are rigidBody objects
+ * Uses glMatrix as its vector/ matrix library
+ */
+function resolveCollision(A, B)
 {
-    let relativeVelocity = B.velocity - A.velocity
- 
-    // velocity in the direction of the minimum translation vector direction from SAT
-    let velicityAlongNormal = vec2.dot(relativeVelocity, normal )
- 
+    let relativeVelocity = vec2.create();
+    vec2.subtract(relativeVelocity, A.velocity. B.velocity);
+    let seperatingVelocityMagnitude = vec2.dot( relativeVelocity, normal );
+
     // Do not resolve if velocities are separating
-    if(velAlongNormal > 0)
+    if(seperatingVelocityMagnitude > 0)
         return;
+
+    let contactNormal = vec2.create();
+    vec2.subtract(contactNormal, A.position, B.position));
+    vec2.normalize(contactNormal, contactNormal);
+
+    // Take least elastic restitution coefficient
+    let e = Math.min( A.restitution, B.restitution);
  
-    // Calculate restitution
-    let e = Math.min( A.restitution, B.restitution)
- 
-    // Calculate impulse scalar
-    float j = -(1 + e) * velAlongNormal
-    j /= 1 / A.mass + 1 / B.mass
- 
-    // Apply impulse
-    Vec2 impulse = j * normal
-    A.velocity -= 1 / A.mass * impulse
-    B.velocity += 1 / B.mass * impulse
+    // Calculate part of the impulse in the direction of the contact normal
+    // -(1 + e) * relativeVelocity / (A.inv_mass - B.inv_mass)
+    vec2.scale(relativeVelocity, relativeVelocity, -(1 + e) / (A.inv_mass - B.inv_mass); 
+    let impulseMagnitudeInContactNormal = vec2.dot(relativeVelocity, contactNormal);
+    let impulse = vec2.create();
+    vec2.scale(impulse, contactNormal, impulseMagnitudeInContactNormal);
+
+    // Apply impulse to bodies' velocities
+    A.velocity -= (impulse / A.mass); 
+    B.velocity += (impulse / B.mass);
 }
 ~~~
 
 ---
 Resources:
 
-[Ian Millington - Game Physics Engine Development](https://www.amazon.com/Game-Physics-Engine-Development-Commercial-Grade/dp/0123819768)
+<a href="https://www.amazon.com/Game-Physics-Engine-Development-Commercial-Grade/dp/0123819768" target="_blank">Ian Millington - Game Physics Engine Development]</a>
 
-[Randy Gaul - How to Create a Custom 2D Physics Engine: The Basics and Impulse Resolution](https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-the-basics-and-impulse-resolution--gamedev-6331?_ga=2.64050476.205125146.1625069373-736815224.1612468891)
+<a href="https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-the-basics-and-impulse-resolution--gamedev-6331?_ga=2.64050476.205125146.1625069373-736815224.1612468891" target="_blank">Randy Gaul - How to Create a Custom 2D Physics Engine: The Basics and Impulse Resolution</a>
 
-[Brian Mirtich & John Canny - Impulse-based Simulation of Rigid Bodies](https://graphics.stanford.edu/courses/cs468-03-winter/Papers/ibsrb.pdf)
+<a href="https://graphics.stanford.edu/courses/cs468-03-winter/Papers/ibsrb.pdf" target="_blank">Brian Mirtich & John Canny - Impulse-based Simulation of Rigid Bodies</a>
 
 <style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
