@@ -1,14 +1,6 @@
 *While toying around with a small 2D physics project, I was unable to follow a popular online explanation of impulse
 based collision resolution*
 
-<!-- Contents
-===================================================
-
-* Overview
-* Impulse Derivation
-* Problem Setup
-* Code example -->
-
 Overview
 ===================================================
 The change in motion of objects in a collision is caused by the forces generated at the collision point by compression and deformation.
@@ -109,36 +101,37 @@ $$\implies v_s = \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$$
 Substituting this into our restitution expresion
 $${v_s}^\prime = -e v_s = -e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$$
 
-${v_s}^\prime$ is the seperating velocity (magnitude) after the collision whose constituents must agree with our impulse expression:
+${v_s}^\prime$ is the seperating velocity (magnitude) after the collision whose constituents must agree with our impulse expression. Note that
+due to Newton's third law, impulses for each object will have opposite directions.
 
 $$ {v_s}^\prime = \left( {\vec v_A}^\prime - {\vec v_B}^\prime  \right) \cdot \hat n_c$$
-$${\vec v_A}^\prime = \vec v_A+ \frac{\vec J}{m_A}$$
-$${\vec v_B}^\prime = \vec v_B+ \frac{\vec J}{m_B}$$
+$${\vec v_A}^\prime = \vec v_A + \frac{\vec J}{m_A}$$
+$${\vec v_B}^\prime = \vec v_B - \frac{\vec J}{m_B}$$
 
-$$\implies {v_s}^\prime = \left( \vec v_A+ \frac{\vec J}{m_A} - \vec v_B - \frac{\vec J}{m_B} \right) \cdot  \hat n_c$$
+$$\implies {v_s}^\prime = \left( \vec v_A+ \frac{\vec J}{m_A} - \vec v_B + \frac{\vec J}{m_B} \right) \cdot  \hat n_c$$
 
 Which can be substituted into our restitution expresion
-$$\left( \vec v_A+ \frac{\vec J}{m_A} - \vec v_B - \frac{\vec J}{m_B} \right) \cdot  \hat n_c
+$$\left( \vec v_A+ \frac{\vec J}{m_A} - \vec v_B + \frac{\vec J}{m_B} \right) \cdot  \hat n_c
 =
 -e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$$
 
 Using the same algebraic properties of the dot product:
 
-$$\left( \vec v_A - \vec v_B +  \vec J \left( \frac{1}{m_A} - \frac{1}{m_B}\right) \right) \cdot  \hat n_c
+$$\left( \vec v_A - \vec v_B +  \vec J \left( \frac{1}{m_A} + \frac{1}{m_B}\right) \right) \cdot  \hat n_c
 =
 -e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$$
 
-$$\left( \vec v_A - \vec v_B \right)\cdot  \hat n_c +  \vec J \left( \frac{1}{m_A} - \frac{1}{m_B} \right) \cdot  \hat n_c
+$$\left( \vec v_A - \vec v_B \right)\cdot  \hat n_c +  \vec J \left( \frac{1}{m_A} + \frac{1}{m_B} \right) \cdot  \hat n_c
 =
 -e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$$
 
-$$\vec J \left( \frac{1}{m_A} - \frac{1}{m_B} \right) \cdot  \hat n_c =
+$$\vec J \left( \frac{1}{m_A} + \frac{1}{m_B} \right) \cdot  \hat n_c =
 
 -\left(1 + e\right) \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c
 $$
 
 $$\vec J \cdot \hat n_c = 
-\frac{-\left(1 + e\right) \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c}{\left( \frac{1}{m_A} - \frac{1}{m_B} \right)}
+\frac{-\left(1 + e\right) \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c}{\left( \frac{1}{m_A} + \frac{1}{m_B} \right)}
 $$
 
 This is, by definition of projection with a normalized vector, the part of the impulse in the direction of the contact normal, which is what we wanted.
@@ -148,49 +141,37 @@ This is, by definition of projection with a normalized vector, the part of the i
 Code Example
 ===================================================
 
-~~~javascript
+~~~cpp
 
 /**
- * Example function in JavaScript
  * A, B are rigidBody objects
- * Uses glMatrix as its vector/ matrix library
+ * mtv is a minimum translation vector calculated in the collision detection routine
  */
- function resolveCollision(A, B)
+ void resolveCollision(A, B, mtv)
  {
-    // relative velocity
-    let relativeVelocity = vec3.create();
-    vec3.subtract(relativeVelocity, A.vel, B.vel);
-
-    // contactNormal
-    let contactNormal = vec3.create();
-    vec3.subtract(contactNormal, A.pos, B.pos);
-    vec3.normalize(contactNormal, contactNormal);
-
-    let seperatingVelocityMagnitude = vec3.dot( relativeVelocity, contactNormal );
+    // Get relative velocity and contact normal
+    vec3 relativeVelocity = A.vel - B.vel;
+    vec3 contactNormal = A.pos - B.pos;
+    contactNormal.normalize();
+    
+    float seperatingVelocityMagnitude = relativeVelocity.dot( contactNormal );
 
     // Do not resolve if velocities are separating
     if(seperatingVelocityMagnitude > 0)
         return;
 
     // Take least elastic restitutionCoeff coefficient
-    let e = 2. * Math.min( A.restitutionCoeff, B.restitutionCoeff);
+    float e = std::min( A.restitutionCoeff, B.restitutionCoeff );
+
     // Calculate part of the impulse in the direction of the contact normal
-    // -(1 + e) * relativeVelocity / (A.inv_mass - B.inv_mass)
-    vec3.scale(relativeVelocity, relativeVelocity, -(1 + e) / (A.inv_mass + B.inv_mass));
-
-    let impulseMagnitudeInContactNormal = vec3.dot(relativeVelocity, contactNormal);
-
-    let impulse = vec3.create();
-    vec3.scale(impulse, contactNormal, impulseMagnitudeInContactNormal);
+    float impulseMagnitudeInContactNormal = -(1 + e) seperatingVelocityMagnitude / (A.inv_mass - B.inv_mass);
+    
+    // scale the normalized minimum translation to impulse length 
+    vec3 impulse = -(mtv.normalize) * impulseMagnitudeInContactNormal;
 
     // Apply impulse to bodies' velocities
-    let tmp = vec3.create();
-    vec3.scale(tmp, impulse, 1.0 / A.mass);
-
-    vec3.add(A.vel, A.vel, tmp); 
-    tmp = vec3.create();
-    vec3.scale(tmp, impulse, 1.0 / B.mass);
-    vec3.subtract(B.vel, B.vel, tmp);
+    A.vel += impulse / A.mass
+    B.vel += impulse / B.mass
 }
 ~~~
 
