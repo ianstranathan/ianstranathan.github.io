@@ -1,0 +1,42 @@
+As always totally from scratch
+
+Design Overview
+===================================================
+
+I wanted to challenge myself and make something that wasn't totally ugly, this would mean using a higher poly mesh
+and a better lighting model to show it with.
+
+Making the mesh
+===================================================
+
+Making a Rubik's cube is a pretty popular 3D modeling project and there are a large amount of tutorials available online by 
+much more component people than me. I'm not a 3D artist and have just used blender off and on for a few years as the
+occasional indie game dev project has called for it. Just make a model and color it's vertices accordingly.
+
+-Rubiks cube blender tutorial
+-Sickly Wizard low poly vertex coloring
+
+Loading the mesh
+===================================================
+
+Importing a mesh seem's daunting at first, but if you've messed around with graphics enough, at the end of the day you
+know that it's just big arrays representing vertex positions, normals and colors. I imported with the .ply format and parsed it.
+
+// plyparser here
+
+Instancing 
+===================================================
+
+Given that my (overly high poly) model is on the order of $5$x$10^4$ triangles, 
+I decided to speed things up by instancing the individual "cubies"
+
+Ray-Box Intersection
+===================================================
+
+I spent some 
+Ray-Quad Intersection
+===================================================
+
+
+
+<style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
