@@ -1,13 +1,20 @@
-As always totally from scratch
+*Simple post mortem of a rubik's cube project*
 
 Design Overview
 ===================================================
+Simple Rubik's cube simulation with trackball camera + point & click controls.
+Visually, I wanted to make something that wasn't too ugly and try a higher poly count model.
 
-I wanted to challenge myself and make something that wasn't totally ugly, this would mean using a higher poly mesh
-and a better lighting model to show it with.
+These simple design goals naturally lead to some technical constraints and necessary patterns.
+To achieve the point and click controls I needed to use Ray-Quad intersection tests and some projection logic which took some time to come up with.
+A better lighting model (Blinn-phong) and instancing was used to utilize the high polygon model.
+Everything (model, webgl rendering, model loading, raycast, aabb-ray intersection, ray-quad intersection, etc) was made from scratch for educational purposes.
 
-Making the mesh
+Rendering side of things
 ===================================================
+
+Making a model
+---------------------------------------------------
 
 Making a Rubik's cube is a pretty popular 3D modeling project and there are a large amount of tutorials available online by 
 much more component people than me. I'm not a 3D artist and have just used blender off and on for a few years as the
@@ -17,26 +24,69 @@ occasional indie game dev project has called for it. Just make a model and color
 -Sickly Wizard low poly vertex coloring
 
 Loading the mesh
-===================================================
+---------------------------------------------------
 
-Importing a mesh seem's daunting at first, but if you've messed around with graphics enough, at the end of the day you
-know that it's just big arrays representing vertex positions, normals and colors. I imported with the .ply format and parsed it.
+Importing a mesh seems daunting at first, but if you've messed around with graphics enough, at the end of the day you
+know that it's just big arrays representing vertex data (positions, normals, colors etc). I imported with the .ply format and parsed it.
 
-// plyparser here
+If you're interested in learning more, check out another <a href="#">article of mine </a> on this subject that goes into more detail.
+
+// plyparser code here
+
+this can be kinda painful in the beginning and debugging this stuff is eye bleeding work.
 
 Instancing 
-===================================================
+---------------------------------------------------
 
-Given that my (overly high poly) model is on the order of $5$x$10^4$ triangles, 
-I decided to speed things up by instancing the individual "cubies"
+Given that my (probably overly high poly, I'm not an artist and retopology is a necessary game dev position after all) model is on the order of $5$ x $10^4$ triangles, 
+I needed to speed things up by instancing the individual "cubies"
+
+I highly recommend the tutorial on Webggl2fundamentals.
+
+Lighting Model 
+---------------------------------------------------
+
+I'm using the old school Blinn-Phong lighting model. Check out my <a>article</a> on the half-way vector if you're derivation curious and/ or need a review.
+
+Programming side of things
+===================================================
 
 Ray-Box Intersection
+---------------------------------------------------
+
+When I first started on this project, I was also working on some small raytracing projects and was fortunate to have Peter Shirley as a resource.
+Oct-tree broadphase tests for raytracing use Axis aligned bounding boxes and so I got a basic idea of what the slab method was about. It still involves a bit
+of math and if you're interested in learning how that works, check out my <a>article</a> on it and the visualizations I set up to debug my own convoluted slab method
+implementation
+
+The high level idea is that I would check the bounds of the entire rubik's cube as a broadphase check on a mouse click, if that passes then I check each cubie's bounds
+taking an early out if the maximum possible, diagonal cross section is collected. Each of those intersections squared distance is compared and the minimum is our clicked cubie.
+
+Rotating the Cube
+---------------------------------------------------
+
+This is kind of where programming and graphics programming combine. 
+I go through each cubie and match whichever translation component of the model matrix with the respect axis I'm going to rotate around.
+If they match, I hit the matrix with a rotational matrix, round to get rid of floating point errors, then sub an array buffer into the giant model matrix buffer of the instanced cubies.
+
+
+Controls for rotating the Cube
+---------------------------------------------------
+
+This was by far the stickiest part of the project, I had to come up with a routine where I got two different surface intersections, culling them with the 2D quad bounds,
+and then projecting their relative position vector onto the cube's basis vectors, deiciding which way to go based on the relative sizes of these projections. 
+Some edge cases and bugs were definitely in this one.
+
+![Diagram of rotation selection logic. Note the possible edge cases of vertical and horizontal lines](../images/rubiksCube/turnSelection.png)
+
+Wrapping up
 ===================================================
 
-I spent some 
-Ray-Quad Intersection
-===================================================
+I could definitely speed this up. Cleaner code and a statically typed language would help for one.
 
+It was my original intention to use this as a PBR demo, maybe I'll add that later, who knows.
 
+I feel like Goethe writing and rewriting the same mediocre thing (sorry Goethe...), but beyond mere repetion the concomitant skills gained for
+this project/s have been very valuable and I don't think there is any other way to learn.
 
 <style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
