@@ -1,14 +1,18 @@
-*Simple post mortem of a rubik's cube project*
+*Redoing an old project + postmortem*
+
+TL'DR: try it out [here](#)
 
 Design Overview
 ===================================================
-Simple Rubik's cube simulation with trackball camera + point & click controls.
-Visually, I wanted to make something that wasn't too ugly and try a higher poly count model.
 
-These simple design goals naturally lead to some technical constraints and necessary patterns.
-To achieve the point and click controls I needed to use Ray-Quad intersection tests and some projection logic which took some time to come up with.
+This is a simple Rubik's cube simulation from scratch. It has a trackball camera + point & click controls.
+My goal was to give an old project a visual update with totally reworked controls, meaning higher poly count/ better lighting and a big refactor respectively.
+
+These simple design goals naturally lead to some technical constraints and necessary pattern implementations.
+
+To achieve the point and click controls I needed to use Ray-Quad intersection tests and some projection logic.
 A better lighting model (Blinn-phong) and instancing was used to utilize the high polygon model.
-Everything (model, webgl rendering, model loading, raycast, aabb-ray intersection, ray-quad intersection, etc) was made from scratch for educational purposes.
+Everything (model, webgl rendering, model loading, raycast, aabb-ray intersection, ray-quad intersection, etc) was handmade for educational purposes.
 
 Rendering side of things
 ===================================================
@@ -16,12 +20,10 @@ Rendering side of things
 Making a model
 ---------------------------------------------------
 
-Making a Rubik's cube is a pretty popular 3D modeling project and there are a large amount of tutorials available online by 
+Making a Rubik's cube is a pretty popular 3D modeling project and there are a large amount of 
+<a href="https://www.youtube.com/results?search_query=rubiks+cube+blender">tutorials available online</a> (mine mirrors the first search result) by
 much more component people than me. I'm not a 3D artist and have just used blender off and on for a few years as the
 occasional indie game dev project has called for it. Just make a model and color it's vertices accordingly.
-
--Rubiks cube blender tutorial
--Sickly Wizard low poly vertex coloring
 
 Loading the mesh
 ---------------------------------------------------
@@ -29,11 +31,11 @@ Loading the mesh
 Importing a mesh seems daunting at first, but if you've messed around with graphics enough, at the end of the day you
 know that it's just big arrays representing vertex data (positions, normals, colors etc). I imported with the .ply format and parsed it.
 
-If you're interested in learning more, check out another <a href="#">article of mine </a> on this subject that goes into more detail.
+In practice this can be a little arduous and debugging this kind of thing is painful, eye bleeding work. To quote a programming superior:
 
-// plyparser code here
+"The model I/O is the worst and almost everybody tries to get somebody else’s code to do this." <br>--Peter Shirley, Raytracing in One Weekend 
 
-this can be kinda painful in the beginning and debugging this stuff is eye bleeding work.
+If you're interested in learning more, check out another <a href="#viewing a model">article of mine </a> on this subject that goes into more detail.
 
 Instancing 
 ---------------------------------------------------
@@ -41,52 +43,66 @@ Instancing
 Given that my (probably overly high poly, I'm not an artist and retopology is a necessary game dev position after all) model is on the order of $5$ x $10^4$ triangles, 
 I needed to speed things up by instancing the individual "cubies"
 
-I highly recommend the tutorial on Webggl2fundamentals.
+I highly recommend this [tutorial](https://webgl2fundamentals.org/webgl/lessons/webgl-instanced-drawing.html) by webggl2fundamentals, I really owe that guy a lot.
 
 Lighting Model 
 ---------------------------------------------------
 
-I'm using the old school Blinn-Phong lighting model. Check out my <a>article</a> on the half-way vector if you're derivation curious and/ or need a review.
+I'm using the old school, tried and true Blinn-Phong lighting model. Check out my <a>article</a> on the half-way vector if you're derivation curious and/ or need a review.
 
 Programming side of things
 ===================================================
 
-Ray-Box Intersection
+Selecting the cube - Ray-Box Intersection
 ---------------------------------------------------
 
 When I first started on this project, I was also working on some small raytracing projects and was fortunate to have Peter Shirley as a resource.
-Oct-tree broadphase tests for raytracing use Axis aligned bounding boxes and so I got a basic idea of what the slab method was about. It still involves a bit
-of math and if you're interested in learning how that works, check out my <a>article</a> on it and the visualizations I set up to debug my own convoluted slab method
-implementation
+Oct-tree broadphase tests for raytracing use axis aligned bounding boxes and so I got a basic idea of what the slab method was about. It still involves a bit
+of math and if you're interested in learning how that works, check out my <a>article & visualizations<a> I made to debug/ understand my own convoluted slab method
+implementation.
 
-The high level idea is that I would check the bounds of the entire rubik's cube as a broadphase check on a mouse click, if that passes then I check each cubie's bounds
-taking an early out if the maximum possible, diagonal cross section is collected. Each of those intersections squared distance is compared and the minimum is our clicked cubie.
+The high level description is that I check the bounds of the entire rubik's cube as a broadphase selection, if that passes I check each cubie's bounds with the ray
+taking an early out if the maximum possible, diagonal cross section is collected. The minimum of those selections is our clicked cubie.
 
-Rotating the Cube
----------------------------------------------------
-
-This is kind of where programming and graphics programming combine. 
-I go through each cubie and match whichever translation component of the model matrix with the respect axis I'm going to rotate around.
-If they match, I hit the matrix with a rotational matrix, round to get rid of floating point errors, then sub an array buffer into the giant model matrix buffer of the instanced cubies.
-
-
-Controls for rotating the Cube
+Getting a direction for a rotation
 ---------------------------------------------------
 
 This was by far the stickiest part of the project, I had to come up with a routine where I got two different surface intersections, culling them with the 2D quad bounds,
 and then projecting their relative position vector onto the cube's basis vectors, deiciding which way to go based on the relative sizes of these projections. 
-Some edge cases and bugs were definitely in this one.
+Some edge cases ( quite literally, say if the first first intersection was exactly on an edge) and bugs were definitely in this one.
 
 ![Diagram of rotation selection logic. Note the possible edge cases of vertical and horizontal lines](../images/rubiksCube/turnSelection.png)
+
+Rotating a plane of the Cube
+---------------------------------------------------
+
+This is kind of where programming and graphics programming meet each other in the project. 
+
+Recall that for a homogenous matrix used in rendering, the translation component is contained in the 12th, 13th and 14th index. 
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~C
+mat4 aMat4 = mat4(1.0, 0.0, 0.0, 0.0,  // 1. column
+                  0.0, 1.0, 0.0, 0.0,  // 2. column
+                  0.0, 0.0, 1.0, 0.0,  // 3. column
+                  T_x, T_x, T_x, 1.0); // 4. column
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're curious or confused and want to take a deeper dive into that, check out my
+<a>article on the matrix math of the rasterization process.</a>
+
+After a decision has been made about rotation direction I save a state referencing it (). 
+I then loop through each cubie and match whichever translation component of the model matrix with the respect axis I'm going to rotate around.
+If they match, I hit the matrix with a rotational matrix, round to get rid of floating point errors, then sub an array buffer into the giant model matrix buffer of the instanced cubies.
 
 Wrapping up
 ===================================================
 
-I could definitely speed this up. Cleaner code and a statically typed language would help for one.
+This is like my third time making a rubik's cube and I hope to not make another one. It's like my version of the red car for blender guru or a hyperbolically self-important version of Faust.
 
-It was my original intention to use this as a PBR demo, maybe I'll add that later, who knows.
+This could of course be improved in many ways. Beyond the obvious things (cleaner code: reduce the size of some classes, make things a little more SOLID + DRY etc; use a statically typed language)
+I think the biggest boost in visual fidelity and performance would come in reducing the size of the cubie model (retopologize) and use a better lighting model (energy conserving, PBR, Raytracing etc)
+or alter the current lighting model to account for certain glaring gaps (shadow mapping - the cubies that are covered are still be shaded currently).
 
-I feel like Goethe writing and rewriting the same mediocre thing (sorry Goethe...), but beyond mere repetion the concomitant skills gained for
-this project/s have been very valuable and I don't think there is any other way to learn.
+All things considered, it's been a fun, little project and has taught me a lot for how simple it ultimately is.
 
 <style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
