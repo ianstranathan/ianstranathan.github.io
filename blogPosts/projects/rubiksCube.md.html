@@ -1,18 +1,17 @@
-*Redoing an old project + postmortem*
+*A small project postmortem*
 
-TL'DR: try it out [here](#)
+Tl;dr: try it out [here](../../projects/rubiksCube/index.html))
 
-Design Overview
+Overview
 ===================================================
 
 This is a simple Rubik's cube simulation from scratch. It has a trackball camera + point & click controls.
-My goal was to give an old project a visual update with totally reworked controls, meaning higher poly count/ better lighting and a big refactor respectively.
+My goal was to have intuitive controls that reflected a faithful simulation and to make it as pretty as possible.
 
-These simple design goals naturally lead to some technical constraints and necessary pattern implementations.
-
-To achieve the point and click controls I needed to use Ray-Quad intersection tests and some projection logic.
-A better lighting model (Blinn-phong) and instancing was used to utilize the high polygon model.
-Everything (model, webgl rendering, model loading, raycast, aabb-ray intersection, ray-quad intersection, etc) was handmade for educational purposes.
+These design goals naturally lead to some technical constraints and necessary pattern implementations.
+<!-- To achieve the point and click controls I needed to use Ray-Quad intersection tests and some projection logic.
+A better lighting model (Blinn-phong) and instancing was used to utilize the high polygon model. -->
+Everything (model, rendering system, model i/o, raycast, aabb-ray intersection, ray-quad intersection, etc) was handmade for educational purposes.
 
 Rendering side of things
 ===================================================
@@ -21,7 +20,7 @@ Making a model
 ---------------------------------------------------
 
 Making a Rubik's cube is a pretty popular 3D modeling project and there are a large amount of 
-<a href="https://www.youtube.com/results?search_query=rubiks+cube+blender">tutorials available online</a> (mine mirrors the first search result) by
+[tutorials available online]("https://www.youtube.com/results?search_query=rubiks+cube+blender") (mine mirrors the first search result) by
 much more component people than me. I'm not a 3D artist and have just used blender off and on for a few years as the
 occasional indie game dev project has called for it. Just make a model and color it's vertices accordingly.
 
@@ -29,26 +28,27 @@ Loading the mesh
 ---------------------------------------------------
 
 Importing a mesh seems daunting at first, but if you've messed around with graphics enough, at the end of the day you
-know that it's just big arrays representing vertex data (positions, normals, colors etc). I imported with the .ply format and parsed it.
+know that it's just big arrays representing vertex data (positions, normals, colors etc). I imported with the .ply format and parsed it accordingly.
 
 In practice this can be a little arduous and debugging this kind of thing is painful, eye bleeding work. To quote a programming superior:
 
 "The model I/O is the worst and almost everybody tries to get somebody else’s code to do this." <br>--Peter Shirley, Raytracing in One Weekend 
 
-If you're interested in learning more, check out another <a href="#viewing a model">article of mine </a> on this subject that goes into more detail.
+If you're interested in learning more, check out another [article of mine](#) on this subject that goes into more detail.
 
 Instancing 
 ---------------------------------------------------
 
-Given that my (probably overly high poly, I'm not an artist and retopology is a necessary game dev position after all) model is on the order of $5$ x $10^4$ triangles, 
-I needed to speed things up by instancing the individual "cubies"
+Given that my unoptimized model (a single "cubie") is on the order of $5$ x $10^4$ triangles (~~retopologyy is a thing for this reason~~ this is why unreal's nanite system was created)
+I needed to speed things up by instancing them.
 
-I highly recommend this [tutorial](https://webgl2fundamentals.org/webgl/lessons/webgl-instanced-drawing.html) by webggl2fundamentals, I really owe that guy a lot.
+I highly recommend this [tutorial](https://webgl2fundamentals.org/webgl/lessons/webgl-instanced-drawing.html) by webggl2fundamentals.
+
 
 Lighting Model 
 ---------------------------------------------------
 
-I'm using the old school, tried and true Blinn-Phong lighting model. Check out my <a>article</a> on the half-way vector if you're derivation curious and/ or need a review.
+I'm using the traditional Blinn-Phong lighting model. Check out my [article on the half-way vector](../graphics/halfwayVector.md.html) if you're derivation curious and/ or need a review.
 
 Programming side of things
 ===================================================
@@ -56,53 +56,74 @@ Programming side of things
 Selecting the cube - Ray-Box Intersection
 ---------------------------------------------------
 
-When I first started on this project, I was also working on some small raytracing projects and was fortunate to have Peter Shirley as a resource.
-Oct-tree broadphase tests for raytracing use axis aligned bounding boxes and so I got a basic idea of what the slab method was about. It still involves a bit
-of math and if you're interested in learning how that works, check out my <a>article & visualizations<a> I made to debug/ understand my own convoluted slab method
+I wanted intuitive controls that reflected a faithful simulation e.g. [rubikscu.be](https://rubikscu.be/)
+
+But where to start?
+
+When I first started on this project, I happened to have also working on some small raytracing projects and was fortunate to have Peter Shirley as a resource.
+Raytracing methods use axis aligned bounding boxes in Oct-trees as a broadphase check the slab method is introduced in Peter Shirley's second cource of 
+popular introductory raytracing books. If you're interested in learning how that works, check out my [article and visulizations](../graphics/rayBoxIntersection.md.html) I made to debug/ understand my own convoluted slab method
 implementation.
 
-The high level description is that I check the bounds of the entire rubik's cube as a broadphase selection, if that passes I check each cubie's bounds with the ray
-taking an early out if the maximum possible, diagonal cross section is collected. The minimum of those selections is our clicked cubie.
+I opted for a broadphase check of a camera ray and an AABB representing the entrie cube, if that passes an AABB of each cubie's bounds is checked with the ray
+taking an early out if the maximum possible, diagonal cross section is collected. The minimum distance of of those selections is our clicked cubie.
 
 Getting a direction for a rotation
 ---------------------------------------------------
 
-This was by far the stickiest part of the project, I had to come up with a routine where I got two different surface intersections, culling them with the 2D quad bounds,
-and then projecting their relative position vector onto the cube's basis vectors, deiciding which way to go based on the relative sizes of these projections. 
+This was by far the stickiest part of the project, I eventually came up with, what I think is a standard solution for this kind of thing: 
+take the relative difference vector of two different surface intersections and project them onto the plane's basis vectors (of course culling them with the 2D quad bounds of the cubie surface),
 Some edge cases ( quite literally, say if the first first intersection was exactly on an edge) and bugs were definitely in this one.
 
 ![Diagram of rotation selection logic. Note the possible edge cases of vertical and horizontal lines](../images/rubiksCube/turnSelection.png)
 
+Please see the [wikipedia article]](https://en.wikipedia.org/wiki/Line%E2%80%93plane_intersection) for a line-plane intersection derivation for further discussion.
+
+(This is another good reminder of the importance of asking for help/ avoiding reinventing the wheel... this was all for educational purposes however and deeper understanding is impossible
+without error and redudancy)
+
 Rotating a plane of the Cube
 ---------------------------------------------------
 
-This is kind of where programming and graphics programming meet each other in the project. 
+This is kind of where programming and graphics programming meet each other in the project.
 
-Recall that for a homogenous matrix used in rendering, the translation component is contained in the 12th, 13th and 14th index. 
+Recall that for a homogenous transformation matrix used in rendering, the translation component is contained in the 12th, 13th and 14th index. 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~C
 mat4 aMat4 = mat4(1.0, 0.0, 0.0, 0.0,  // 1. column
                   0.0, 1.0, 0.0, 0.0,  // 2. column
                   0.0, 0.0, 1.0, 0.0,  // 3. column
-                  T_x, T_x, T_x, 1.0); // 4. column
+                  T_x, T_y, T_z, 1.0); // 4. column
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you're curious or confused and want to take a deeper dive into that, check out my
-<a>article on the matrix math of the rasterization process.</a>
+[article on the matrix math of the rasterization process](../graphics/modelViewProjection.md.html)
 
-After a decision has been made about rotation direction I save a state referencing it (). 
-I then loop through each cubie and match whichever translation component of the model matrix with the respect axis I'm going to rotate around.
-If they match, I hit the matrix with a rotational matrix, round to get rid of floating point errors, then sub an array buffer into the giant model matrix buffer of the instanced cubies.
+So far in the input handling cycle, a specific cubie (and associated rendering object) has been selected and the axis of rotation has been decided with the mouse.
+To affect a rotation, each cubie is looped over and if their translation component that corresponds with the axis of rotation matches the selected cubie, 
+it's transform is hit with a rotation matrix. 
+But the GPU buffer also must be changed to see any corresponding change:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~C
+// update a substitue float32 array and then offset into buffer correctly, replacing 9 matrices instead of 27
+for(let j = 0; j < 16; j++)
+{
+    this.theSubArr[j] = this.renderer.renderables[0].cubieTransforms[i][j];
+}
+gl.bufferSubData(this.gl.ARRAY_BUFFER, i * 16 * 4, this.theSubArr);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Floating point errors in the cubie's transformation matrix will accrue over time and its basis vectors and affine translation should be rounded after a rotation. (as a small optimization
+this need only be done on the final, corrective rotation to nearest $\frac {\pi}{2}$
 
 Wrapping up
 ===================================================
 
-This is like my third time making a rubik's cube and I hope to not make another one. It's like my version of the red car for blender guru or a hyperbolically self-important version of Faust.
+There are many ways this projected could be improved upon. Beyond the obvious things (cleaner code: reduce the size of some classes, make things a little more SOLID + DRY etc; use a statically typed language)
+I think the biggest boost in visual fidelity and performance would come in reducing the size of the cubie model (retopologize) and using a better lighting model (energy conserving, PBR, raytracing etc)
+or alter the current lighting model to account for certain glaring gaps / artifacts (shadow mapping - the cubies that are covered are still being shaded currently).
 
-This could of course be improved in many ways. Beyond the obvious things (cleaner code: reduce the size of some classes, make things a little more SOLID + DRY etc; use a statically typed language)
-I think the biggest boost in visual fidelity and performance would come in reducing the size of the cubie model (retopologize) and use a better lighting model (energy conserving, PBR, Raytracing etc)
-or alter the current lighting model to account for certain glaring gaps (shadow mapping - the cubies that are covered are still be shaded currently).
+It's always humbling how much is required for so little; to do these projects that the world doesn't need is a confusing balance between unproductivity and educational value for me. 
 
-All things considered, it's been a fun, little project and has taught me a lot for how simple it ultimately is.
-
+Cheers.
 <style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
