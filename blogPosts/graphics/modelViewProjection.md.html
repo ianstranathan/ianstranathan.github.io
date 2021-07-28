@@ -1,13 +1,7 @@
 
-1. [Small Math Primer](#smallMathPrimer)
-2. [Model Transform](#modelTransform)
-  * [Hello Demo](#helloQuad)
-  * [Model Demo](#modelDemo)
-3. [View Transform](#viewTransform)
-  * [View Demo](#viewDemo)
-1. [Projection Transform](#projectionTransform)
-  * [Projection Demo 1](#projectionDemo1)
-  * [Projection Demo 2](#projectionDemo2)
+
+Overview
+====================================
 
 This is a little dive into the so called model-view-projection matrix.
 
@@ -38,12 +32,9 @@ For the sake of writing these little online articles I'm using WebGL because it 
 I also highly recommend the rasterization mini-cource <a href="https://github.com/ssloy/tinyrenderer" target="_blank">here</a>
 Now, Let's try to "touch" what's going on and figure this stuff out.
 
----
+Small Math Primer
+====================================
 
-<a id="smallMathPrimer"></a>
-<p style="text-align: center; font-size: large;">Small Math Primer</p>
-
----  
 A point in three dimensional space can be represented by a set of three numbers.
 We represent these points by a vector.
 Each vector can be thought of as a sum of unit vectors (it's one unit in length) pointed in different dimensions called basis vectors
@@ -185,10 +176,11 @@ You can see a potentially more interesting further discussion about this <a href
 
 ---
 
-<a id="modelTransform"></a>
-<p style="text-align: center; font-size: large;">Model Transform</p>
+Model Transform
+====================================
 
----                       
+Explanation
+------------------------------------
 A vertex shader processes vertices, simple enough, but no matter what we do, at the end of the day, we're just turning
 knobs on a complicated state machine that rasterizes stuff on a screen.
 The ultimate <a href="https://www.youtube.com/watch?v=t7Ztio8cwqM&t=0s" target="_blank">rasterization</a> entrails are not controllable, but how
@@ -228,8 +220,8 @@ I'll color it with shadertoy's default vec3 col to ease the monotony of using a 
 vec3 col = 0.5 + 0.5*cos(t +uv.xyx + vec3(0,2,4));
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
-<p style="text-align:center">
-<a id="helloQuad"></a>
+Hello Quad
+------------------------------------
 Our <a href="../demos/MVPDerivationTests/helloQuad.html">Hello Quad </a>
 </p>
 
@@ -252,13 +244,12 @@ OpenGL matrices are 16-value arrays with base vectors laid out contiguously in m
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
-// Please note this is pseudo-ish code.
 model =
 [
-  0.25 * cos(t),   -0.25 * sin(t), 0,    0,
-  0.25 * sin(t),    0.25 * cos(t), 0,    0,
-              0,                0, 1,    0,
-0.5 * sin(0.5t),  0.5 * cos(0.5t), 0,    1
+  0.25 * cos(  t ),   -0.25 * sin(t), 0,    0,
+  0.25 * sin(  t ),    0.25 * cos(t), 0,    0,
+                 0,                0, 1,    0,
+  0.50 * sin(0.5t),  0.5 * cos(0.5t), 0,    1
 ];
 
 /*
@@ -272,7 +263,8 @@ gl_Position =  model * vec4(vertexPos, 1.0);
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-<a id="modelDemo"></a>
+Model Demo
+------------------------------------
 Here is our <a href="../demos/MVPDerivationTests/modelTest.html">Model Test</a>
 
 And that's pretty much it, really. If you're comfortable with using 4x4 matrices to encode any rigid transformation, there's nothing more to it.
@@ -281,13 +273,11 @@ This was of course a very simple example, but any arbitrary position and orienta
 We're limited right now in what we can test by our ability to see it. The rendering context will only show whatever is in the normalized device coordinates.
 This bring us to our next object, how to match our scene geometry to this rendering constraint.
 
----
+View Transform
+====================================
 
-<a id="viewTransform"></a>
-<p style="text-align: center; font-size: large;">View Transform:
-</p>
-
---- 
+Explanation
+------------------------------------
 
 This is really where things become less obvious and most resources fail to sufficiently explain what's going.
 See <a href="https://learnopengl.com/Getting-started/Camera">this</a> for example
@@ -389,8 +379,8 @@ It's the process of generating a set of orthogonal vectors using the cross produ
 <span style="font-weight: bold; text-decoration: underline;">Cross product aside:</span>
 (from wikipedia):
 
-Given two linearly independent vectors $a↖{→}$ and $b↖{→}$, the cross product, a × b ("a cross b"),
-is a vector that is perpendicular to both $a↖{→}$ and $b↖{→}$ and thus normal to the plane containing them.
+Given two linearly independent vectors $\vec a$ and $\vec b$, the cross product, $\vec a \times \vec b$ ("a cross b"),
+is a vector that is perpendicular to both $\vec a$ and $\vec b$ and thus normal to the plane containing them.
 
 (Linearly independent meaning that there is dimensionality or directionality in one that cannot be represented by the other.
 There is no amount of the traditional $y$ that will add to the traditional $x$ for example.)
@@ -457,7 +447,7 @@ Maybe the cross product circle pneumonic will aide your credulity (check to see 
 "right" cross "up" yields "front", "up" cross "front" yields "right",
 and "front" cross "right" yields "up".
 (due to the anit-commutative nature of cross products
-$a↖{→}$ × $b↖{→}$ = - $b↖{→}$ × $a↖{→}$, it's negative if you reverse the direction of the circle)
+$\vec a$ × $\vec b$ = - $\vec b$ × $\vec a$, it's negative if you reverse the direction of the circle)
 
 ![](../images/MVPAppletImages/diagrams/crossProductCircle.png)
 
@@ -498,13 +488,13 @@ $$ \overrightarrow{c} - \hat{c_f} ± \hat{c_r} ± \hat{c_f}$$
 
 Our new screen quad:
 
-vertex 0: $c↖{→} - c_f↖{→} + c_r↖{→} + c_u↖{→} ≈ 2.538, 0.606, 1.124$
+vertex 0: $\vec c - \vec {c_f} + \vec {c_r} + \vec {c_u} ≈ 2.538, 0.606, 1.124$
 
-vertex 1: $c↖{→} - c_f↖{→} + c_r↖{→} - c_u↖{→} ≈ 1.722, 2.239, 0.307$
+vertex 1: $\vec c - \vec {c_f} + \vec {c_r} - \vec {c_u} ≈ 1.722, 2.239, 0.307$
 
-vertex 2: $c↖{→} - c_f↖{→} - c_r↖{→} + c_u↖{→} ≈ 0.307, 2.239, 1.721$
+vertex 2: $\vec c - \vec {c_f} - \vec {c_r} + \vec {c_u} ≈ 0.307, 2.239, 1.721$
 
-vertex 3: $c↖{→} - c_f↖{→} - c_r↖{→} - c_u↖{→} ≈ 1.124, 0.606, 2.538$
+vertex 3: $\vec c - \vec {c_f} - \vec {c_r} - \vec {c_u} ≈ 1.124, 0.606, 2.538$
 
 
 
@@ -695,7 +685,8 @@ gl_Position =  model * round(view * vec4(vertexPos, 1.0));
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-<a id="viewDemo"></a>
+View Demo
+------------------------------------
 
 <p style="text-align:center">
 Here is our <a href="../demos/MVPDerivationTests/viewTest.html">
@@ -708,12 +699,11 @@ As you can see, we have identical results to our model test as expected, that's 
 Note that I've rounded the $z$ value to its closest integer (one of the vertices' $z$ value is like -1.005  or something and just barely gets clipped
 , anything outside the cannonical view volume gets clipped or culled, see picture below.
 
----
+Projection Transform
+====================================
 
-<a id="projectionTransform"></a>
-<p style="text-align: center; font-size: large;">Projection Transform</p>
-
----  
+Explanation
+------------------------------------
 
 This picture is taken from <a href="http://www.songho.ca/">Song Ho Ahn</a>
 
@@ -1031,10 +1021,10 @@ gl_Position = projPos;
 
 And we have perspective, I've never been more excited about a rectangle in my life.
 
-<a id="projectionDemo1"></a>
-<p style="text-align:center">
-Our first <a href="../demos/MVPDerivationTests/firstProjectionTest.html">
-Projection Test
+First Projection Demo
+------------------------------------
+Our <a href="../demos/MVPDerivationTests/firstProjectionTest.html">
+first projection test
 </a>
 
 
@@ -1061,12 +1051,16 @@ gl_Position = projPos;
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-<a id="projectionDemo2"></a>
-<p style="text-align:center">
-Our Second <a href="../demos/MVPDerivationTests/secondProjectionTest.html">
-Projection Test
+
+Second Projection Demo
+------------------------------------
+Our <a href="../demos/MVPDerivationTests/secondProjectionTest.html"> second
+projection test
 </a>
 
+
+Wrapping Up
+------------------------------------
 And that's it I guess. That was a lot longer than I thought it was going to be.
 
 This was all done for educational purposes, in practice there are very nice and highly optimized libraries for this kind of thing. (glm, glMatrix etc)
