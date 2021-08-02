@@ -1,32 +1,44 @@
-<script src="../../scripts/onPost.js"></script>
+*Small project post mortem*
 
-Overview
-===================================================
-This is a simplified 2D physics simulation.
+Tl;dr: Try it out [here](../../projects\2Dphysics\refactor\index.html)
 
+Overview:
+===============
 
-Rendering Side of Things
-===================================================
+I wanted to make a simple physics "engine" (equations of motion, basic collision) as a programming exercise 
 
+I was inspired to do so after watching this presentation by [Steven Witten](https://www.youtube.com/watch?v=Zkx1aKv2z8o&t=2399s)
+(It's worth your time if you're interested in math or graphics. All his presentations, along with a host of interesting toys and articles, can be found on his incredibly polished [site:](http://acko.net/))
 
+The fundamental idea of a physics system is very simple: incoporate the appropriate physical law (gravity, hookes law, w/e) and numerically integrate.
+
+Pushing around pixels in practice however is hard with a capital H and this is just a simulation of frictionless colliding rigid bodies (no rotation, multiple contact point collisions, or constrained simulation)
+
+As usual, the underpinning rendering and programming routines were all implemented from scratch (webgl, seperating axis theorem, impulse collision response, euler integration etc)
+
+In the future, time/ interest willing, I hope to improve upon this first stab and dig deeper into the subject.
+
+Rendering Side of Things:
+---------------------------------------------------
+Vanilla WebGL with some boilerplate code and glmatrix as my vector and matrix library.
+
+* Wireframe Shader via barycentric coordinates math from vertex data.
+* orthographic projection matrix to map world coordinates to 2D space.
+
+If I were to do this as a fuller project I'd like to add instancing/ batch rendering to really stress test things.
+
+Programming Side of Things:
 ---------------------------------------------------
 
-Physics System
-===================================================
+Visualization tests or articles for each main component:
 
-I made visualization tests or wrote articles for each main component:
-
-* <a onclick="postClick('math/eulerMethod')" href="#">Euler Method</a> (Verlet Integration too eventually) for numerical integration to propagate motion
-
+* [Euler Method](../math/eulerMethod.md.html)  for numerical integration to propagate motion
 * [Seperating Axis Theorem](../../projects/2Dphysics/SATVisualization/index.html) for narrow phase collision detection and contact normal
-
-* <a onclick="postClick('physics/impulseBasedCollisionResolution')" href="#">Impulse Based Collision Response</a>
-
+* [Impulse Based Collision Response](../physics/impulseBasedCollisionResolution.md.html)
 * [Quadtree](../../projects/2Dphysics/quadTreeVisualization/index.html) for broadphase collision detection
 
-
 Resources
-===================================================
+---------------------------------------------------
 
 SAT:
 
