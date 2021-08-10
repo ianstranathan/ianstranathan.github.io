@@ -24,7 +24,8 @@ Vanilla WebGL with some boilerplate code and glmatrix as my vector and matrix li
 
 * Wireframe shader via barycentric coordinates from vertices.
 
-If I were to do this as a fuller project I'd like to add instancing/ batch rendering to really stress test things.
+A glaring missing component is not setting current state of renderer from the interpolation between the two physics states. This results in some flickering artifacts.
+Also, if I were to do this as a fuller project I'd like to add instancing/ batch rendering to be able to stress test the simulation.
 
 Programming Side of Things:
 ---------------------------------------------------
@@ -38,6 +39,9 @@ Visualization tests or articles for each main component:
 
 Resources
 ---------------------------------------------------
+
+Fixed Timestep:
+* [Glenn Fiedler](https://www.gafferongames.com/post/fix_your_timestep/)
 
 SAT:
 

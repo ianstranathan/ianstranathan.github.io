@@ -78,7 +78,7 @@ void main()
     //------------- uvs ------------- 
     vec2 gaussianUV = 2. * gl_FragCoord.xy/resolution.xy - 1.;
     //vec2 mousePos = 2. * iMouse.xy/resolution.xy - 1.;
-    vec2 mousePos = vec2(mod(time, 5.) - 2., 0.);
+    vec2 mousePos = vec2(time - 2., 0.);
 	vec2 noiseUV1 = 2. * gl_FragCoord.xy/resolution.xy - 1.;
     vec2 noiseUV2 = 2. * gl_FragCoord.xy/resolution.xy - 1.;
     vec2 uv = gl_FragCoord.xy/resolution.xy;

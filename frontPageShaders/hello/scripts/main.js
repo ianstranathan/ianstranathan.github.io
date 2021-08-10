@@ -10,18 +10,20 @@ function main()
         [rayMarchOneVS, rayMarchOneFS],
         [noiseOneVS, noiseOneFS],
         [trefoilVS, trefoilFS],
-        [gaussianWaveVS, gaussianWaveFS]
+        [gaussianWaveVS, gaussianWaveFS],
+        [goldenSpiralOneVS, goldenSpiralOneFS],
+        [oldWebsiteMouseVS, oldWebsiteMouseFS]
     ];
+    
+    var rnd = 5; //Math.floor(Math.random() * numShaders);
 
-    var numShaders = shaderSourceContainer.length;
-    var rnd = Math.floor(Math.random() * numShaders);
-
-    // ---------------- Basis Vectors Init ----------------
+    //
     var renderables = [];
 
     var helloProgram = createProgramFromSources(gl, shaderSourceContainer[rnd][0], shaderSourceContainer[rnd][1]);
     var helloProgramUTime = gl.getUniformLocation(helloProgram, "time");
     var helloProgramUResolution = gl.getUniformLocation(helloProgram, "resolution");
+    var helloProgramUMouse = gl.getUniformLocation(helloProgram, "mousePos");
     
     var quadVAO = gl.createVertexArray();
     var quadVBO = gl.createBuffer();
@@ -43,7 +45,8 @@ function main()
         vertCount: 6,
         program: helloProgram,
         uniformLocations: {resolution: helloProgramUResolution,
-                           time: helloProgramUTime
+                           time: helloProgramUTime,
+                           mousePos: helloProgramUMouse
                         }
         });
     
@@ -54,12 +57,16 @@ function main()
 
     // ---------------- Time Init ----------------
     var oldTimeStamp = 0.0;
-    var seconds = 0.0;
+    var time = 0.0;
     var deltaTime = 0.0;
     
     // -- no need to do this more than once
     gl.useProgram(helloProgram)
     gl.bindVertexArray(quadVAO);
+
+    var shaderObj = {shaders: shaderSourceContainer, currentShaderIndex: rnd};
+
+    var inputManager = new InputManager(gl, shaderObj, renderables);
 
     // ---------------- Start Render Loop ----------------
     window.requestAnimationFrame(render);
@@ -74,10 +81,11 @@ function main()
         // -------- Time Update -------- 
         deltaTime = (timeStamp - oldTimeStamp) / 1000.0; // in seconds
         oldTimeStamp = timeStamp;
-        seconds += deltaTime;    
+        inputManager.time += deltaTime;    
         
         // -------- Uniform Update -------- 
-        gl.uniform1f(renderables[0].uniformLocations["time"], seconds);
+        gl.uniform1f(renderables[0].uniformLocations["time"], inputManager.time);
+        gl.uniform2f(renderables[0].uniformLocations["mousePos"], inputManager.mousePos[0], inputManager.mousePos[1]);
         gl.uniform2f(renderables[0].uniformLocations["resolution"], gl.canvas.width, gl.canvas.height);
         gl.drawArrays(renderables[0].primitiveType, 0, renderables[0].vertCount);
         
