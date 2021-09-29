@@ -1,0 +1,113 @@
+Overview
+=======================================================================================
+I don’t particularly like the name raymarching, it’s confusing on a surface level and sphere tracing 
+seems much more representative of what's going on, but I think we’re stuck with it.
+
+Why bother:
+---------------------------------------------------------------------------------------
+
+* Allows the creation of complex shapes through construvtive solid geomety (CSG) and doesn't need anlytical intersection solutions for rendering.
+
+* Cheap ambient occlusion (AO) according to the number of steps ray is marched
+
+Signed Distance Function
+=======================================================================================
+
+A field is a representation of a space that has a numerical value associated with every point of that space.
+If it’s “signed”, it just means that it can be both positive and negative. 
+Since it’s assumed to be continuous, it can also take on the intermediary value of zero.
+
+With respect to a digital object we want to render, 
+a signed field can be found via the distance from the ray’s current position to that object’s surface.
+So, if the ray is inside the object, the SDF is negative, zero if it’s exactly on the surface and positive otherwise.
+
+Algorithm
+=======================================================================================
+
+Using the properties of a signed distance field, we can step or march a ray along its direction in increment lengths of the amount the SDF 
+returns. This ensures the ray can never step past the surface (for the case of a single, non-distorted primitive)
+If the ray’s position is within a given threshold distance (or has marched beyond a given threshold distance, or has taken its maximum 
+amount of steps), the ray stops marching and we call it a hit. 
+Thus, raymarching is actually a distance estimation technique as opposed to raytracing where the exact intersection points of the geometry 
+(as described by a set of primitives, like triangles) and ray are returned.
+
+Raymarching Loop
+---------------------------------------------------------------------------------------
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+#define MAX_RAY_STEPS (100)
+#define MAX_DIST (100)
+#define MIN_DIST (0.001)
+
+float distanceEstimator()
+{
+    // sdf combinations here
+    return sdfCombinations;
+}
+
+float trace(vec3 from, vec3 direction) 
+{
+    float totalDistance = 0.0;
+    int steps;
+    for (steps=0; steps < MAX_RAY_STEPS; steps++) 
+    {
+        vec3 p = from + totalDistance * direction;
+        float distEstimate = distanceEstimator(p);
+        totalDistance += distEstimate;
+        if (distEstimate < MIN_DIST || totalDistance > MAX_DIST)
+        {
+            break;
+
+        }
+    }
+    return totalDistance;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To reiterate, the returned distance is the approximate length the current ray must go along in 
+its direction to be within an accepted range of the object’s (or objects’ if there are more than one in the distance estimator) surface.
+
+Constructive Solid Geometry & Sundry:
+=======================================================================================
+
+Constructive solid geometry creates a complex surface or object by using Boolean operators (union, intersection and difference) on primitives (cylinders, prisms, pyramids, spheres, cones etc).
+
+Union
+---------------------------------------------------------------------------------------
+
+Subtraction
+---------------------------------------------------------------------------------------
+
+Intersection
+---------------------------------------------------------------------------------------
+
+Domain Distortion
+---------------------------------------------------------------------------------------
+
+Domain Repetition
+---------------------------------------------------------------------------------------
+
+<!-- Link to  -->
+
+Problems
+=======================================================================================
+
+Overmarching/stepping
+---------------------------------------------------------------------------------------
+
+Resources:
+========================
+
+German dude
+https://www.youtube.com/watch?v=s8nFqwOho-s&t=990s
+
+IQ
+https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
+
+Blackle Mori
+https://www.youtube.com/watch?v=FilPE91ACOA
+
+
+https://digitalfreepen.com/2017/06/21/consistent-distance-fields.html
+
+<style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
