@@ -2,9 +2,10 @@
 
 TL;DR: Live shader <a href="../demos/sminLive.html">here</a>.
 
-Iñigo Quilez, hallowed be his name, wrote a function for blending distance field primitives to procedurally model organic shapes.
+Iñigo Quilez, hallowed be his name, wrote a function for blending distance function primitives to model organic shapes with raymarching.
+(for introduction to raymarching, see the article I wrote [here](raymarching.md.html))
 He wrote a very nice article about it <a href="https://www.iquilezles.org/www/articles/smin/smin.htm">here</a>.
-It's a foundational technique to get natural looking implicit surfaces because nature is smooth and continuous(... that's at least what they told me in school anyway) and a simple union of two shapes is not.
+It's a foundational technique to get natural looking implicit surfaces which is important because nature is smooth and continuous(... that's at least what they told me in school anyway) and a simple union of two shapes is not.
 
 "The first time you see something it's a trick, the second time it's a technique" and for anyone that is trying to learn this stuff and for whom it's still a trick, hopefully this is helpful.
 I know I can only reluctantly use some derived result if I don't understand where it's coming from.
@@ -13,8 +14,8 @@ It was impossible to follow iq's derivation in his article, surely the material 
 In my opinion, especially for the beginner like me, derivations are not the place for compactness, especially for something so foundational. <br>
 
 It really gave me pause to see a couple really smart guys I follow using this function without fulling understanding it or deriving it correctly.
-See: <a href="https://www.youtube.com/watch?v=Cp5WWtMoeKg&t=185s">Sebastian Lague</a> and
-<a href="https://www.youtube.com/watch?v=YJ4iyff7zbk&t=453s">The Art of Code</a><br>
+See: <a href="https://www.youtube.com/watch?v=Cp5WWtMoeKg&t=185s" target="_blank">Sebastian Lague</a> and
+<a href="https://www.youtube.com/watch?v=YJ4iyff7zbk&t=453s" target="_blank">The Art of Code</a><br>
 Both are far more productive, experienced and knowledgable than me, so maybe the real takeaway of this derivation is to choose my battles more wisely.
 There is however something deeply fruitful about reinventing the wheel, despite the undeniable loss in productivity.
 

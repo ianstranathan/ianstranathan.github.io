@@ -1,35 +1,113 @@
+*Raymarching tinkering summary*
+
 Overview
 =======================================================================================
-I don’t particularly like the name raymarching, it’s confusing on a surface level and sphere tracing 
-seems much more representative of what's going on, but I think we’re stuck with it.
 
-Why bother:
+Note
+---------------------------------------------------------------------------------------
+Computer graphics has been a hobby of mine for a few years and shadertoy-style fragment shaders were what originally sparked my interest.
+The main algorithm behind many of the inspiring 3D shaders you can find there is raymarching (or sphere tracing).
+
+Shaders tend to be, euphemistically put, terse and the resources available for learning (always improving with time) have historically been sparse and irregular.
+This is frustrating from a student's perspective because the most correct resources are made by working rendering engineers, but then, almost necessarily, the basics are ommited and you're left
+to decypher heiroglyphically written shader code. On the other end of the spectrum, you come accross over written (I'm guilty of this myself) and/ or incorrectly derived/ explained
+articles. Bridging the two is educational -- learning and experimenting on your own -- but it can also be daunting and time consuming.
+
+Hopefully this serves as a clear explaination of raymarching and a consolidation of various resources I've collected to ease someone else's learning curve.
+
+Motivation:
 ---------------------------------------------------------------------------------------
 
-* Allows the creation of complex shapes through construvtive solid geomety (CSG) and doesn't need anlytical intersection solutions for rendering.
+I was personally motivated to learn about this to try and make the mathematical art that I was so inspired by, but there
+are lots of good reasons to learn about signed distance rendering:
 
-* Cheap ambient occlusion (AO) according to the number of steps ray is marched
+* Allows the creation of complex, procedural shapes (constructive solid geomety -- CSG) and doesn't need anlytical intersection solutions for rendering.
 
-Signed Distance Function
+* A number of effects that are expensive in a normal rendering pipeline are naturally cheap in raymarching (ambient occlusion, glow, fog, shadows, instancing)
+
+* It's interesting and can be another tool in your toolkit (you never know when you might use a technique ; see [Valve and font rendering with SDFs](https://steamcdn-a.akamaihd.net/apps/valve/2007/SIGGRAPH2007_AlphaTestedMagnification.pdf) for a creative, working example)
+
+Signed distance function (SDF)
 =======================================================================================
 
-A field is a representation of a space that has a numerical value associated with every point of that space.
-If it’s “signed”, it just means that it can be both positive and negative. 
-Since it’s assumed to be continuous, it can also take on the intermediary value of zero.
+Definition
+---------------------------------------------------------------------------------------
+
+A signed distance function (or oriented distance function) determines the distance of a given point from the boundary of something else 
+with the sign determined by whether the given point is inside or outside the boundary.
+
+Mathematically, this is an implicit surface, i.e. an equation of the form $F\left( x, y, z \right) = 0$
 
 With respect to a digital object we want to render, 
-a signed field can be found via the distance from the ray’s current position to that object’s surface.
-So, if the ray is inside the object, the SDF is negative, zero if it’s exactly on the surface and positive otherwise.
+a signed function can be found via the distance from the ray’s current position to that object’s surface.
+Conventially, the distance's expression is such that the SDF will be negative if the ray’s current position is inside the object, positive outside, or zero if it’s exactly on the surface.
+It could be the other way around, you just need that trichotomy.
 
-Algorithm
+Example
+---------------------------------------------------------------------------------------
+
+A sphere is the prototypical example:
+
+The equation of a sphere of radius $R$ centered at the origin in cartesian coordinates is:
+$F\left( x, y, z \right) = x^2 + y^2 + z^2 = R^2 \implies x^2 + y^2 + z^2 - R^2 = 0$
+
+A field of values emerges for the coordinate space according to that implicit formula, telling you whether you are outside, inside or on the surface of the sphere
+( again, positive for all coordinates outside the sphere, zero for those exactly on the sphere's surface and negative for those inside the sphere )
+
+The raymarching algorithm works with any such function and there are many geometric primitives to choose from.
+Deriving these functions is one of the harder and more interesting (mathier) components of raymarching.
+
+For a reference list see [Iñigo Quilez](https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm), the co-creator of shadertoy and influential demoscener/ mathematical artist/ rendering engineer.
+
+The Raymarching (Sphere Tracing) Algorithm
 =======================================================================================
 
-Using the properties of a signed distance field, we can step or march a ray along its direction in increment lengths of the amount the SDF 
-returns. This ensures the ray can never step past the surface (for the case of a single, non-distorted primitive)
-If the ray’s position is within a given threshold distance (or has marched beyond a given threshold distance, or has taken its maximum 
-amount of steps), the ray stops marching and we call it a hit. 
-Thus, raymarching is actually a distance estimation technique as opposed to raytracing where the exact intersection points of the geometry 
-(as described by a set of primitives, like triangles) and ray are returned.
+The signed distance function (remember this is different for each geometry) gives the distance to the surface of the object to be rendered.
+
+Recall the vector form of a ray (a line):
+$$ \vec r = \vec {ro} + t \vec {rd} $$ 
+where $t$ is the length or distance that scales a unit vector $\vec {rd}$ giving the rays direction
+(If using rays and geometric optics is unfamiliar, see my article on a [ray-sphere interesection](#) for an introduction)
+
+This SDF returned distance can be used to as our line parameter.
+This ensures that the ray can never step past the surface of the object (for the case of a single, non-distorted primitive. Overstepping is discussed later in this article)
+
+This process is repeated until the distance is within an arbitrarily small threshold, the loop has finished its iterations, or the distance has gone
+beyond some arbitrary large threshold.
+
+I think this is best understood visually:
+
+If the ray’s position is within a given threshold distance of the surface the ray stops marching and we call it a hit.
+![**Hit case.** Diagram from [Simon Ashbery](https://si-ashbery.medium.com/raymarching-3cdf86c637ba)](../images/graphics/raymarching/hit.png)
+
+The ray may never intersect the object: If accumulated distance goes beyond a given threshold, break out of the raymarching loop.
+![**Miss case.** Diagram from [Simon Ashbery](https://si-ashbery.medium.com/raymarching-3cdf86c637ba)](../images/graphics/raymarching/miss.png)
+
+The case of a sphere or other single primitive is clear, but what about multiple or non-primitve shapes? For example:
+
+![Raymarching diagram from [hvidtfeldts](http://blog.hvidtfeldts.net)](../images/graphics/raymarching/ray.png)
+
+Or this commonly encountered picture from GPU Gems 2:
+
+![Figure 8-5, [Chapter 8, GPU Gems 2](https://developer.nvidia.com/gpugems/gpugems2/part-i-geometric-complexity/chapter-8-pixel-displacement-mapping-distance-functions)](../images/graphics/raymarching/GPUGemsRaymarching.jpg)
+
+Naively put: How does the ray know to step correctly? Well, it's embarrasing that it was confusing to me at first because it's so simple. 
+The ray steps according the sdf which if it's an exact SDF (doesn't distort the metric of the space -- preserves distances) 
+is the distance to the surface of the object.
+We make the ray step correctly by limiting it to step according the minimum SDF of all the objects we're rendering. This is actually how composition of
+objects can happen (see Constructive Solid Geometry below). This poses some scaling issues ()
+
+We don't want the ray to accidentally step past the surface of any of the objects, so all that's needed is to take the minimum of each object's
+SDF.
+
+Here are some more interactive visualizations and explainations:
+Awesome interactive visualization [shader](https://www.shadertoy.com/view/4dKyRz) that makes a nod to the cannonical 
+GPU Gems 2 image, or this (literally) award winning 
+[explanatory shader](https://reindernijhoff.net/2017/07/raymarching-distance-fields/)
+
+In short, raymarching is actually a distance estimation technique as opposed to raytracing where the exact intersection points of the geometry 
+(as described by a set of primitives, like triangles) and the ray are returned. 
+(distance estimation tells the distance from a point to the closest object. Ray tracing finds the distance from a point to a given object along a line.)
 
 Raymarching Loop
 ---------------------------------------------------------------------------------------
@@ -57,7 +135,6 @@ float trace(vec3 from, vec3 direction)
         if (distEstimate < MIN_DIST || totalDistance > MAX_DIST)
         {
             break;
-
         }
     }
     return totalDistance;
@@ -67,47 +144,94 @@ float trace(vec3 from, vec3 direction)
 To reiterate, the returned distance is the approximate length the current ray must go along in 
 its direction to be within an accepted range of the object’s (or objects’ if there are more than one in the distance estimator) surface.
 
-Constructive Solid Geometry & Sundry:
+Lighting
 =======================================================================================
+
+Calculating Normals
+---------------------------------------------------------------------------------------
+
+From Mikael Hvidtfeldt Christensen's awesome article on Raymarching:
+"the common way to find the surface normal, is to sample the DE function close to the camera ray/surface intersection. 
+But if the intersection point is located very close to the surface (for instance exactly on it), 
+we might sample the DE inside the sphere. And this will lead to artifacts in the normal vector calculation for (1) and (3). 
+So, if possible use signed distance functions. 
+Another way to avoid this, 
+is to backstep along the camera ray a bit before calculating the surface normal (or to add a ray step multiplier less than 1.0)."
+
+Modeling Techniques:
+=======================================================================================
+
+When first defining the raymarching algorithm, we were using the term distance estimator to refer to 
+a function working on a collection of objects (things with a distance function)
+that returns the minimum of each object's
+SDF.
+
+This brings up an interesting space to play in, we can chose to return something else.
+
+Constructive Solid Geometry (CSG)
+---------------------------------------------------------------------------------------
 
 Constructive solid geometry creates a complex surface or object by using Boolean operators (union, intersection and difference) on primitives (cylinders, prisms, pyramids, spheres, cones etc).
 
-Union
+Image from Wikipedia article on CSG:
+![Union](../images/graphics/raymarching/Boolean_union.PNG) ![Difference](../images/graphics/raymarching/Boolean_difference.PNG) ![Intersection](../images/graphics/raymarching/Boolean_intersect.PNG)
+
+Smooth minimum
 ---------------------------------------------------------------------------------------
 
-Subtraction
----------------------------------------------------------------------------------------
+A smooth minimum is a function that blends distance function primitives (as opposed to a simple union) to model organic shapes with raymarching.
+It's a spline interpolation that makes the union of the distance functions $C^1$ continuous.
 
-Intersection
----------------------------------------------------------------------------------------
+Note, this returns a non-exact SDF:
+"operators (like the smooth minimum here) cannot be "exact" because the very mathematics that describe them prevent it"
+-Iñigo Quilez
 
-Domain Distortion
----------------------------------------------------------------------------------------
+My derivation of the polynomial flavor of this function can be found [here](polynomialSmin.md.html), if you're interested.
 
-Domain Repetition
+Domain Distortion, Repetition, Folding, 
 ---------------------------------------------------------------------------------------
+These techniques aren't unique to raymarching, but are just as useful as in all other mathematical arts.
 
-<!-- Link to  -->
+Domain Distortion:<br>
+
+Domain Repetition:<br>
+
+Domain Folding:<br>
 
 Problems
 =======================================================================================
 
 Overmarching/stepping
 ---------------------------------------------------------------------------------------
+Overstepping will either fail to render something ( it stepped completely past an object ) 
+or render the inside of an object (it stepped past the surface) either way it leads to artifacts.
+
+The raymarching/ sphere tracing algorithm is fastest when we the largest step size possible (the shortest distance returned by the distance estimator)
+but it still works if we take smaller than optimal steps, it will just take longer for the loop to resolve at a threshold distance.
 
 Resources:
 ========================
 
-German dude
-https://www.youtube.com/watch?v=s8nFqwOho-s&t=990s
+Domain Repetition
+* <a href="https://www.youtube.com/watch?v=s8nFqwOho-s&t=990s" target="_blank">Mercury Demoteam</a>)
 
-IQ
-https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
+Comprehensive list of primitives and techniques for SDFs
+* [Iñigo Quilez](https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm)
 
-Blackle Mori
-https://www.youtube.com/watch?v=FilPE91ACOA
+Lighting
+* <a href="https://www.youtube.com/watch?v=FilPE91ACOA" target="_blank">Blackle Mori</a>)
+* [Gamma Correction from LearnOpenGL.com](https://learnopengl.com/Advanced-Lighting/Gamma-Correction)
 
+Correcting Overstepping 
+* [digitalfreepen](https://digitalfreepen.com/2017/06/21/consistent-distance-fields.html)
 
-https://digitalfreepen.com/2017/06/21/consistent-distance-fields.html
+Visualizations:
+* [Trashe725]https://www.shadertoy.com/view/4dKyRz
+* [Reinder Nihoff](https://reindernijhoff.net/2017/07/raymarching-distance-fields/)
+
+General Tutorials
+* [scratch a pixel](https://www.scratchapixel.com/lessons/advanced-rendering/rendering-distance-fields)
+* <a href="https://www.youtube.com/watch?v=Ff0jJyyiVyw&list=PLGmrMu-IwbgtMxMiV3x4IrHPlPmg7FD-P" target="_blank">Art of Code</a>)
+[Mikael Hvidtfeldt Christensen](http://blog.hvidtfeldts.net/index.php/2011/08/distance-estimated-3d-fractals-ii-lighting-and-coloring/)
 
 <style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
