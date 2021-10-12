@@ -44,21 +44,20 @@ body a {
   border-top-right-radius: 10px;
   align-content: center;
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto;
   grid-template-rows: auto; }
 
 #shader-calendar-container {
-  background-color: white;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   width: 100%;
-  height: 91.2vh;
+  height: 91.5vh;
   margin: 0px;
   padding: 0px; }
 
 #shader-iframe {
-  border-bottom-right-radius: 9.5px;
-  border-bottom-left-radius: 9.5px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
   width: 100%;
   height: 100%;
   border: none;
@@ -68,4 +67,4 @@ body a {
   #top-container {
     width: 60%; } }
 
-/*# sourceMappingURL=blog.css.map */
+/*# sourceMappingURL=index.css.map */
