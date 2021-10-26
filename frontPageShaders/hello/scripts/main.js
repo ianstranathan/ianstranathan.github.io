@@ -7,7 +7,8 @@ function main()
     
     var shaderSourceContainer = 
     [
-        [rayMarchOneVS, rayMarchOneFS],
+        [bombGuyVS, bombGuyFS],
+        [kaboomVS, kaboomFS],
         [noiseOneVS, noiseOneFS],
         [trefoilVS, trefoilFS],
         [gaussianWaveVS, gaussianWaveFS],
@@ -15,12 +16,12 @@ function main()
         [oldWebsiteMouseVS, oldWebsiteMouseFS]
     ];
     
-    var rnd = 5; //Math.floor(Math.random() * numShaders);
+    var startingShaderIndex = shaderSourceContainer.length - 1; // starting shader num
 
     //
     var renderables = [];
 
-    var helloProgram = createProgramFromSources(gl, shaderSourceContainer[rnd][0], shaderSourceContainer[rnd][1]);
+    var helloProgram = createProgramFromSources(gl, shaderSourceContainer[startingShaderIndex][0], shaderSourceContainer[startingShaderIndex][1]);
     var helloProgramUTime = gl.getUniformLocation(helloProgram, "time");
     var helloProgramUResolution = gl.getUniformLocation(helloProgram, "resolution");
     var helloProgramUMouse = gl.getUniformLocation(helloProgram, "mousePos");
@@ -64,7 +65,7 @@ function main()
     gl.useProgram(helloProgram)
     gl.bindVertexArray(quadVAO);
 
-    var shaderObj = {shaders: shaderSourceContainer, currentShaderIndex: rnd};
+    var shaderObj = {shaders: shaderSourceContainer, currentShaderIndex: startingShaderIndex};
 
     var inputManager = new InputManager(gl, shaderObj, renderables);
 
