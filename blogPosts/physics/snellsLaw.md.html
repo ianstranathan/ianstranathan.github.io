@@ -1,37 +1,48 @@
-*Reference derivation for refraction derivation.*
+*Reference derivation for ["Reflection and Refraction in a Raytracer](../graphics/reflectionAndRefractionInARaytracer.md.html).*
 
-----
+Overview
+=======================================================================================
 
-Paths to snell's law:
+Snell's law is a long known empircal fact (wikipedia's [historical summary](https://en.wikipedia.org/wiki/Snell%27s_law#History) )
+It can be recovered a priori by a variety of paths (no pun intended)
 
-* Ray model with calculus optimization
-* Ray model with variational arguments
-* Wavefront model with geometry
+* Ray model & Fermat's principle with calculus
+* Ray model & Fermat's principle with variational arguments
+* Wavefront model & Huygen's princple with geometry
 
-All approaches are ultimately equivalent and it's enriching to see them converge to the same result
+All approaches ultimately converge to the same result which of course they must but is satisfying and
+educational to see
 
----
+Ray model & Fermat's principle with calculus
+=======================================================================================
 
-Fermat's principle states that the path taken by a ray between two given points is the path that can be traversed in the least time
-It seems strange to ascribe behavior to nature and was controversial in its time for that very reason.
-integral of speed with respect to distance was a minimum
----
+**Fermat's principle:**<br>
+The path taken by a ray between two given points is the path that can be traversed in the least amount of time
+This is something that is taken for granted through early expsoure education, but the idea to ascribe behavior to nature was controversial in its time.
+<!-- integral of speed with respect to distance was a minimum -->
 
-Huygen's principle
+Ray model & Fermat's principle with variational arguments
+=======================================================================================
 
----
+Wavefront model & Huygen's princple with geometry
+=======================================================================================
 
 It feels slightly out of place to bring in Huygen's principle as it occupies some middle 
 ground between ray and wave representations of light, but it's strengthening to see a relationship derived
 in many disparate ways. 
 It's also very elegant in that Snell's law pops out as a purely geometrical argument.
 
-The idea is that every point on a wavefront is itself the source of spherical wavelets, and the secondary wavelets emanating from different points mutually interfere
+**Huygen's principle:**<br>
+Every point on a wavefront is itself the source of spherical wavelets, and 
+the secondary wavelets emanating from different points mutually interfere.
+The sum of these spherical wavelets forms the wavefront. 
 
 Here is a picture of a wavefront as originally conceived by Huygen from Wikipedia
 
 ![refracted wavefront](../images/snellsLaw/Huygens_Refracted_Waves.png)
 
-Check out this [very nicely done animation and derivation](https://www.youtube.com/watch?v=1GcW9jWj4FM) for some intuition
+I don't want to repeat work and only derive something for myself if I don't understand it due to something having been handwaved or
+not explained sufficiently clearly. This <a href="https://www.youtube.com/watch?v=1GcW9jWj4FM" >derivation</a> is well explained and animated,
+so check it out.
 
 <style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>

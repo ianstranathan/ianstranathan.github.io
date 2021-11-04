@@ -708,17 +708,14 @@ Projection Transform
 
 Explanation
 ------------------------------------
+A visual summary of what we're going to be doing to help with intuition:
 
-This picture is taken from <a href="http://www.songho.ca/">Song Ho Ahn</a>
+![from <a href="http://www.songho.ca/">Song Ho Ahn</a>, note that the camera is looking down the negative $z$ axis in line with OpenGL convention.](../images/MVPAppletImages/diagrams/gl_projectionmatrix01.png)
 
-![](../images/MVPAppletImages/diagrams/gl_projectionmatrix01.png)
-
-This is a very clean picture, but the $z$ axis is turned around and it doesn't reinforce that there really is only one
-coordinate system. Perspective projection just employs the mathematical object of a frustum,
+Perspective projection just employs the mathematical object of a frustum,
 the portion of a solid that lies between one or two (in our case, "near" and "far" planes) parallel planes cutting it.
 
 All that previous work was to get it along the $z$ axis to aide in projecting and clipping along these frustum planes
-
 
 Consider an arbitrary point in a frustum
 
