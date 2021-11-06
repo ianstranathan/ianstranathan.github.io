@@ -1,4 +1,4 @@
-// OOP
+// OOP : object oriented programming
 
 // encapsulate data with functionality
 
@@ -13,18 +13,12 @@ class Paddle
         this.width = w;
         this.screen = [0, 0];
     }
+                                   
+    // an array is a data container of contiguous memory that can be indexed
+    // ex|:   var arr = [1, 2, 3]
+    //        console.log(arr[0]) = 1
 
-    // functions inside objects are usually called methods
-    getArea()
-    {
-        console.log(this.height * this.width);
-    }
-
-    getPerimeter()
-    {
-        console.log(2 * this.width + 2 * this.height);
-    }
-
+    // screen is init to max values from p5, windowWidth and windowHeight
     initScreen(x, y)
     {
         this.screen[0] = x;
@@ -34,12 +28,10 @@ class Paddle
     {
         if(y < this.screen[1] - this.height)
         {
-            this.position[0] = x;
             this.position[1] = y;
         }
         else
         {
-            this.position[0] = x;
             this.position[1] = this.screen[1] - this.height;
         }
     }

@@ -1,11 +1,11 @@
-*Raymarching tinkering summary*
+*Noodling around with raymarching summary*
 
 Overview
 =======================================================================================
 
 Note
 ---------------------------------------------------------------------------------------
-Computer graphics has been a hobby of mine for a few years and shadertoy-style fragment shaders were what originally sparked my interest.
+Shadertoy-style fragment shaders were what originally sparked my interest in computer graphics.
 The main algorithm behind many of the inspiring 3D shaders you can find there is raymarching (or sphere tracing).
 
 Shaders tend to be, euphemistically put, terse and the resources available for learning (always improving with time) have historically been sparse and irregular.
@@ -41,33 +41,40 @@ Mathematically, this is an implicit surface, i.e. an equation of the form $F\lef
 With respect to a digital object we want to render, 
 a signed function can be found via the distance from the ray’s current position to that object’s surface.
 Conventially, the distance's expression is such that the SDF will be negative if the ray’s current position is inside the object, positive outside, or zero if it’s exactly on the surface.
-It could be the other way around, you just need that trichotomy.
+It could be the other way around, you just need that trichotomy distinction.
 
 Example
 ---------------------------------------------------------------------------------------
 
 A sphere is the prototypical example:
 
-The equation of a sphere of radius $R$ centered at the origin in cartesian coordinates is:
-$F\left( x, y, z \right) = x^2 + y^2 + z^2 = R^2 \implies x^2 + y^2 + z^2 - R^2 = 0$
+The equation of a sphere of radius $R$ centered at the origin in cartesian coordinates:
+$$x^2 + y^2 + z^2 = R^2 \implies x^2 + y^2 + z^2 - R^2 = 0$$
 
-A field of values emerges for the coordinate space according to that implicit formula, telling you whether you are outside, inside or on the surface of the sphere
-( again, positive for all coordinates outside the sphere, zero for those exactly on the sphere's surface and negative for those inside the sphere )
+A field of values emerges for the coordinate space (for any $x, y, or z$) according to that implicit formula.
+This can can interpreted as signifying whether you are outside, inside or on the surface of the sphere. 
+(again, positive for all coordinates outside the sphere, zero for those exactly on the sphere's surface and negative for those inside the sphere )
 
 The raymarching algorithm works with any such function and there are many geometric primitives to choose from.
-Deriving these functions is one of the harder and more interesting (mathier) components of raymarching.
+Deriving these functions is one of the more interesting (mathier) components of raymarching that is not often explained.
 
 For a reference list see [Iñigo Quilez](https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm), the co-creator of shadertoy and influential demoscener/ mathematical artist/ rendering engineer.
+Also, check out his <a href ="https://www.youtube.com/c/InigoQuilez" target="_blank">youtube channel</a> if you're interested in this stuff.
 
 The Raymarching (Sphere Tracing) Algorithm
 =======================================================================================
 
+Recall a digital scene setup (camera and object positions in some defined space creating an image frustum -- If using geometric optics in the context of computer graphics is unfamiliar, see my article on a [ray-sphere interesection](raySphereIntersection.md.html) for an introduction):
+
+![From Wikipedia's article on Raytracing (at the risk of over using this popular image)](../images/graphics/raymarching/800px-Ray_trace_diagram.png)
+![From my article [ray-sphere interesection](raySphereIntersection.md.html)](../images/raySphereIntersection/sketch2.png)
 The signed distance function (remember this is different for each geometry) gives the distance to the surface of the object to be rendered.
 
 Recall the vector form of a ray (a line):
 $$ \vec r = \vec {ro} + t \vec {rd} $$ 
 where $t$ is the length or distance that scales a unit vector $\vec {rd}$ giving the rays direction
-(If using rays and geometric optics is unfamiliar, see my article on a [ray-sphere interesection](#) for an introduction)
+
+
 
 This SDF returned distance can be used to as our line parameter.
 This ensures that the ray can never step past the surface of the object (for the case of a single, non-distorted primitive. Overstepping is discussed later in this article)
@@ -208,6 +215,9 @@ or render the inside of an object (it stepped past the surface) either way it le
 
 The raymarching/ sphere tracing algorithm is fastest when we the largest step size possible (the shortest distance returned by the distance estimator)
 but it still works if we take smaller than optimal steps, it will just take longer for the loop to resolve at a threshold distance.
+
+Derivation of Geometric Primitives
+=======================================================================================
 
 Resources:
 ========================
