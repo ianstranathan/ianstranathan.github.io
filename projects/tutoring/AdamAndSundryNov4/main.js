@@ -1,19 +1,30 @@
 
-var paddle1 = new Paddle(30, 0, 20, 20 * 6); // paddle(x,y,w,h, [ww, wh])
-var theBall = new Ball(0, 0, 15);
-
 var gameObjects = [];
+
+function makeGameObjects()
+{
+	var paddle1 = new Paddle(30, 0, 20, 20 * 6);
+	var theBall = new Ball(0, 0, 15);
+	gameObjects.push(paddle1);
+	gameObjects.push(theBall);
+}
 
 function setup() 
 {
-	paddle1.initScreen(windowWidth, windowHeight) // global variables from p5, windowWidth, windowHeight
-	// init ball position to middle of board
-	theBall.pos[0] = windowWidth / 2.0;
-	theBall.pos[1] = windowHeight / 2.0;
+	makeGameObjects(); 	   					 // make all game objects			   					 
+	init();                					 // initialize
+	createCanvas(windowWidth, windowHeight); // make html5 canvas through p5
+}
 
-	fill(255);
-	createCanvas(windowWidth, windowHeight);
-	background(40);
+function init()
+{
+	fill(255);      // set fill color from p5 API
+	background(40); // 
+
+	for(let i in gameObjects)
+	{
+		gameObjects[i].init(windowWidth, windowHeight);
+	}
 }
 
 function screenUpdate()
@@ -21,33 +32,21 @@ function screenUpdate()
 	clear();
 	background(40);
 }
+
 function gameUpdate()
 {
-	// for(let i in gameObjects)
-	// {
-
-	// }
+	for(let i in gameObjects)
+	{
+		if(gameObjects[i].controllable)
+		{
+			gameObjects[i].mousePos = [mouseX, mouseY];
+		}
+		gameObjects[i].update();
+	}
 }
+
 function draw()
 {
 	screenUpdate();
-	theBall.display();
-	paddle1.update(30, mouseY); // args = x, y 
+	gameUpdate();
 }
-
-/*
-(0,0)############################################(windowWidth,0)
-################################################################
-################################################################
-################################################################
-################################################################
-################################################################
-################################################################
-################################################################
-################################################################
-################################################################
-################################################################
-################################################################
-################################################################
-(0, windowHeight)##################### (windowWidth, windowWidth)
-*/

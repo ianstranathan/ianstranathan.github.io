@@ -6,14 +6,16 @@ class Paddle
         this.height = h;
         this.width = w;
         this.screen = [0, 0];
-    }
-                                   
-    initScreen(x, y)
+        this.controllable = true;
+        this.mousePos = [x, y];
+    }                            
+    init(x, y)
     {
         this.screen[0] = x;
         this.screen[1] = y;
     }
-    setPosition(x, y)
+    
+    setPosition(y)
     {
         if(y < this.screen[1] - this.height)
         {
@@ -30,9 +32,9 @@ class Paddle
         rect(this.position[0], this.position[1], this.width, this.height);
     }
 
-    update(x, y)
+    update()
     {
-        this.setPosition(x, y);
+        this.setPosition(this.mousePos[1]);
         this.display();
     }
 }
