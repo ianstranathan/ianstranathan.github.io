@@ -1,16 +1,25 @@
 *Small project post mortem*
 
+<head>
+    <title>Pushing Pixels</title>
+</head>
+
 <!-- Tl;dr: Try it out [here](../../projects\2Dphysics\refactor\index.html) -->
 Tl;dr: Try it out <a href="../../projects\2Dphysics\refactor\index.html" target="_blank">here</a>
 
 Overview:
-===============
+=======================================================================================
 
-I wanted to make a simple physics "engine" (equations of motion, basic collision) as a programming exercise 
+Motivation
+---------------------------------------------------------------------------------------
+I wanted to make a simple physics "engine" (equations of motion, basic collision) as an exercise 
 
 I was inspired to do so after watching this presentation by [Steven Witten](https://www.youtube.com/watch?v=Zkx1aKv2z8o&t=2399s)
-(It's worth your time if you're interested in math or graphics. All his presentations, along with a host of interesting toys and articles, can be found on his incredibly polished [site:](http://acko.net/))
+(It's worth your time if you're interested in math or graphics. 
+All his presentations, along with a host of interesting toys and articles, can be found on his incredibly polished [site](http://acko.net/))
 
+The Gist
+---------------------------------------------------------------------------------------
 The fundamental idea of a physics system is very simple: incoporate the appropriate physical law (gravity, hookes law, w/e) and numerically integrate.
 
 Pushing around pixels in practice however is hard with a capital H and this is just a simulation of frictionless colliding rigid bodies (no rotation, multiple contact point collisions, or constrained simulation)
@@ -21,7 +30,7 @@ In the future, time/ interest willing, I hope to improve upon this first stab an
 
 Rendering Side of Things:
 ---------------------------------------------------
-Vanilla WebGL with some boilerplate code and glmatrix as my vector and matrix library.
+Vanilla WebGL with some boilerplate code and glMatrix as my vector and matrix library.
 
 * Wireframe shader via barycentric coordinates from vertices.
 
@@ -33,10 +42,15 @@ Programming Side of Things:
 
 Visualization tests or articles for each main component:
 
-* [Euler Method](../math/eulerMethod.md.html)  for numerical integration to propagate motion
-* [Seperating Axis Theorem](../../projects/2Dphysics/SATVisualization/index.html) for narrow phase collision detection and contact normal
-* [Impulse Based Collision Response](../physics/impulseBasedCollisionResolution.md.html)
-* [Quadtree](../../projects/2Dphysics/quadTreeVisualization/index.html) for broadphase collision detection
+Euler integration for numerical integration to propagate motion:
+
+* [Euler Method Article](../math/eulerMethod.md.html) 
+
+Quad tree + circle colliders for broadphase detection & seperating axis theorem for narrow phase detection + generating contact normal for impulse
+
+* [Impulse Based Collision Response Article](../physics/impulseBasedCollisionResolution.md.html)
+* [Seperating Axis Theorem Test in p5](../../projects/2Dphysics/SATVisualization/index.html) 
+* [Quadtree test in p5](../../projects/2Dphysics/quadTreeVisualization/index.html)
 
 Resources
 ---------------------------------------------------
