@@ -1,13 +1,34 @@
-These are visualizations I made to help understand the intersection of a ray with an axis aligned bounding box
- -- the slab method.
+*Derivation of slab method for axis aligned bounding box - ray intersection*
 
 TL;DR:
 
-2D live demo [here](../demos/rayBoxIntersection/2D/index.html)
+2D live demo / visualization [here](../demos/rayBoxIntersection/2D/index.html)
 
-3D live demo [here](../demos/rayBoxIntersection/3D/index.html)
+3D live demo / visualization [here](../demos/rayBoxIntersection/3D/index.html)
 
----
+Derivation
+=======================================================================================
+
+Recall the vector equation of a line (ray)
+$$ \vec{r} = \vec{ro} + t\vec{rd}$$
+Such that $\vec{ro}$ is the ray origin and $\vec{rd}$ is the normalized direction of the ray
+
+This can be represented component wise:
+
+$$ \vec{r} =  < {ro_x}, {ro_y}, {ro_z} > + t < {rd_x}, {rd_y}, {rd_z} >$$
+$ \implies $
+$$
+    {r_x} = {ro_x} + t {rd_x}
+$$
+$$
+    {r_y} = {ro_y} + t {rd_y}
+$$
+$$
+    {r_z} = {ro_z} + t {rd_z}
+$$
+
+![]("")
+=======================================================================================
 Resources:
 
 * [Exhaustive list](http://www.realtimerendering.com/intersections.html) of resources for object intersections collected by the guys from real time rendering:
