@@ -1,4 +1,4 @@
-class Paddle 
+class ComputerPaddle 
 {
     constructor(x, y, w, h) 
     {
@@ -6,25 +6,18 @@ class Paddle
         this.height = h;
         this.width = w;
         this.screen = [0, 0];
-        this.controllable = true;
-        this.mousePos = [x, y];
+        this.controllable = false;
     }                            
     init(x, y)
     {
         this.screen[0] = x;
         this.screen[1] = y;
+        this.setPosition(this.screen[1] / 2.0);
     }
     
     setPosition(y)
     {
-        if(y < this.screen[1] - this.height)
-        {
-            this.pos[1] = y;
-        }
-        else
-        {
-            this.pos[1] = this.screen[1] - this.height;
-        }
+        this.pos[1] = y;
     }
 
     display()
@@ -34,7 +27,7 @@ class Paddle
 
     update()
     {
-        this.setPosition(this.mousePos[1]);
+        //this.setPosition(this.mousePos[1]);
         this.display();
     }
 }

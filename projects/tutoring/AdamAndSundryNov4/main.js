@@ -1,16 +1,37 @@
 
 var gameObjects = [];
+// var debugFlags = {DEBUG:}
+
+// presetup()
+// {
+	
+// }
 
 function makeGameObjects()
 {
-	var paddle1 = new Paddle(30, 0, 20, 20 * 6);
-	var theBall = new Ball(0, 0, 15);
+	var paddle1 = new Paddle(30, 0, PADDLE_WIDTH, PADDLE_HEIGHT);
+	var paddle2 = new ComputerPaddle(windowWidth - 30, 0, PADDLE_WIDTH, PADDLE_HEIGHT);
+	var theBall = new Ball(0, 0, BALL_RADIUS, paddle1);
 	gameObjects.push(paddle1);
+	gameObjects.push(paddle2);
 	gameObjects.push(theBall);
 }
 
 function setup() 
 {
+	// presetup()
+	// {
+
+	// }
+	// if(DEBUG)
+	// {
+	// 	frameRate(5)
+	// }
+	// else
+	// {
+	// 	frameRate(60)
+	// }
+	
 	makeGameObjects(); 	   					 // make all game objects			   					 
 	init();                					 // initialize
 	createCanvas(windowWidth, windowHeight); // make html5 canvas through p5
@@ -33,20 +54,29 @@ function screenUpdate()
 	background(40);
 }
 
-function gameUpdate()
+function gameLoop()
 {
 	for(let i in gameObjects)
 	{
-		if(gameObjects[i].controllable)
-		{
-			gameObjects[i].mousePos = [mouseX, mouseY];
-		}
+		// manage input -- move paddle
+		processInput(gameObjects[i])
+		// process state -- check for collisions between the ball and the paddles
+
+		// render
 		gameObjects[i].update();
+	}
+}
+
+function processInput(gameObj)
+{
+	if(gameObj.controllable)
+	{
+		gameObj.mousePos = [mouseX, mouseY];
 	}
 }
 
 function draw()
 {
 	screenUpdate();
-	gameUpdate();
+	gameLoop();
 }

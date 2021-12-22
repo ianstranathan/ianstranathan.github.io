@@ -1,10 +1,19 @@
 
 Data Oriented Design:
 =======================================================================================
-General Overview
-* https://medium.com/mirum-budapest/introduction-to-data-oriented-programming-85b51b99572d
 
-C++
+https://medium.com/mirum-budapest/introduction-to-data-oriented-programming-85b51b99572d
+
+https://www.dataorienteddesign.com/dodbook/
+
+
+SIMD
+https://www.youtube.com/watch?v=YnnTb0AQgYM
+https://www.youtube.com/watch?v=YGTZr6bmNmk&t=2162s
+
+All modern processors are actually vector under the hood. Unlike scalar processors, which process data individually, modern vector processors process one-dimensional arrays of data. If you want to maximize performance, you need to write code tailored to these vectors. 
+
+C/ C++
 =======================================================================================
 
 Internal and External Linkage
@@ -14,6 +23,9 @@ Internal and External Linkage
 
 Forward Declaring
 ---------------------------------------------------------------------------------------
+
+Static, Stack & Heap Allocations:
+objects with static lifetime are located in global memory, objects with dynamic lifetime on the heap, objects with auto lifetime or temporaries on the stack, exceptions in some other special place, etc., etc. Words like stack or heap are just conventions---simple ways of designating the lifetime, and not some specific location in memory
 
 Misc:
 =======================================================================================
@@ -29,6 +41,13 @@ https://en.wikichip.org/wiki/WikiChip
 
 Life Lessons / Good talks:
 =======================================================================================
+
+Matt Godbolt:
+
+
+Joe Armstrong:
+---------------------------------------------------------------------------------------
+https://www.youtube.com/watch?v=lKXe3HUG2l4
 
 Jonathan Blow:
 ---------------------------------------------------------------------------------------

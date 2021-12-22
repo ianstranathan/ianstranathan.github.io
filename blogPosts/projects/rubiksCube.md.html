@@ -60,12 +60,11 @@ I wanted intuitive controls that reflected a faithful simulation e.g. [rubikscu.
 
 But where to start?
 
-When I first started on this project, I happened to have also working on some small raytracing projects and was fortunate to have Peter Shirley as a resource.
-Raytracing methods use axis aligned bounding boxes in Oct-trees as a broadphase check the slab method is introduced in Peter Shirley's second cource of 
-popular introductory raytracing books. If you're interested in learning how that works, check out my [article and visulizations](../graphics/rayBoxIntersection.md.html) I made to debug/ understand my own convoluted slab method
+When I first started on this project, I happened to also have been working on some small raytracing projects and was fortunate to have Peter Shirley as a resource.
+Raytracing methods often use axis aligned bounding boxes in Oct-trees as a broadphase check using the slab method. If you're interested in learning how that works, check out my [article and visulizations](../graphics/rayBoxIntersection.md.html) I made to debug/ understand my own convoluted slab method
 implementation.
 
-I opted for a broadphase check of a camera ray and an AABB representing the entrie cube, if that passes an AABB of each cubie's bounds is checked with the ray
+I opted for a broadphase check of a camera ray and an AABB representing the entire cube, if that passes an AABB of each cubie's bounds is checked with the ray
 taking an early out if the maximum possible, diagonal cross section is collected. The minimum distance of of those selections is our clicked cubie.
 
 Getting a direction for a rotation
@@ -77,7 +76,7 @@ Some edge cases ( quite literally, say if the first first intersection was exact
 
 ![Diagram of rotation selection logic. Note the possible edge cases of vertical and horizontal lines](../images/rubiksCube/turnSelection.png)
 
-Please see the [wikipedia article]](https://en.wikipedia.org/wiki/Line%E2%80%93plane_intersection) for a line-plane intersection derivation for further discussion.
+Please see the [wikipedia article](https://en.wikipedia.org/wiki/Line%E2%80%93plane_intersection) for a line-plane intersection derivation for further discussion.
 
 (This is another good reminder of the importance of asking for help/ avoiding reinventing the wheel... this was all for educational purposes however and deeper understanding is impossible
 without error and redudancy)
@@ -114,16 +113,14 @@ gl.bufferSubData(this.gl.ARRAY_BUFFER, i * 16 * 4, this.theSubArr);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Floating point errors in the cubie's transformation matrix will accrue over time and its basis vectors and affine translation should be rounded after a rotation. (as a small optimization
-this need only be done on the final, corrective rotation to nearest $\frac {\pi}{2}$
+this need only be done on the final, corrective rotation to nearest $\frac {\pi}{2}$)
 
 Wrapping up
 ===================================================
 
 There are many ways this project could be improved upon. 
 Beyond the obvious things (cleaner code: reduce the size of some classes, make things a little more SOLID + DRY etc;
-use a compiled language)
-
-I think the biggest boost in visual fidelity and performance would come in reducing the size of the cubie model (retopologize) and using a better lighting model (energy conserving, PBR, raytracing etc)
+use a compiled language), I think the biggest boost in visual fidelity and performance would come in reducing the size of the cubie model (retopologize) and using a better lighting model (energy conserving, PBR, raytracing etc)
 or alter the current lighting model to account for certain glaring gaps / artifacts (shadow mapping - the cubies that are covered are still being shaded currently).
 
 It's always humbling how much is required for so little; to do these projects that the world doesn't need is a confusing balance between unproductivity and educational value for me. 
