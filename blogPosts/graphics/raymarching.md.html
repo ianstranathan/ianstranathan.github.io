@@ -3,7 +3,7 @@
 Overview
 =======================================================================================
 
-Note
+Personal note
 ---------------------------------------------------------------------------------------
 Shadertoy-style fragment shaders were what originally sparked my interest in computer graphics.
 The main algorithm behind many of the inspiring 3D shaders you can find there is raymarching (or sphere tracing).
@@ -20,7 +20,8 @@ Motivation / Why you should care:
 
 There are lots of good reasons to learn about signed distance rendering besides wanting to make mathematical art like me:
 
-* Allows the creation of complex, procedural shapes (constructive solid geomety -- CSG) and doesn't need anlytical intersection solutions for rendering.
+* Allows the creation of complex, procedural shapes (constructive solid geomety -- CSG) and 
+  doesn't need analytical intersection solutions for rendering.
 
 * A number of effects that are expensive in a normal rendering pipeline are naturally cheap in raymarching (ambient occlusion, glow, fog, shadows, instancing)
 
@@ -84,8 +85,6 @@ This ensures that the ray can never step past the surface of the object (for the
 
 This process is repeated until the SDF returned distance is within an arbitrarily small threshold (it's close enough to be registered a "hit"), the raymarching loop has finished its iterations (reached it's max amount of steps, it has to end sometime), or the distance has gone
 beyond some arbitrarily large threshold (it's far enough to be considered a "miss").
-
-Cases represented visually:
 
 ![**Hit case.** Diagram from [Simon Ashbery](https://si-ashbery.medium.com/raymarching-3cdf86c637ba)](../images/graphics/raymarching/hit.png)
 
@@ -182,37 +181,37 @@ is to backstep along the camera ray a bit before calculating the surface normal 
 Modeling Techniques:
 =======================================================================================
 
-When first defining the raymarching algorithm, the term distance estimator refered to 
+<!-- When first defining the raymarching algorithm, the term distance estimator refered to 
 a function working on a collection of objects (things with a distance function)
 that returns the minimum of each object's SDF.
 
-This brings up an interesting space to play in, namely, we can chose to return something else.
+This brings up an interesting space to play in, namely, we can chose to return something else. -->
 
 Constructive Solid Geometry (CSG)
 ---------------------------------------------------------------------------------------
-
+<!-- 
 Constructive solid geometry creates a complex surface or object by using Boolean operators (union, intersection and difference) on primitives (cylinders, prisms, pyramids, spheres, cones etc).
 
 Image from Wikipedia article on CSG:
-![Union](../images/graphics/raymarching/Boolean_union.PNG) ![Difference](../images/graphics/raymarching/Boolean_difference.PNG) ![Intersection](../images/graphics/raymarching/Boolean_intersect.PNG)
+![Union](../images/graphics/raymarching/Boolean_union.PNG) ![Difference](../images/graphics/raymarching/Boolean_difference.PNG) ![Intersection](../images/graphics/raymarching/Boolean_intersect.PNG) -->
 
 Smooth minimum
 ---------------------------------------------------------------------------------------
 
-A smooth minimum is a function that blends distance function primitives (as opposed to a simple union -- the minimum of two SDFs) to model organic shapes with raymarching.
+<!-- A smooth minimum is a function that blends distance function primitives (as opposed to a simple union -- the minimum of two SDFs) to model organic shapes with raymarching.
 It's a spline interpolation that makes the union of the distance functions $C^1$ continuous (you can differentiate it at least once).
 
 Note, this returns a non-exact SDF:
 "operators (like the smooth minimum here) cannot be "exact" because the very mathematics that describe them prevent it"
--Iñigo Quilez
+-Iñigo Quilez -->
 
 My derivation of the polynomial flavor of this function can be found [here](polynomialSmin.md.html), if you're interested.
 
 Domain Distortion, Repetition, Folding, 
 ---------------------------------------------------------------------------------------
-These techniques aren't unique to raymarching, but are just as useful as in all other shader based expressions.
+<!-- These techniques aren't unique to raymarching, but are just as useful as in all other shader based expressions.
 
-<!-- Domain Distortion:<br>
+Domain Distortion:<br>
 
 Domain Repetition:<br>
 
@@ -233,19 +232,11 @@ but it still works if we take smaller than optimal steps, it will just take long
 Derivation of Geometric Primitives
 =======================================================================================
 
-Outro
-=======================================================================================
-
-Computer graphics is a pretty deep subject and this is just one old school rendering algorithm that's popular in a niche subculture (demoscene)
-It started a serious interest in the broader subject for me and continues to be fun hobby on the side (check out [shaders as a practice](#))
-
-I remember sitting in a cafe a few years ago looking at a some shader source code thinking how utterly impenetrable this stuff was, 
-hopefully this helps someone else feeling something similar somewhere. 
-
-Cheers
-
 Resources:
 =======================================================================================
+
+Computer graphics is a pretty deep subject and there's always more to learn even within the narrow scope of just one old school rendering algorithm that's popular in a niche subculture (demoscene)
+This definitely doesn't cover everything, but hopefully it's a decent starting point for another beginner somewhere. 
 
 Domain Repetition
 ---------------------------------------------------------------------------------------
