@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../style/style.css">
+    
+    <!-- Katex -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css" integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+              // customised options
+              // • auto-render specific keys, e.g.:
+              delimiters: [
+                  {left: '$$', right: '$$', display: true},
+                  {left: '$', right: '$', display: false},
+                  {left: '\\(', right: '\\)', display: false},
+                  {left: '\\[', right: '\\]', display: true}
+              ],
+              // • rendering keys, e.g.:
+              throwOnError : false
+            });
+        });
+    </script>
+    <!-- highlightjs -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+    <script defer>hljs.highlightAll();</script>
+    <!-- Google Font -->  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cousine&display=swap" rel="stylesheet"> 
+    <!-- FontAwesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- My own stuff -->
+    <!-- ---------------------------------------------------------------  -->
+    <script src="../../scripts/metaStuff.js"></script>
+    <script src="../../scripts/header.js" defer></script>
+    <script src="../../scripts/about.js" defer></script>
+    <!-- Injects table of contents at beginning of each content div -->
+    <script src="../../scripts/makeTableOfContents.js" defer></script>
+    <!-- Injects page with static pages from metadata -->
+    <script src="../../scripts/linkInjection.js" defer></script>
+    <script src="../../scripts/latexWorkAround.js" defer></script>
+    <script src="../../scripts/footer.js" defer></script>
+  
+    <!-- ---------------------------------------------------------------  -->
+  </head>
+
+  <body>
+   
+    <div id="header">
+    </div>
+    
+    <div id="content-categories-container">
+      
+      <div id="content"><p><em>Reference derivation for <a href="../Graphics/reflectionAndRefractionInARaytracer.html">"Reflection and Refraction in a Raytracer</a>.</em></p>
+<h1 id="overview">Overview</h1>
+<p>Snell's law is a an ancient empircal result, but it can be recovered a priori by a variety of paths (no pun intended)</p>
+<h2 id="history">History</h2>
+<p>Wikipedia's <a href="https://en.wikipedia.org/wiki/Snell%27s_law#History">historical summary</a></p>
+<h2 id="derivationmethods">Derivation Methods</h2>
+<ul>
+<li>Ray model &amp; Fermat's principle with calculus</li>
+<li>Ray model &amp; Fermat's principle with variational arguments</li>
+<li>Wavefront model &amp; Huygen's princple with geometry</li>
+</ul>
+<h1 id="raymodelfermatsprinciplewithcalculus">Ray model &amp; Fermat's principle with calculus</h1>
+<h2 id="fermatsprincipledefinition">Fermat's principle definition</h2>
+<p><strong>Fermat's principle:</strong><br>
+The path taken by a ray between two given points is the path that can be traversed in the least amount of time.</p>
+<p>This is something that is taken for granted now, but it does give pause to think how strange it is to to ascribe behavior to nature and it was quite controversial in its time.</p>
+<h2 id="problemsetup">Problem Setup</h2>
+<!-- integral of speed with respect to distance was a minimum -->
+<!-- ![Refraction of light at the interface between two media of different refractive indices](../images/snellsLaw/setup1.png) -->
+<div id="center">
+    <img src="../../images/snellsLaw/setup1.png">
+    <p>Refraction of light at the interface between two media of different refractive indices</p>
+</div>
+<p>Preliminary values to be used (<code class='latexWorkaround'>$d_i$</code> is the length of the ray):</p>
+<p><code class='latexWorkaround'>$d_1 = \sqrt{a^2 + {x_1}^2}$</code>
+<code class='latexWorkaround'>$d_2 = \sqrt{b^2 + {x_2}^2}$</code>
+<code class='latexWorkaround'>$\sin{\alpha} = \frac{x_1}{d_1} = \frac{x_1}{\sqrt{a^2 + {x_1}^2}}$</code>
+<code class='latexWorkaround'>$\sin{\beta} =  \frac{x_1}{d_2} = \frac{x_2}{\sqrt{b^2 + {x_2}^2}}$</code></p>
+<p>Speed of ray (where <code class='latexWorkaround'>$\eta$</code> is the respective index of refraction of the medium): <code class='latexWorkaround'>$s_i = \frac{c}{\eta_i}$</code></p>
+<p>The total time taken for the ray: <code class='latexWorkaround'>$T_{total} = t_1 + t_2$</code></p>
+<h2 id="derivation">Derivation</h2>
+<p>Definition of speed: <code class='latexWorkaround'>$s_i = \frac{d_i}{t_i} = \frac{c}{\eta_i}$</code>
+<code class='latexWorkaround'>$\implies$</code> 
+<code class='latexWorkaround'>$t_i = \frac{\eta_i}{c} d_i$</code>
+<code class='latexWorkaround'>$\implies$</code> 
+<code class='latexWorkaround'>$T_{total} = \frac{\eta_1}{c} d_1 + \frac{\eta_2}{c} d_2$</code>
+<code class='latexWorkaround'>$T_{total} = \frac{\eta_1}{c} \sqrt{a^2 + {x_1}^2} + \frac{\eta_2}{c} \sqrt{b^2 + {x_2}^2}$</code></p>
+<p>To invoke Fermat's principle, we want to minimize this function (we find a critical point which may or may not be a minimum)
+and we need to make a small substituion so that we can take a whole derivative with respect to the distance</p>
+<!-- ![Setup with substitution for calculus optimization](../images/snellsLaw/setup2.png) -->
+<div id="center">
+    <img src="../../images/snellsLaw/setup2.png">
+    <p>Setup with substitution for calculus optimization</p>
+</div>
+<p><code class='latexWorkaround'>$T_{total} = \frac{\eta_1}{c} \sqrt{a^2 + {x_1}^2} + 
+              \frac{\eta_2}{c} \sqrt{b^2 + {\left(l - x_1 \right)}^2}$</code></p>
+<p>Taking a derivative with respect to distance and setting it to zero to find its critical points:
+<code class='latexWorkaround'>$ 0 = \frac{1}{2} {\left( a^2 + {x_1}^2 \right)}^{-\frac{1}{2}} 2x_1 \frac{\eta_1}{c} +
+       \frac{1}{2} {\left( b^2 + {\left(l - x_1 \right)}^2 \right)}^{-\frac{1}{2}} \left( {2x_1 - 2l} \right) \frac{\eta_1}{c}
+$</code>
+<code class='latexWorkaround'>$\implies$</code> 
+<code class='latexWorkaround'>$ 0 = \cancel{\frac{1}{2}} {\left( a^2 + {x_1}^2 \right)}^{-\frac{1}{2}} \cancel{2}x_1 \frac{\eta_1}{c} +
+       \cancel{\frac{1}{2}} {\left( b^2 + {\left(l - x_1 \right)}^2 \right)}^{-\frac{1}{2}} \cancel{2}\left( {x_1 - l} \right) \frac{\eta_1}{c}
+$</code></p>
+<p><code class='latexWorkaround'>$ 0 = \frac{x_1}{\sqrt{a^2 + {x_1}^2}} \frac{\eta_1}{\cancel{c}} - 
+       \frac{ \left( l - x_1 \right) }{\sqrt{b^2 + {\left(l - x_1 \right)}^2}} \frac{\eta_2}{\cancel{c}}
+$</code>
+Referencing our preliminary trig expressions, substitute with <code class='latexWorkaround'>$\sin{\alpha}$</code> and <code class='latexWorkaround'>$\sin{\beta}$</code></p>
+<p><code class='latexWorkaround'>$ 0 = \sin{\alpha} \eta_1 - 
+       \sin{\beta}  \eta_2
+$</code>
+<code class='latexWorkaround'>$\implies$</code>
+<code class='latexWorkaround'>$ 
+\eta_1 \sin{\alpha} = \eta_2 \sin{\beta}
+$</code></p>
+<h1 id="raymodelfermatsprinciplewithvariationalarguments">Ray model &amp; Fermat's principle with variational arguments</h1>
+<h1 id="wavefrontmodelhuygensprincplewithgeometry">Wavefront model &amp; Huygen's princple with geometry</h1>
+<p>It feels slightly out of place to bring in Huygen's principle (in the context of geometric optics for computer graphics) 
+as it occupies some middle ground between ray and wave representations of light, but intuition and trust in something is built by reaching
+the same result from many, disparate paths.</p>
+<p>It's also very elegant in that Snell's law pops out as a purely geometrical argument.</p>
+<h2 id="huygensprincipledefinition">Huygen's principle definition</h2>
+<p><strong>Huygen's principle:</strong><br>
+Every point on a wavefront is itself the source of spherical wavelets, and 
+the secondary wavelets emanating from different points mutually interfere.
+The sum of these spherical wavelets forms the wavefront. </p>
+<p>Here is a picture of a wavefront as originally conceived by Huygen from Wikipedia</p>
+<!-- ![refracted wavefront](../images/snellsLaw/Huygens_Refracted_Waves.png) -->
+<div id="center">
+    <img src="../../images/snellsLaw/Huygens_Refracted_Waves.png">
+    <p>Refracted wavefront</p>
+</div>
+<h2 id="derivation-1">Derivation</h2>
+<p>Here is a well explained and animated <a href="https://www.youtube.com/watch?v=1GcW9jWj4FM"  target="_blank">derivation</a>,
+check it out.</p>
+      </div>
+      
+      <div id="categories">
+      </div>
+      
+    </div>
+  
+  </body>
+<html>
+

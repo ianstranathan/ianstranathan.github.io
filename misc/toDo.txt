@@ -1,1 +1,7 @@
-* Write mathematical reasoning for ray-box intersection blip
+
+*) Correct posts date stuff
+
+*) Have multiple categories with number of total articles
+*) Katex "display" formulas ($$ ... $$) not centering
+*) Sort According to Date
+

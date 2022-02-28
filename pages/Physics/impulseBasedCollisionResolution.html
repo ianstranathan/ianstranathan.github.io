@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../style/style.css">
+    
+    <!-- Katex -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css" integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+              // customised options
+              // • auto-render specific keys, e.g.:
+              delimiters: [
+                  {left: '$$', right: '$$', display: true},
+                  {left: '$', right: '$', display: false},
+                  {left: '\\(', right: '\\)', display: false},
+                  {left: '\\[', right: '\\]', display: true}
+              ],
+              // • rendering keys, e.g.:
+              throwOnError : false
+            });
+        });
+    </script>
+    <!-- highlightjs -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+    <script defer>hljs.highlightAll();</script>
+    <!-- Google Font -->  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cousine&display=swap" rel="stylesheet"> 
+    <!-- FontAwesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- My own stuff -->
+    <!-- ---------------------------------------------------------------  -->
+    <script src="../../scripts/metaStuff.js"></script>
+    <script src="../../scripts/header.js" defer></script>
+    <script src="../../scripts/about.js" defer></script>
+    <!-- Injects table of contents at beginning of each content div -->
+    <script src="../../scripts/makeTableOfContents.js" defer></script>
+    <!-- Injects page with static pages from metadata -->
+    <script src="../../scripts/linkInjection.js" defer></script>
+    <script src="../../scripts/latexWorkAround.js" defer></script>
+    <script src="../../scripts/footer.js" defer></script>
+  
+    <!-- ---------------------------------------------------------------  -->
+  </head>
+
+  <body>
+   
+    <div id="header">
+    </div>
+    
+    <div id="content-categories-container">
+      
+      <div id="content"><p><em>While toying around with a small 2D physics project, I was unable to follow a popular online explanation of impulse
+based collision resolution</em></p>
+<h1 id="overview">Overview</h1>
+<p>The change in motion of objects in a collision is caused by the forces generated at the collision point by compression and deformation.
+This compression and deformation is too fast to simulate frame by frame for a rigid body.
+Infinitesimal collision time allows us to assume an impulse model -- instantaneous change in velocity due to the collision.
+Thus the movement after the collision can be calculated from the movement before the collision with the consideration of some math and physical parameters.</p>
+<h1 id="impulsederivation">Impulse Derivation</h1>
+<p>Definition of momentum:</p>
+<p><code class='latexWorkaround'>$ \vec p = m \vec v$</code></p>
+<p>Newton's second law: <code class='latexWorkaround'>$\vec F = m\vec a = \frac{d}{dt} \left( m \vec v \right) = \frac{d \vec p}{dt}$</code></p>
+<p>Seperating variables and integrating:</p>
+<p><code class='latexWorkaround'>$\int_{t_1}^{t_2} \vec F \,dt = \int_{p_1}^{p_2} \vec dp \, = \vec p_2 - \vec p_1$</code></p>
+<p>This change in momentum is said to be impulse, let <code class='latexWorkaround'>$\vec J$</code> be impulse:</p>
+<p>Substituting original momentum expression:
+<code class='latexWorkaround'>$\vec p_2 - \vec p_1 = m \vec v_2 - m \vec v_2$</code></p>
+<p><code class='latexWorkaround'>$\frac{\vec p_2 - \vec p_1}{m} = \vec v_2 - \vec v_1$</code></p>
+<p><code class='latexWorkaround'>$\vec v_2 = \vec v_1+ \frac{\vec p_2 - \vec p_1}{m}$</code></p>
+<p><code class='latexWorkaround'>$\vec v_2 = \vec v_1+ \frac{\vec J}{m}$</code></p>
+<p>I tend to use prime notation for after a collision, so let's change that to stay consistent:</p>
+<p><code class='latexWorkaround'>${\vec v}^\prime = \vec v+ \frac{\vec J}{m}$</code></p>
+<h1 id="problemsetup">Problem Setup</h1>
+<p>Consider two colliding objects, the shape is arbitrary, 
+what's important is that a collision has somehow been detected and that a collision normal can be established.</p>
+<!-- ![](../images/impulseBasedCollisionResolution/one.png) -->
+<div id="center">
+    <img src="../../images/impulseBasedCollisionResolution/one.png">
+    <p></p>
+</div>
+<p>From properties of dot products and normalized vectors, the magnitude of the velocities of the respective bodies along the relative position vector is:</p>
+<p><code class='latexWorkaround'>$\vec V_A \cdot \hat {\left( \vec r_B - \vec r_A \right)}$</code>
+<code class='latexWorkaround'>$\vec V_B \cdot \hat {\left( \vec r_A - \vec r_B \right)}$</code></p>
+<!-- ![The magnitudes of respective velocities along relative position](../images/impulseBasedCollisionResolution/two.png) -->
+<div id="center">
+    <img src="../../images/impulseBasedCollisionResolution/two.png">
+    <p>The magnitudes of respective velocities along relative position</p>
+</div>
+<p>Remembering that the sign of a dot product evinces the comparative direction of two vectors;
+it's clear that if the sum of these two dot products is negative, the objects, although colliding during this frame, are moving 
+away from each other, similarly, if the sum is positive then they're moving towards each other and the collision has to be resolved.</p>
+<p><code class='latexWorkaround'>$\vec V_A \cdot \hat {\left( \vec r_B - \vec r_A \right)} + \vec V_B \cdot \hat {\left( \vec r_A - \vec r_B \right)} &lt; 0$</code>
+<code class='latexWorkaround'>$\implies$</code> moving away from each other
+<code class='latexWorkaround'>$\vec V_A \cdot \hat {\left( \vec r_B - \vec r_A \right)} + \vec V_B \cdot \hat {\left( \vec r_A - \vec r_B \right)} &gt; 0$</code>
+<code class='latexWorkaround'>$\implies$</code> moving toward each other</p>
+<p>This value is called the closing velocity, <code class='latexWorkaround'>$v_c$</code> in the literature. </p>
+<p>This is sloppy naming as it's a scalar value, but I'll stick with it for consistency.</p>
+<p>Rewritten:</p>
+<p><code class='latexWorkaround'>$v_c = -\left( \vec v_A - \vec v_B \right) \cdot \hat {\left( \vec r_A - \vec v_B \right)}$</code></p>
+<p>It's negation is often used instead, called the seperating velocity <code class='latexWorkaround'>$v_s$</code> and its implications change accordingly.</p>
+<p><code class='latexWorkaround'>$v_s = \left( \vec v_A - \vec v_B \right) \cdot  \hat {\left( \vec r_A - \vec v_B \right)}$</code></p>
+<p><code class='latexWorkaround'>$v_s &gt; 0 \implies$</code> moving away from each other.</p>
+<p><code class='latexWorkaround'>$v_s &lt; 0 \implies$</code> moving toward each other.</p>
+<h2 id="derivinganexpressionforthevelocityafterthecollision">Deriving an expression for the velocity after the collision</h2>
+<p>Recall from the above derivation of impulse that a velocity after collision is of the following form:
+<code class='latexWorkaround'>${\vec v}^\prime = \vec v+ \frac{\vec J}{m}$</code></p>
+<p>This is unfortunately underconstrained/ underdetermined and another equation is needed to solve for the impulse, fortunately there are more relationships to mine.</p>
+<p>From physics, we know the coefficient of restitution (denoted by <code class='latexWorkaround'>$e$</code>) is the ratio of the final to initial relative velocity between two objects after they collide.
+It ranges from <code class='latexWorkaround'>$0$</code> to <code class='latexWorkaround'>$1$</code> where <code class='latexWorkaround'>$1$</code> would be a perfectly elastic collision and <code class='latexWorkaround'>$0$</code> a perfectly inelastic collision (<a href="https://en.wikipedia.org/wiki/Coefficient_of_restitution">Wiki article for coefficient of restitution</a>)</p>
+<p><code class='latexWorkaround'>$e = \frac {{v_s}^\prime}{v_s}$</code></p>
+<p>By Newton's third law and the restitution relationship:</p>
+<p><code class='latexWorkaround'>${v_s}^\prime = -e v_s$</code></p>
+<p>To ease the notation, I would also like to make a substitution for the normalized relative position vector
+<code class='latexWorkaround'>$\hat {\left( \vec r_A - \vec v_B \right)}$</code>
+as this is the same thing as the "contact normal", <code class='latexWorkaround'>$\hat n_c$</code></p>
+<p><code class='latexWorkaround'>$\implies v_s = \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$</code></p>
+<p>Substituting this into our restitution expresion
+<code class='latexWorkaround'>${v_s}^\prime = -e v_s = -e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$</code></p>
+<p><code class='latexWorkaround'>${v_s}^\prime$</code> is the seperating velocity (magnitude) after the collision whose constituents must agree with our impulse expression. Note that
+due to Newton's third law, impulses for each object will have opposite directions.</p>
+<p><code class='latexWorkaround'>$ {v_s}^\prime = \left( {\vec v_A}^\prime - {\vec v_B}^\prime  \right) \cdot \hat n_c$</code>
+<code class='latexWorkaround'>${\vec v_A}^\prime = \vec v_A + \frac{\vec J}{m_A}$</code>
+<code class='latexWorkaround'>${\vec v_B}^\prime = \vec v_B - \frac{\vec J}{m_B}$</code></p>
+<p><code class='latexWorkaround'>$\implies {v_s}^\prime = \left( \vec v_A+ \frac{\vec J}{m_A} - \vec v_B + \frac{\vec J}{m_B} \right) \cdot  \hat n_c$</code></p>
+<p>Which can be substituted into our restitution expresion
+<code class='latexWorkaround'>$\left( \vec v_A+ \frac{\vec J}{m_A} - \vec v_B + \frac{\vec J}{m_B} \right) \cdot  \hat n_c
+=
+-e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$</code></p>
+<p>Using the same algebraic properties of the dot product:</p>
+<p><code class='latexWorkaround'>$\left( \vec v_A - \vec v_B +  \vec J \left( \frac{1}{m_A} + \frac{1}{m_B}\right) \right) \cdot  \hat n_c
+=
+-e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$</code></p>
+<p><code class='latexWorkaround'>$\left( \vec v_A - \vec v_B \right)\cdot  \hat n_c +  \vec J \left( \frac{1}{m_A} + \frac{1}{m_B} \right) \cdot  \hat n_c
+=
+-e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c$</code></p>
+<p><code class='latexWorkaround'>$\vec J \left( \frac{1}{m_A} + \frac{1}{m_B} \right) \cdot  \hat n_c =
+
+-\left(1 + e\right) \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c
+$</code></p>
+<p><code class='latexWorkaround'>$\vec J \cdot \hat n_c = 
+\frac{-\left(1 + e\right) \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c}{\left( \frac{1}{m_A} + \frac{1}{m_B} \right)}
+$</code></p>
+<p>This is, by definition of projection with a normalized vector, the part of the impulse in the direction of the contact normal, which is what we wanted.</p>
+<!-- I think this is a reiteration of Poisson's hypothesis and could be more succinctly given. -->
+<h1 id="codeexample">Code Example</h1>
+<pre>
+    <code class="c++">
+/**
+ * A, B are rigidBody objects
+ * mtv is a minimum translation vector calculated in the collision detection routine
+ */
+ void resolveCollision(rigidbody& A, rigidbody& B, vec3 mtv)
+ {
+    // Get relative velocity and contact normal
+    vec3 relativeVelocity = A.vel - B.vel;
+    vec3 contactNormal = A.pos - B.pos;
+    contactNormal.normalize();
+
+    float seperatingVelocityMagnitude = relativeVelocity.dot( contactNormal );
+
+    // Do not resolve if velocities are separating
+    if(seperatingVelocityMagnitude > 0)
+        return;
+
+    // Take least elastic restitutionCoeff coefficient
+    float e = std::min( A.restitutionCoeff, B.restitutionCoeff );
+
+    // Calculate part of the impulse in the direction of the contact normal
+    float impulseMagnitudeInContactNormal = -(1 + e) * seperatingVelocityMagnitude / (A.inv_mass - B.inv_mass);
+
+    // scale the normalized minimum translation to impulse length 
+    vec3 impulse = -(mtv.normalize) * impulseMagnitudeInContactNormal;
+
+    // Apply impulse to bodies' velocities
+    A.vel += impulse / A.mass
+    B.vel -= impulse / B.mass
+}
+    </code>
+</pre>
+<h1 id="resources">Resources:</h1>
+<p><a href="https://www.amazon.com/Game-Physics-Engine-Development-Commercial-Grade/dp/0123819768" target="_blank">Ian Millington - Game Physics Engine Development</a></p>
+<p><a href="https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-the-basics-and-impulse-resolution--gamedev-6331?_ga=2.64050476.205125146.1625069373-736815224.1612468891" target="_blank">Randy Gaul - How to Create a Custom 2D Physics Engine: The Basics and Impulse Resolution</a></p>
+<p><a href="https://graphics.stanford.edu/courses/cs468-03-winter/Papers/ibsrb.pdf" target="_blank">Brian Mirtich & John Canny - Impulse-based Simulation of Rigid Bodies</a></p>
+      </div>
+      
+      <div id="categories">
+      </div>
+      
+    </div>
+  
+  </body>
+<html>
+

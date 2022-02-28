@@ -1,0 +1,16 @@
+						Poor man's SSG:
+
+DESIGN
+//=============================================================================================
+
+Influences for design (SSGs in general):
+https://austinmorlan.com/
+https://www.david-colson.com
+stuffwithstuff.com
+
+RESOURCES
+//=============================================================================================
+https://shadertoyunofficial.wordpress.com/2018/02/17/embedding-shadertoys-in-website/
+
+
+

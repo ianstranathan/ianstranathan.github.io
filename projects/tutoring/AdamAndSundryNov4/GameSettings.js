@@ -1,4 +1,0 @@
-var PADDLE_WIDTH = 20; // pixels
-var PADDLE_HEIGHT = PADDLE_WIDTH * 6;
-
-var BALL_RADIUS = 15;
