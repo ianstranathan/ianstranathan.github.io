@@ -7,7 +7,7 @@ var path = window.location.pathname;
 var page = path.split("/").pop();
 var isIndex;
 
-if ( page == "index.html")
+if ( page == "index.html" || page == "")
 {
     isIndex = true;
     initContentLinks(theArrOfCategories);
@@ -55,6 +55,7 @@ function initContentLinks(arrOfCategories)
         // was split by ".", so the year is the second index
         return (parseInt(b.date[2]) - parseInt(a.date[2]));
     });
+    // sort by month
     arrOfDateObjects.sort(function (a, b)
     {
         // sort by year:
@@ -63,6 +64,21 @@ function initContentLinks(arrOfCategories)
         if(b.date[2] == a.date[2])
         {
             return (parseInt(b.date[1]) - parseInt(a.date[1]));
+        }
+        else
+        {
+            return 0;
+        }
+    });
+    // sort by day
+    arrOfDateObjects.sort(function (a, b)
+    {
+        // sort by year:
+        // the string ex) 14.07.2020
+        // was split by ".", so the year is the second index
+        if(b.date[2] == a.date[2] && b.date[1] == a.date[1])
+        {
+            return (parseInt(b.date[0]) - parseInt(a.date[0]));
         }
         else
         {
@@ -141,6 +157,21 @@ function makeCategoryContentLinks(aCategory)
         if(b.date[2] == a.date[2])
         {
             return (parseInt(b.date[1]) - parseInt(a.date[1]));
+        }
+        else
+        {
+            return 0;
+        }
+    });
+    // sort by day
+    arrOfDateObjects.sort(function (a, b)
+    {
+        // sort by year:
+        // the string ex) 14.07.2020
+        // was split by ".", so the year is the second index
+        if(b.date[2] == a.date[2] && b.date[1] == a.date[1])
+        {
+            return (parseInt(b.date[0]) - parseInt(a.date[0]));
         }
         else
         {

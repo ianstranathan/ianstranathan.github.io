@@ -30,11 +30,12 @@
     --categories-bg-color: rgba(20, 20, 20, 0.5); } }
 @media (prefers-color-scheme: light) {
   :root {
-    --main-bg-color: rgb(212, 202, 202);
-    --secondary-bg-color: rgb(32, 31, 31);
-    --main-text-color: #222121;
-    --secondary-text-color: #f5eaea;
-    --toc_bg_color: rgb(194, 172, 172); } }
+    --main-bg-color: #343f49;
+    --secondary-bg-color: rgb(212, 202, 202);
+    --main-text-color: #f5eaea;
+    --secondary-text-color: #222121;
+    --toc_bg_color: rgba(20, 20, 20, 0.5);
+    --categories-bg-color: rgba(20, 20, 20, 0.5); } }
 #center {
   margin-left: auto;
   margin-right: auto;
@@ -159,8 +160,7 @@ img {
   flex-direction: column-reverse; }
 
 #content {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   gap: 10px; }
@@ -228,12 +228,11 @@ img {
     margin-right: auto; }
 
   #content {
+    padding: 30px;
     width: 76.5%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding-right: 10px;
-    padding-bottom: 30px; }
+    gap: 10px; }
 
   #categories {
     width: 15%;
