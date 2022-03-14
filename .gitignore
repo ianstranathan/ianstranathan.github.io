@@ -49,3 +49,4 @@ flycheck_*.el
 
 **/.vs/
 **/.DS_Store
+**/.bat/

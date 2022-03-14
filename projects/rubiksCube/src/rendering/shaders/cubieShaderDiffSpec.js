@@ -52,7 +52,9 @@ void main()
     // diffuse
     vec3 lightDir = normalize(lightPos - v_FragPos);
     vec3 normal = normalize(v_Normal);
-    float diff = max(dot(lightDir, normal), 0.0);
+    //float diff = max(dot(lightDir, normal), 0.0);
+    float diff = dot(lightDir, normal);
+    diff = mix( max(diff, 0.0), diff * 0.5 + 0.5, 0.2);
     vec3 diffuse = diff * color;
 
     // specular

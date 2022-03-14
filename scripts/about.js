@@ -28,5 +28,6 @@ about.onclick = function displayAbout()
     content.textContent = "";
     content.appendChild(title);
     content.appendChild(div);
-    div.insertAdjacentHTML("beforeend", aboutLiteral);
+ //   div.insertAdjacentHTML("beforeend", aboutLiteral);
+    div.innerHTML = aboutLiteral;
 }
