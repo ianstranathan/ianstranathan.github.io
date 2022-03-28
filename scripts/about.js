@@ -6,16 +6,22 @@ aboutLiteral =`
     it's like my own, budget <a href="http://hyperphysics.phy-astr.gsu.edu/hbase/hframe.html" target="_blank">Hyperphysics</a> 
     or <a href="https://www.algorithm-archive.org" target="_blank">Algorithm Archive.</a>
 </p>
+<h2>About</h2>
+<p>
+    My name is Ian. I studied Physics (B.S.) and Math (B.S) and I'm a hobbyist graphics programmer/ game developer.
+</p>
 <p>
     I'm motivated by understanding how things work and communicating ideas.
-    Writing serves as useful scaffolding when learning something new or cataloging a derivation.
 </p>
 <p>
-    Unfortunately, I don't always have the time or inclination to proof read each post as thoroughly as I'd like.
-    There will definitely be lots of spelling and grammar mistakes (But hopefully not too many technical mistakes). 
+    I find writing serves as useful scaffolding when learning something new or cataloging a derivation and that's what
+    I use this blog for.
+<br>
+    Unfortunately, I don't always have the time or inclination to proof read each post as thoroughly as I'd like --
+    there will definitely be lots of spelling and grammar mistakes (But hopefully not too many technical mistakes). 
 </p>
 <p>
-    Thanks for stopping by and feel free to reach out.
+    Cheers & thanks for stopping by.
 </p>
 `
 let title = document.createElement('h1');
