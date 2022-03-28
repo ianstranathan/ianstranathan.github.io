@@ -170,7 +170,7 @@ img {
   height: fit-content;
   padding-top: 30px;
   padding-bottom: 30px;
-  display: flex;
+  display: none;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -238,7 +238,7 @@ img {
     width: 15%;
     padding-top: 30px;
     padding-bottom: 30px;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: start;
     gap: 20px; }

@@ -50,3 +50,7 @@ flycheck_*.el
 **/.vs/
 **/.DS_Store
 **/.bat/
+
+build.bat
+
+node_modules/

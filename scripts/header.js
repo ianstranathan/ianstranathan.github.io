@@ -31,7 +31,7 @@ if(page == "index.html")
     </div>
     <div id="toggle-categories-container">
         <a href="#" id="toggle-categories-icon" onclick="toggleCategories()">
-            <i id="the-toggle-icon" class="fa fa-close"></i>
+            <i id="the-toggle-icon" class="fa fa-bars"></i>
         </a>
     </div>
     `
@@ -64,7 +64,7 @@ else
         </div>
         <div id="toggle-categories-container">
             <a href="#" id="toggle-categories-icon" onclick="toggleCategories()">
-                <i id="the-toggle-icon" class="fa fa-close"></i>
+                <i id="the-toggle-icon" class="fa fa-bars"></i>
             </a>
         </div>
     `
@@ -77,7 +77,7 @@ header.insertAdjacentHTML("afterbegin", headerLiteral);
 function toggleCategories()
 {
     let categoryDiv = document.getElementById("categories");
-    let tableOfContents = document.getElementById("toc_container");
+    // let tableOfContents = document.getElementById("toc_container");
     let icon = document.getElementById("the-toggle-icon");
 
     if(window.getComputedStyle(categoryDiv).display == "flex")
