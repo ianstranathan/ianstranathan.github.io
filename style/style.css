@@ -229,7 +229,7 @@ img {
 
   #content {
     padding: 30px;
-    width: 76.5%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px; }

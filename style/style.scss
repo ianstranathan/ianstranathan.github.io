@@ -364,7 +364,8 @@ img
   #content
   {
     padding: 30px;
-    width: $contentWidth * 0.9;
+    // width: $contentWidth * 0.9;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
