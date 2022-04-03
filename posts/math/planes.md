@@ -1,4 +1,4 @@
-Title: Something about planes
+Title: Distance between point and plane
 Date:  30.03.2022
 Categories: Math
 #--
@@ -52,7 +52,12 @@ Consider the following diagram:
 
 <div id="center">
     <img src="../../images/math/plane/diagramOne.png">
-    <p>Some arbitrary plane with some non-coplanar point Q</p>
+    <p>Some arbitrary plane with some non-coplanar point Q with the relative position vector 
+    $
+        \vec{Q} - \vec{P}  = \vec{QP} 
+    $
+    drawn in blue
+    </p>
 </div>
 
 <div id="center">
@@ -87,12 +92,17 @@ Via ray intersection
 
 <div id="center">
     <img src="../../images/math/plane/diagramOneRay.png">
-    <p>Some arbitrary plane</p>
+    <p>
+        The first diagram with the ray intersection point 
+        $
+            \vec{P}^\prime 
+        $
+    </p>
 </div>
 
 <div id="center">
     <img src="../../images/math/plane/diagramTwoRay.png">
-    <p>Some arbitrary plane</p>
+    <p>The same as above but from a different perspective</p>
 </div>
 
 The vector equation of a ray (really a line -- we just discard negative scaling values ℓ for the ray): <br>
@@ -142,8 +152,8 @@ Wrapping up:
 Casey's idea that the "$d$" value generally represents distance along the plane's normal is incorrect.
 Fortunately, it doesn't really matter as you don't need to know this in order to implement the simple intersection check for a plane.
 
-All said and done, this is definitely all unnecessary minutia on some level, but it fits the spirit of handmade ethos I think.
+All said and done, this is definitely all unnecessary minutia on some level, but it fits the spirit of the handmade ethos hopefully.
 
-Now, if only I knew half of what Casey does or could program a quarter as well as him... guess it's back to work.
+Now, if only I knew half of what Casey does or could program a significantly smaller fraction as well as him... guess it's back to work.
 
 Cheers
