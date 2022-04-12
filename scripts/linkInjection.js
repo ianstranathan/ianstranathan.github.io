@@ -94,7 +94,8 @@ function initContentLinks(arrOfCategories)
         div.style.flexDirection = "row";
         div.style.gap = "1%";
         let a = document.createElement('a');
-        let link = document.createTextNode(arrayOfPagesJSON[arrOfDateObjects[i].index].date + " " + arrayOfPagesJSON[arrOfDateObjects[i].index].title);
+        let link = document.createTextNode(arrayOfPagesJSON[arrOfDateObjects[i].index].title);
+        a.appendChild(link); 
         a.appendChild(link); 
         a.title = arrayOfPagesJSON[arrOfDateObjects[i].index].title; 
         a.href = "pages/" + arrayOfPagesJSON[arrOfDateObjects[i].index].category + "/" + arrayOfPagesJSON[arrOfDateObjects[i].index].fileName; 
