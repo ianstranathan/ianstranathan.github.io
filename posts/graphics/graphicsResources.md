@@ -94,6 +94,7 @@ Raymarching
 
 PBR
 ---------------------------------------------------------------------------------------
+[Interplay of Light](https://interplayoflight.wordpress.com/2013/12/30/readings-on-physically-based-rendering/)
 
 [Physically Based Rendering, 3rd Edition](https://pbrt.org/)
 
@@ -109,7 +110,7 @@ PBR
 
 Lectures/ Talks
 =======================================================================================
-
+[Zavie on PBR and First Princples](https://www.youtube.com/watch?v=E5HEynjqDcg)
 <a href="https://www.youtube.com/watch?v=P6UKhR0T6cs" target="_blank">John Carmack</a>
 
 <a href="https://www.youtube.com/watch?v=j-A0mwsJRmk" target="_blank">Naty Hoffman</a>
