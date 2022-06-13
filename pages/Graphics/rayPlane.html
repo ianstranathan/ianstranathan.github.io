@@ -63,61 +63,39 @@
     <div id="content-categories-container">
       
       <div id="content"><h1 id="motivation">Motivation</h1>
-<p><em>While watching <a href="https://www.youtube.com/watch?v=pq7dV4sR7lg">Casey Muratori write a raytracer</a> recently, I noticed that he incorrectly characterized the plane equation. So of course I had to do a quick derivation to convince myself</em></p>
-<h1 id="planeequationderivation">Plane equation derivation</h1>
-<p>From the wiki article:
-"In a manner analogous to the way lines in a two-dimensional space are described using a point-slope form for their equations, planes in a three dimensional space have a natural description using a point in the plane and a vector orthogonal to it (the normal vector) to indicate its "inclination".</p>
-<p>For a given normal vector: <code class='latexWorkaround'>$\vec{n}$</code><br>
-And a vector in the plane: <code class='latexWorkaround'>$\vec{P^{\prime}} - \vec{P}$</code></p>
-<p>A plane is defined for all <code class='latexWorkaround'>$\vec{P^{\prime}}$</code> such that their dot product is zero (they're orthogonal to each other)
-<code class='latexWorkaround'>$\left( \vec{P^{\prime}} - \vec{P} \right) \cdot \vec{n} = 0$</code></p>
-<p>We can easily recover the more familiar implicit form (<code class='latexWorkaround'>$Ax + By + Cz = d$</code>) if we write out the expression in scalar form:</p>
-<p><code class='latexWorkaround'>$\vec{n} = \left( A, B, C \right)$</code><br>
-<code class='latexWorkaround'>$\vec{P} = \left( a, b, c \right)$</code><br>
-<code class='latexWorkaround'>$\vec{P^{\prime}} = \left( x, y, z \right)$</code><br></p>
-<p><code class='latexWorkaround'>$ \implies \vec{P^{\prime}} - \vec{P} = \left(x - a, y - b, z - c \right)$</code></p>
-<p>And <code class='latexWorkaround'>$\left( \vec{P^{\prime}} - \vec{P} \right) \cdot \vec{n} = 0 = 
-\left( A, B, C \right) \cdot \left(x - a, y - b, z - c \right)$</code></p>
-<p>Expanding the dot product: <br>
-<code class='latexWorkaround'>$\left( A, B, C \right) \cdot \left(x - a, y - b, z - c \right) = A\left(x - a \right) + B\left(y - b \right) +  C\left(z - b \right)$</code></p>
-<p>Distributing and collecting constants: <br>
-<code class='latexWorkaround'>$A\left(x - a \right) + B\left(y - b \right) +  C\left(z - b \right) = Ax + By + Cz + \left(Aa + Bb + Cc \right) = 0$</code></p>
-<p>Rewriting the constant values as a new constant <code class='latexWorkaround'>$-d$</code>:<br>
-<code class='latexWorkaround'>$\implies d = Aa + Bb + Cc$</code><br>
-(or vectorially: <code class='latexWorkaround'>$\vec{P} \cdot \vec{n}$</code>)</p>
-<p><code class='latexWorkaround'>$Ax + By + Cz - d = 0 \implies Ax + By + Cz = d$</code></p>
-<h1 id="closestdistancetoaplanefromanarbitrarynoncoplanarpoint">Closest distance to a plane from an arbitrary non-coplanar point:</h1>
-<h2 id="problemsetup">Problem setup</h2>
-<p>Consider the following diagram:</p>
+<p>*While watching <a href="https://www.youtube.com/watch?v=pq7dV4sR7lg">Casey Muratori write a raytracer</a> recently, I noticed he characterized the equation of a plane equation in a weird way, so I decided to write out a quick derivation.</p>
+<h1 id="problemsetup">Problem Set Up</h1>
+<p>What seemed weird to me was his expression for a plane:  <code class='latexWorkaround'>$N^T \cdot P + d = 0$</code>
+Where <code class='latexWorkaround'>$N^T$</code> is a normal to the plane, <em>P</em> is a point on the plane and <em>d</em> is the distance to the plane. The operator is the scalar product.</p>
+<p>Non-standard notation aside, this is just the negative distance to a plane and isn't an equation to generate a plane.</p>
 <div id="center">
-    <img src="../../images/math/plane/diagramOne.png">
-    <p>Some arbitrary plane with some non-coplanar point Q with the relative position vector 
-    <code class='latexWorkaround'>$
-        \vec{Q} - \vec{P}  = \vec{QP} 
-    $</code>
-    drawn in blue
-    </p>
+    <img src="../../images/rayPlane/caseySetup1.png">
+    <p>Arbitrary plane with a point on the plane </p>
 </div>
 <div id="center">
-    <img src="../../images/math/plane/diagramTwo.png">
-    <p>The same problem from a different perspective</p>
+    <img src="../../images/rayPlane/caseySetup2.png">
+    <p><code class='latexWorkaround'>$\vec{N} \cdot \vec{P}$</code> is indeed the distance from the origin to the plane</p>
 </div>
+<p>Let's make this explicit by showing the distance to a plane from any arbitrary point</p>
+<h1 id="distancetoaplane">Distance to a plane</h1>
 <h2 id="viaprojectionofpointontonormal">Via projection of point onto normal:</h2>
 <div id="center">
-    <img src="../../images/math/plane/diagramOneProj.png">
+    <img src="../../images/rayPlane/diagramOneProj.png">
     <p>The projection length of the relative position vector and the plane normal</p>
 </div>
 <div id="center">
-    <img src="../../images/math/plane/diagramTwoProj.png">
+    <img src="../../images/rayPlane/diagramTwoProj.png">
 </div>
 <p>The dot product of the relative position vector and the normal:</p>
 <p><code class='latexWorkaround'>$\vec{QP} = \vec{Q} - \vec{P}$</code> </p>
 <p>By definition of the dot product<br>
 <code class='latexWorkaround'>$\vec{QP} \cdot \vec{n} = \lvert \lvert \vec{QP} \rvert \rvert \lvert \lvert \vec{n} \rvert \rvert \cos{\theta}$</code></p>
 <p><code class='latexWorkaround'>$ \implies \lvert \lvert \vec{QP} \rvert \rvert \cos{\theta} = \frac{\vec{QP} \cdot \vec{n}}{ \lvert \lvert \vec{n} \rvert \rvert}$</code></p>
+<p>In the case that the normal is unit length, this simplifies to our first result</p>
 <h2 id="viarayintersection">Via ray intersection</h2>
+<p>It's always encouraging to see the same result in multiple ways:</p>
 <div id="center">
-    <img src="../../images/math/plane/diagramOneRay.png">
+    <img src="../../images/rayPlane/diagramOneRay.png">
     <p>
         The first diagram with the ray intersection point 
         <code class='latexWorkaround'>$
@@ -126,13 +104,13 @@ And a vector in the plane: <code class='latexWorkaround'>$\vec{P^{\prime}} - \ve
     </p>
 </div>
 <div id="center">
-    <img src="../../images/math/plane/diagramTwoRay.png">
+    <img src="../../images/rayPlane/diagramTwoRay.png">
     <p>The same as above but from a different perspective</p>
 </div>
-<p>The vector equation of a ray (really a line -- we just discard negative scaling values ℓ for the ray): <br>
+<p>The vector equation of a ray (really a line segment -- we just discard negative scaling values ℓ for the ray): <br>
 <code class='latexWorkaround'>$\vec{ray} = \vec{r_0} + ℓ \vec{rd}$</code></p>
 <p>Where <code class='latexWorkaround'>$\vec{rd}$</code> is a unit vector in the ray direction.</p>
-<p>In the case of the ray intersection with the plane, the ray direction is the negative unit vector of whatever the normal vector happens to be; the ray origin is our arbitrary non-coplanar point <code class='latexWorkaround'>$Q$</code></p>
+<p>In the case of just looking for the distance to the plane, the ray direction is <code class='latexWorkaround'>$\pm$</code> the unit vector of whatever the normal vector happens to be depending on what side of the plane the ray origin is on; where the ray origin is our arbitrary point <code class='latexWorkaround'>$Q$</code></p>
 <p><code class='latexWorkaround'>$\vec{rd} = \frac{\vec{n}}{\lvert \lvert \vec{n} \rvert \rvert}$</code>
 <code class='latexWorkaround'>$\vec{r_0} = \vec{Q}$</code></p>
 <p>Substituting this into the plane equation:</p>
@@ -143,23 +121,38 @@ And a vector in the plane: <code class='latexWorkaround'>$\vec{P^{\prime}} - \ve
 <p><code class='latexWorkaround'>$\left(\vec{Q} - \vec{P} \right) \cdot \vec{n} - ℓ \frac{{\lvert \lvert \vec{n} \rvert \rvert}^2}{\lvert \lvert \vec{n} \rvert \rvert} = 0$</code></p>
 <p><code class='latexWorkaround'>$\vec{QP} \cdot \vec{n} - ℓ \lvert \lvert \vec{n} \rvert \rvert = 0$</code></p>
 <p><code class='latexWorkaround'>$ℓ = \frac{\vec{QP} \cdot \vec{n}}{\lvert \lvert \vec{n} \rvert \rvert}$</code></p>
-<h2 id="visualconfirmationwith3dgraphingsoftwaregeogebra">Visual confirmation with 3D graphing software (Geogebra):</h2>
-<p>Arbitrarily picking a simple example, let the plane be <code class='latexWorkaround'>$x + y + z = 4$</code></p>
-<p>Thus, the normal vector is <code class='latexWorkaround'>$\left( 1, 1, 1 \right)$</code> and the "<code class='latexWorkaround'>$d$</code>" value is <code class='latexWorkaround'>$4$</code></p>
+<p>And again, in the case that the normal is unit length, this simplifies to our first result.</p>
+<h1 id="equationofaplane">Equation of a plane</h1>
+<p>Now that we've gorily shown that the first expression in the video is indeed the distance from the origin to the plane, we can now show that the second expression is an accidental sleight of hand by deriving the equation of a plane.</p>
+<p>From <a href="https://en.wikipedia.org/wiki/Plane_(geometry)">wikipedia</a>: <br>
+<em>"In a manner analogous to the way lines in a two-dimensional space are described using a point-slope form for their equations, planes in a three dimensional space have a natural description using a point in the plane and a vector orthogonal to it (the normal vector) to indicate its "inclination".</em></p>
 <div id="center">
-    <img src="../../images/math/plane/geogebra1.png">
-    <p>Vector along the normal to plane that is scaled to the derived length</p>
+    <p>Some visual intuition:</p>
+    <img src="../../images/rayPlane/equationIntuition.png">
+    <p>The dot product of a relative position vector and a normal must be zero to be on a plane</p>
 </div>
-<div id="center">
-    <img src="../../images/math/plane/geogebra2.png">
-    <p>Vector along the normal to plane that is scaled to the the "<code class='latexWorkaround'>$d$</code>" length, in this case 4</p>
-</div>
-<h1 id="wrappingup">Wrapping up:</h1>
-<p>Casey's idea that the "<code class='latexWorkaround'>$d$</code>" value generally represents distance along the plane's normal is incorrect.
-Fortunately, it doesn't really matter as you don't need to know this in order to implement the simple intersection check for a plane.</p>
-<p>All said and done, this is definitely all unnecessary minutia on some level, but it fits the spirit of the handmade ethos hopefully.</p>
-<p>Now, if only I knew half of what Casey does or could program a significantly smaller fraction as well as him… guess it's back to work.</p>
-<p>Cheers</p>
+<p>A plane is defined for all <code class='latexWorkaround'>$\vec{P^{\prime}}$</code> if <code class='latexWorkaround'>$\left( \vec{P^{\prime}} - \vec{P} \right) \cdot \vec{n} = 0$</code>, i.e. their dot product is zero (they're orthogonal to each other)</p>
+<p>We can easily recover the more familiar implicit form (<code class='latexWorkaround'>$Ax + By + Cz = d$</code>) if we write out the expression in scalar form:</p>
+<p>Some chosen inclination (a normal to the plane)
+<code class='latexWorkaround'>$\vec{n} = \left( A, B, C \right)$</code><br>
+And some chosen point on the plane
+<code class='latexWorkaround'>$\vec{P} = \left( a, b, c \right)$</code></p>
+<p>And a variable point <code class='latexWorkaround'>$\vec{P^{\prime}}$</code><br>
+<code class='latexWorkaround'>$\vec{P^{\prime}} = \left( x, y, z \right)$</code><br></p>
+<p><code class='latexWorkaround'>$ \implies \vec{P^{\prime}} - \vec{P} = \left(x - a, y - b, z - c \right)$</code></p>
+<p>And our plane is then: <code class='latexWorkaround'>$\left( \vec{P^{\prime}} - \vec{P} \right) \cdot \vec{n} = 0 = \left(x - a, y - b, z - c \right) \cdot \left( A, B, C \right) $</code></p>
+<p>Expanding the dot product: <br>
+<code class='latexWorkaround'>$\left(x - a, y - b, z - c \right) \cdot \left( A, B, C \right) = A\left(x - a \right) + B\left(y - b \right) +  C\left(z - b \right)$</code></p>
+<p>Distributing and collecting constants: <br>
+<code class='latexWorkaround'>$A\left(x - a \right) + B\left(y - b \right) +  C\left(z - b \right) = Ax + By + Cz - \left(Aa + Bb + Cc \right) = 0$</code></p>
+<p>Rewriting the constant values as a new constant <code class='latexWorkaround'>$d$</code>: let <code class='latexWorkaround'>$d = Aa + Bb + Cc$</code><br>
+<code class='latexWorkaround'>$\implies Ax + By + Cz = d$</code></p>
+<h1 id="rayplaneintersection">Ray-Plane Intersection</h1>
+<p>Again the vector</p>
+<h1 id="wrappingup">Wrapping Up</h1>
+<p>The implicit form of the video is correct, but it is never shown that the expanded dot produt constants all get subsumed into a single constant (so, equation one and two are accidentally conflated). Fortunately/ surprisingly you don't need to know this to implement the simple intersection check for a plane (the <em>t</em> scalar for the ray is contained in <code class='latexWorkaround'>$\vec{N} \cdot \vec{P}$</code>)</p>
+<p>Planes and Ray-Plane intersections are very basic concepts, but it's always good to refresh fundamentals (it also fits the spirit of the handmade ethos hopefully)</p>
+<p>I do wish programmers would use standard notation/ be more explicit in their derivations, but I'm sure they feel similarly whenever they have to see scientists' unfortunate Matlab/ Python / Julia / R code.</p>
       </div>
       
       <div id="categories">
