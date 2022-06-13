@@ -138,6 +138,7 @@ $A\left(x - a \right) + B\left(y - b \right) +  C\left(z - b \right) = Ax + By +
 Rewriting the constant values as a new constant $d$: let $d = Aa + Bb + Cc$$<br>
 $\implies Ax + By + Cz = d$
 
+
 Wrapping Up
 ==========================================================================================================================
 
