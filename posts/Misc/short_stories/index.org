@@ -1,0 +1,15 @@
+#+TITLE: Short Stories
+#+Date:  <2016-06-06 Mon>
+#+FILETAGS: :Writing:
+
+[[../../../misc/stories/theRedCafe.pdf][The Red Cafe]]
+
+[[../../../misc/stories/aHomeForUs.pdf][A Home for Us]]
+
+[[../../../misc/stories/theFeatheredFairy.pdf][The Feathered Fairy]]
+
+[[../../../misc/stories/denemeDreams.pdf][Deneme - Dreams]]
+
+[[../../../misc/stories/theGypsyDance.pdf][The Gypsy Dance]]
+
+[[../../../misc/stories/gleaningsOfHazelnutsInChinese.pdf][Hazelnuts in Chinese]]

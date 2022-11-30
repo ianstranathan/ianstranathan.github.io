@@ -1,0 +1,37 @@
+Org mode static site generator
+https://juanjose.garciaripoll.com/blog/org-mode-html-templates/index.html
+https://juanjose.garciaripoll.com/blog/org-mode-html-templates/index.html
+
+https://orgmode.org/manual/Configuration.html
+
+https://orgmode.org/manual/Complex-example.html
+
+https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html
+
+https://thibaultmarin.github.io/blog/posts/2016-11-13-Personal_website_in_org.html
+
+Working example for windows
+https://www.emacswiki.org/emacs/EmacsScripts#h5o-3
+
+http://xahlee.info/emacs/emacs/elisp_running_script_in_batch_mode.html
+
+https://meganrenae21.github.io/Meg-in-Progress/posts/blogging-with-org-mode.html
+
+https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html
+
+https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/#creating-the-build-script
+
+https://ogbe.net/blog/blogging_with_org.html
+
+Making directory structure
+
+Export to HTML
+https://www.youtube.com/watch?v=8Gw4Y2EpcOY
+
+Using Katex instead of MathJax
+https://amitp.blogspot.com/2019/02/emacs-org-mode-and-katex.html
+
+Style
+
+
+Design Inspirations

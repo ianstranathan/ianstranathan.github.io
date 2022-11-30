@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Impulse Based Collision</title>
+<meta name="generator" content="Org mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous"/>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org92b2262">Overview</a></li>
+<li><a href="#orgcb073c3">Impulse Derivation</a></li>
+<li><a href="#orgdfaa5dd">Problem Setup</a></li>
+<li><a href="#org59a0f43">Deriving an expression for the velocity after the collision</a></li>
+<li><a href="#org6753bbe">Code Example</a></li>
+<li><a href="#org4c85a51">Resources:</a></li>
+</ul>
+</div>
+</div>
+<p>
+<i>While toying around with a small 2D physics project, I was unable to follow a popular online explanation of impulse based collision resolution</i>
+</p>
+
+<div id="outline-container-org92b2262" class="outline-2">
+<h2 id="org92b2262">Overview</h2>
+<div class="outline-text-2" id="text-org92b2262">
+<hr />
+<p>
+The change in motion of objects in a collision is caused by the forces generated at the collision point by compression and deformation.
+This compression and deformation is too fast to simulate frame by frame for a rigid body.
+Infinitesimal collision time allows us to assume an impulse model &#x2013; instantaneous change in velocity due to the collision.
+Thus, the movement after the collision can be calculated from the movement before the collision with the consideration of some math and physical parameters.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcb073c3" class="outline-2">
+<h2 id="orgcb073c3">Impulse Derivation</h2>
+<div class="outline-text-2" id="text-orgcb073c3">
+<hr />
+
+<p>
+Definition of momentum:
+</p>
+
+<p>
+\[ \vec p = m \vec v\]
+</p>
+
+<p>
+Newton's second law: \[\vec F = m\vec a = \frac{d}{dt} \left( m \vec v \right) = \frac{d \vec p}{dt}\]
+</p>
+
+<p>
+Seperating variables and integrating:
+</p>
+
+<p>
+\[\int_{t_1}^{t_2} \vec F \,dt = \int_{p_1}^{p_2} \vec dp \, = \vec p_2 - \vec p_1\]
+</p>
+
+<p>
+This change in momentum is said to be impulse, let \(\vec J\) be impulse:
+</p>
+
+<p>
+Substituting original momentum expression:
+\[\vec p_2 - \vec p_1 = m \vec v_2 - m \vec v_2\]
+</p>
+
+<p>
+\[\frac{\vec p_2 - \vec p_1}{m} = \vec v_2 - \vec v_1\]
+</p>
+
+<p>
+\[\vec v_2 = \vec v_1+ \frac{\vec p_2 - \vec p_1}{m}\]
+</p>
+
+<p>
+\[\vec v_2 = \vec v_1+ \frac{\vec J}{m}\]
+</p>
+
+<p>
+I tend to use prime notation for after a collision, so let's change that to stay consistent:
+</p>
+
+<p>
+\[{\vec v}^\prime = \vec v+ \frac{\vec J}{m}\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdfaa5dd" class="outline-2">
+<h2 id="orgdfaa5dd">Problem Setup</h2>
+<div class="outline-text-2" id="text-orgdfaa5dd">
+<hr />
+
+<p>
+Consider two colliding objects, the shape is arbitrary, 
+what's important is that a collision has somehow been detected and that a collision normal can be established.
+</p>
+
+
+<div id="org313379b" class="figure">
+<p><img src="../../../img/Physics/impulse_based_collision/one.png" alt="one.png" />
+</p>
+</div>
+
+<p>
+From properties of dot products and normalized vectors, the magnitude of the velocities of the respective bodies along the relative position vector is:
+</p>
+
+<p>
+\[\vec V_A \cdot \hat {\left( \vec r_B - \vec r_A \right)}\]
+\[\vec V_B \cdot \hat {\left( \vec r_A - \vec r_B \right)}\]
+</p>
+
+
+<div id="org1dd4cc5" class="figure">
+<p><img src="../../../img/Physics/impulse_based_collision/two.png" alt="two.png" />
+</p>
+<p><span class="figure-number">Figure 2: </span>The magnitudes of the respective velocities along relative position</p>
+</div>
+
+<p>
+Remembering that the sign of a dot product evinces the comparative direction of two vectors;
+it's clear that if the sum of these two dot products is negative, the objects, although colliding during this frame, are moving 
+away from each other, similarly, if the sum is positive then they're moving towards each other and the collision has to be resolved.
+</p>
+
+<p>
+\[\vec V_A \cdot \hat {\left( \vec r_B - \vec r_A \right)} + \vec V_B \cdot \hat {\left( \vec r_A - \vec r_B \right)} < 0\]
+\(\implies\) moving away from each other
+\[\vec V_A \cdot \hat {\left( \vec r_B - \vec r_A \right)} + \vec V_B \cdot \hat {\left( \vec r_A - \vec r_B \right)} > 0\]
+\(\implies\) moving toward each other
+</p>
+
+<p>
+This value is called the closing velocity, \(v_c\) in the literature. 
+</p>
+
+<p>
+This is sloppy naming as it's a scalar value, but I'll stick with it for consistency.
+</p>
+
+<p>
+<span class="underline">Rewritten</span>:
+</p>
+
+<p>
+\[v_c = -\left( \vec v_A - \vec v_B \right) \cdot \hat {\left( \vec r_A - \vec v_B \right)}\]
+</p>
+
+<p>
+It's negation is often used instead, called the seperating velocity \(v_s\) and its implications change accordingly.
+</p>
+
+<p>
+\[v_s = \left( \vec v_A - \vec v_B \right) \cdot  \hat {\left( \vec r_A - \vec v_B \right)}\]
+</p>
+
+<p>
+\(v_s > 0 \implies\) moving away from each other.
+</p>
+
+<p>
+\(v_s < 0 \implies\) moving toward each other.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org59a0f43" class="outline-2">
+<h2 id="org59a0f43">Deriving an expression for the velocity after the collision</h2>
+<div class="outline-text-2" id="text-org59a0f43">
+<hr />
+
+<p>
+Recall from the above derivation of impulse that a velocity after collision is of the following form:
+\[{\vec v}^\prime = \vec v+ \frac{\vec J}{m}\]
+</p>
+
+<p>
+This is unfortunately underconstrained/ underdetermined and another equation is needed to solve for the impulse, fortunately there are more relationships to mine.
+</p>
+
+<p>
+From physics, we know the coefficient of restitution (denoted by \(e\)) is the ratio of the final to initial relative velocity between two objects after they collide.
+It ranges from \(0\) to \(1\) where \(1\) would be a perfectly elastic collision and \(0\) a perfectly inelastic collision ([Wiki article for coefficient of restitution](<a href="https://en.wikipedia.org/wiki/Coefficient_of_restitution">https://en.wikipedia.org/wiki/Coefficient_of_restitution</a>))
+</p>
+
+<p>
+\[e = \frac {{v_s}^\prime}{v_s}\]
+</p>
+
+<p>
+By Newton's third law and the restitution relationship:
+</p>
+
+<p>
+\[{v_s}^\prime = -e v_s\]
+</p>
+
+<p>
+To ease the notation, I would also like to make a substitution for the normalized relative position vector
+\(\hat {\left( \vec r_A - \vec v_B \right)}\)
+as this is the same thing as the "contact normal", \(\hat n_c\)
+</p>
+
+<p>
+\[\implies v_s = \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c\]
+</p>
+
+<p>
+Substituting this into our restitution expresion
+\[{v_s}^\prime = -e v_s = -e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c\]
+</p>
+
+<p>
+\({v_s}^\prime\) is the seperating velocity (magnitude) after the collision whose constituents must agree with our impulse expression. Note that
+due to Newton's third law, impulses for each object will have opposite directions.
+</p>
+
+<p>
+\[ {v_s}^\prime = \left( {\vec v_A}^\prime - {\vec v_B}^\prime  \right) \cdot \hat n_c\]
+\[{\vec v_A}^\prime = \vec v_A + \frac{\vec J}{m_A}\]
+\[{\vec v_B}^\prime = \vec v_B - \frac{\vec J}{m_B}\]
+</p>
+
+<p>
+\[\implies {v_s}^\prime = \left( \vec v_A+ \frac{\vec J}{m_A} - \vec v_B + \frac{\vec J}{m_B} \right) \cdot  \hat n_c\]
+</p>
+
+<p>
+Which can be substituted into our restitution expresion
+\[\left( \vec v_A+ \frac{\vec J}{m_A} - \vec v_B + \frac{\vec J}{m_B} \right) \cdot  \hat n_c
+  =
+  -e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c\]
+</p>
+
+<p>
+Using the same algebraic properties of the dot product:
+</p>
+
+<p>
+\[\left( \vec v_A - \vec v_B +  \vec J \left( \frac{1}{m_A} + \frac{1}{m_B}\right) \right) \cdot  \hat n_c
+  =
+  -e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c\]
+</p>
+
+<p>
+\[\left( \vec v_A - \vec v_B \right)\cdot  \hat n_c +  \vec J \left( \frac{1}{m_A} + \frac{1}{m_B} \right) \cdot  \hat n_c
+  =
+  -e \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c\]
+</p>
+
+<p>
+$$\vec J \left( \frac{1}{m_A} + \frac{1}{m_B} \right) &sdot;  \hat n<sub>c</sub> =
+</p>
+
+<p>
+-\left(1 + e\right) \left( \vec v<sub>A</sub> - \vec v<sub>B</sub> \right) &sdot;  \hat n<sub>c</sub>
+$$
+</p>
+
+<p>
+\[\vec J \cdot \hat n_c = 
+  \frac{-\left(1 + e\right) \left( \vec v_A - \vec v_B \right) \cdot  \hat n_c}{\left( \frac{1}{m_A} + \frac{1}{m_B} \right)}
+  \]
+</p>
+
+<p>
+This is, by definition of projection with a normalized vector, the part of the impulse in the direction of the contact normal, which is what we wanted.
+</p>
+
+<p>
+&lt;!&#x2013; I think this is a reiteration of Poisson's hypothesis and could be more succinctly given. &#x2013;&gt;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6753bbe" class="outline-2">
+<h2 id="org6753bbe">Code Example</h2>
+<div class="outline-text-2" id="text-org6753bbe">
+<hr />
+<div class="org-src-container">
+<pre class="src src-cpp">/**
+ * A, B are rigidBody objects
+ * mtv is a minimum translation vector calculated in the collision detection routine
+ */
+void resolveCollision(rigidbody&amp; A, rigidbody&amp; B, vec3 mtv){
+    // Get relative velocity and contact normal
+    vec3 relativeVelocity = A.vel - B.vel;
+    vec3 contactNormal = A.pos - B.pos;
+    contactNormal.normalize();
+
+    float seperatingVelocityMagnitude = relativeVelocity.dot( contactNormal );
+
+    // Do not resolve if velocities are separating
+    if(seperatingVelocityMagnitude &gt; 0)
+	return;
+
+    // Take least elastic restitutionCoeff coefficient
+    float e = std::min( A.restitutionCoeff, B.restitutionCoeff );
+
+    // Calculate part of the impulse in the direction of the contact normal
+    float impulseMagnitudeInContactNormal = -(1 + e) * seperatingVelocityMagnitude / (A.inv_mass - B.inv_mass);
+
+    // scale the normalized minimum translation to impulse length 
+    vec3 impulse = -(mtv.normalize) * impulseMagnitudeInContactNormal;
+
+    // Apply impulse to bodies' velocities
+    A.vel += impulse / A.mass
+	B.vel -= impulse / B.mass
+ }
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4c85a51" class="outline-2">
+<h2 id="org4c85a51">Resources:</h2>
+<div class="outline-text-2" id="text-org4c85a51">
+<hr />
+
+<p>
+<a href="https://www.amazon.com/Game-Physics-Engine-Development-Commercial-Grade/dp/0123819768">Ian Millington - Game Physics Engine Development</a>
+</p>
+
+<p>
+<a href="https://graphics.stanford.edu/courses/cs468-03-winter/Papers/ibsrb.pdf">Brian Mirtich &amp; John Canny - Impulse-based Simulation of Rigid Bodies</a>
+</p>
+
+<p>
+<a href="https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-the-basics-and-impulse-resolution--gamedev-6331?_ga=2.64050476.205125146.1625069373-736815224.1612468891">Randy Gaul - How to Create a Custom 2D Physics Engine: The Basics and Impulse Resolution</a>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="https://orgmode.org">Org</a> mode 9.4.4)</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Polynomial Smooth Minimum</title>
+<meta name="generator" content="Org mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous"/>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgcf881ba">Motivation</a></li>
+<li><a href="#orgda5df41">Derivation</a></li>
+<li><a href="#orgcb91398">Wrapping Up:</a></li>
+<li><a href="#org4fc92f9">Annex</a>
+<ul>
+<li><a href="#org0e73f74">Shader Source</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+TL;DR: <a href="../../../demos/graphics/sminLive.html">Live shader here</a>
+</p>
+
+<div id="outline-container-orgcf881ba" class="outline-2">
+<h2 id="orgcf881ba">Motivation</h2>
+<div class="outline-text-2" id="text-orgcf881ba">
+<hr />
+
+<p>
+Iñigo Quilez, hallowed be his name, wrote a function for blending distance function primitives to model organic shapes with raymarching.
+(for introduction to raymarching, see the article I wrote <a href="../raymarching/index.html">here</a>
+</p>
+
+<p>
+He wrote a very nice article about it <a href="https://www.iquilezles.org/www/articles/smin/smin.htm">here</a>
+</p>
+
+<p>
+It's a foundational technique to get natural looking implicit surfaces which is important because nature is smooth and continuous(&#x2026; that's at least what they told me in school anyway) and a simple union of two shapes is not.
+</p>
+
+<blockquote>
+<p>
+The first time you see something it's a trick, the second time it's a technique
+</p>
+</blockquote>
+
+<p>
+For anyone that is trying to learn this stuff and for whom it's still a trick, hopefully this is helpful.
+I know I can only reluctantly use some derived result if I don't understand where it's coming from.
+</p>
+
+<p>
+It was impossible to follow iq's derivation in his article, surely the material is just so obvious to him that the terseness with which his derivation was written wasn't intentional.
+In my opinion, especially for the beginner like me, derivations are not the place for compactness, especially for something so foundational. 
+</p>
+
+<p>
+It really gave me pause to see a couple really smart guys I follow using this function without fulling understanding it or deriving it correctly.
+See: <a href="https://www.youtube.com/watch?v=Cp5WWtMoeKg&amp;t=185s">Sebastian Lague</a> and <a href="https://www.youtube.com/watch?v=YJ4iyff7zbk&amp;t=453s">The Art of Code</a>
+Both are far more productive, experienced and knowledgable than me, so maybe the real takeaway of this derivation is to choose my battles more wisely.
+There is however something deeply fruitful about reinventing the wheel, despite the undeniable loss in productivity.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgda5df41" class="outline-2">
+<h2 id="orgda5df41">Derivation</h2>
+<div class="outline-text-2" id="text-orgda5df41">
+<hr />
+
+<p>
+Looking at iq's article, the example of the polynomial smin seems to be getting a smooth minimum between
+some decreasing exponential and a sinusoid. That seems a little hard to think about right now with it's many intersection points to account for, so let's just look at a decreasing exponential with one intersection
+</p>
+
+
+<div id="org1e5d7ae" class="figure">
+<p><img src="../../../img/Graphics/polynomial_smin/smin0.png" alt="smin0.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Our functions; \(f(x) = x^2\) and  \(g(x) = e^{-x}\)</p>
+</div>
+
+
+<div id="org511362f" class="figure">
+<p><img src="../../../img/Graphics/polynomial_smin/smin1.png" alt="smin1.png" />
+</p>
+<p><span class="figure-number">Figure 2: </span>The simple union of our two functions</p>
+</div>
+
+
+<div id="org5be8184" class="figure">
+<p><img src="../../../img/Graphics/polynomial_smin/smin2.png" alt="smin2.png" />
+</p>
+<p><span class="figure-number">Figure 3: </span>Our functions with their difference \(d = f(x) - g(x)\)</p>
+</div>
+
+<p>
+Looking at this hard minimum, we can imagine a smooth curve in its place that connects \(f\) and \(g\)
+when the functions are sufficiently close to their intersection.
+But what does sufficiently close mean more precisely, \(i.e\) where should the constructed function stop being \(f\) and start being \(g\)?
+</p>
+
+<p>
+Now for a reasonably useless aside:
+</p>
+
+<p>
+At first blush, it's not obvious to me how to make a meaningful relationship or constraint between the two functions
+beyond that they're equal to each other at their intersection. This gives us a point \(C\), \(d = 0\) and its mapping $x$-value
+</p>
+
+<p>
+Looking at a given \(ε\) neighborhood around this point, you can see that \(d\) must be on the interval \([d(x-ε), d(x+ε)]\)
+which are small, not necessarily identical values.
+</p>
+
+
+<div id="org66f76e3" class="figure">
+<p><img src="../../../img/Graphics/polynomial_smin/sminEpsilon.png" alt="sminEpsilon.png" />
+</p>
+</div>
+
+<p>
+Well, now we're at loss about how to generalize along this line of thinking.
+</p>
+
+<p>
+And it gets worse, talking about points close to where a root of a function is requires us to know where the root is in the first place. This is a non trivial thing and a whole numerical method in its own right.
+And even worse&#x2026; iq's original diagram was of some flavor of a sinusoid and its intersection with a decreasing exponential has infinitely many roots. 
+We're noping on out of here my friend, it's just too messy; we'll need to think of another relationship characteristic of proximity to the intersection.
+</p>
+
+<p>
+A helpful observation is to note that this \(ε\) could be made arbitrarily small, small enough to where
+\([d(x-ε), d(x+ε)]\)
+is smaller than our original epsilon.
+</p>
+
+
+<div id="org8721ca9" class="figure">
+<p><img src="../../../img/Graphics/polynomial_smin/sminEpsilon2.png" alt="sminEpsilon2.png" />
+</p>
+</div>
+
+<p>
+It's also helpful to note that the difference between two polynomials is also a polynomial and that polynomials are continuous everywhere.
+So, by the intermediate value theorem, for some small value say \(k\), \(d∈ [-k, k]\).
+</p>
+
+<p>
+"Sufficiently close" to an intersection then could be recast in terms of the difference's value instead of being near its root.
+</p>
+
+<p>
+Note however that \(d\) reaches \(-k\) and \(k\) at different rates, however slightly different, as discussed previously and if we are planning on using this interval as our generalized way to talk about being close to the intersection
+our choice of \(k\) will affect how the curve stiches to its base functions.
+In the limit close to \(C\) this doesnt matter, but for medium sized choices of \(k\) I think you could play around with how \(k\) changes before and after \(C\) to get something more uniform or weird as you fancy.
+</p>
+
+<p>
+Well, this is much nicer: we don't need to know anything about the \(x\) value for a mapped zero and it's just one value, some chosen \(k\).
+</p>
+
+<p>
+Now that we at least have a general method of talking about being close to an intersection.
+(My god, We're only on the second line of iq's derivation&#x2026;)
+What should the curve be in that interval?
+I'm not sure there's an intelligent reason for choosing linear interpolation over something more exotic looking besides
+that linear interpolation is familiar and more importantly meets our first constraint for our constructed curve/ spline thingy,
+namely it must be \(f\) at the beginning of "being close to the intersection” (\(i.e\) at \(d = -k\)) and
+\(g\) at the end of "being close to the intersection” (\(i.e\) at \(d = k\)).
+</p>
+
+<p>
+Linear interpolation: &lt;br&gt;
+\(ξ = (1 - u)f + ug\) ; \(u ∈ [0, 1]\) &lt;br&gt;
+So when \(u = 0, ξ = f\) and \(u = 0, ξ = g\)
+</p>
+
+<p>
+But we're not necessarily working on the interval \([0, 1]\)
+Thus we have to map our chosen "closeness" interval \([-k, k]\) to \([0, 1]\)
+</p>
+
+<p>
+Like the choice of linear interpolation, linear mapping seems easiest/ most familar:
+</p>
+
+<p>
+\(ℓ = mx + b\) 
+With boundary conditions:
+\(ℓ(-k) = 0\) and \(ℓ(k) = 1\)
+\(ℓ(-k) = -mk + b = 0, \implies b = mk\)
+\(ℓ(k) = mk + mk = 2mk = 1 \implies m = \frac{1}{2k}\) 
+\(\implies b = \frac{1}{2}\)
+\(\implies ℓ = \frac{x}{2k} + \frac{1}{2}\)
+</p>
+
+<p>
+but we're interpolating over the difference, not \(x\)
+</p>
+
+<p>
+\[ℓ = \frac{d}{2k} + \frac{1}{2}\]
+</p>
+
+<p>
+also, we don't want to include values outside the "sufficiently close" interval
+\(\implies\) we don't want to include the values when \(ℓ < 0\) and \(ℓ > 1\)
+</p>
+
+<p>
+\(\implies ℓ =\) max(0, min(\(1\),  \(ℓ\)), note that this is the same as the glsl hardware accelerated function <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/clamp.xhtml">clamp</a>;
+</p>
+
+<p>
+in glsl: \(ℓ =\) clamp(\(ℓ\), \(0\), \(1\))
+</p>
+
+<p>
+Just using a linear interpolation between our functions with the correctly mapped interval gives us a pretty good result:
+\(ξ = (1-ℓ)f + ℓg\);
+\(ℓ = d / {2k} + 1/2\) and \(k ≈ 0.1\)
+</p>
+
+
+<div id="orgc21875f" class="figure">
+<p><img src="../../../img/Graphics/polynomial_smin/firstApproxNaive.png" alt="firstApproxNaive.png" />
+</p>
+<p><span class="figure-number">Figure 6: </span>As expected, our interpolated curve is equal to \(f\) and \(g\) when \(d = -k\) and \(d = k\) respectively.</p>
+</div>
+
+
+<div id="org0d712c9" class="figure">
+<p><img src="../../../img/Graphics/polynomial_smin/firstApproxWithClamp.png" alt="firstApproxWithClamp.png" />
+</p>
+<p><span class="figure-number">Figure 7: </span>This is improved by limiting our ℓ value to only ever be between \(0\) and \(1\) as reasoned before</p>
+</div>
+
+<p>
+What now and how do we improve on this? Well, before we go racking our brains for something more creative, what other constraints exist for our curve?
+Not only must ξ evaluate to \(f\) &amp; \(g\) at the "closeness" interval boundaries, but since it's supposed to be smooth,
+its derivative must also match the boundaries' derivatives.
+So what is ξ's derivative?
+</p>
+
+
+<p>
+\[ξ = (1-ℓ)f + ℓg\]
+</p>
+
+<p>
+by the product rule:
+</p>
+
+<p>
+\[\frac{dξ}{dx} = \frac{d(1-ℓ)}{dx}f + \frac{df}{dx}(1-ℓ) + \frac{dℓ}{dx}g + \frac{dg}{dx}ℓ\]
+</p>
+
+<p>
+\[\frac{dξ}{dx} = \frac{-dℓ)}{dx}f + \frac{df}{dx} - ℓ\frac{df}{dx} + \frac{dℓ}{dx}g + \frac{dg}{dx}ℓ\]
+</p>
+
+<p>
+collecting like terms:
+</p>
+
+<p>
+\[\frac{dξ}{dx} = (g - f)\frac{dℓ)}{dx} + (1 - ℓ)\frac{df}{dx} + \frac{dg}{dx}ℓ\]
+</p>
+
+<p>
+Note that \(g - f\) is just \(-d\)
+</p>
+
+<p>
+Testing our first boundary: \(d = -k \implies l = 0,  g - f = k\)
+</p>
+
+<p>
+Again \[ξ = (1-ℓ)f + ℓg, l = 0 \implies g = 0\]
+</p>
+
+<p>
+\[\frac{dξ}{dx} = k\frac{dℓ)}{dx} + \frac{df}{dx}\]
+</p>
+
+<p>
+We require ξ's derivative to equal the derivative of \(f\) at this boundary in order to be smooth. 
+</p>
+
+<p>
+Thus we must subtract this extra, first term from our original expression for ξ's derivative to match.
+</p>
+
+<p>
+\[\implies \frac{dξ}{dx} = (g - f)\frac{dℓ)}{dx} + (1 - ℓ)\frac{df}{dx} + \frac{dg}{dx}ℓ - k\frac{dℓ)}{dx}\]
+</p>
+
+<p>
+Similarly, evaluating ξ's derivative at the other boundary:
+</p>
+
+<p>
+\(d = k \implies l = 1,  g - f = -k\)
+\[\implies \frac{dξ}{dx} = (-k)\frac{dℓ)}{dx} + (0)\frac{df}{dx} + \frac{dg}{dx}ℓ - k\frac{dℓ)}{dx}\]
+\[\implies \frac{dξ}{dx} = (-2k)\frac{dℓ)}{dx} + \frac{dg}{dx}ℓ\]
+</p>
+
+<p>
+Again we require ξ's derivative to equal the derivative of \(f\) at this boundary for smoothness.
+</p>
+
+<p>
+So we must now add this extra term to our expression for ξ's derivative to match
+</p>
+
+<p>
+\[\implies \frac{dξ}{dx} = (g - f)\frac{dℓ)}{dx} + (1 - ℓ)\frac{df}{dx} + \frac{dg}{dx}ℓ - k\frac{dℓ)}{dx} +2k\frac{dℓ)}{dx}\]
+</p>
+
+<p>
+But now we're a bit stuck&#x2026; after all, doesn't adding this term change what the ξ's derivative will evaluate to at the first boundary? 
+Definitely, and if we were to go back and redo our process we'd be stuck in a vicious cirlce; so we need to have this second boundary corrective term disappear at the first boundary, but still be around at the second boundary.
+</p>
+
+<p>
+We're in luck though; just such a term exists and has already been used by us, namely, ℓ.
+\(ℓ\) by design is just such a term, so if we multiply this corrective term by ℓ, it will do precisely what we want it to.
+</p>
+
+<p>
+\[\implies \frac{dξ}{dx} = (g - f)\frac{dℓ)}{dx} + (1 - ℓ)\frac{df}{dx} + \frac{dg}{dx}ℓ - k\frac{dℓ)}{dx} +2kℓ\frac{dℓ)}{dx}\]
+</p>
+
+<p>
+Whew, that already feels like clever enough work to stop, but we want the function, not its derivative.
+So how to integrate this thing?
+</p>
+
+<p>
+\[ξ = \int_{}^{} (g - f)\frac{dℓ)}{dx} + (1 - ℓ)\frac{df}{dx} + \frac{dg}{dx}ℓ - k\frac{dℓ)}{dx} +2kℓ\frac{dℓ)}{dx} dx\]
+</p>
+
+<p>
+Regrouping terms to make the underlying product rule more obvious.
+</p>
+
+<p>
+\[ξ = \int_{}^{} g\frac{dℓ)}{dx} - f\frac{dℓ)}{dx} + \frac{df}{dx} - ℓ\frac{df}{dx} + \frac{dg}{dx}ℓ - k\frac{dℓ)}{dx} +2kℓ\frac{dℓ)}{dx} dx\]
+</p>
+
+<p>
+\[ξ = \int_{}^{} g\frac{dℓ)}{dx} + \frac{dg}{dx}ℓ - \left(f\frac{dℓ)}{dx} + ℓ\frac{df}{dx}\right) + \frac{df}{dx} - k\frac{dℓ)}{dx} +2kℓ\frac{dℓ)}{dx} dx\]
+</p>
+
+<p>
+reversing the product rule on the first two terms or integrating by parts and integrating the last three, straightforward integrals
+</p>
+
+<p>
+\[ξ = gℓ - fℓ + f - kℓ + kℓ^2\]
+</p>
+
+<p>
+\[\implies ξ = (1 - ℓ)f + ℓg - kℓ(1 - ℓ)\]
+</p>
+
+<p>
+This is exactly iq's function ( <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/mix.xhtml">mix</a> is glsl hardware accelerated linear interpolation)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-cpp">// polynomial smooth min (k = 0.1);
+float smin( float a, float b, float k )
+{
+    float h = clamp( 0.5+0.5*(b-a)/k, 0.0, 1.0 );
+    return mix( b, a, h ) - k*h*(1.0-h);    
+}
+</pre>
+</div>
+
+
+<div id="org1bf7ada" class="figure">
+<p><img src="../../../img/Graphics/polynomial_smin/sminFinal.png" alt="sminFinal.png" />
+</p>
+<p><span class="figure-number">Figure 8: </span>Our smooth minimum</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcb91398" class="outline-2">
+<h2 id="orgcb91398">Wrapping Up:</h2>
+<div class="outline-text-2" id="text-orgcb91398">
+<hr />
+<p>
+This was a little dive into shader flavored spline interpolation; we took a nice result from an authoritative source and rederived it from first principles.
+The function itself, as said by iq, is only \(C^1\) continous, but we could extend this with our same approach to be whatever order continuous we like at the expense of performance.
+Shaders are performance sensitive and the first order polynomial smin is what you mostly see perusing shadertoy.
+</p>
+
+<p>
+Live shader can be found <a href="../../../demos/graphics/sminLive.html">here</a>
+</p>
+
+<p>
+If you're curious how I made this shader, the big picture is that I'm using the "over operator" to make a graph of
+functions which is a really common technique, see <a href="https://thebookofshaders.com/05/">this well known resource</a> for more on that.
+Additionally, I am using a handmade easing function that is interpolating over the functions' derivatives' values to make the lines more uniform  with some functional conditionals to help out.
+</p>
+
+<p>
+Hopefully it's helped someone besides me. Thank you for reading.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4fc92f9" class="outline-2">
+<h2 id="org4fc92f9">Annex</h2>
+<div class="outline-text-2" id="text-org4fc92f9">
+</div>
+<div id="outline-container-org0e73f74" class="outline-3">
+<h3 id="org0e73f74">Shader Source</h3>
+<div class="outline-text-3" id="text-org0e73f74">
+<div class="org-src-container">
+<pre class="src src-cpp">#define SCALE (2.)
+#define PI (3.14159)
+
+float when_gt(float x, float y) 
+{
+    return max(sign(x - y), 0.0);
+}
+float graph(float tolerance, float function, float axis)
+{
+    return (smoothstep(function, function + tolerance, axis))
+	- (smoothstep(function + tolerance, function + 2. * tolerance, axis));
+}
+
+float derivativeEasingFunction(float minTolerance, float maxTolerance,
+			       float maxDerivVal, float derivativeVal)
+{
+    return ((maxTolerance - minTolerance) * (1. - cos(PI * derivativeVal/ maxDerivVal)) + minTolerance);
+}
+void main() 
+{
+    vec2 uv = SCALE * ( 2. * gl_FragCoord.xy/resolution.xy - 1.);
+    uv.x *= resolution.x / resolution.y;
+
+    // abitrarily chosen to look nice
+    float minEpsilon = 0.03;
+    float maxEpsilon = 1.6 * minEpsilon;
+
+    // sin(x)
+    float periodNum = 3.;
+    float amplitude = 1.;
+    float sinusoid = amplitude * sin(periodNum * uv.x - 0.5 * time);
+    float derivativeSinusoid = periodNum *  amplitude * cos(periodNum * uv.x - 0.5 * time);
+    float maxDerivSinusoid = periodNum *  amplitude;
+
+    // e^-x
+    float exponential = exp(-uv.x);
+    float derivativeExponential = -exp(-uv.x);
+    float maxDerivExponential = -exp(0.73); // chosen with helper line -- max visible f(x)
+
+    // smin
+    float kk = 0.5;
+    float dd = sinusoid - exponential;
+    float ll = clamp(0.5 + dd / (2. * kk), 0.0, 1.0 );
+    float dlldx = clamp((derivativeSinusoid - derivativeExponential)/ (2. * kk), 0.0, 1.0 );
+    float leSmin = (1. - ll) * sinusoid +  ll * exponential - kk * ll * (1.0 - ll);
+    float derivativeXi = dlldx * (-dd) + derivativeSinusoid * (1. - ll) 
+	+ derivativeExponential * ll - dlldx * kk + dlldx * 2. * kk * ll;
+    float derivativeLeSmin = derivativeXi * when_gt(dd, -kk) + derivativeSinusoid * when_le(dd, -kk);
+
+    // mask for background and making things lighter
+    float mask = length(0.2 * uv);
+    vec3 col = (1. - mask) * vec3(.129, .141, .176);
+
+    // graphs
+    float graphLeSmin = graph(derivativeEasingFunction(minEpsilon, maxEpsilon, maxDerivSinusoid, derivativeLeSmin),
+			      leSmin, uv.y);
+    float graphSinusoid = graph(derivativeEasingFunction(minEpsilon, maxEpsilon, maxDerivSinusoid, derivativeSinusoid),
+				sinusoid, uv.y);
+    float graphExponential = graph(derivativeEasingFunction(minEpsilon, maxEpsilon, maxDerivExponential, derivativeExponential),
+				   exponential, uv.y);
+
+    // making "draw order"
+    graphSinusoid *= (.6 - graphLeSmin);
+    graphExponential *= (.5 - graphSinusoid) * (1. - graphLeSmin);
+
+    // col and frag
+    col += vec3(0., 0., 1.) * graphSinusoid + vec3(1., 0., 0.) * graphExponential + vec3(0., 1., 0.) * graphLeSmin;
+    fragColor = vec4(col,1.0);
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="https://orgmode.org">Org</a> mode 9.4.4)</p>
+</div>
+</body>
+</html>

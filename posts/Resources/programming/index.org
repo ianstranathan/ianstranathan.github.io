@@ -1,0 +1,17 @@
+#+STARTUP: indent
+
+* Functional Programming
+- [[https://mostly-adequate.gitbook.io/mostly-adequate-guide/][Professor Frisby's Mostly Adequate Guide to Functional Programming]]
+- [[https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript][More Professor Frisby]]
+- [[https://github.com/BartoszMilewski/DaoFP][The Dao of Functional Programming]]
+# https://jrsinclair.com/articles/2022/whats-so-great-about-functional-programming-anyway/
+
+* Common Lisp
+- [[https://gigamonkeys.com/book/][Practical Common Lisp]]
+- [[http://landoflisp.com/][Land of Lisp]]
+- [[http://weitz.de/cl-recipes/][Common Lisp Recipes]]
+
+* Misc
+- [[https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwjquKOgi9D7AhXrjYkEHW1oCm0QFnoECBcQAQ&url=https%3A%2F%2Fweb.mit.edu%2F6.001%2F6.037%2Fsicp.pdf&usg=AOvVaw3UTwiMdUAZylkX6whlh6uf][The Structure and Interpretation of Computer Programs]]
+
+

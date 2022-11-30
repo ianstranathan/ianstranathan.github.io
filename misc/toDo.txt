@@ -1,7 +1,0 @@
-*) Have multiple categories with number of total articles
-
-*) Katex "display" formulas ($$ ... $$) not centering
-
-*) Blogpost template html should have title be the post name probably
-
-

@@ -1,0 +1,108 @@
+#+TITLE: Quotes
+#+DATE: <2022-02-26 Sat>
+#+FILETAGS: :Quotes:
+
+#+BEGIN_QUOTE
+Try not to become a man of success, but rather try to become a man of value. -- Albert Einstein
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+What I cannot create, I do not understand. -- Richard Feynman
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Was Du ererbt von deinen Vätern hast, erwirb es, um es zu besitzen. -- Goethe
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Arise awake and stop not until the goal is reached. -- Vivekananda
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Ostinato Rigore. -- Leonardo da Vinci
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+There is only one thing that I dread: not to be worthy of my sufferings. -- Dostoevsky
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+la nature ne fait jamais des sauts -- Leibniz
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Wahrlich, es ist nicht das Wissen, sondern das Lernen, nicht das Besitzen sondern das Erwerben, nicht das Da-Seyn, sondern das Hinkommen, was den grössten Genuss. -- Gauss
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+When I write a paper, I have to rederive for myself the rules of differentiation and sometimes even the commutative law of multiplication. -- Lipót Fejér 
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Hat man sein warum? des Lebens, so verträgt man sich fast mit jedem wie? -- Nietzsche
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+What you leave behind is not what is engraved in stone monuments, but what is woven into the lives of others. -- Pericles
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The only true wisdom is in knowing you know nothing. -- Socrates
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The unexamined life is not worth living. -- Socrates
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Practice yourself, for heaven’s sake, in little things;
+and thence proceed to greater. -- Epictetus
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Good character is not formed in a week or a month. It is created little by little, day by day. Protracted and patient effort. -- Heraclitus
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Never take counsel of your fears. -- Stone Wall Jackson
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The secret to what anything means to us depends on how we've connected it to other things we know. -- Marvin Minsky
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+And that's the point – Not to make something sell, something very popular, 
+but to love something, and make something that we creators can love.
+It's the very core feeling we should have in making games. -- Shigeru Miyamoto
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+If you ask me, Tech/Engineering is there to support Art/Design. And Art/Design is there to support Story/Experience/Product. Science/Research is there to inspire them all. -- Inigo Quilez
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Herd thither, me hither. -- Erik Naggum
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Ever tried. Ever failed. No matter. Try again. Fail again. Fail better. -- Samuel Beckett
+#+END_QUOTE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -51,6 +51,7 @@ flycheck_*.el
 **/.DS_Store
 **/.bat/
 
-build.bat
+build.cmd
+build-site.el
 
 node_modules/

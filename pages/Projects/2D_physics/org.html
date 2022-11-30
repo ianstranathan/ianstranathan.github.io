@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WebGL: Pushing Pixels</title>
+<meta name="generator" content="Org mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd102f0e">Overview:</a>
+<ul>
+<li><a href="#org556230a">Motivation</a></li>
+</ul>
+</li>
+<li><a href="#org72dd9a6">Rendering Side of Things:</a></li>
+<li><a href="#org3d28625">Programming Side of Things:</a></li>
+<li><a href="#org0c7814c">Resources:</a></li>
+</ul>
+</div>
+</div>
+<p>
+<b>A Small project post mortem</b>
+</p>
+
+<p>
+Tl;dr: check it out <a href="../../../projects/2D_physics/refactor/">here</a>
+</p>
+
+<div id="outline-container-orgd102f0e" class="outline-2">
+<h2 id="orgd102f0e">Overview:</h2>
+<div class="outline-text-2" id="text-orgd102f0e">
+<hr />
+</div>
+
+<div id="outline-container-org556230a" class="outline-3">
+<h3 id="org556230a">Motivation</h3>
+<div class="outline-text-3" id="text-org556230a">
+<hr />
+<p>
+I wanted to make a simple physics "engine" (equations of motion, basic collision) as an exercise 
+</p>
+
+<p>
+I was inspired to do so after watching this presentation by <a href="https://www.youtube.com/watch?v=Zkx1aKv2z8o&amp;t=2399s">Steven Witten</a>
+It's worth your time if you're interested in math or graphics
+All his presentations, along with a host of interesting toys and articles, can be found on his <a href="http://acko.net/">incredibly polished site</a>
+</p>
+
+<p>
+The Gist
+</p>
+<hr />
+<p>
+The fundamental idea of a physics system is very simple: incoporate the appropriate physical law (gravity, hookes law, w/e) and numerically integrate.
+</p>
+
+<p>
+Pushing around pixels in practice however is hard with a capital H and this is just a simulation of frictionless colliding rigid bodies (no rotation, multiple contact point collisions, or constrained simulation)
+</p>
+
+<p>
+As usual, the underpinning rendering and programming routines were all implemented from scratch (webgl, seperating axis theorem, impulse collision response, euler integration etc)
+</p>
+
+<p>
+In the future, time/ interest willing, I hope to improve upon this first stab and dig deeper into the subject.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org72dd9a6" class="outline-2">
+<h2 id="org72dd9a6">Rendering Side of Things:</h2>
+<div class="outline-text-2" id="text-org72dd9a6">
+<hr />
+<ul class="org-ul">
+<li>Vanilla WebGL with some boilerplate code and glMatrix as my vector and matrix library.</li>
+
+<li>Wireframe shader via barycentric coordinates from vertices.</li>
+</ul>
+
+<p>
+A glaring missing component is not setting current state of renderer from the interpolation between the two physics states.
+This results in some flickering artifacts.
+Also, if I were to do this as a fuller project I'd like to add instancing/ batch rendering to be able to stress test the simulation.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3d28625" class="outline-2">
+<h2 id="org3d28625">Programming Side of Things:</h2>
+<div class="outline-text-2" id="text-org3d28625">
+<hr />
+<p>
+Visualization tests or articles for each main component:
+</p>
+
+<ul class="org-ul">
+<li>Euler integration for numerical integration to propagate motion:
+<ul class="org-ul">
+<li><a href="../../Math/euler_method/">Euler Method Article</a></li>
+</ul></li>
+
+<li>Quad tree + circle colliders for broadphase detection &amp; seperating axis theorem for narrow phase detection + generating contact normal for impulse
+<ul class="org-ul">
+<li><a href="../../Physics/impulse_based_collision">My Impulse Based Collision Response Article</a></li>
+<li><a href="../../../Projects/2D_physics/SATVisualization/">Seperating Axis Theorem Test in p5</a></li>
+<li><a href="../../../Projects/2D_physics/quadTreeVisualization/">Quadtree test in p5</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0c7814c" class="outline-2">
+<h2 id="org0c7814c">Resources:</h2>
+<div class="outline-text-2" id="text-org0c7814c">
+<hr />
+
+<ul class="org-ul">
+<li>Fixed Timestep:
+<ul class="org-ul">
+<li><a href="https://www.gafferongames.com/post/fix_your_timestep/">Glenn Fiedler</a></li>
+</ul></li>
+
+<li>SAT:
+<ul class="org-ul">
+<li><a href="https://dyn4j.org/2010/01/sat/">SAT tutorial by dyn4j</a></li>
+<li><a href="http://www.metanetsoftware.com/technique/tutorialA.html">Tutorial by n++ developer</a></li>
+</ul></li>
+
+<li>Impulse Based Collision Response:
+<ul class="org-ul">
+<li><a href="https://www.amazon.com/Game-Physics-Engine-Development-Commercial-Grade/dp/0123819768">Ian Millington - Game Physics Engine Development</a></li>
+<li><a href="https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-the-basics-and-impulse-resolution--gamedev-6331?_ga=2.64050476.205125146.1625069373-736815224.1612468891">Randy Gaul - [[How to Create a Custom 2D Physics Engine: The Basics and Impulse Resolution</a>]]</li>
+<li><a href="https://graphics.stanford.edu/courses/cs468-03-winter/Papers/ibsrb.pdf">Brian Mirtich &amp; John Canny - Impulse-based Simulation of Rigid Bodies</a></li>
+</ul></li>
+
+<li>Quadtree:
+<ul class="org-ul">
+<li><a href="https://en.wikipedia.org/wiki/Quadtree#Pseudocode">Wikipedia</a></li>
+<li><a href="https://www.youtube.com/watch?v=OJxEcs0w_kE">The Coding Train</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="https://orgmode.org">Org</a> mode 9.4.4)</p>
+</div>
+</body>
+</html>
