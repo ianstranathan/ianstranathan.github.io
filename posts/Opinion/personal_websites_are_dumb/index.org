@@ -26,7 +26,7 @@ they're judging you primarily and negatively for the plainness of your portfolio
 (with some notable exceptions like [[http://acko.net][Steven Witten]]), I assume they want the best engineer possible and I want to waste as little time as possible)
 
 I could try to make a fanicer website ([[https://zackmibrown.github.io/][here's one]] I made for a friend) but it's ultimately disaptive for non-renewable resources like time and
-attention which we're all rapidly running out of.
+ability which we're all rapidly running out of.
 
 Wouldn't we all rather be writing stories, making games or solving interesting & real problems instead?
 

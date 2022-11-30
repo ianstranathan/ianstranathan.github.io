@@ -53,5 +53,6 @@ flycheck_*.el
 
 build.cmd
 build-site.el
+log.org
 
 node_modules/

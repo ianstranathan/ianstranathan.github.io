@@ -1,7 +1,7 @@
 #+STARTUP: indent
 #+TITLE: About
 
-Greetings and salutations, I'm Ian and this a small archive for things I become interested in (think poor man [[http://hyperphysics.phy-astr.gsu.edu/hbase/hframe.html"][Hyperphysics]] or [[https://www.algorithm-archive.org][Algorithm Archive]]).
+Greetings and salutations, I'm Ian and this a small archive for things I become interested in (think poor man's [[http://hyperphysics.phy-astr.gsu.edu/hbase/hframe.html"][Hyperphysics]] or [[https://www.algorithm-archive.org][Algorithm Archive]]).
 
 I studied Physics (B.S.) and Math (B.S) and Mechanical Engineering (almost B.S) and I'm a hobbyist graphics programmer & game developer.
 

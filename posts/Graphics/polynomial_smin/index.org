@@ -2,7 +2,7 @@
 #+Date:  06.05.2020
 #+FILETAGS: :Graphics:
 
-TL;DR: [[../../../demos/graphics/sminLive.html][Live shader here]]
+TL;DR: [[../../../demos/Graphics/sminLive.html][Live shader here]]
 
 * Motivation
   -------------------
