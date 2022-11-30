@@ -20,7 +20,7 @@
     <p> Noodling around: Graphics | Game Development | Physics | Math <p>
     <nav>
       <ul>
-	<li><a href="../../Misc/About/"><i class="fa-regular fa-address-card"></i></a></li>
+	<li><a href="../../Misc/about/"><i class="fa-regular fa-address-card"></i></a></li>
 	<li><a href="mailto:ian@wabisoft.io"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
 	<li><a href="https://github.com/stranathan"><i class="fa-brands fa-github"></i></a></li>
       </ul>
@@ -30,14 +30,14 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2fcdc2d">Motivation</a></li>
-<li><a href="#orgc68b01c">Derivation</a></li>
-<li><a href="#org8f523d5">Wrapping Up</a></li>
-<li><a href="#orga615a29">Annex</a>
+<li><a href="#orgb00e00b">Motivation</a></li>
+<li><a href="#orgffa8ab0">Derivation</a></li>
+<li><a href="#org6c795ad">Wrapping Up</a></li>
+<li><a href="#orga65471c">Annex</a>
 <ul>
-<li><a href="#org5670ace">Extras</a></li>
-<li><a href="#org61d688f">Resources</a></li>
-<li><a href="#org5755609">Shader Source</a></li>
+<li><a href="#orga8bc358">Extras</a></li>
+<li><a href="#orge4d8af6">Resources</a></li>
+<li><a href="#orge1116b9">Shader Source</a></li>
 </ul>
 </li>
 </ul>
@@ -47,9 +47,9 @@
 TL;DR: Real time shader can be found <a href="../../../demos/Graphics/raySphereIntersection.html">here</a>
 </p>
 
-<div id="outline-container-org2fcdc2d" class="outline-2">
-<h2 id="org2fcdc2d">Motivation</h2>
-<div class="outline-text-2" id="text-org2fcdc2d">
+<div id="outline-container-orgb00e00b" class="outline-2">
+<h2 id="orgb00e00b">Motivation</h2>
+<div class="outline-text-2" id="text-orgb00e00b">
 <hr />
 
 <p>
@@ -60,9 +60,9 @@ This is supposed to be an analytical exercise on paper, but let's use that as a 
 </div>
 </div>
 
-<div id="outline-container-orgc68b01c" class="outline-2">
-<h2 id="orgc68b01c">Derivation</h2>
-<div class="outline-text-2" id="text-orgc68b01c">
+<div id="outline-container-orgffa8ab0" class="outline-2">
+<h2 id="orgffa8ab0">Derivation</h2>
+<div class="outline-text-2" id="text-orgffa8ab0">
 <hr />
 <p>
 Getting something in your head is always the hardest part, so what are we trying to do exactly?
@@ -73,7 +73,7 @@ Let's draw a picture to help our thoughts. We all understand what a line interse
 </p>
 
 
-<div id="orgb7ea863" class="figure">
+<div id="orga7d945e" class="figure">
 <p><img src="../../../img/Graphics/ray_sphere_intersection/sketch0.png" alt="sketch0.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>The three possible ray-sphere intersections</p>
@@ -102,7 +102,7 @@ If we were just doing this on paper, we would be set with our choice of any numb
 </p>
 
 
-<div id="org125a19f" class="figure">
+<div id="org08b64e2" class="figure">
 <p><img src="../../../img/Graphics/ray_sphere_intersection/sketch01.png" alt="sketch01.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Our two paths</p>
@@ -123,7 +123,7 @@ Let \(\vec{ro}\), \(\vec{s}\) and \(\vec{uv}\) be the camera, sphere, and screen
 </p>
 
 
-<div id="org552ad28" class="figure">
+<div id="org3acfbbc" class="figure">
 <p><img src="../../../img/Graphics/ray_sphere_intersection/sketch1.png" alt="sketch1.png" />
 </p>
 </div>
@@ -134,7 +134,7 @@ A ray, \(\vec{r}\), from the ray origin, the "camera", that is incident with the
 </p>
 
 
-<div id="orge860e38" class="figure">
+<div id="org2ac7e72" class="figure">
 <p><img src="../../../img/Graphics/ray_sphere_intersection/sketch2.png" alt="sketch2.png" />
 </p>
 </div>
@@ -144,7 +144,7 @@ It's difficult to think about initially, but this is all done in parallel, so th
 </p>
 
 
-<div id="orgd464602" class="figure">
+<div id="org2b556d7" class="figure">
 <p><img src="../../../img/Graphics/ray_sphere_intersection/sketch3.png" alt="sketch3.png" />
 </p>
 <p><span class="figure-number">Figure 5: </span>All possible incident rays form a frustum</p>
@@ -174,7 +174,7 @@ Looking at a zx-plane cross section, we can find an intermediary distance inside
 </p>
 
 
-<div id="org788d4ec" class="figure">
+<div id="org12f4539" class="figure">
 <p><img src="../../../img/Graphics/ray_sphere_intersection/sketch4.png" alt="sketch4.png" />
 </p>
 <p><span class="figure-number">Figure 6: </span>Top down view of scene</p>
@@ -202,7 +202,7 @@ Dropping the norm symbol to save some digital chalk.
 </p>
 
 
-<div id="orgec4f609" class="figure">
+<div id="org5ba9fad" class="figure">
 <p><img src="../../../img/Graphics/ray_sphere_intersection/sketch6.png" alt="sketch6.png" />
 </p>
 </div>
@@ -248,7 +248,7 @@ That was a lot of drawing for so little return. The algebraic approach is much c
 </p>
 
 
-<div id="orgae71534" class="figure">
+<div id="org7236b89" class="figure">
 <p><img src="../../../img/Graphics/ray_sphere_intersection/sketch7.png" alt="sketch7.png" />
 </p>
 </div>
@@ -260,7 +260,7 @@ Written in vector notation with a little manipulation using properties of dot pr
 </p>
 
 
-<div id="orgac9138c" class="figure">
+<div id="org5e1820b" class="figure">
 <p><img src="../../../img/Graphics/ray_sphere_intersection/sketch8.jpg" alt="sketch8.jpg" />
 </p>
 </div>
@@ -322,9 +322,9 @@ This is a distance field from the line segment. We can mimic a ray by making thi
 </div>
 </div>
 
-<div id="outline-container-org8f523d5" class="outline-2">
-<h2 id="org8f523d5">Wrapping Up</h2>
-<div class="outline-text-2" id="text-org8f523d5">
+<div id="outline-container-org6c795ad" class="outline-2">
+<h2 id="org6c795ad">Wrapping Up</h2>
+<div class="outline-text-2" id="text-org6c795ad">
 <hr />
 <p>
 Let's put it all together in a shader:
@@ -341,13 +341,13 @@ Thank you for reading.
 </div>
 </div>
 
-<div id="outline-container-orga615a29" class="outline-2">
-<h2 id="orga615a29">Annex</h2>
-<div class="outline-text-2" id="text-orga615a29">
+<div id="outline-container-orga65471c" class="outline-2">
+<h2 id="orga65471c">Annex</h2>
+<div class="outline-text-2" id="text-orga65471c">
 </div>
-<div id="outline-container-org5670ace" class="outline-3">
-<h3 id="org5670ace">Extras</h3>
-<div class="outline-text-3" id="text-org5670ace">
+<div id="outline-container-orga8bc358" class="outline-3">
+<h3 id="orga8bc358">Extras</h3>
+<div class="outline-text-3" id="text-orga8bc358">
 <hr />
 <p>
 For knowledge's sake, here are two other derivations that I came across while trying to understand this problem:
@@ -361,9 +361,9 @@ Here is a derivation by Ronald Goldman from the book "Graphics Gems by Andrew S.
 </div>
 </div>
 
-<div id="outline-container-org61d688f" class="outline-3">
-<h3 id="org61d688f">Resources</h3>
-<div class="outline-text-3" id="text-org61d688f">
+<div id="outline-container-orge4d8af6" class="outline-3">
+<h3 id="orge4d8af6">Resources</h3>
+<div class="outline-text-3" id="text-orge4d8af6">
 <hr />
 <ul class="org-ul">
 <li><a href="https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection">Wikipedia</a>:        Algebraic line-sphere intersection derivation.</li>
@@ -374,9 +374,9 @@ Here is a derivation by Ronald Goldman from the book "Graphics Gems by Andrew S.
 </div>
 </div>
 
-<div id="outline-container-org5755609" class="outline-3">
-<h3 id="org5755609">Shader Source</h3>
-<div class="outline-text-3" id="text-org5755609">
+<div id="outline-container-orge1116b9" class="outline-3">
+<h3 id="orge1116b9">Shader Source</h3>
+<div class="outline-text-3" id="text-orge1116b9">
 <hr />
 <div class="org-src-container">
 <pre class="src src-cpp">uniform vec2 resolution;
