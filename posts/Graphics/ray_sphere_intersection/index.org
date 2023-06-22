@@ -77,20 +77,20 @@ TL;DR: Real time shader can be found [[../../../demos/Graphics/raySphereIntersec
   #+CAPTION: Top down view of scene
   [[../../../img/Graphics/ray_sphere_intersection/sketch4.png]]
 
-  Let $\vec{u_r}$ be the unit vector of $\vec{r}$, defined as: $ \frac{\vec{r}}{||\vec{r}||} $
+  Let $\vec{u_r}$ be the unit vector of $\vec{r}$, defined as: $\frac{\vec{r}}{ \left\Vert \vec{r} \right\Vert } $
 
   The relative position vector from the ray origin to the sphere is $\vec{s} - \vec{ro}$;
-  the projection length of this vector onto the the ray then is: $||\vec{s} - \vec{ro}|| cosθ$
+  the projection length of this vector onto the the ray then is: $\left\Vert \vec{s} - \vec{ro} \right\Vert \cos{ \theta }$
 
-  This is nothing more than the dot product between $\vec{u_r}$ and $\vec{s} - \vec{ro}$ since $\vec{u_r} = ||\vec{u_r}|| = 1$
+  This is nothing more than the dot product between $\vec{u_r}$ and $\vec{s} - \vec{ro}$ since $\vec{u_r} = \left\Vert \vec{u_r} \right\Vert  = 1$
 
   Dropping the norm symbol to save some digital chalk.
 
-  $\vec{u_r} ⋅ (\vec{s} - \vec{ro}) = \vec{u_r}(\vec{s} - \vec{ro})cos θ = λ$
+  $\vec{u_r} \cdot (\vec{s} - \vec{ro}) = \vec{u_r}(\vec{s} - \vec{ro}) \cos{ \theta} = \lambda$
 
   [[../../../img/Graphics/ray_sphere_intersection/sketch6.png]]
 
-  $ξ^2 + δ^2 = R^2$; ⇒ $δ = ±(R^2 - ξ^2)^\frac{1}{2}$
+  $\xi^2 + \delta^2 = R^2$; \Rightarrow $\delta = \pm (R^2 - \xi^2)^\frac{1}{2}$
 
   This value added to the original projection length gives us the distance to the respective incident points.
 
@@ -125,7 +125,7 @@ TL;DR: Real time shader can be found [[../../../demos/Graphics/raySphereIntersec
 
 
   The fundamental notion of a sphere (or circle or whatever dimension sphere thingy) is that the relative position length between its center and any point on its surface must be its radius.
-  Written in vector notation with a little manipulation using properties of dot products, we can massage this into a quadratic equation in terms of the unknown incident distance ℓ.
+  Written in vector notation with a little manipulation using properties of dot products, we can massage this into a quadratic equation in terms of the unknown incident distance $\ell$.
                     
   [[../../../img/Graphics/ray_sphere_intersection/sketch8.jpg]]
 
@@ -325,5 +325,3 @@ TL;DR: Real time shader can be found [[../../../demos/Graphics/raySphereIntersec
 	 fragColor = vec4(vec3(col), 1.0);
      }
    #+END_SRC
-   
-  

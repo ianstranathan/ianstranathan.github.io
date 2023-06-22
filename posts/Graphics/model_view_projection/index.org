@@ -29,7 +29,7 @@ You should also know the basics of working with your graphics API of choice.
 I don't explain how to set up a rendering pipeline used to test our math and understanding (which you absolutely should do for your own benefit!)
 For the sake of writing these little online articles I'm using WebGL ( it's the only cross platform solution for producing computer graphics that I can easily share; 
 (I can recommend [[https://webgl2fundamentals.org/][WebGLFundamentals]] and [[http://learnwebgl.brown37.net/index.html][Wayne Brown]] if you'd like to learn this particular API)
-For learning computer graphics in general, please see  [[file:../../Graphics/graphics_resources/index.org][my collected graphics resources]] which I try to update as I come accross helpful sources.
+For learning computer graphics in general, please see  [[../../Resources/graphics/index.org][my collected graphics resources]] which I try to update as I come accross helpful sources.
 
 *Now*, Let's try to "/touch/" what's going on and figure some of this stuff out.
 
@@ -331,7 +331,7 @@ You can see a potentially more interesting further discussion about this [[https
     (this is why the previous learnOpenGL link had a transposed matrix whose basis vectors
     are an orthonormal set.... too bad they didn't explain that though...)
 
-    Again, conveniently for us, just such a process exist and is calle the Gram-Schmidt process.
+    Again, conveniently for us, just such a process exist and is called the Gram-Schmidt process.
 
 
     Ok, so what is the Gram-Schmidt process?
@@ -414,7 +414,7 @@ You can see a potentially more interesting further discussion about this [[https
     "right" cross "up" yields "front", "up" cross "front" yields "right",
     and "front" cross "right" yields "up".
     (due to the anit-commutative nature of cross products
-    $\vec a$ × $\vec b$ = - $\vec b$ × $\vec a$, it's negative if you reverse the direction of the circle)
+    $\vec a \times \vec b$ = - $\vec b \times \vec a$, it's negative if you reverse the direction of the circle)
 
     #+CAPTION: Visual Mnemonic for Right Hand Rule
     #+NAME:    fig: Visual_Mnemonic_for_Right_Hand_Rule
@@ -433,7 +433,7 @@ You can see a potentially more interesting further discussion about this [[https
     I usually use [[https://www.desmos.com/calculator][desmos]] for shader development, it seems more intutive than Geogebra, but doesn't have 3D viewing.
     I'm not complaining though, they're both very nice, free tools.
 
-    (Addeddum: [Math3D](https://www.math3d.org/) seems super nice)
+    (*Addeddum*: [[https://www.math3d.org/][Math3D]] seems super nice)
 
     But wait you say, won't you get different results if you generated it with a different "seeding" vector?
 
@@ -452,19 +452,19 @@ You can see a potentially more interesting further discussion about this [[https
 
     To make a square around the camera, we're going start at the camera, go
     in a unit length away from in and then go to all the combinations of our right and up unit vectors to get our new corner vertices:
-    $$ \overrightarrow{c} - \hat{c_f} ± \hat{c_r} ± \hat{c_f}$$
+    $$ \overrightarrow{c} - \hat{c_f} \pm \hat{c_r} \pm \hat{c_f}$$
     
     [[../../../img/Graphics/model_view_projection/diagrams/viewTransformTestQuad.png]]
 
     Our new screen quad:
 
-    vertex 0: $\vec c - \vec {c_f} + \vec {c_r} + \vec {c_u} ≈ 2.538, 0.606, 1.124$
+    vertex 0: $\vec c - \vec {c_f} + \vec {c_r} + \vec {c_u} \approx 2.538, 0.606, 1.124$
 
-    vertex 1: $\vec c - \vec {c_f} + \vec {c_r} - \vec {c_u} ≈ 1.722, 2.239, 0.307$
+    vertex 1: $\vec c - \vec {c_f} + \vec {c_r} - \vec {c_u} \approx 1.722, 2.239, 0.307$
 
-    vertex 2: $\vec c - \vec {c_f} - \vec {c_r} + \vec {c_u} ≈ 0.307, 2.239, 1.721$
+    vertex 2: $\vec c - \vec {c_f} - \vec {c_r} + \vec {c_u} \approx 0.307, 2.239, 1.721$
 
-    vertex 3: $\vec c - \vec {c_f} - \vec {c_r} - \vec {c_u} ≈ 1.124, 0.606, 2.538$
+    vertex 3: $\vec c - \vec {c_f} - \vec {c_r} - \vec {c_u} \approx 1.124, 0.606, 2.538$
 
 
 
@@ -476,7 +476,7 @@ You can see a potentially more interesting further discussion about this [[https
 
     Our basis vectors again for our mind's eye's convenience:
 
-    $$⇒ \hat{c_f} = [\frac {1} {\sqrt{3}}, \frac {1} {\sqrt{3}}, \frac {1} {\sqrt{3}} ]$$
+    $$\Rightarrow \hat{c_f} = [\frac {1} {\sqrt{3}}, \frac {1} {\sqrt{3}}, \frac {1} {\sqrt{3}} ]$$
 
     $$ \hat{c_r} = [\frac {-1} {\sqrt{2}}, 0, \frac {1} {\sqrt{2}} ]$$
 
@@ -519,7 +519,8 @@ You can see a potentially more interesting further discussion about this [[https
     1     \\ 
     \end{bmatrix}$$
 
-    $$≈\begin{bmatrix}
+    $$\approx
+    \begin{bmatrix}
     -1 \\
     1 \\
     -1 \\
@@ -539,7 +540,7 @@ You can see a potentially more interesting further discussion about this [[https
     1 \\
     \end{bmatrix}$$
 
-    $$≈\begin{bmatrix}
+    $$\approx \begin{bmatrix}
     -1 \\
     -1 \\
     -1 \\
@@ -559,7 +560,7 @@ You can see a potentially more interesting further discussion about this [[https
     1 \\
     \end{bmatrix}$$
 
-    $$≈\begin{bmatrix}
+    $$\approx \begin{bmatrix}
     1 \\
     -1 \\
     -1 \\
@@ -579,14 +580,14 @@ You can see a potentially more interesting further discussion about this [[https
     1 \\
     \end{bmatrix}$$
 
-    $$≈\begin{bmatrix}
+    $$\approx \begin{bmatrix}
     1 \\
     1 \\
     -1 \\
     1 \\
     \end{bmatrix}$$
 
-    We got back our NDC corners and we can see that the metric is held, they're all still $√3$ away from the camera, I think it works.
+    We got back our NDC corners and we can see that the metric is held, they're all still $\sqrt{3}$ away from the camera, I think it works.
 
 
     So, let's see this in action.

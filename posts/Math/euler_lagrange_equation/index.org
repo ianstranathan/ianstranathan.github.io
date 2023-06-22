@@ -3,8 +3,8 @@
 #+FILETAGS: :Math:
 
 * Motivation
-  I have had to convinve myself that this is true a few times over the years, so now it's here to stay forever
-  or at least until I forget to pay for my web hosting again.
+  I have had to convinve myself that this is true a few times over the years, so now it's here to stay.
+  
   -----------------------------------------
 * Derivation
   Consider some arbitrary path of length $S$ from points $p_1$ to $p_2$ denoted as $y(x)$

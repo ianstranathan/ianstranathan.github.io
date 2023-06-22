@@ -89,7 +89,7 @@
   This is unfortunately underconstrained/ underdetermined and another equation is needed to solve for the impulse, fortunately there are more relationships to mine.
 
   From physics, we know the coefficient of restitution (denoted by $e$) is the ratio of the final to initial relative velocity between two objects after they collide.
-  It ranges from $0$ to $1$ where $1$ would be a perfectly elastic collision and $0$ a perfectly inelastic collision ([Wiki article for coefficient of restitution](https://en.wikipedia.org/wiki/Coefficient_of_restitution))
+  It ranges from $0$ to $1$ where $1$ would be a perfectly elastic collision and $0$ a perfectly inelastic collision ([[https://en.wikipedia.org/wiki/Coefficient_of_restitution][Wiki article for coefficient of restitution]]
 
   $$e = \frac {{v_s}^\prime}{v_s}$$
 
@@ -141,7 +141,7 @@
 
   This is, by definition of projection with a normalized vector, the part of the impulse in the direction of the contact normal, which is what we wanted.
 
-  <!-- I think this is a reiteration of Poisson's hypothesis and could be more succinctly given. -->
+  /I think this is a reiteration of Poisson's hypothesis and could be more succinctly given./
 
 * Code Example
   ------------------------------

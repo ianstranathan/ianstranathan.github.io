@@ -12,7 +12,7 @@ $$
 \xi = \lvert \lvert \vec a \rvert \rvert \vec b + \lvert \lvert \vec b \rvert \rvert \vec a
 $$
 
-Here is a helpful [desmos visualization](https://www.desmos.com/calculator/flokdplftr)
+Here is a helpful [[https://www.desmos.com/calculator/flokdplftr][desmos visualization]]
 
 This is rather arbitrarily presented, but if you construct it for yourself, 
 you'll see the geometric motivation for the expression in the parallelogram it forms.

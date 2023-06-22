@@ -2,7 +2,7 @@
 #+DATE: <2021-07-02 Wed>
 #+FILETAGS: :Math:
 
-/Derivation of forward euler method for project/
+/Derivation of forward euler method for a [[../../../projects/JS_and_WebGL/collision_study/refactor][small project]]/
 
 * Derivation
   ---------------------------------

@@ -51,9 +51,9 @@ TL;DR: [[../../../demos/Graphics/sminLive.html][Live shader here]]
   Now for a reasonably useless aside:
 
   At first blush, it's not obvious to me how to make a meaningful relationship or constraint between the two functions
-  beyond that they're equal to each other at their intersection. This gives us a point $C$, $d = 0$ and its mapping $x$-value
+  beyond that they're equal to each other at their intersection. This gives us a point $C$, $d = 0$ and its mapping $x$ value
 
-  Looking at a given $ε$ neighborhood around this point, you can see that $d$ must be on the interval $[d(x-ε), d(x+ε)]$
+  Looking at a given $\epsilon$ neighborhood around this point, you can see that $d$ must be on the interval $[d(x-\epsilon), d(x+\epsilon)]$
   which are small, not necessarily identical values.
 
   [[../../../img/Graphics/polynomial_smin/sminEpsilon.png]]
@@ -64,14 +64,14 @@ TL;DR: [[../../../demos/Graphics/sminLive.html][Live shader here]]
   And even worse... iq's original diagram was of some flavor of a sinusoid and its intersection with a decreasing exponential has infinitely many roots. 
   We're noping on out of here my friend, it's just too messy; we'll need to think of another relationship characteristic of proximity to the intersection.
 
-  A helpful observation is to note that this $ε$ could be made arbitrarily small, small enough to where
-  $[d(x-ε), d(x+ε)]$
+  A helpful observation is to note that this $\epsilon$ could be made arbitrarily small, small enough to where
+  $[d(x-\epsilon), d(x+\epsilon)]$
   is smaller than our original epsilon.
 
   [[../../../img/Graphics/polynomial_smin/sminEpsilon2.png]]
   
   It's also helpful to note that the difference between two polynomials is also a polynomial and that polynomials are continuous everywhere.
-  So, by the intermediate value theorem, for some small value say $k$, $d∈ [-k, k]$.
+  So, by the intermediate value theorem, for some small value say $k$, $d\in [-k, k]$.
 
   "Sufficiently close" to an intersection then could be recast in terms of the difference's value instead of being near its root.
 
@@ -90,111 +90,111 @@ TL;DR: [[../../../demos/Graphics/sminLive.html][Live shader here]]
   $g$ at the end of "being close to the intersection” ($i.e$ at $d = k$).
 
   Linear interpolation: <br>
-  $ξ = (1 - u)f + ug$ ; $u ∈ [0, 1]$ <br>
-  So when $u = 0, ξ = f$ and $u = 0, ξ = g$
+  $\xi = (1 - u)f + ug$ ; $u \in [0, 1]$ <br>
+  So when $u = 0, \xi = f$ and $u = 0, \xi = g$
 
   But we're not necessarily working on the interval $[0, 1]$
   Thus we have to map our chosen "closeness" interval $[-k, k]$ to $[0, 1]$
 
   Like the choice of linear interpolation, linear mapping seems easiest/ most familar:
 
-  $ℓ = mx + b$ 
+  $\ell = mx + b$ 
   With boundary conditions:
-  $ℓ(-k) = 0$ and $ℓ(k) = 1$
-  $ℓ(-k) = -mk + b = 0, \implies b = mk$
-  $ℓ(k) = mk + mk = 2mk = 1 \implies m = \frac{1}{2k}$ 
+  $\ell(-k) = 0$ and $\ell(k) = 1$
+  $\ell(-k) = -mk + b = 0, \implies b = mk$
+  $\ell(k) = mk + mk = 2mk = 1 \implies m = \frac{1}{2k}$ 
   $\implies b = \frac{1}{2}$
-  $\implies ℓ = \frac{x}{2k} + \frac{1}{2}$
+  $\implies \ell = \frac{x}{2k} + \frac{1}{2}$
 
   but we're interpolating over the difference, not $x$
 
-  $$ℓ = \frac{d}{2k} + \frac{1}{2}$$
+  $$\ell = \frac{d}{2k} + \frac{1}{2}$$
 
   also, we don't want to include values outside the "sufficiently close" interval
-  $\implies$ we don't want to include the values when $ℓ < 0$ and $ℓ > 1$
+  $\implies$ we don't want to include the values when $\ell < 0$ and $\ell > 1$
 
-  $\implies ℓ =$ max(0, min($1$,  $ℓ$), note that this is the same as the glsl hardware accelerated function [[https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/clamp.xhtml][clamp]];
+  $\implies \ell =$ max(0, min($1$,  $\ell$), note that this is the same as the glsl hardware accelerated function [[https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/clamp.xhtml][clamp]];
 
-  in glsl: $ℓ =$ clamp($ℓ$, $0$, $1$)
+  in glsl: $\ell =$ clamp($\ell$, $0$, $1$)
 
   Just using a linear interpolation between our functions with the correctly mapped interval gives us a pretty good result:
-  $ξ = (1-ℓ)f + ℓg$;
-  $ℓ = d / {2k} + 1/2$ and $k ≈ 0.1$
+  $\xi = (1-\ell)f + \ellg$;
+  $\ell = d / {2k} + 1/2$ and $k \approx 0.1$
 
   #+CAPTION: As expected, our interpolated curve is equal to $f$ and $g$ when $d = -k$ and $d = k$ respectively.
   [[../../../img/Graphics/polynomial_smin/firstApproxNaive.png]]
     
-  #+CAPTION: This is improved by limiting our ℓ value to only ever be between $0$ and $1$ as reasoned before
+  #+CAPTION: This is improved by limiting our \ell value to only ever be between $0$ and $1$ as reasoned before
   [[../../../img/Graphics/polynomial_smin/firstApproxWithClamp.png]]
 
   What now and how do we improve on this? Well, before we go racking our brains for something more creative, what other constraints exist for our curve?
-  Not only must ξ evaluate to $f$ & $g$ at the "closeness" interval boundaries, but since it's supposed to be smooth,
+  Not only must \xi evaluate to $f$ & $g$ at the "closeness" interval boundaries, but since it's supposed to be smooth,
   its derivative must also match the boundaries' derivatives.
-  So what is ξ's derivative?
+  So what is \xi's derivative?
 
 
-  $$ξ = (1-ℓ)f + ℓg$$
+  $$\xi = \left( 1 - \ell \right) f + \ell g$$
 
   by the product rule:
 
-  $$\frac{dξ}{dx} = \frac{d(1-ℓ)}{dx}f + \frac{df}{dx}(1-ℓ) + \frac{dℓ}{dx}g + \frac{dg}{dx}ℓ$$
+  $$\frac{d\xi}{dx} = \frac{d(1-\ell)}{dx}f + \frac{df}{dx}(1-\ell) + \frac{d\ell}{dx}g + \frac{dg}{dx}\ell$$
 
-  $$\frac{dξ}{dx} = \frac{-dℓ)}{dx}f + \frac{df}{dx} - ℓ\frac{df}{dx} + \frac{dℓ}{dx}g + \frac{dg}{dx}ℓ$$
+  $$\frac{d\xi}{dx} = \frac{-d\ell)}{dx}f + \frac{df}{dx} - \ell\frac{df}{dx} + \frac{d\ell}{dx}g + \frac{dg}{dx}\ell$$
 
   collecting like terms:
 
-  $$\frac{dξ}{dx} = (g - f)\frac{dℓ)}{dx} + (1 - ℓ)\frac{df}{dx} + \frac{dg}{dx}ℓ$$
+  $$\frac{d\xi}{dx} = (g - f)\frac{d\ell)}{dx} + (1 - \ell)\frac{df}{dx} + \frac{dg}{dx}\ell$$
 
   Note that $g - f$ is just $-d$
 
   Testing our first boundary: $d = -k \implies l = 0,  g - f = k$
 
-  Again $$ξ = (1-ℓ)f + ℓg, l = 0 \implies g = 0$$
+  Again $$\xi = \left( 1- \ell \right) f + \ell g, l = 0 \implies g = 0$$
 
-  $$\frac{dξ}{dx} = k\frac{dℓ)}{dx} + \frac{df}{dx}$$
+  $$\frac{d\xi}{dx} = k\frac{d\ell)}{dx} + \frac{df}{dx}$$
 
-  We require ξ's derivative to equal the derivative of $f$ at this boundary in order to be smooth. 
+  We require \xi's derivative to equal the derivative of $f$ at this boundary in order to be smooth. 
 
-  Thus we must subtract this extra, first term from our original expression for ξ's derivative to match.
+  Thus we must subtract this extra, first term from our original expression for \xi's derivative to match.
 
-  $$\implies \frac{dξ}{dx} = (g - f)\frac{dℓ)}{dx} + (1 - ℓ)\frac{df}{dx} + \frac{dg}{dx}ℓ - k\frac{dℓ)}{dx}$$
+  $$\implies \frac{d\xi}{dx} = (g - f)\frac{d\ell)}{dx} + (1 - \ell)\frac{df}{dx} + \frac{dg}{dx}\ell - k\frac{d\ell)}{dx}$$
 
-  Similarly, evaluating ξ's derivative at the other boundary:
+  Similarly, evaluating \xi's derivative at the other boundary:
 
   $d = k \implies l = 1,  g - f = -k$
-  $$\implies \frac{dξ}{dx} = (-k)\frac{dℓ)}{dx} + (0)\frac{df}{dx} + \frac{dg}{dx}ℓ - k\frac{dℓ)}{dx}$$
-  $$\implies \frac{dξ}{dx} = (-2k)\frac{dℓ)}{dx} + \frac{dg}{dx}ℓ$$
+  $$\implies \frac{d\xi}{dx} = (-k)\frac{d\ell)}{dx} + (0)\frac{df}{dx} + \frac{dg}{dx}\ell - k\frac{d\ell)}{dx}$$
+  $$\implies \frac{d\xi}{dx} = (-2k)\frac{d\ell)}{dx} + \frac{dg}{dx}\ell$$
 
-  Again we require ξ's derivative to equal the derivative of $f$ at this boundary for smoothness.
+  Again we require \xi's derivative to equal the derivative of $f$ at this boundary for smoothness.
 
-  So we must now add this extra term to our expression for ξ's derivative to match
+  So we must now add this extra term to our expression for \xi's derivative to match
 
-  $$\implies \frac{dξ}{dx} = (g - f)\frac{dℓ)}{dx} + (1 - ℓ)\frac{df}{dx} + \frac{dg}{dx}ℓ - k\frac{dℓ)}{dx} +2k\frac{dℓ)}{dx}$$
+  $$\implies \frac{d\xi}{dx} = (g - f)\frac{d\ell)}{dx} + (1 - \ell)\frac{df}{dx} + \frac{dg}{dx}\ell - k\frac{d\ell)}{dx} +2k\frac{d\ell)}{dx}$$
 
-  But now we're a bit stuck... after all, doesn't adding this term change what the ξ's derivative will evaluate to at the first boundary? 
+  But now we're a bit stuck... after all, doesn't adding this term change what the \xi's derivative will evaluate to at the first boundary? 
   Definitely, and if we were to go back and redo our process we'd be stuck in a vicious cirlce; so we need to have this second boundary corrective term disappear at the first boundary, but still be around at the second boundary.
 
-  We're in luck though; just such a term exists and has already been used by us, namely, ℓ.
-  $ℓ$ by design is just such a term, so if we multiply this corrective term by ℓ, it will do precisely what we want it to.
+  We're in luck though; just such a term exists and has already been used by us, namely, \ell.
+  $\ell$ by design is just such a term, so if we multiply this corrective term by \ell, it will do precisely what we want it to.
 
-  $$\implies \frac{dξ}{dx} = (g - f)\frac{dℓ)}{dx} + (1 - ℓ)\frac{df}{dx} + \frac{dg}{dx}ℓ - k\frac{dℓ)}{dx} +2kℓ\frac{dℓ)}{dx}$$
+  $$\implies \frac{d\xi}{dx} = (g - f)\frac{d\ell)}{dx} + (1 - \ell)\frac{df}{dx} + \frac{dg}{dx}\ell - k\frac{d\ell)}{dx} +2k\ell\frac{d\ell)}{dx}$$
 
   Whew, that already feels like clever enough work to stop, but we want the function, not its derivative.
   So how to integrate this thing?
 
-  $$ξ = \int_{}^{} (g - f)\frac{dℓ)}{dx} + (1 - ℓ)\frac{df}{dx} + \frac{dg}{dx}ℓ - k\frac{dℓ)}{dx} +2kℓ\frac{dℓ)}{dx} dx$$
+  $$\xi = \int_{}^{} (g - f)\frac{d\ell)}{dx} + (1 - \ell)\frac{df}{dx} + \frac{dg}{dx}\ell - k\frac{d\ell)}{dx} +2k\ell\frac{d\ell)}{dx} dx$$
 
   Regrouping terms to make the underlying product rule more obvious.
 
-  $$ξ = \int_{}^{} g\frac{dℓ)}{dx} - f\frac{dℓ)}{dx} + \frac{df}{dx} - ℓ\frac{df}{dx} + \frac{dg}{dx}ℓ - k\frac{dℓ)}{dx} +2kℓ\frac{dℓ)}{dx} dx$$
+  $$\xi = \int_{}^{} g\frac{d\ell)}{dx} - f\frac{d\ell)}{dx} + \frac{df}{dx} - \ell\frac{df}{dx} + \frac{dg}{dx}\ell - k\frac{d\ell)}{dx} +2k\ell\frac{d\ell)}{dx} dx$$
 
-  $$ξ = \int_{}^{} g\frac{dℓ)}{dx} + \frac{dg}{dx}ℓ - \left(f\frac{dℓ)}{dx} + ℓ\frac{df}{dx}\right) + \frac{df}{dx} - k\frac{dℓ)}{dx} +2kℓ\frac{dℓ)}{dx} dx$$
+  $$\xi = \int_{}^{} g\frac{d\ell)}{dx} + \frac{dg}{dx}\ell - \left(f\frac{d\ell)}{dx} + \ell\frac{df}{dx}\right) + \frac{df}{dx} - k\frac{d\ell)}{dx} +2k\ell\frac{d\ell)}{dx} dx$$
 
   reversing the product rule on the first two terms or integrating by parts and integrating the last three, straightforward integrals
 
-  $$ξ = gℓ - fℓ + f - kℓ + kℓ^2$$
+  $$\xi = g\ell - f\ell + f - k\ell + k\ell^2$$
 
-  $$\implies ξ = (1 - ℓ)f + ℓg - kℓ(1 - ℓ)$$
+  $$\implies \xi = \left( 1 - \ell \right) f + \ell g - k \ell \left( 1 - \ell \right)$$
 
   This is exactly iq's function ( [[https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/mix.xhtml][mix]] is glsl hardware accelerated linear interpolation)
 

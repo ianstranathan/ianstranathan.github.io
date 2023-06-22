@@ -63,8 +63,8 @@ It's always encouraging to see the same result in multiple ways:
 [[../../../img/Math/distance_to_plane_and_ray_plane_intersection/diagramTwoRay.png]]
 
 
-The vector equation of a ray (really a line segment -- we just discard negative scaling values ℓ for the ray):
-$\vec{ray} = \vec{r_0} + ℓ \vec{rd}$
+The vector equation of a ray (really a line segment -- we just discard negative scaling values \ell for the ray):
+$\vec{ray} = \vec{r_0} + \ell \vec{rd}$
 
 Where $\vec{rd}$ is a unit vector in the ray direction.
 
@@ -75,18 +75,18 @@ $\vec{rd} = \frac{\vec{n}}{\lvert \lvert \vec{n} \rvert \rvert}$  ;  $\vec{r_0} 
 
 Substituting this into the plane equation:
 
-$\left( \vec{Q} - ℓ \frac{\vec{n}}{\lvert \lvert \vec{n} \rvert \rvert} - \vec{P} \right) \cdot \vec{n} = 0$
+$\left( \vec{Q} - \ell \frac{\vec{n}}{\lvert \lvert \vec{n} \rvert \rvert} - \vec{P} \right) \cdot \vec{n} = 0$
 
-Solving for ℓ:
+Solving for \ell:
 (Rearranging and using properties of the dot product (distributive & $\vec{a} \cdot \vec{a} = {\lvert \lvert \vec{a} \rvert \rvert}^2$))
 
-$\left(\vec{Q} - \vec{P} \right) \cdot \vec{n} - ℓ \frac{\vec{n}}{\lvert \lvert \vec{n} \rvert \rvert} \cdot \vec{n} = 0$
+$\left(\vec{Q} - \vec{P} \right) \cdot \vec{n} - \ell \frac{\vec{n}}{\lvert \lvert \vec{n} \rvert \rvert} \cdot \vec{n} = 0$
 
-$\left(\vec{Q} - \vec{P} \right) \cdot \vec{n} - ℓ \frac{{\lvert \lvert \vec{n} \rvert \rvert}^2}{\lvert \lvert \vec{n} \rvert \rvert} = 0$
+$\left(\vec{Q} - \vec{P} \right) \cdot \vec{n} - \ell \frac{{\lvert \lvert \vec{n} \rvert \rvert}^2}{\lvert \lvert \vec{n} \rvert \rvert} = 0$
 
-$\vec{QP} \cdot \vec{n} - ℓ \lvert \lvert \vec{n} \rvert \rvert = 0$
+$\vec{QP} \cdot \vec{n} - \ell \lvert \lvert \vec{n} \rvert \rvert = 0$
 
-$ℓ = \frac{\vec{QP} \cdot \vec{n}}{\lvert \lvert \vec{n} \rvert \rvert}$
+$\ell = \frac{\vec{QP} \cdot \vec{n}}{\lvert \lvert \vec{n} \rvert \rvert}$
 
 And again, in the case that the normal is unit length, this simplifies to our first result.
 
@@ -94,7 +94,7 @@ And again, in the case that the normal is unit length, this simplifies to our fi
 ------------------------------
 Now that we've gorily (most might say unnecessarily) shown that the first expression $\hat{n} \cdot \vec{P} + d = 0$ is indeed the distance from the origin to the plane, we can now show that the second expression is an accidental sleight of hand by deriving the equation of a plane.
 
-From [[https://en.wikipedia.org/wiki/Plane_(geometry)][*wikipedia]]*
+From [[https://en.wikipedia.org/wiki/Plane_(geometry)][wikipedia]]
 #+BEGIN_QUOTE
 In a manner analogous to the way lines in a two-dimensional space are described using a point-slope form for their equations,
 planes in a three dimensional space have a natural description using a point in the plane and a vector orthogonal to it (the normal vector) to indicate its "inclination".
