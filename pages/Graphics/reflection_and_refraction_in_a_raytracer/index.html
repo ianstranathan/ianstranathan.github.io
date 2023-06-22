@@ -30,10 +30,10 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1c3f746">Overview</a></li>
-<li><a href="#orgcaf9b7a">Reflection</a></li>
-<li><a href="#orgebc9c68">Refraction</a></li>
-<li><a href="#org0de2f70">Resources</a></li>
+<li><a href="#org9cfd273">Overview</a></li>
+<li><a href="#orgd5713a0">Reflection</a></li>
+<li><a href="#org74ac7dc">Refraction</a></li>
+<li><a href="#orgb155aa5">Resources</a></li>
 </ul>
 </div>
 </div>
@@ -41,9 +41,9 @@
 <i>While working through Peter Shirley's <a href="https://raytracing.github.io/books/RayTracingInOneWeekend.html">"Raytracing in One Weekend"</a> I had trouble justifying the handwaved expression for a refracted ray and had to derive it for myself</i>
 </p>
 
-<div id="outline-container-org1c3f746" class="outline-2">
-<h2 id="org1c3f746">Overview</h2>
-<div class="outline-text-2" id="text-org1c3f746">
+<div id="outline-container-org9cfd273" class="outline-2">
+<h2 id="org9cfd273">Overview</h2>
+<div class="outline-text-2" id="text-org9cfd273">
 <hr />
 
 <p>
@@ -83,9 +83,9 @@ Using the ray model forces us to account for refraction and reflection (Fresnel 
 </div>
 </div>
 
-<div id="outline-container-orgcaf9b7a" class="outline-2">
-<h2 id="orgcaf9b7a">Reflection</h2>
-<div class="outline-text-2" id="text-orgcaf9b7a">
+<div id="outline-container-orgd5713a0" class="outline-2">
+<h2 id="orgd5713a0">Reflection</h2>
+<div class="outline-text-2" id="text-orgd5713a0">
 <hr />
 
 <p>
@@ -93,7 +93,7 @@ I think Shirley's derivation is good with just some small (probably obvious depe
 </p>
 
 
-<div id="org03ee22a" class="figure">
+<div id="orgc7b5c06" class="figure">
 <p><img src="../../../img/Graphics/reflection_and_refraction_in_a_raytracer/shirleyReflection.png" alt="shirleyReflection.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>\(\hat n\) , the normal, and \(\vec v\), the incident ray, from [<a href="https://raytracing.github.io/books/RayTracingInOneWeekend.html#metal/mirroredlightreflection">https://raytracing.github.io/books/RayTracingInOneWeekend.html#metal/mirroredlightreflection</a>][Peter Shirley - Raytracing in One Weekend:: Section 9.4]]</p>
@@ -128,19 +128,19 @@ now the \(\lvert \lvert \vec v \rvert \rvert \cos {\theta}\) is clearly just the
 </p>
 
 <p>
-&lt;!&#x2013; Alternatively, you could use the obtuse angle and use the fact that sine and cosine are equal after a half pi phase shift
-, \(\sin \left( {x + \frac{\pi}{2}} \right)= \cos x\).&lt;br&gt;
+Alternatively, you could use the obtuse angle and use the fact that sine and cosine are equal after a half pi phase shift
+, \(\sin \left( {x + \frac{\pi}{2}} \right)= \cos x\).
 Trigonometrically, \(B\) is just the opposite leg of the angle \(\phi\) s.t. \(\phi = \theta - \frac{\pi}{2}\),
-\(B = \lvert \lvert \vec v \rvert \rvert \sin \phi = \lvert \lvert \vec v \rvert \rvert \cos \left( \phi - \frac{\pi}{2} \right)\) &#x2013;&gt;
+\(B = \lvert \lvert \vec v \rvert \rvert \sin \phi = \lvert \lvert \vec v \rvert \rvert \cos \left( \phi - \frac{\pi}{2} \right)\)
 </p>
 
 <p>
-&lt;!&#x2013; \[\vec v \cdot \hat n = \lvert \lvert \vec v \rvert \rvert \cos {\theta}\] &#x2013;&gt;
+\[\vec v \cdot \hat n = \lvert \lvert \vec v \rvert \rvert \cos {\theta}\]
 </p>
 
 <p>
-&lt;!&#x2013; Since the incident ray and the normal are obtuse to each other, the magnitude \({\lvert \lvert \vec B \rvert \rvert}\) must equal
-\(-\vec v \cdot \hat n\)&lt;br&gt; &#x2013;&gt;
+Since the incident ray and the normal are obtuse to each other, the magnitude \({\lvert \lvert \vec B \rvert \rvert}\) must equal
+\(-\vec v \cdot \hat n\)
 </p>
 
 <p>
@@ -153,17 +153,18 @@ Finding the reflected vector is now just a matter of using vector addition:
 </p>
 
 <p>
-Another good, alternative derivation for the reflected vector, in this case for specular lighting in rasterization can be found [here](<a href="http://learnwebgl.brown37.net/09_lights/lights_specular.html">http://learnwebgl.brown37.net/09_lights/lights_specular.html</a>)
+Another good, alternative derivation for the reflected vector, in this case for specular lighting in rasterization can be found
+<a href="http://learnwebgl.brown37.net/09_lights/lights_specular.html">here</a>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgebc9c68" class="outline-2">
-<h2 id="orgebc9c68">Refraction</h2>
-<div class="outline-text-2" id="text-orgebc9c68">
+<div id="outline-container-org74ac7dc" class="outline-2">
+<h2 id="org74ac7dc">Refraction</h2>
+<div class="outline-text-2" id="text-org74ac7dc">
 <hr />
 
-<div id="orgf06fea9" class="figure">
+<div id="org0e4159c" class="figure">
 <p><img src="../../../img/Graphics/reflection_and_refraction_in_a_raytracer/bramDeGreve.png" alt="bramDeGreve.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Diagram from <a href="https://graphics.stanford.edu/courses/cs148-10-summer/docs/2006--degreve--reflection_refraction.pdf">Bram De Greve</a></p>
@@ -174,7 +175,7 @@ Available tools in the toolkit: Snell's law, vector math, trigonometry
 </p>
 
 <ol class="org-ol">
-<li>[Snell's law](snell's law link), see derivation [here](mylink):</li>
+<li><a href="https://en.wikipedia.org/wiki/Snell%27s_law">Snell's law</a>, see my derivation <a href="../../Physics/snells_law/">here</a>:</li>
 </ol>
 
 <p>
@@ -229,7 +230,10 @@ By  3.
 </p>
 
 <p>
-Note:&lt;br&gt;
+<b>Note:</b>
+</p>
+
+<p>
 Even if the ray isn't normalized, for the simplfified geometric/ ray model, the incident and refracted ray
 are the same ray, despite a change in orientation, and must accordingly have the same length.
 </p>
@@ -297,9 +301,9 @@ I'm still very thankful for his free and very well written resource despite the 
 </div>
 </div>
 
-<div id="outline-container-org0de2f70" class="outline-2">
-<h2 id="org0de2f70">Resources</h2>
-<div class="outline-text-2" id="text-org0de2f70">
+<div id="outline-container-orgb155aa5" class="outline-2">
+<h2 id="orgb155aa5">Resources</h2>
+<div class="outline-text-2" id="text-orgb155aa5">
 <hr />
 
 <ul class="org-ul">

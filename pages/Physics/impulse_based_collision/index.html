@@ -30,12 +30,12 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgde5e287">Overview</a></li>
-<li><a href="#orge3cd27f">Impulse Derivation</a></li>
-<li><a href="#org75b8634">Problem Setup</a></li>
-<li><a href="#org03c854f">Deriving an expression for the velocity after the collision</a></li>
-<li><a href="#orgb5432c5">Code Example</a></li>
-<li><a href="#orgaf920c7">Resources:</a></li>
+<li><a href="#org7bffadb">Overview</a></li>
+<li><a href="#orgefc2ffb">Impulse Derivation</a></li>
+<li><a href="#orgcaf7de1">Problem Setup</a></li>
+<li><a href="#org7120011">Deriving an expression for the velocity after the collision</a></li>
+<li><a href="#org16f31c7">Code Example</a></li>
+<li><a href="#orgbca847a">Resources:</a></li>
 </ul>
 </div>
 </div>
@@ -43,9 +43,9 @@
 <i>While toying around with a small 2D physics project, I was unable to follow a popular online explanation of impulse based collision resolution</i>
 </p>
 
-<div id="outline-container-orgde5e287" class="outline-2">
-<h2 id="orgde5e287">Overview</h2>
-<div class="outline-text-2" id="text-orgde5e287">
+<div id="outline-container-org7bffadb" class="outline-2">
+<h2 id="org7bffadb">Overview</h2>
+<div class="outline-text-2" id="text-org7bffadb">
 <hr />
 <p>
 The change in motion of objects in a collision is caused by the forces generated at the collision point by compression and deformation.
@@ -56,9 +56,9 @@ Thus, the movement after the collision can be calculated from the movement befor
 </div>
 </div>
 
-<div id="outline-container-orge3cd27f" class="outline-2">
-<h2 id="orge3cd27f">Impulse Derivation</h2>
-<div class="outline-text-2" id="text-orge3cd27f">
+<div id="outline-container-orgefc2ffb" class="outline-2">
+<h2 id="orgefc2ffb">Impulse Derivation</h2>
+<div class="outline-text-2" id="text-orgefc2ffb">
 <hr />
 
 <p>
@@ -112,9 +112,9 @@ I tend to use prime notation for after a collision, so let's change that to stay
 </div>
 </div>
 
-<div id="outline-container-org75b8634" class="outline-2">
-<h2 id="org75b8634">Problem Setup</h2>
-<div class="outline-text-2" id="text-org75b8634">
+<div id="outline-container-orgcaf7de1" class="outline-2">
+<h2 id="orgcaf7de1">Problem Setup</h2>
+<div class="outline-text-2" id="text-orgcaf7de1">
 <hr />
 
 <p>
@@ -123,7 +123,7 @@ what's important is that a collision has somehow been detected and that a collis
 </p>
 
 
-<div id="orgd9e1090" class="figure">
+<div id="orga6b266c" class="figure">
 <p><img src="../../../img/Physics/impulse_based_collision/one.png" alt="one.png" />
 </p>
 </div>
@@ -138,7 +138,7 @@ From properties of dot products and normalized vectors, the magnitude of the vel
 </p>
 
 
-<div id="orge6517f4" class="figure">
+<div id="org272d929" class="figure">
 <p><img src="../../../img/Physics/impulse_based_collision/two.png" alt="two.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>The magnitudes of the respective velocities along relative position</p>
@@ -191,9 +191,9 @@ It's negation is often used instead, called the seperating velocity \(v_s\) and 
 </div>
 </div>
 
-<div id="outline-container-org03c854f" class="outline-2">
-<h2 id="org03c854f">Deriving an expression for the velocity after the collision</h2>
-<div class="outline-text-2" id="text-org03c854f">
+<div id="outline-container-org7120011" class="outline-2">
+<h2 id="org7120011">Deriving an expression for the velocity after the collision</h2>
+<div class="outline-text-2" id="text-org7120011">
 <hr />
 
 <p>
@@ -207,7 +207,7 @@ This is unfortunately underconstrained/ underdetermined and another equation is 
 
 <p>
 From physics, we know the coefficient of restitution (denoted by \(e\)) is the ratio of the final to initial relative velocity between two objects after they collide.
-It ranges from \(0\) to \(1\) where \(1\) would be a perfectly elastic collision and \(0\) a perfectly inelastic collision ([Wiki article for coefficient of restitution](<a href="https://en.wikipedia.org/wiki/Coefficient_of_restitution">https://en.wikipedia.org/wiki/Coefficient_of_restitution</a>))
+It ranges from \(0\) to \(1\) where \(1\) would be a perfectly elastic collision and \(0\) a perfectly inelastic collision (<a href="https://en.wikipedia.org/wiki/Coefficient_of_restitution">Wiki article for coefficient of restitution</a>
 </p>
 
 <p>
@@ -295,14 +295,14 @@ This is, by definition of projection with a normalized vector, the part of the i
 </p>
 
 <p>
-&lt;!&#x2013; I think this is a reiteration of Poisson's hypothesis and could be more succinctly given. &#x2013;&gt;
+<i>I think this is a reiteration of Poisson's hypothesis and could be more succinctly given.</i>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb5432c5" class="outline-2">
-<h2 id="orgb5432c5">Code Example</h2>
-<div class="outline-text-2" id="text-orgb5432c5">
+<div id="outline-container-org16f31c7" class="outline-2">
+<h2 id="org16f31c7">Code Example</h2>
+<div class="outline-text-2" id="text-org16f31c7">
 <hr />
 <div class="org-src-container">
 <pre class="src src-cpp">/**
@@ -339,9 +339,9 @@ void resolveCollision(rigidbody&amp; A, rigidbody&amp; B, vec3 mtv){
 </div>
 </div>
 
-<div id="outline-container-orgaf920c7" class="outline-2">
-<h2 id="orgaf920c7">Resources:</h2>
-<div class="outline-text-2" id="text-orgaf920c7">
+<div id="outline-container-orgbca847a" class="outline-2">
+<h2 id="orgbca847a">Resources:</h2>
+<div class="outline-text-2" id="text-orgbca847a">
 <hr />
 
 <p>

@@ -30,21 +30,21 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org65f0d5f">Motivation (Why this?)</a></li>
-<li><a href="#org5ffb2b1">Derivation</a></li>
+<li><a href="#orge5e3e34">Motivation (Why bother)</a></li>
+<li><a href="#org9a26cc5">Derivation</a></li>
 </ul>
 </div>
 </div>
 <p>
-/It wasn't obvious to me at first blush how the halfway vector took the expression that it did and
-I couldn't find a clear derivation anywhere
-(Not explained on wikipedia, Peter Shirley's Fundamentals of Computer Graphics (4th edition), or Real Time Rendering (3rd edition),
-clearly too trivial for the wizard beards./
+<i>It wasn't obvious to me at first blush how the halfway vector took the expression that it did and</i>
+<i>I couldn't find a clear derivation anywhere</i>
+<i>(Not explained on wikipedia, Peter Shirley's Fundamentals of Computer Graphics (4th edition), or Real Time Rendering (3rd edition),</i>
+<i>clearly too trivial for the wizard beards.</i>
 </p>
 
-<div id="outline-container-org65f0d5f" class="outline-2">
-<h2 id="org65f0d5f">Motivation (Why this?)</h2>
-<div class="outline-text-2" id="text-org65f0d5f">
+<div id="outline-container-orge5e3e34" class="outline-2">
+<h2 id="orge5e3e34">Motivation (Why bother)</h2>
+<div class="outline-text-2" id="text-orge5e3e34">
 <hr />
 
 <p>
@@ -58,17 +58,13 @@ the vertex's normal, a light and viewing direction.
 </p>
 
 <p>
-Each traditional shading model is named after its inventor.
-</p>
-
-<p>
-If the data  of each vertex, the corners of each triangle, are interpolated (vertex to vertex, done in a vertex shader) then it's said to be <b><span class="underline">Gouraud</span></b> shading.
-If the pixel values between vertices are interpolated (pixel to pixel, done in a fragment shader) then it's said to be <b><span class="underline">Phong</span></b> shading.
+If the data  of each vertex, the corners of each triangle, are interpolated (vertex to vertex, done in a vertex shader) then it's said to be <b>Gouraud</b> shading.
+If the pixel values between vertices are interpolated (pixel to pixel, done in a fragment shader) then it's said to be <b>Phong</b> shading.
+(Each of these old school models are named after their inventor.)
 </p>
 
 
-
-<div id="orgcf5bf46" class="figure">
+<div id="orgddbfd03" class="figure">
 <p><img src="../../../img/Graphics/halfway_vector//PhongVersusGouraud.jpg" alt="PhongVersusGouraud.jpg" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Gouraud versus Phong shading, from wikipedia</p>
@@ -80,11 +76,11 @@ This is accomplished by the internal interpolation that happens in a "varying"/ 
 </p>
 
 <p>
-This gives a discrete vertex normal that was piped in from the vertex shader a continuous smearing of normals, "fragment" to "fragment", in a fragment shader. <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. 
+This turns a discrete vertex normal that was piped in from the vertex shader into a continuous smearing of normals data, "fragment" to "fragment", in a fragment shader. <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. 
 </p>
 
 
-<div id="org0b3a8a9" class="figure">
+<div id="org4e8843b" class="figure">
 <p><img src="../../../img/Graphics/halfway_vector/intermediate_normal_vectors.png" alt="intermediate_normal_vectors.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Interpolated intermediate vertex normals (diagram from <a href="http://learnwebgl.brown37.net/10_surface_properties/smooth_vertex_normals.html">learnwebgl.brown37.net</a>)</p>
@@ -95,17 +91,15 @@ This can then be normalized and dotted with the viewing direction to find a diff
 </p>
 
 
-<div id="org7cb2a84" class="figure">
+<div id="org9ee94e4" class="figure">
 <p><img src="../../../img/Graphics/halfway_vector/learnWebGL.png" alt="learnWebGL.png" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Diffuse Lighting Heuristic Diagram (diagram from <a href="http://learnwebgl.brown37.net/09_lights/lights_diffuse.html">learnwebgl.brown37.net</a>)</p>
 </div>
 
 <p>
-An associated reflection vector can be found as described in
-</p>
-
-<p>
+An associated reflection vector can be calculated for approximated specular lighting. See another article I wrote for more:
+<a href="../reflection_and_refraction_in_a_raytracer/index.html">Reflection and Refraction in a Raytracer</a>
 There are also hardware accelerated functions in modern shading languages for finding the reflection vector, e.g. reflect() in glsl.
 </p>
 
@@ -115,7 +109,7 @@ only be ever deal with angles of 90 degrees / \(\frac{\pi}{2}\) or less, but thi
 </p>
 
 
-<div id="org8be0800" class="figure">
+<div id="orgd79d9fe" class="figure">
 <p><img src="../../../img/Graphics/halfway_vector/learnOpenGL.png" alt="learnOpenGL.png" />
 </p>
 <p><span class="figure-number">Figure 4: </span>The reflection vector can fail (diagram from <a href="https://learnopengl.com/Advanced-Lighting/Advanced-Lighting">learnOpenGL.com</a>)</p>
@@ -131,7 +125,7 @@ how oblique or aligned with the reflection vector the viewing angle is to the no
 </p>
 
 
-<div id="orgab2e511" class="figure">
+<div id="org8a655de" class="figure">
 <p><img src="../../../img/Graphics/halfway_vector/learnOpenGL2.png" alt="learnOpenGL2.png" />
 </p>
 <p><span class="figure-number">Figure 5: </span>The Halfway Vector (diagram from <a href="https://learnopengl.com/Advanced-Lighting/Advanced-Lighting">learnOpenGL.com</a>)</p>
@@ -139,9 +133,9 @@ how oblique or aligned with the reflection vector the viewing angle is to the no
 </div>
 </div>
 
-<div id="outline-container-org5ffb2b1" class="outline-2">
-<h2 id="org5ffb2b1">Derivation</h2>
-<div class="outline-text-2" id="text-org5ffb2b1">
+<div id="outline-container-org9a26cc5" class="outline-2">
+<h2 id="org9a26cc5">Derivation</h2>
+<div class="outline-text-2" id="text-org9a26cc5">
 <hr />
 
 <p>
@@ -154,7 +148,7 @@ See the article for <a href="../../Math/angle_bisector/index.html">Vector angle 
 </p>
 
 <p>
-If both vectors have both been normalized then this reduces to:
+If both vectors have been normalized then this reduces to:
 \(\vec v + \vec l\)
 </p>
 
