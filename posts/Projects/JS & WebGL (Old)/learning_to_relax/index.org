@@ -1,9 +1,0 @@
-#+TITLE: WebGL: Learning to Relax
-#+DATE: 15.01.2020
-
-A small project to play around with WebGL.
-
-I wanted to make the basics of the animation for
-[[https://www.youtube.com/watch?v=RtjS3KN162s][Dan Deacon's Learning to Relax]] from scratch.
-
-Check it out [[../../../../projects/JS_and_WebGL/learning_to_relax/][here]]

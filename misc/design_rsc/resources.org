@@ -1,9 +1,0 @@
-+ The org manual
-  https://orgmode.org/manual/index.html
-
-  https://ogbe.net/blog/blogging_with_org.html
-+ bastian something
-  https://bastibe.de/2013-11-13-blogging-with-emacs.html
-
-+ https://pavpanchekha.com/blog/org-mode-publish.html
-

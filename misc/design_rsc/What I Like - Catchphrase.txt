@@ -1,7 +1,0 @@
-getting closer the ideas, beyond the abstraction of language syntax, semantics and language specific quirks
-
-I think it's far more important to write well than most people realise. Writing doesn't just communicate ideas; it generates them. If you're bad at writing and don't like to do it, you'll miss out on most of the ideas writing would have generated
-- Paul Graham
-
-Why eschew existing ssg?
-I did in the past, because they are complicated to maintain, have a lot of dependencies and break over time. 

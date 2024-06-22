@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Snell's Law</title>
+<meta name="generator" content="Org Mode" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Blah</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+<style>
+
+#preamble > header {
+    background-color: var(--accent-bg);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    /*top, right, bottom, left*/
+    /*padding: 0 0.5rem 2rem 0.5rem; */
+    grid-column: 1 / -1;
+}
+
+#preamble > header > *:only-child {
+    margin-block-start: 2rem;
+}
+
+#preamble > header h1 {
+  max-width: 1200px;
+  margin: 1rem auto;
+}
+
+#preamble > header p {
+  max-width: 40rem;
+  margin: 1rem auto;
+}
+
+#content{
+    display: flex;
+    flex-direction: column;
+}
+
+#content > span{
+    padding-top: 7px;
+}
+
+#postamble > footer {
+    margin-top: 4rem;
+    padding: 2rem 1rem 1.5rem 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+}
+#categories{
+display: flex;
+flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.dir{
+	  width: fit-content;
+	  border-radius: 10px;
+	  background-color: rgb(25, 25, 25);
+          padding: 2%;
+          margin: 1%;
+      }
+.dir h3 {
+	  text-align: center;
+	  padding: 0;
+	  padding-bottom: 7px;
+	  margin: 0;
+      }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous"/>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+<header> <a href="https://ianstranathan.github.io/">Main</a> :: <a href="https://ianstranathan.github.io/Articles/">Articles</a> ::</header></header>
+</div>
+<div id="content" class="content">
+<h1 class="title">Snell's Law</h1>
+<p>
+<i>Reference derivation for Reflection and Refraction in a Raytracer</i>
+</p>
+
+<div id="outline-container-org3bbb77b" class="outline-2">
+<h2 id="org3bbb77b">Overview</h2>
+<div class="outline-text-2" id="text-org3bbb77b">
+<hr />
+
+<p>
+Snell's law is a an <a href="https://en.wikipedia.org/wiki/Snell%27s_law#History">ancient empircal result</a>, but it can be recovered a priori by a variety of paths (no pun intended)
+</p>
+
+<ul class="org-ul">
+<li>Ray model &amp; Fermat's principle with calculus</li>
+</ul>
+
+<ul class="org-ul">
+<li>Wavefront model &amp; Huygen's princple with geometry</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org72eed82" class="outline-2">
+<h2 id="org72eed82">Ray model &amp; Fermat's principle with calculus</h2>
+<div class="outline-text-2" id="text-org72eed82">
+<hr />
+</div>
+
+<div id="outline-container-org20348f3" class="outline-3">
+<h3 id="org20348f3">Fermat's principle definition</h3>
+<div class="outline-text-3" id="text-org20348f3">
+<hr />
+<p>
+The path taken by a ray between two given points is the path that can be traversed in the least amount of time.
+</p>
+
+<p>
+This is something that is taken for granted now, but it does give pause to think how strange it is to to ascribe
+behavior to nature and it was quite controversial in its time.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org114e315" class="outline-3">
+<h3 id="org114e315">Problem Setup</h3>
+<div class="outline-text-3" id="text-org114e315">
+<hr />
+
+<div id="org12d6d96" class="figure">
+<p><img src="../../../../rsc/img/articles/Physics/snells_law/setup1.png" alt="setup1.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Refraction of light at the interface between two media of different refractive indices</p>
+</div>
+
+
+
+<p>
+Preliminary values to be used (\(d_i\) is the length of the ray):
+</p>
+
+<p>
+\[d_1 = \sqrt{a^2 + {x_1}^2}\]
+\[d_2 = \sqrt{b^2 + {x_2}^2}\]
+\[\sin{\alpha} = \frac{x_1}{d_1} = \frac{x_1}{\sqrt{a^2 + {x_1}^2}}\]
+\[\sin{\beta} =  \frac{x_1}{d_2} = \frac{x_2}{\sqrt{b^2 + {x_2}^2}}\]
+</p>
+
+<p>
+Speed of ray (where \(\eta\) is the respective index of refraction of the medium): \[s_i = \frac{c}{\eta_i}\]
+</p>
+
+<p>
+The total time taken for the ray: \[T_{total} = t_1 + t_2\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9f40d5d" class="outline-3">
+<h3 id="org9f40d5d">Derivation</h3>
+<div class="outline-text-3" id="text-org9f40d5d">
+<hr />
+
+<p>
+Definition of speed: \[s_i = \frac{d_i}{t_i} = \frac{c}{\eta_i}\]
+\(\implies\) 
+\[t_i = \frac{\eta_i}{c} d_i\]
+\(\implies\) 
+\[T_{total} = \frac{\eta_1}{c} d_1 + \frac{\eta_2}{c} d_2\]
+\[T_{total} = \frac{\eta_1}{c} \sqrt{a^2 + {x_1}^2} + \frac{\eta_2}{c} \sqrt{b^2 + {x_2}^2}\]
+</p>
+
+<p>
+To invoke Fermat's principle, we want to minimize this function (we find a critical point which may or may not be a minimum)
+and we need to make a small substituion so that we can take a whole derivative with respect to the distance
+</p>
+
+<p>
+\[T_{total} = \frac{\eta_1}{c} \sqrt{a^2 + {x_1}^2} + 
+   \frac{\eta_2}{c} \sqrt{b^2 + {\left(l - x_1 \right)}^2}\]
+</p>
+
+<p>
+Taking a derivative with respect to distance and setting it to zero to find its critical points:
+\[ 0 = \frac{1}{2} {\left( a^2 + {x_1}^2 \right)}^{-\frac{1}{2}} 2x_1 \frac{\eta_1}{c} +
+   \frac{1}{2} {\left( b^2 + {\left(l - x_1 \right)}^2 \right)}^{-\frac{1}{2}} \left( {2x_1 - 2l} \right) \frac{\eta_1}{c}
+   \]
+\(\implies\) 
+\[ 0 = \cancel{\frac{1}{2}} {\left( a^2 + {x_1}^2 \right)}^{-\frac{1}{2}} \cancel{2}x_1 \frac{\eta_1}{c} +
+   \cancel{\frac{1}{2}} {\left( b^2 + {\left(l - x_1 \right)}^2 \right)}^{-\frac{1}{2}} \cancel{2}\left( {x_1 - l} \right) \frac{\eta_1}{c}
+   \]
+</p>
+
+<p>
+\[ 0 = \frac{x_1}{\sqrt{a^2 + {x_1}^2}} \frac{\eta_1}{\cancel{c}} - 
+   \frac{ \left( l - x_1 \right) }{\sqrt{b^2 + {\left(l - x_1 \right)}^2}} \frac{\eta_2}{\cancel{c}}
+   \]
+Referencing our preliminary trig expressions, substitute with \(\sin{\alpha}\) and \(\sin{\beta}\)
+</p>
+
+<p>
+\[ 0 = \sin{\alpha} \eta_1 - 
+   \sin{\beta}  \eta_2
+   \]
+\(\implies\)
+\[ 
+   \eta_1 \sin{\alpha} = \eta_2 \sin{\beta}
+   \]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7cc9e50" class="outline-2">
+<h2 id="org7cc9e50">Wavefront model &amp; Huygen's princple with geometry</h2>
+<div class="outline-text-2" id="text-org7cc9e50">
+<hr />
+
+<p>
+It feels slightly out of place to bring in Huygen's principle (in the context of geometric optics for computer graphics) 
+as it occupies some middle ground between ray and wave representations of light, but intuition and trust in something is built by reaching
+the same result from many, disparate paths.
+</p>
+
+<p>
+It's also very elegant in that Snell's law pops out as a purely geometrical argument.
+</p>
+</div>
+
+<div id="outline-container-org6a7c49c" class="outline-3">
+<h3 id="org6a7c49c">Huygen's principle definition</h3>
+<div class="outline-text-3" id="text-org6a7c49c">
+<hr />
+<p>
+Every point on a wavefront is itself the source of spherical wavelets, and 
+the secondary wavelets emanating from different points mutually interfere.
+The sum of these spherical wavelets forms the wavefront. 
+</p>
+
+<p>
+Here is a picture of a wavefront as originally conceived by Huygen from Wikipedia
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgc56a53d" class="outline-3">
+<h3 id="orgc56a53d">Derivation</h3>
+<div class="outline-text-3" id="text-orgc56a53d">
+<hr />
+
+<p>
+Here is a <a href="https://www.youtube.com/watch?v=1GcW9jWj4FM">well explained and animated derivation</a>, check it out.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<footer><p>©Ian Stranathan <script>document.write(new Date().getFullYear())</script></p></footer>
+</div>
+</body>
+</html>

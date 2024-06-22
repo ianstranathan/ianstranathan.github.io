@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org Mode" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Blah</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+<style>
+
+#preamble > header {
+    background-color: var(--accent-bg);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    /*top, right, bottom, left*/
+    /*padding: 0 0.5rem 2rem 0.5rem; */
+    grid-column: 1 / -1;
+}
+
+#preamble > header > *:only-child {
+    margin-block-start: 2rem;
+}
+
+#preamble > header h1 {
+  max-width: 1200px;
+  margin: 1rem auto;
+}
+
+#preamble > header p {
+  max-width: 40rem;
+  margin: 1rem auto;
+}
+
+#content{
+    display: flex;
+    flex-direction: column;
+}
+
+#content > span{
+    padding-top: 7px;
+}
+
+#postamble > footer {
+    margin-top: 4rem;
+    padding: 2rem 1rem 1.5rem 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+}
+#categories{
+display: flex;
+flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.dir{
+	  width: fit-content;
+	  border-radius: 10px;
+	  background-color: rgb(25, 25, 25);
+          padding: 2%;
+          margin: 1%;
+      }
+.dir h3 {
+	  text-align: center;
+	  padding: 0;
+	  padding-bottom: 7px;
+	  margin: 0;
+      }
+</style>
+</head>
+<body>
+<div id="preamble" class="status">
+<header> <a href="https://ianstranathan.github.io/">Main</a> :: <a href="https://ianstranathan.github.io/Misc/">Misc</a> ::</header></header>
+</div>
+<div id="content" class="content">
+<p>
+Real programmers only use keyboard based text editors and a shell, not IDEs
+</p>
+
+<p>
+Real programmers use mechanical keyboards
+</p>
+
+<p>
+Real programmers only use compiled languages
+</p>
+
+<p>
+Real programmers only use statically typed languages
+</p>
+
+<p>
+Real programmers don't use GC languages
+</p>
+
+<p>
+Real programmers use OOP and design patterns
+</p>
+
+<p>
+Real programmers use RAII / ARC
+</p>
+
+<p>
+Real programmers use FP and 
+</p>
+
+<p>
+Real programmers use CPU architecture oriented imperative programming
+</p>
+
+<hr />
+
+<div id="outline-container-org30a73ce" class="outline-2">
+<h2 id="org30a73ce">Discrete tools in a continuous problem space</h2>
+<div class="outline-text-2" id="text-org30a73ce">
+<p>
+Often dev time, correctness, I/O time, scriptability, real-time changeability, are more important than CPU time.
+</p>
+
+<p>
+Just as often they're not and you absolutely need to optimize.
+</p>
+
+<p>
+Sometimes it's a wash.
+</p>
+
+<p>
+Think critically and don't be tribalistic/ dogmatic (don't be a programming language fan defending any system, no matter how dysfunctional, as long as it's
+<b>your</b> dysfunctional sytem.)
+</p>
+
+<blockquote>
+<p>
+Ars longa, vita brevis
+</p>
+<ul class="org-ul">
+<li>Hippocrates</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org506a9f4" class="outline-2">
+<h2 id="org506a9f4">Example in the contenxt of Vulkan:</h2>
+<div class="outline-text-2" id="text-org506a9f4">
+</div>
+<div id="outline-container-orgc8dd5e8" class="outline-3">
+<h3 id="orgc8dd5e8">Complexity as something to minimize</h3>
+<div class="outline-text-3" id="text-orgc8dd5e8">
+<p>
+even though you can call Vulkan relatively low level in terms of what is available now, it's not low level in the way you program a CPU. When you use Vulkan, you are still just making an API call into a black box. The black box may have more knobs and simpler primitives than the other black boxes, but at the end of the day, it is still the one making decisions about things like instructions and memory layout, not you. He is saying that you should be able to program the GPU without having to go through anything like Vulkan in the first place, the same way you can with a CPU, it's not that Vulkan is worse than the alternatives.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org08d1f0e" class="outline-3">
+<h3 id="org08d1f0e">But complexity is a necessary by-product of progress</h3>
+<div class="outline-text-3" id="text-org08d1f0e">
+<p>
+And that's what happened, we got first accelerated graphics cards that had 3D acceleration and it became very obvious we can't talk directly to hardware anymore as the API for graphics card was incomprehensible. It's not as simple as writing pixels to mapped buffers, you have to talk in the language the graphics card understands. There's no way to go around Vulkan API unless you want to reinvent the entire graphics driver with its proprietary interface.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<footer><p>©Ian Stranathan <script>document.write(new Date().getFullYear())</script></p></footer>
+</div>
+</body>
+</html>
