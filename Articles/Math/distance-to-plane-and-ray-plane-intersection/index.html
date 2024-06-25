@@ -86,9 +86,9 @@ flex-direction: column;
 <div id="content" class="content">
 <h1 class="title">Distance to Plane and Ray Plane Intersection</h1>
 
-<div id="outline-container-orgd365764" class="outline-2">
-<h2 id="orgd365764">Motivation</h2>
-<div class="outline-text-2" id="text-orgd365764">
+<div id="outline-container-org22ad1bb" class="outline-2">
+<h2 id="org22ad1bb">Motivation</h2>
+<div class="outline-text-2" id="text-org22ad1bb">
 <hr />
 <p>
 <i>While watching <a href="https://www.youtube.com/watch?v=pq7dV4sR7lg">Casey Muratori write a raytracer</a> recently, I noticed he characterized the equation of a plane equation in a weird way, so I decided to write out a quick derivation.</i>
@@ -96,9 +96,9 @@ flex-direction: column;
 </div>
 </div>
 
-<div id="outline-container-org3d623bb" class="outline-2">
-<h2 id="org3d623bb">Problem Set Up</h2>
-<div class="outline-text-2" id="text-org3d623bb">
+<div id="outline-container-orgcaf0e83" class="outline-2">
+<h2 id="orgcaf0e83">Problem Set Up</h2>
+<div class="outline-text-2" id="text-orgcaf0e83">
 <hr />
 <p>
 What seemed weird to me was his expression for a plane:  \(N^T \cdot P + d = 0\)
@@ -110,14 +110,14 @@ Non-standard notation aside, this just isn't an equation to generate a plane.
 </p>
 
 
-<div id="orgacbdd06" class="figure">
+<div id="orgb4925b5" class="figure">
 <p><img src="../../../../rsc/img/articles/Math/distance_to_plane_and_ray_plane_intersection/caseySetup1.png" alt="caseySetup1.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Arbitrary plane with a point on the plane</p>
 </div>
 
 
-<div id="org165020e" class="figure">
+<div id="org115a6d1" class="figure">
 <p><img src="../../../../rsc/img/articles/Math/distance_to_plane_and_ray_plane_intersection/caseySetup2.png" alt="caseySetup2.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>\(\vec{N} \cdot \vec{P}\) is the distance from the origin to the plane</p>
@@ -129,15 +129,15 @@ Let's make this explicit by showing the distance to a plane from any arbitrary p
 </div>
 </div>
 
-<div id="outline-container-orgdf256c3" class="outline-2">
-<h2 id="orgdf256c3">Distance to a plane</h2>
-<div class="outline-text-2" id="text-orgdf256c3">
+<div id="outline-container-org7194a1f" class="outline-2">
+<h2 id="org7194a1f">Distance to a plane</h2>
+<div class="outline-text-2" id="text-org7194a1f">
 <hr />
 </div>
 
-<div id="outline-container-orgfb056cd" class="outline-3">
-<h3 id="orgfb056cd">Via projection of point onto normal:</h3>
-<div class="outline-text-3" id="text-orgfb056cd">
+<div id="outline-container-org8aa29af" class="outline-3">
+<h3 id="org8aa29af">Via projection of point onto normal:</h3>
+<div class="outline-text-3" id="text-org8aa29af">
 <hr />
 
 <p>
@@ -145,14 +145,14 @@ Repeating our drawing from above for an arbitrary point &#x2013; feel free to sk
 </p>
 
 
-<div id="org8caa72c" class="figure">
+<div id="org0609b24" class="figure">
 <p><img src="../../../../rsc/img/articles/Math/distance_to_plane_and_ray_plane_intersection/diagramOneProj.png" alt="diagramOneProj.png" />
 </p>
 <p><span class="figure-number">Figure 3: </span>The projection length of the relative position vector between an arbitrary position \(\vec{Q}\) and a point on the plane \(\vec{P}\) with the plane normal \(\vec{n}\)</p>
 </div>
 
 
-<div id="org77a8609" class="figure">
+<div id="orgc964270" class="figure">
 <p><img src="../../../../rsc/img/articles/Math/distance_to_plane_and_ray_plane_intersection/diagramTwoProj.png" alt="diagramTwoProj.png" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Again, same setup from a different perspective, still slowing dying from boredom</p>
@@ -186,9 +186,9 @@ In the case that the normal is unit length, this simplifies to our first result
 </div>
 </div>
 
-<div id="outline-container-org64e8c20" class="outline-3">
-<h3 id="org64e8c20">Via ray intersection</h3>
-<div class="outline-text-3" id="text-org64e8c20">
+<div id="outline-container-org91f98e3" class="outline-3">
+<h3 id="org91f98e3">Via ray intersection</h3>
+<div class="outline-text-3" id="text-org91f98e3">
 <hr />
 
 <p>
@@ -196,7 +196,7 @@ It's always encouraging to see the same result in multiple ways:
 </p>
 
 
-<div id="org2f8d839" class="figure">
+<div id="org1de2ebf" class="figure">
 <p><img src="../../../../rsc/img/articles/Math/distance_to_plane_and_ray_plane_intersection/diagramOneRay.png" alt="diagramOneRay.png" />
 </p>
 <p><span class="figure-number">Figure 5: </span>The first diagram with the ray intersection point \(\vec{P}^\prime\)</p>
@@ -204,7 +204,7 @@ It's always encouraging to see the same result in multiple ways:
 
 
 
-<div id="org78816e1" class="figure">
+<div id="org9010128" class="figure">
 <p><img src="../../../../rsc/img/articles/Math/distance_to_plane_and_ray_plane_intersection/diagramTwoRay.png" alt="diagramTwoRay.png" />
 </p>
 <p><span class="figure-number">Figure 6: </span>The same as above but from a different perspective</p>
@@ -265,9 +265,9 @@ And again, in the case that the normal is unit length, this simplifies to our fi
 </div>
 </div>
 
-<div id="outline-container-org83bb0a7" class="outline-2">
-<h2 id="org83bb0a7">Equation of a plane</h2>
-<div class="outline-text-2" id="text-org83bb0a7">
+<div id="outline-container-org1ca7f31" class="outline-2">
+<h2 id="org1ca7f31">Equation of a plane</h2>
+<div class="outline-text-2" id="text-org1ca7f31">
 <hr />
 <p>
 Now that we've gorily (most might say unnecessarily) shown that the first expression \(\hat{n} \cdot \vec{P} + d = 0\) is indeed the distance from the origin to the plane, we can now show that the second expression is an accidental sleight of hand by deriving the equation of a plane.
@@ -288,7 +288,7 @@ planes in a three dimensional space have a natural description using a point in 
 </p>
 
 
-<div id="orge836c10" class="figure">
+<div id="orgff92746" class="figure">
 <p><img src="../../../../rsc/img/articles/Math/distance_to_plane_and_ray_plane_intersection/equationIntuition.png" alt="equationIntuition.png" />
 </p>
 <p><span class="figure-number">Figure 7: </span>The dot product of a relative position vector and a normal must be zero to be on a plane</p>
@@ -350,9 +350,9 @@ This is just a line - for some \(x\), there's some \(y\), extending into 3D is n
 </div>
 </div>
 
-<div id="outline-container-org8d3ee33" class="outline-2">
-<h2 id="org8d3ee33">Ray Plane Intersection</h2>
-<div class="outline-text-2" id="text-org8d3ee33">
+<div id="outline-container-org190c2d6" class="outline-2">
+<h2 id="org190c2d6">Ray Plane Intersection</h2>
+<div class="outline-text-2" id="text-org190c2d6">
 <hr />
 <p>
 Finding the necessary distance a given ray (that is to say a given direction \(\vec{rd}\)) should travel to intersect with a plane is pretty straight forward.
@@ -398,9 +398,9 @@ So the equation seems to make physical sense.
 </div>
 </div>
 
-<div id="outline-container-orgb171cde" class="outline-2">
-<h2 id="orgb171cde">Wrapping Up</h2>
-<div class="outline-text-2" id="text-orgb171cde">
+<div id="outline-container-orga9ad1e9" class="outline-2">
+<h2 id="orga9ad1e9">Wrapping Up</h2>
+<div class="outline-text-2" id="text-orga9ad1e9">
 <hr />
 
 <p>
@@ -418,9 +418,9 @@ are even more annoyed whenever they're forced to see scientists' unfortunate Mat
 </p>
 </div>
 
-<div id="outline-container-org13252ff" class="outline-3">
-<h3 id="org13252ff">Misc.</h3>
-<div class="outline-text-3" id="text-org13252ff">
+<div id="outline-container-orge3af457" class="outline-3">
+<h3 id="orge3af457">Misc.</h3>
+<div class="outline-text-3" id="text-orge3af457">
 <hr />
 <p>
 Here's a <a href="http://lousodrome.net/blog/light/2020/07/03/intersection-of-a-ray-and-a-plane/">less verbose article</a> from a graphics programmer I like.
