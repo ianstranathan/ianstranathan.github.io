@@ -1,0 +1,2 @@
+Projects, Demos, tools. Mostly game dev & graphics related.
+I'm often forced to build a tool or demo as a visual aide while working on a project.

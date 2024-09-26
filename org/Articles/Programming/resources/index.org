@@ -1,0 +1,18 @@
+
+* Blog Roll; Guys to learn from & be inspired by
+[[https://groups.csail.mit.edu/mac/users/gjs/gjs.html][Gerald Jay Sussman]]
+
+* Paradigms & Languages
+** Lisp
+[[../a-lispy-interlude/][Personal Summary of Lisp]]
+
+** Functional Programming
+[[https://web.mit.edu/6.001/6.037/sicp.pdf][SICP]]
+[[https://mostly-adequate.gitbook.io/mostly-adequate-guide][Professor Frisby]]
+
+* Lectures & Interviews
+** Rich Hickey
+[[https://www.youtube.com/watch?v=ScEPu1cs4l0&t=2399s][Are we there yet?]]
+[[https://www.youtube.com/watch?v=SxdOUGdseq4&list=PLUFeA6y-5sFkPkTN9Cx5H5pjQjhYKgeVI&index=6][Simple Made Easy]]
+[[https://harfangk.github.io/2017/12/08/rich-hickey-interview-from-codequarterly.html#:~:text=Hickey%3A%20Yes%2C%20I%20was%20a%20music%20composition%20major%20in%20college][Misc]]
+

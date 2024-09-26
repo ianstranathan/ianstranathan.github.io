@@ -1,0 +1,63 @@
+
+_Game development is hard._
+It's hard because it requires many, disparate, high level skills / backgrounds.
+
+Why paradigms or conventions change is a sufficiently deep subject in its own right.
+(See [[https://en.wikipedia.org/wiki/The_Structure_of_Scientific_Revolutions][Kuhn - The Structure of Scientific Revolutions]] )
+
+A very well formulated overview of the historial paradigm context from Peter Norvig
+(Paradigms of Artificial Intelligence Programming):
+
+#+BEGIN_QUOTE:
+Historically, the first computer programs were written in an imperative programming style.
+A program was construed as a series of instructions, where each instruction performs some action:
+changing the value of a memory location, printing a result, and so forth.
+Assembly language is an example of an imperative language.
+
+As experience (and ambition) grew, programmers looked for ways of controlling the complexity of programs.
+The invention of subroutines marked the algorithmic or procedural programming style, a subclass of the imperative style.
+Subroutines are helpful for two reasons: breaking up the problem into small pieces makes each piece easier to understand,
+and it also makes it possible to reuse pieces.
+Examples of procedural languages are FORTRAN, C, Pascal, and Lisp with setf.
+
+Subroutines are still dependent on global state, so they are not completely separate pieces.
+The use of a large number of global variables has been criticized as a factor that makes it difficult to
+develop and maintain large programs.
+To eliminate this problem, the functional programming style insists that functions access only the parameters
+that are passed to them, and always return the same result for the same inputs.
+Functional programs have the advantage of being mathematically clean-it is easy to prove properties about them.
+However, some applications are more naturally seen as taking action rather than calculating functional values,
+and are therefore unnatural to program in a functional style. 
+...
+
+Object-oriented programming is another way to tame the problem of global state.
+Instead of prohibiting global state (as functional programming does),
+object-oriented programming breaks up the unruly mass of global state and encapsulates it into small,
+manageable pieces, or objects.
+#+END_QUOTE
+
+
+As with anything in life, there is give and take; namely, there are performance implications for paradigm choice.
+
+In my subversive opinion, Object Oriented Programming (OOP) became dominant in the 1980s and 90s not because it
+led to greater code reuse, but rather it made the employees more interchangeable.
+
+The performance implications of OOP have been well documented
+[[https://www.youtube.com/watch?v=tD5NrevFtbU][Casey Muratori: Clean Code, Horrible Performance]]
+
+The driving zeitgeist of perpetually increasing hardware performance masked this for quite a while, but it's now
+a main topic in software circles.
+
+These seem to be non-issues if you're willing to roll everything yourself:
+[[https://www.youtube.com/watch?v=xt1KNDmOYqA][Casey Muratori on systems thinking and non-issues-issues in programming]]
+
+But, as we've established, game-dev is hard. This was said in a handwaving, high-level kind of way -- the complexity can go very deep indeed.
+How many man-decades have been invested into juggernauts like Unreal, let alone smaller, more niche game engines like Godot (Godot started development
+in 2001...)
+Everything in Unreal and Godot is object oriented. I'm sure there are analogous speed up architecture injections like Unity's ECS,
+but the point remains that the architecture, as a result of the historical context of when it was first developed, remains ill-posed.
+(This isn't limited to game engines. See Windows OS)
+
+
+
+

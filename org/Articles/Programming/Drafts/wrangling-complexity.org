@@ -1,0 +1,9 @@
+
+# * Example in the contenxt of Vulkan:
+# ** Complexity as something to minimize
+# even though you can call Vulkan relatively low level in terms of what is available now, it's not low level in the way you program a CPU. When you use Vulkan, you are still just making an API call into a black box. The black box may have more knobs and simpler primitives than the other black boxes, but at the end of the day, it is still the one making decisions about things like instructions and memory layout, not you. He is saying that you should be able to program the GPU without having to go through anything like Vulkan in the first place, the same way you can with a CPU, it's not that Vulkan is worse than the alternatives.
+
+# ** But complexity is a necessary by-product of progress
+# And that's what happened, we got first accelerated graphics cards that had 3D acceleration and it became very obvious we can't talk directly to hardware anymore as the API for graphics card was incomprehensible. It's not as simple as writing pixels to mapped buffers, you have to talk in the language the graphics card understands. There's no way to go around Vulkan API unless you want to reinvent the entire graphics driver with its proprietary interface.
+
+

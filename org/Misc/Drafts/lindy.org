@@ -1,0 +1,36 @@
+
+
+
+* Definition
+The longer a period something has survived to exist or be used in the present, the longer its
+remaining life expectancy
+See [[https://en.wikipedia.org/wiki/Lindy_effect#:~:text=The%20Lindy%20effect%20][The lindy effect]]
+
+* Popular Opinions vary and personal oscilaltion
+How to decide if it's good or useful to invest your time into something?
+I think one parameter that seems generally accurate is whether or not it's lindy.
+
+I think strongly Lindy 'things' very often mask for non-arbitrary or naturally occuring systems.
+
+Let's look at the examples of the programming languages 'C' and 'Common Lisp'
+C is widely described as a portable assembly language. If you were to make another minimal abstraction of assembly languages, it would just be C with
+a change of syntax (same up to a shuffling of naming/ symbolic convention -- an isomorphism if you will)
+Similarly, if you were to minimalistically [[https://paulgraham.com/icad.html]["express programs directly in the parse trees that get built behind the scenes when other languages are parsed"]]
+you would get a lisp dialect and if you were focus on the metaprogramming expressiveness you'd get Common Lisp
+I can't make up my mind if programming should be as closely aligned with machine architecture or with
+an elegant abstraction
+
+
+
+Love only the eternal is a rumi quote,
+
+
+If I'm going to be doing something for the rest of my life, I'd like it to be 
+
+
+* 
+- emacs
+- Common Lisp
+- C
+
+  

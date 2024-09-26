@@ -1,0 +1,6 @@
+There was a time (~2020/ 2021-ish) when I was playing around with WebGL quite a bit (shadertoy too)
+I'd make little doodles while waiting for students at a tutoring center I worked at.
+
+Just randomly found these and decided to put them up [[../../../rsc/projects-tools-demos/Demos/Graphics/shadertoy_shaders/][here]]
+Would have been less effort to [[https://shadertoyunofficial.wordpress.com/2018/02/17/embedding-shadertoys-in-website/][not reinvent the wheel]] as usual
+

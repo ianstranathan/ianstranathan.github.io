@@ -1,0 +1,104 @@
+
+* TODO
+- [ ] Change where github pages is looking for main index file
+      (I just want a single repo that I can rebuild mindlesslessy)
+
+** Articles
+*** GRAPHICS
+- [ ] Raybox intersection
+  - [ ] Change scroll speed to be more managable in 3D
+- Redo MVP article with WebGPU and leaner structure
+- Raymarching
+- Compute Shader
+- Vulkan
+- bitmap
+  https://www.0de5.net/stimuli/a-reintroduction-to-programming/memory/binary-formats-through-bitmap-images
+  
+*** Programming
+- [ ] Functional Programming  
+
+** Misc
+- [ ] Lindy (emacs)
+  
+** Projects
+- [ ] Godot projects
+  - [ ] Clicky, clikmi and Djinn Kids
+  - [ ] Compute shader raytracer or boids or something
+
+# ----------------------------------------------------------------------------------------------------
+# -- Website Design Notes
+# ----------------------------------------------------------------------------------------------------
+
+*TOC*
+[[Philosophy][Philosophy]]
+[[Technical Notes]]
+
+* Philosophy
+1. Simplicity
+2. Control
+3. Lindy
+4. YAGNI
+
+** Simplicity:
+Write the entire thing in org mode
+
+** Lindy
+Lindy system (not dependent on SSG flavor of the month)
+- emacs, common lisp and org mode aren't going anywhere anytime soon
+
+Emphasis on "Bottom Up" writing. (I should be able to write whenever I like, wherever I am)
+I'm a perfectionist, just stick whatever isn't up to a standard in some-folder/Drafts and don't worry about it
+
+** YAGNI:
+- portability
+  it's ok to be locked into my machine, dependencies are:
+  emacs init file that has:
+  1) SBCL + SLIME, Htmlize, org mode, UTF-8 formatting
+  
+# ----------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------
+
+* Design
+** Styling
+Whatever minimal css framework I don't have to care about/ can easily extend or override, e.g.:
+https://simplecss.org/
+
+
+# ----------------------------------------------------------------------------------------------------
+
+* Technical Notes
+- UTF-8 to keep non-english symbols
+  (I fixed this by making it less general, uses my .init file
+   My reasoning, I live in emacs, why use an additional shell script when I can just do it from emacs)
+  
+- math latex:
+  + katex is faster than mathjax
+  + https://amitp.blogspot.com/2019/02/emacs-org-mode-and-katex.html
+
+- syntax highlighting:
+  + org mode html export depends on htmlize (check to make sure it's installed)
+    htmlize.el is available via MELPA
+    (already available for modern emacs)
+
+**  HOSTING
+Domain name managed by iwantaname, github pages pointing to ianstranathan.com
+
+** ORG NOTES
+#+TITLE: grtcdr's website
+#+OPTIONS: title:nil
+
+
+* Technical TODO
+- [X] Exclude drafts from export
+https://emacs.stackexchange.com/questions/32758/is-it-possible-for-org-publish-to-ignore-certain-sub-directories
+
+- [X] Write CL script to inject some html for every page
+  sbcl --load file.lisp
+  (finish-website)
+  
+- [ ] RSS Feed
+  https://alexanderle.com/create-an-rss-feed-from-scratch
+  https://kevincox.ca/2022/05/06/rss-feed-best-practices/
+
+
+

@@ -1,0 +1,8 @@
+
+#+EXCLUDE_TAGS: noexport
+
+* How to distort geometry in an interesting way => vertex
+We can get this outline for basically free:
+
+https://madebyevan.com/shaders/grid/
+

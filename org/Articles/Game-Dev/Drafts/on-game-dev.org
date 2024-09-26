@@ -1,0 +1,14 @@
+Thesis:
+Most great franchises were born from small games and incremental investment over decades.
+This is no longer possible due to the maturity of the games industry
+Game development is a very high risk (resources required to make a game) and
+
+Reading:
+[[https://www.gamedeveloper.com/production/a-small-games-manifesto][Small Game Manifesto]]
+
+Small
+* List of games made by solo developers:
+- Braid
+- Stardew Valley
+
+You cannot make

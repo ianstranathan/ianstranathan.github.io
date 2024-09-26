@@ -1,0 +1,29 @@
+#+TITLE: Functional Programming
+#+DATE: <2022-11-20 Sun>
+#+START_UP: indent
+
+* Motivation
+  I recently became interested in functional programming and the Lisp language family (Common lisp
+  in particular -- I know, no tail call optimization (TCO) or tail call elimitation like in Scheme, Haskell or Scala, so it can't
+  be said to be strictly a functioinal language, but CL has functions as first-class objects and closurs plus it seems like practical choice: learning materials from size of user base,
+  accesibility (Scheme is not supported on Windows and Mac).I wanted to learn a Lisp so Haskell will need to wait for another day)
+  
+  While grasping and groping in the gestalt of a new subject, I came accross
+  [[https://mostly-adequate.gitbook.io/]["Professor Frisby's Mostly Adequate Guide to Functional Programming"]] which I found to be clearly written and quite entertaining.
+  I've dabbled in some Javascript (WebGl projects) and so I decided to work through it.
+  The book's immediate emphasis on mathematical isomorphisms had me hooked
+
+* Currying
+  -Currying is a technique to extend and specialize functions from other functions (encouraging code reuse and management)
+
+  - the biggest reason why currying is useful is that it allows the programmer to save state when needed
+  - "pre-load" a function with an argument or two in order to receive a new function that remembers those arguments.
+
+  You can write a function that doesn't something, then define a another function as a partially completed version
+  #+BEGIN_SRC javascript
+const add_three_things = 
+  #+END_SRC
+* Resources
+  https://sagnibak.github.io/blog/python-is-haskell-currying/
+  https://sagnibak.github.io/blog/python-is-haskell-tail-recursion/
+  

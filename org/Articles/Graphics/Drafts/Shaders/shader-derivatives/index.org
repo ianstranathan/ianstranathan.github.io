@@ -1,0 +1,5 @@
+
+* Anti-aliasing
+
+* clockwork berry
+https://www.aclockworkberry.com/shader-derivative-functions/

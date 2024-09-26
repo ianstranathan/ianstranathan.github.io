@@ -1,0 +1,46 @@
+#+TITLE: Functional Programming
+
+* The backbone
+[[https://en.wikipedia.org/wiki/Lambda_calculus#:~:text=Lambda%20calculus%20is%20Turing%20complete,may%20be%20untyped%20or%20typed.][Lambda calculus]] is Turing complete, that is, it is a universal model of computation that can be used to simulate any Turing machine.
+This is a powerful thing and if it can be made e
+I used to be very critical of OOP (all the cool kids were doing it), but Turing machines more closely resemble the von Neumann architecture
+of a real computer. This means imperatuve/ procedural programming should always be more performant, but
+
+
+#+BEGIN_QUOTE
+There are two ways to write error-free programs; only the third one works.
+- Alan Perlis
+#+END_QUOTE
+
+Complexity in programming is usually connected to subtle state changes.
+
+
+#+BEGIN_QUOTE
+Fools ignore complexity. Pragmatists suffer it. Some can avoid it. Geniuses remove it
+- Alan Perlis
+#+END_QUOTE
+
+There are better, more considered opinions than mine on the subject, check out [[https://www.youtube.com/watch?v=SxdOUGdseq4&t=3135s][Rich Hickey]] talk about managing complexity.
+(He ultimately made a functional programming dialect of lisp, Clojure, to reflect such observations and experience)
+
+A lot of my time is spent programming these days, but my background isn't in software engineering; I don't have a CS degree.
+This was forunate w.r.t. programming paradigms as I wasn't incluclated in anything in particular.
+One would think that we'd be beyond tribalism in something as high level as programming in a civilization as to avoid
+
+* OOP
+inculcated dogma/ a series of relatively arbitrary rules that had grown into gospel.
+
+
+* Tenets (what seems necessary to be functional)
+Avoid mutable state,
+Functions are first-class
+Recursive iteration is emphasized (This means tail-call optimization is pretty much necessary)
+- collect instead of mutate
+
+
+* At the end of the day:
+This is a programming paradigm. Programming paradigms are tools to wrangle complexity. Use the tool that works for you.
+This isn't for everyone or every task.
+
+* Interesting Resources
+- [[https://www.youtube.com/watch?v=pAnLQ9jwN-E&list=PLpkHU923F2XFWv-XfVuvWuxq41h21nOPK&index=2][A Flock of Functions]]

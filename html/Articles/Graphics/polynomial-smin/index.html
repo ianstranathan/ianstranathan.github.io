@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Polynomial Smooth Minimum</title>
+<meta name="generator" content="Org Mode" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Blah</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+<style>
+
+#preamble > header {
+    background-color: var(--accent-bg);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    /*top, right, bottom, left*/
+    /*padding: 0 0.5rem 2rem 0.5rem; */
+    grid-column: 1 / -1;
+}
+
+#preamble > header > *:only-child {
+    margin-block-start: 2rem;
+}
+
+#preamble > header h1 {
+  max-width: 1200px;
+  margin: 1rem auto;
+}
+
+#preamble > header p {
+  max-width: 40rem;
+  margin: 1rem auto;
+}
+
+#content{
+    display: flex;
+    flex-direction: column;
+}
+
+#content > span{
+    padding-top: 7px;
+}
+
+#postamble > footer {
+    margin-top: 4rem;
+    padding: 2rem 1rem 1.5rem 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+}
+#categories{
+display: flex;
+flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.dir{
+	  width: fit-content;
+	  border-radius: 10px;
+	  background-color: rgb(25, 25, 25);
+          padding: 2%;
+          margin: 1%;
+      }
+.dir h3 {
+	  text-align: center;
+	  padding: 0;
+	  padding-bottom: 7px;
+	  margin: 0;
+      }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous"/>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+<header> <a href="http://localhost:8080/">Main</a> :: <a href="http://localhost:8080/Articles/">Articles</a> ::</header></header>
+</div>
+<div id="content" class="content">
+<h1 class="title">Polynomial Smooth Minimum</h1>
+<p>
+TL;DR: <a href="../../../../rsc/projects-tools-demos/Demos/Graphics/sminLive.html">Live shader here</a>
+</p>
+
+<div id="outline-container-org03462d1" class="outline-2">
+<h2 id="org03462d1">Motivation</h2>
+<div class="outline-text-2" id="text-org03462d1">
+<hr />
+
+<p>
+Iñigo Quilez, hallowed be his name, wrote a function for blending distance function primitives to model organic shapes with raymarching.
+(for introduction to raymarching, see the article I wrote <a href="../raymarching/index.html">here</a>
+</p>
+
+<p>
+He wrote a very nice article about it <a href="https://www.iquilezles.org/www/articles/smin/smin.htm">here</a>
+</p>
+
+<p>
+It's a foundational technique to get natural looking implicit surfaces which is important because nature is smooth and continuous(&#x2026; that's at least what they told me in school anyway) and a simple union of two shapes is not.
+</p>
+
+<blockquote>
+<p>
+The first time you see something it's a trick, the second time it's a technique
+</p>
+</blockquote>
+
+<p>
+For anyone that is trying to learn this stuff and for whom it's still a trick, hopefully this is helpful.
+I know I can only reluctantly use some derived result if I don't understand where it's coming from.
+</p>
+
+<p>
+It was impossible to follow iq's derivation in his article, surely the material is just so obvious to him that the terseness with which his derivation was written wasn't intentional.
+In my opinion, especially for the beginner like me, derivations are not the place for compactness, especially for something so foundational. 
+</p>
+
+<p>
+It really gave me pause to see a couple really smart guys I follow using this function without fulling understanding it or deriving it correctly.
+See: <a href="https://www.youtube.com/watch?v=Cp5WWtMoeKg&amp;t=185s">Sebastian Lague</a> and <a href="https://www.youtube.com/watch?v=YJ4iyff7zbk&amp;t=453s">The Art of Code</a>
+Both are far more productive, experienced and knowledgable than me, so maybe the real takeaway of this derivation is to choose my battles more wisely.
+There is however something deeply fruitful about reinventing the wheel, despite the undeniable loss in productivity.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7000fe8" class="outline-2">
+<h2 id="org7000fe8">Derivation</h2>
+<div class="outline-text-2" id="text-org7000fe8">
+<hr />
+
+<p>
+Looking at iq's article, the example of the polynomial smin seems to be getting a smooth minimum between
+some decreasing exponential and a sinusoid. That seems a little hard to think about right now with it's many intersection points to account for, so let's just look at a decreasing exponential with one intersection
+</p>
+
+
+<div id="orga0e041e" class="figure">
+<p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/smin0.png" alt="smin0.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Our functions; \(f(x) = x^2\) and  \(g(x) = e^{-x}\)</p>
+</div>
+
+
+<div id="orgdd34678" class="figure">
+<p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/smin1.png" alt="smin1.png" />
+</p>
+<p><span class="figure-number">Figure 2: </span>The simple union of our two functions</p>
+</div>
+
+
+<div id="org478294f" class="figure">
+<p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/smin2.png" alt="smin2.png" />
+</p>
+<p><span class="figure-number">Figure 3: </span>Our functions with their difference \(d = f(x) - g(x)\)</p>
+</div>
+
+<p>
+Looking at this hard minimum, we can imagine a smooth curve in its place that connects \(f\) and \(g\)
+when the functions are sufficiently close to their intersection.
+But what does sufficiently close mean more precisely, \(i.e\) where should the constructed function stop being \(f\) and start being \(g\)?
+</p>
+
+<p>
+Now for a reasonably useless aside:
+</p>
+
+<p>
+At first blush, it's not obvious to me how to make a meaningful relationship or constraint between the two functions
+beyond that they're equal to each other at their intersection. This gives us a point \(C\), \(d = 0\) and its mapping \(x\) value
+</p>
+
+<p>
+Looking at a given \(\epsilon\) neighborhood around this point, you can see that \(d\) must be on the interval \([d(x-\epsilon), d(x+\epsilon)]\)
+which are small, not necessarily identical values.
+</p>
+
+
+<div id="org1f5e58f" class="figure">
+<p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/sminEpsilon.png" alt="sminEpsilon.png" />
+</p>
+</div>
+
+<p>
+Well, now we're at loss about how to generalize along this line of thinking.
+</p>
+
+<p>
+And it gets worse, talking about points close to where a root of a function is requires us to know where the root is in the first place. This is a non trivial thing and a whole numerical method in its own right.
+And even worse&#x2026; iq's original diagram was of some flavor of a sinusoid and its intersection with a decreasing exponential has infinitely many roots. 
+We're noping on out of here my friend, it's just too messy; we'll need to think of another relationship characteristic of proximity to the intersection.
+</p>
+
+<p>
+A helpful observation is to note that this \(\epsilon\) could be made arbitrarily small, small enough to where
+\([d(x-\epsilon), d(x+\epsilon)]\)
+is smaller than our original epsilon.
+</p>
+
+
+<div id="org59903ef" class="figure">
+<p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/sminEpsilon2.png" alt="sminEpsilon2.png" />
+</p>
+</div>
+
+<p>
+It's also helpful to note that the difference between two polynomials is also a polynomial and that polynomials are continuous everywhere.
+So, by the intermediate value theorem, for some small value say \(k\), \(d\in [-k, k]\).
+</p>
+
+<p>
+"Sufficiently close" to an intersection then could be recast in terms of the difference's value instead of being near its root.
+</p>
+
+<p>
+Note however that \(d\) reaches \(-k\) and \(k\) at different rates, however slightly different, as discussed previously and if we are planning on using this interval as our generalized way to talk about being close to the intersection
+our choice of \(k\) will affect how the curve stiches to its base functions.
+In the limit close to \(C\) this doesnt matter, but for medium sized choices of \(k\) I think you could play around with how \(k\) changes before and after \(C\) to get something more uniform or weird as you fancy.
+</p>
+
+<p>
+Well, this is much nicer: we don't need to know anything about the \(x\) value for a mapped zero and it's just one value, some chosen \(k\).
+</p>
+
+<p>
+Now that we at least have a general method of talking about being close to an intersection.
+(My god, We're only on the second line of iq's derivation&#x2026;)
+What should the curve be in that interval?
+I'm not sure there's an intelligent reason for choosing linear interpolation over something more exotic looking besides
+that linear interpolation is familiar and more importantly meets our first constraint for our constructed curve/ spline thingy,
+namely it must be \(f\) at the beginning of "being close to the intersection” (\(i.e\) at \(d = -k\)) and
+\(g\) at the end of "being close to the intersection” (\(i.e\) at \(d = k\)).
+</p>
+
+<p>
+Linear interpolation: &lt;br&gt;
+\(\xi = (1 - u)f + ug\) ; \(u \in [0, 1]\) &lt;br&gt;
+So when \(u = 0, \xi = f\) and \(u = 0, \xi = g\)
+</p>
+
+<p>
+But we're not necessarily working on the interval \([0, 1]\)
+Thus we have to map our chosen "closeness" interval \([-k, k]\) to \([0, 1]\)
+</p>
+
+<p>
+Like the choice of linear interpolation, linear mapping seems easiest/ most familar:
+</p>
+
+<p>
+\(\ell = mx + b\) 
+With boundary conditions:
+\(\ell(-k) = 0\) and \(\ell(k) = 1\)
+\(\ell(-k) = -mk + b = 0, \implies b = mk\)
+\(\ell(k) = mk + mk = 2mk = 1 \implies m = \frac{1}{2k}\) 
+\(\implies b = \frac{1}{2}\)
+\(\implies \ell = \frac{x}{2k} + \frac{1}{2}\)
+</p>
+
+<p>
+but we're interpolating over the difference, not \(x\)
+</p>
+
+<p>
+\[\ell = \frac{d}{2k} + \frac{1}{2}\]
+</p>
+
+<p>
+also, we don't want to include values outside the "sufficiently close" interval
+\(\implies\) we don't want to include the values when \(\ell < 0\) and \(\ell > 1\)
+</p>
+
+<p>
+\(\implies \ell =\) max(0, min(\(1\),  \(\ell\)), note that this is the same as the glsl hardware accelerated function <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/clamp.xhtml">clamp</a>;
+</p>
+
+<p>
+in glsl: \(\ell =\) clamp(\(\ell\), \(0\), \(1\))
+</p>
+
+<p>
+Just using a linear interpolation between our functions with the correctly mapped interval gives us a pretty good result:
+\(\xi = (1-\ell)f + \ellg\);
+\(\ell = d / {2k} + 1/2\) and \(k \approx 0.1\)
+</p>
+
+
+<div id="org0104c77" class="figure">
+<p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/firstApproxNaive.png" alt="firstApproxNaive.png" />
+</p>
+<p><span class="figure-number">Figure 4: </span>As expected, our interpolated curve is equal to \(f\) and \(g\) when \(d = -k\) and \(d = k\) respectively.</p>
+</div>
+
+
+<div id="orgfe3fc3a" class="figure">
+<p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/firstApproxWithClamp.png" alt="firstApproxWithClamp.png" />
+</p>
+<p><span class="figure-number">Figure 5: </span>This is improved by limiting our &ell; value to only ever be between \(0\) and \(1\) as reasoned before</p>
+</div>
+
+<p>
+What now and how do we improve on this? Well, before we go racking our brains for something more creative, what other constraints exist for our curve?
+Not only must &xi; evaluate to \(f\) &amp; \(g\) at the "closeness" interval boundaries, but since it's supposed to be smooth,
+its derivative must also match the boundaries' derivatives.
+So what is &xi;'s derivative?
+</p>
+
+
+<p>
+\[\xi = \left( 1 - \ell \right) f + \ell g\]
+</p>
+
+<p>
+by the product rule:
+</p>
+
+<p>
+\[\frac{d\xi}{dx} = \frac{d(1-\ell)}{dx}f + \frac{df}{dx}(1-\ell) + \frac{d\ell}{dx}g + \frac{dg}{dx}\ell\]
+</p>
+
+<p>
+\[\frac{d\xi}{dx} = \frac{-d\ell)}{dx}f + \frac{df}{dx} - \ell\frac{df}{dx} + \frac{d\ell}{dx}g + \frac{dg}{dx}\ell\]
+</p>
+
+<p>
+collecting like terms:
+</p>
+
+<p>
+\[\frac{d\xi}{dx} = (g - f)\frac{d\ell)}{dx} + (1 - \ell)\frac{df}{dx} + \frac{dg}{dx}\ell\]
+</p>
+
+<p>
+Note that \(g - f\) is just \(-d\)
+</p>
+
+<p>
+Testing our first boundary: \(d = -k \implies l = 0,  g - f = k\)
+</p>
+
+<p>
+Again \[\xi = \left( 1- \ell \right) f + \ell g, l = 0 \implies g = 0\]
+</p>
+
+<p>
+\[\frac{d\xi}{dx} = k\frac{d\ell)}{dx} + \frac{df}{dx}\]
+</p>
+
+<p>
+We require &xi;'s derivative to equal the derivative of \(f\) at this boundary in order to be smooth. 
+</p>
+
+<p>
+Thus we must subtract this extra, first term from our original expression for &xi;'s derivative to match.
+</p>
+
+<p>
+\[\implies \frac{d\xi}{dx} = (g - f)\frac{d\ell)}{dx} + (1 - \ell)\frac{df}{dx} + \frac{dg}{dx}\ell - k\frac{d\ell)}{dx}\]
+</p>
+
+<p>
+Similarly, evaluating &xi;'s derivative at the other boundary:
+</p>
+
+<p>
+\(d = k \implies l = 1,  g - f = -k\)
+\[\implies \frac{d\xi}{dx} = (-k)\frac{d\ell)}{dx} + (0)\frac{df}{dx} + \frac{dg}{dx}\ell - k\frac{d\ell)}{dx}\]
+\[\implies \frac{d\xi}{dx} = (-2k)\frac{d\ell)}{dx} + \frac{dg}{dx}\ell\]
+</p>
+
+<p>
+Again we require &xi;'s derivative to equal the derivative of \(f\) at this boundary for smoothness.
+</p>
+
+<p>
+So we must now add this extra term to our expression for &xi;'s derivative to match
+</p>
+
+<p>
+\[\implies \frac{d\xi}{dx} = (g - f)\frac{d\ell)}{dx} + (1 - \ell)\frac{df}{dx} + \frac{dg}{dx}\ell - k\frac{d\ell)}{dx} +2k\frac{d\ell)}{dx}\]
+</p>
+
+<p>
+But now we're a bit stuck&#x2026; after all, doesn't adding this term change what the &xi;'s derivative will evaluate to at the first boundary? 
+Definitely, and if we were to go back and redo our process we'd be stuck in a vicious cirlce; so we need to have this second boundary corrective term disappear at the first boundary, but still be around at the second boundary.
+</p>
+
+<p>
+We're in luck though; just such a term exists and has already been used by us, namely, &ell;.
+\(\ell\) by design is just such a term, so if we multiply this corrective term by &ell;, it will do precisely what we want it to.
+</p>
+
+<p>
+\[\implies \frac{d\xi}{dx} = (g - f)\frac{d\ell)}{dx} + (1 - \ell)\frac{df}{dx} + \frac{dg}{dx}\ell - k\frac{d\ell)}{dx} +2k\ell\frac{d\ell)}{dx}\]
+</p>
+
+<p>
+Whew, that already feels like clever enough work to stop, but we want the function, not its derivative.
+So how to integrate this thing?
+</p>
+
+<p>
+\[\xi = \int_{}^{} (g - f)\frac{d\ell)}{dx} + (1 - \ell)\frac{df}{dx} + \frac{dg}{dx}\ell - k\frac{d\ell)}{dx} +2k\ell\frac{d\ell)}{dx} dx\]
+</p>
+
+<p>
+Regrouping terms to make the underlying product rule more obvious.
+</p>
+
+<p>
+\[\xi = \int_{}^{} g\frac{d\ell)}{dx} - f\frac{d\ell)}{dx} + \frac{df}{dx} - \ell\frac{df}{dx} + \frac{dg}{dx}\ell - k\frac{d\ell)}{dx} +2k\ell\frac{d\ell)}{dx} dx\]
+</p>
+
+<p>
+\[\xi = \int_{}^{} g\frac{d\ell)}{dx} + \frac{dg}{dx}\ell - \left(f\frac{d\ell)}{dx} + \ell\frac{df}{dx}\right) + \frac{df}{dx} - k\frac{d\ell)}{dx} +2k\ell\frac{d\ell)}{dx} dx\]
+</p>
+
+<p>
+reversing the product rule on the first two terms or integrating by parts and integrating the last three, straightforward integrals
+</p>
+
+<p>
+\[\xi = g\ell - f\ell + f - k\ell + k\ell^2\]
+</p>
+
+<p>
+\[\implies \xi = \left( 1 - \ell \right) f + \ell g - k \ell \left( 1 - \ell \right)\]
+</p>
+
+<p>
+This is exactly iq's function ( <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/mix.xhtml">mix</a> is glsl hardware accelerated linear interpolation)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-cpp"><span style="color: #989898;">// </span><span style="color: #989898;">polynomial smooth min (k = 0.1);</span>
+<span style="color: #6ae4b9;">float</span> <span style="color: #feacd0;">smin</span>( <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">a</span>, <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">b</span>, <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">k</span> )
+{
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">h</span> = clamp( 0.5+0.5*(b-a)/k, 0.0, 1.0 );
+    <span style="color: #b6a0ff;">return</span> mix( b, a, h ) - k*h*(1.0-h);    
+}
+</pre>
+</div>
+
+
+<div id="org54ac915" class="figure">
+<p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/sminFinal.png" alt="sminFinal.png" />
+</p>
+<p><span class="figure-number">Figure 6: </span>Our smooth minimum</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0b2151b" class="outline-2">
+<h2 id="org0b2151b">Wrapping Up:</h2>
+<div class="outline-text-2" id="text-org0b2151b">
+<hr />
+<p>
+This was a little dive into shader flavored spline interpolation; we took a nice result from an authoritative source and rederived it from first principles.
+The function itself, as said by iq, is only \(C^1\) continous, but we could extend this with our same approach to be whatever order continuous we like at the expense of performance.
+Shaders are performance sensitive and the first order polynomial smin is what you mostly see perusing shadertoy.
+</p>
+
+<p>
+Live shader can be found <a href="../../../../demos/graphics/sminLive.html">here</a>
+</p>
+
+<p>
+If you're curious how I made this shader, the big picture is that I'm using the "over operator" to make a graph of
+functions which is a really common technique, see <a href="https://thebookofshaders.com/05/">this well known resource</a> for more on that.
+Additionally, I am using a handmade easing function that is interpolating over the functions' derivatives' values to make the lines more uniform  with some functional conditionals to help out.
+</p>
+
+<p>
+Hopefully it's helped someone besides me. Thank you for reading.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd1517df" class="outline-2">
+<h2 id="orgd1517df">Annex</h2>
+<div class="outline-text-2" id="text-orgd1517df">
+</div>
+<div id="outline-container-orgbc0ed6e" class="outline-3">
+<h3 id="orgbc0ed6e">Shader Source</h3>
+<div class="outline-text-3" id="text-orgbc0ed6e">
+<div class="org-src-container">
+<pre class="src src-cpp"><span style="color: #ff7f9f;">#define</span> <span style="color: #00d3d0;">SCALE</span> (2.)
+<span style="color: #ff7f9f;">#define</span> <span style="color: #00d3d0;">PI</span> (3.14159)
+
+<span style="color: #6ae4b9;">float</span> <span style="color: #feacd0;">when_gt</span>(<span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">x</span>, <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">y</span>) 
+{
+    <span style="color: #b6a0ff;">return</span> max(sign(x - y), 0.0);
+}
+<span style="color: #6ae4b9;">float</span> <span style="color: #feacd0;">graph</span>(<span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">tolerance</span>, <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">function</span>, <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">axis</span>)
+{
+    <span style="color: #b6a0ff;">return</span> (smoothstep(function, function + tolerance, axis))
+        - (smoothstep(function + tolerance, function + 2. * tolerance, axis));
+}
+
+<span style="color: #6ae4b9;">float</span> <span style="color: #feacd0;">derivativeEasingFunction</span>(<span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">minTolerance</span>, <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">maxTolerance</span>,
+                               <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">maxDerivVal</span>, <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">derivativeVal</span>)
+{
+    <span style="color: #b6a0ff;">return</span> ((maxTolerance - minTolerance) * (1. - cos(PI * derivativeVal/ maxDerivVal)) + minTolerance);
+}
+<span style="color: #6ae4b9;">void</span> <span style="color: #feacd0;">main</span>() 
+{
+    <span style="color: #6ae4b9;">vec2</span> <span style="color: #00d3d0;">uv</span> = SCALE * ( 2. * gl_FragCoord.xy/resolution.xy - 1.);
+    uv.x *= resolution.x / resolution.y;
+
+    <span style="color: #989898;">// </span><span style="color: #989898;">abitrarily chosen to look nice</span>
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">minEpsilon</span> = 0.03;
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">maxEpsilon</span> = 1.6 * minEpsilon;
+
+    <span style="color: #989898;">// </span><span style="color: #989898;">sin(x)</span>
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">periodNum</span> = 3.;
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">amplitude</span> = 1.;
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">sinusoid</span> = amplitude * sin(periodNum * uv.x - 0.5 * time);
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">derivativeSinusoid</span> = periodNum *  amplitude * cos(periodNum * uv.x - 0.5 * time);
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">maxDerivSinusoid</span> = periodNum *  amplitude;
+
+    <span style="color: #989898;">// </span><span style="color: #989898;">e^-x</span>
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">exponential</span> = exp(-uv.x);
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">derivativeExponential</span> = -exp(-uv.x);
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">maxDerivExponential</span> = -exp(0.73); <span style="color: #989898;">// </span><span style="color: #989898;">chosen with helper line -- max visible f(x)</span>
+
+    <span style="color: #989898;">// </span><span style="color: #989898;">smin</span>
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">kk</span> = 0.5;
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">dd</span> = sinusoid - exponential;
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">ll</span> = clamp(0.5 + dd / (2. * kk), 0.0, 1.0 );
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">dlldx</span> = clamp((derivativeSinusoid - derivativeExponential)/ (2. * kk), 0.0, 1.0 );
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">leSmin</span> = (1. - ll) * sinusoid +  ll * exponential - kk * ll * (1.0 - ll);
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">derivativeXi</span> = dlldx * (-dd) + derivativeSinusoid * (1. - ll) 
+        + derivativeExponential * ll - dlldx * kk + dlldx * 2. * kk * ll;
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">derivativeLeSmin</span> = derivativeXi * when_gt(dd, -kk) + derivativeSinusoid * when_le(dd, -kk);
+
+    <span style="color: #989898;">// </span><span style="color: #989898;">mask for background and making things lighter</span>
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">mask</span> = length(0.2 * uv);
+    <span style="color: #6ae4b9;">vec3</span> <span style="color: #00d3d0;">col</span> = (1. - mask) * vec3(.129, .141, .176);
+
+    <span style="color: #989898;">// </span><span style="color: #989898;">graphs</span>
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">graphLeSmin</span> = graph(derivativeEasingFunction(minEpsilon, maxEpsilon, maxDerivSinusoid, derivativeLeSmin),
+                              leSmin, uv.y);
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">graphSinusoid</span> = graph(derivativeEasingFunction(minEpsilon, maxEpsilon, maxDerivSinusoid, derivativeSinusoid),
+                                sinusoid, uv.y);
+    <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">graphExponential</span> = graph(derivativeEasingFunction(minEpsilon, maxEpsilon, maxDerivExponential, derivativeExponential),
+                                   exponential, uv.y);
+
+    <span style="color: #989898;">// </span><span style="color: #989898;">making "draw order"</span>
+    graphSinusoid *= (.6 - graphLeSmin);
+    graphExponential *= (.5 - graphSinusoid) * (1. - graphLeSmin);
+
+    <span style="color: #989898;">// </span><span style="color: #989898;">col and frag</span>
+    col += vec3(0., 0., 1.) * graphSinusoid + vec3(1., 0., 0.) * graphExponential + vec3(0., 1., 0.) * graphLeSmin;
+    fragColor = vec4(col,1.0);
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<footer><p>©Ian Stranathan <script>document.write(new Date().getFullYear())</script></p></footer>
+</div>
+</body>
+</html>

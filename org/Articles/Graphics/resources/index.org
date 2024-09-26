@@ -1,0 +1,75 @@
+
+* Blog Roll; Guys to learn from & be inspired by
+[[https://www.glassner.com/writing/][Andrew Glassner]]
+[[https://www.iquilezles.org/www/index.htm][Inigo Quilez]]
+[[https://twitter.com/FabriceNEYRET][Fabrice Neyret]]
+[[https://twitter.com/The_ArtOfCode][Martijn Steinrucken]]
+[[https://blog.demofox.org/][Alan Wolfe]]
+[[https://twitter.com/renderwonk][Naty Hoffman]]
+[[http://mollyrocket.com/casey][Casey Muratori]]
+[[http://www.p1xelcoder.com/links/][Oliver Franzke]]
+[[https://erich.realtimerendering.com/][Eric Haines]]
+[[https://casual-effects.com/][Morgan McGuire]]
+[[https://twitter.com/gabrielpeyre][Gabriel Peyré]]
+[[https://www.petershirley.com/][Peter Shirley]]
+[[http://acko.net][Steven Witten]]
+[[https://twitter.com/programmerlin][John Lin]]
+[[https://twitter.com/tuxedolabs?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor][Dennis Gustafsson]]
+
+# Reinder Nijhoff
+# IAN MALLET
+# https://geometrian.com
+# Fizzer
+# Robert Hodgin
+# John Lin
+
+* Literature that's been helpful & Misc collected resources
+** General
+---------------------------------------------------------------------------------------
+[[http://www.realtimerendering.com/][Real Time Rendering, 4th Edition]]
+[[https://www.glassner.com/portfolio/principles-of-digital-image-synthesis/][Principles of Digital Image Synthesis]]
+[[https://www.amazon.com/Fundamentals-Computer-Graphics-Steve-Marschner-dp-1482229390/dp/1482229390/ref=dp_ob_title_bk][Fundamentals of Computer Graphics, 4th Edition]]
+[[https://www.amazon.com/Advanced-Global-Illumination-Philip-Dutre/dp/1568813074/ref=sr_1_1?s=books&ie=UTF8&qid=1540517779&sr=1-1&keywords=advanced+global][Advanced Global Illumination]]
+# Realistic Image Synthesis Using Photon Mapping
+[[https://graphicscodex.com/][Graphics Codex]]
+[[https://paroj.github.io/gltut/][Learning Modern 3D Graphics Programming]]
+[[https://github.com/ssloy][Tiny tutorials]]
+
+** Framework Resources
+*** Vulkan
+
+*** WebGPU
+[[https://webgpufundamentals.org/][webgpufundamentals]]
+
+*** OpenGL
+---------------------------------------------------------------------------------------
+[[https://learnopengl.com][LearnOpenGL]]
+
+*** WebGL 
+---------------------------------------------------------------------------------------
+[[https://webgl2fundamentals.org/][webgl2fundamentals]]
+[[http://learnwebgl.brown37.net/][LearnWebGL]]
+
+
+** Algorithms
+*** Raytracing
+[[https://www.youtube.com/playlist?list=PLujxSBD-JXgnGmsn7gEyN28P1DnRZG7qi][TU Wien]]
+
+*** Raymarching
+[[../raymarching][Personal Raymarching Summary]]
+
+*** PBR
+[[https://pbrt.org/][Physically Based Rendering, 3rd Edition]]
+[[https://learnopengl.com/#!PBR/Theory][LearnOpenGL]]
+http://blog.selfshadow.com/publications/s2014-shading-course/frostbite/s2014_pbs_frostbite_slides.pdf
+http://renderwonk.com/publications/s2010-shading-course/hoffman/s2010_physically_based_shading_hoffman_b_notes.pdf
+https://disney-animation.s3.amazonaws.com/library/s2012_pbs_disney_brdf_notes_v2.pdf
+http://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_slides.pdf
+
+
+** Lectures/ Talks
+=======================================================================================
+[[https://www.youtube.com/watch?v=P6UKhR0T6cs][John Carmack]]
+[[https://www.youtube.com/watch?v=j-A0mwsJRmk][Naty Hoffman]]
+[[https://www.youtube.com/watch?v=GNO_CYUjMK8][Steven Witten]]
+

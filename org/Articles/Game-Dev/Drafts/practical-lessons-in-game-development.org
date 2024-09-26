@@ -1,0 +1,42 @@
+
+There are many ways to define games, but they're all various forms of feedback loops
+- a seris of interesting decisions (Cid Meier)
+- a serieinterconnected systems    (Will Wright)
+- (Warren Spector)
+- Miyamoto
+
+Game design is a kind of [[https://www.youtube.com/watch?v=o5K0uqhxgsE][optimization problem / search algorithm]] ; you're trying to make the best game you possibly can
+(minimize risk, maximize resources; try out different ideas and gain feedback on what's fun -> constrain the system down from infinity
+(the space of all possible games) in an optimal way (chosen path diverges from a desirable one))
+
+This requires "bottom up development" (to borrow the phrase from Paul Graham); an experimental, undogmatic attitude that allows for rapid
+playtesting. There is no ivory tower idea or platonic shadow for what's fun.
+
+* Feedback loops or the importance of polish
+
+These are the bulleted items from Steve Swink's "Game Feel - A Game Designers Guide to virtual sensation"
+
+- Predictable results
+  + When players take action, they get the response they expect. 
+- Instantaneous response
+  + The player feels the response to their input is immediate. 
+- Easy but deep
+  + The game takes minutes to learn but a lifetime to master. 
+- Novelty
+  + Though the result of an input is predictable, there is enough subtlety and expressiveness to keep the
+    controls feeling fresh and interesting through hours and hours of play. 
+- Appealing response
+  + The sensation of control is aesthetically appealing and compelling, separate from context. 
+- Organic motion
+  + Controlling the avatar creates appealing arcs of motion. 
+- Harmony
+  + Each element of a game’s feel supports a single, cohesive perception of a unique physical reality for the player. 
+
+All these points, except for maybe "Easy but deep", require well made feedback loops (visual, aural etc)
+This requires "Polish".
+"Polish" is an infinite yak waiting to be shaven.
+It's 100% necessary, there is no game without polish, but care must be taken not to invest too much time in any single component
+Ars longa, vita brevis...
+
+
+

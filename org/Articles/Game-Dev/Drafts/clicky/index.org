@@ -1,0 +1,20 @@
+
+This was my first serious project (first game-dev project that went beyond a game-jam scope / was able to maintain development discipline)
+
+A name was never decided.
+- Clicky
+- Petri Pals
+- RTSS
+
+Lessons Learned:
+
+Don't spend too much time with juice / polish / assets/ features
+(Most of them will never see the light of day)
+BUT
+Spend enough time with juice / polish / assets/ features
+(This is what a game is at its core and you can't say what's fun before building it)
+
+It's a shitty balance to strike... there is where experience pays dividends
+
+
+

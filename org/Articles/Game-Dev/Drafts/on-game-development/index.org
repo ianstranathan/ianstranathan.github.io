@@ -1,0 +1,91 @@
+#+TITLE: On my recent time spent in indie game development
+
+Thesis:
+Most great franchises were born from small games and incremental investment over decades.
+This is no longer possible due to the maturity of the games industry
+Game development is a very high risk (resources required to make a game) and
+
+Reading:
+[[https://www.gamedeveloper.com/production/a-small-games-manifesto][Small Game Manifesto]]
+
+Small
+* List of games made by solo developers:
+- Braid
+- Stardew Valley
+
+You cannot make
+
+----------------------------------------------------------------------------------------------------
+
+I was asking a former coworker to help me salvage a game I'd been working on for a over a year.
+Here is a link to a small demo on itch
+
+Unfortunately, the other guy I'd been working with for the last ~6 months had recently abandoned the project and I was stuck
+trying to decide what to do next.
+The problem: I'd made certain core design decisions around the game being a peer to peer multiplayer game.
+This was done partly as an attempt to synthesize disparate gaming genres (Halo & Starcraft) that I enjoyed and partly
+because my teamate/ collaborator's area of expertise was networking.
+
+His gaming resume is definitely better than mine (He owns 1112 games and has 4 games with 600+ hours played)
+(My most played game is Halo MCC at 196 hours, then Nuclear Throne at 83 hours... needed to beat it with melting... I have 4k games played
+in Starcraft 2 however)
+
+So, I started the conversation trying to explain the core mechanics while letting him try it out.
+
+He bluntly said it was too niche (1v1, competitive, skill based, original mechanics) and that I'm wasting my time.
+His advice was to make some kind of wave based top down shooter and hope for the best.
+After considering his words, I have to agree with them on the whole. This spawned this little blog post.
+
+I remember saying:
+#+begin_quote
+I wanted to make a game I would want to play...
+#+end_quote
+
+and then at some point later in the conversation:
+
+#+begin_quote
+I think we're just very different gamers
+#+end_quote
+
+This kind of questioned the foundations of game development for me.
+Game development has to be about more than just programming or art, that is to say, it has to be more than the
+sum of its parts.
+There is a meta intelligence and culture here that I've intuitively touched but never formally understood.
+
+#+begin_quote
+A person who never made a mistake never tried anything new.
+#+end_quote
+
+(As a solo developer)
+A lot of game development is a fools errand. Most assests/ code/ ideas will not survive.
+Even the better variants still need to make it through the almost impossible crucible of tying together
+the disparate disciplines to make a game possible (art, music, code, design etc.)
+
+This smacks of relativism or infinite regress, but I think a lot of aspiring developers should ask themselves earnestly
+if they really want to make the game  they're setting out to make.
+
+I remember Jonathan Blow (with a full caveat of I'm likely misremembering & his particular style of communication/ presentation
+veers a little hyperbolic)
+talking about this like: If you don't become emotional telling someone about the game you're working on, it's not worth it.
+([[https://www.youtube.com/watch?v=pniZez-iA5E][Here's at least an actual link]] of him chastising a viewer's question because it's ill-posed which more else gives you the
+spirit of it)
+
+This is actually what attracted me to game development in the first place.
+
+I dropped out of high school and studied physics, I'm not interested in a mainstream or socially lucrative path.
+I wanted to work with smart, creative people that was doing a tangible good (e.g. formative childhood experience of wonder and exploration)
+or at least a tangible innocuity (e.g. not designing missles for Lockheed Martin to drop on Palestinians)
+
+Mix this with a wrongly concieved notion of a 1990's punk-rock ethos (what game development oozed when
+I was a kid) and game development seemed like a worthwhile wayt to spend some heartbeats of my finite supply.
+
+Unfortunately the truth is, this has nothing to do with reality. It's self-evidently true for AAA (Blizzard of the 90's vs Bobby Kotick)
+But this is also true for indie game development
+
+
+I'm grateful for my multi-year sjourn however. I will be programming until the robots make me redudant -- even then, maybe I'll
+be balancing lisp parens like a carpenter hand chisels some hand milled lumber into some convoluted joinery.
+
+
+
+
