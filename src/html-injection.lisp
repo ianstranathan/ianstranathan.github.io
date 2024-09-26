@@ -4,8 +4,8 @@
 
 ;; Try to leave some comments for future me...
 
-;;(defparameter site-root-url "https://ianstranathan.github.io/")
-(defparameter site-root-url "http://localhost:8080/")
+(defparameter site-root-url "https://ianstranathan.github.io/")
+;; (defparameter site-root-url "http://localhost:8080/")
 
 ;; Note:
 ;; This should be a relative file path to be less fragile

@@ -81,7 +81,7 @@ flex-direction: column;
 </head>
 <body>
 <div id="preamble" class="status">
-<header> <a href="http://localhost:8080/">Main</a> :: <a href="http://localhost:8080/Projects-Demos-Tools/">Projects-Demos-Tools</a> ::</header></header>
+<header> <a href="https://ianstranathan.github.io/">Main</a> :: <a href="https://ianstranathan.github.io/Projects-Demos-Tools/">Projects-Demos-Tools</a> ::</header></header>
 </div>
 <div id="content" class="content">
 <h1 class="title">Rubik's Cube Simulation</h1>
@@ -93,9 +93,9 @@ flex-direction: column;
 Tl;dr: Try it out <a href="../../../../../rsc/projects-tools-demos/Projects/JS-&amp;-WebGL/rubiks_cube/">here</a>
 </p>
 
-<div id="outline-container-org17d21fe" class="outline-2">
-<h2 id="org17d21fe">Overview</h2>
-<div class="outline-text-2" id="text-org17d21fe">
+<div id="outline-container-org8a41329" class="outline-2">
+<h2 id="org8a41329">Overview</h2>
+<div class="outline-text-2" id="text-org8a41329">
 <hr />
 
 <p>
@@ -113,15 +113,15 @@ Everything (model, rendering system, model i/o, raycast, aabb-ray intersection, 
 </div>
 </div>
 
-<div id="outline-container-org2441170" class="outline-2">
-<h2 id="org2441170">Rendering side of things</h2>
-<div class="outline-text-2" id="text-org2441170">
+<div id="outline-container-orgec67dbc" class="outline-2">
+<h2 id="orgec67dbc">Rendering side of things</h2>
+<div class="outline-text-2" id="text-orgec67dbc">
 <hr />
 </div>
 
-<div id="outline-container-orgbcd3923" class="outline-3">
-<h3 id="orgbcd3923">Making a model</h3>
-<div class="outline-text-3" id="text-orgbcd3923">
+<div id="outline-container-org1c0eb25" class="outline-3">
+<h3 id="org1c0eb25">Making a model</h3>
+<div class="outline-text-3" id="text-org1c0eb25">
 <hr />
 
 <p>
@@ -133,9 +133,9 @@ occasional indie game dev project has called for it. Just make a model and color
 </div>
 </div>
 
-<div id="outline-container-orgaef4385" class="outline-3">
-<h3 id="orgaef4385">Loading the mesh</h3>
-<div class="outline-text-3" id="text-orgaef4385">
+<div id="outline-container-orgdb1c3dd" class="outline-3">
+<h3 id="orgdb1c3dd">Loading the mesh</h3>
+<div class="outline-text-3" id="text-orgdb1c3dd">
 <hr />
 
 <p>
@@ -156,9 +156,9 @@ The model I/O is the worst and almost everybody tries to get somebody else’s c
 </div>
 </div>
 
-<div id="outline-container-org87cda76" class="outline-3">
-<h3 id="org87cda76">Instancing</h3>
-<div class="outline-text-3" id="text-org87cda76">
+<div id="outline-container-orgc250cae" class="outline-3">
+<h3 id="orgc250cae">Instancing</h3>
+<div class="outline-text-3" id="text-orgc250cae">
 <hr />
 
 <p>
@@ -173,9 +173,9 @@ I highly recommend this <a href="https://webgl2fundamentals.org/webgl/lessons/we
 </div>
 
 
-<div id="outline-container-orgfba0d52" class="outline-3">
-<h3 id="orgfba0d52">Lighting Model</h3>
-<div class="outline-text-3" id="text-orgfba0d52">
+<div id="outline-container-org1e73c60" class="outline-3">
+<h3 id="org1e73c60">Lighting Model</h3>
+<div class="outline-text-3" id="text-org1e73c60">
 <hr />
 
 <p>
@@ -185,15 +185,15 @@ I'm using the traditional Blinn-Phong lighting model. Check out my [article on t
 </div>
 </div>
 
-<div id="outline-container-orgcdecdea" class="outline-2">
-<h2 id="orgcdecdea">Programming side of things</h2>
-<div class="outline-text-2" id="text-orgcdecdea">
+<div id="outline-container-orgf6e814f" class="outline-2">
+<h2 id="orgf6e814f">Programming side of things</h2>
+<div class="outline-text-2" id="text-orgf6e814f">
 <hr />
 </div>
 
-<div id="outline-container-org1453ab9" class="outline-3">
-<h3 id="org1453ab9">Selecting the cube - Ray-Box Intersection</h3>
-<div class="outline-text-3" id="text-org1453ab9">
+<div id="outline-container-orgd85aa0f" class="outline-3">
+<h3 id="orgd85aa0f">Selecting the cube - Ray-Box Intersection</h3>
+<div class="outline-text-3" id="text-orgd85aa0f">
 <hr />
 
 <p>
@@ -217,9 +217,9 @@ taking an early out if the maximum possible, diagonal cross section is collected
 </div>
 </div>
 
-<div id="outline-container-orgf9f4790" class="outline-3">
-<h3 id="orgf9f4790">Getting a direction for a rotation</h3>
-<div class="outline-text-3" id="text-orgf9f4790">
+<div id="outline-container-orgfd354ce" class="outline-3">
+<h3 id="orgfd354ce">Getting a direction for a rotation</h3>
+<div class="outline-text-3" id="text-orgfd354ce">
 <hr />
 
 <p>
@@ -237,7 +237,7 @@ Some edge cases ( quite literally, say if the first first intersection was exact
 </p>
 
 
-<div id="org039c120" class="figure">
+<div id="orgc1bc113" class="figure">
 <p><img src="../../../img/Projects/rubiks_cube/turnSelection.png" alt="turnSelection.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Diagram of rotation selection logic. Note the possible edge cases of vertical and horizontal lines</p>
@@ -255,9 +255,9 @@ without error and redudancy)
 </div>
 </div>
 
-<div id="outline-container-org6568a81" class="outline-3">
-<h3 id="org6568a81">Rotating a plane of the Cube</h3>
-<div class="outline-text-3" id="text-org6568a81">
+<div id="outline-container-orge2c0d4f" class="outline-3">
+<h3 id="orge2c0d4f">Rotating a plane of the Cube</h3>
+<div class="outline-text-3" id="text-orge2c0d4f">
 <hr />
 
 <p>
@@ -306,9 +306,9 @@ Floating point errors in the cubie's transformation matrix will accrue over time
 </div>
 </div>
 
-<div id="outline-container-org9997b62" class="outline-2">
-<h2 id="org9997b62">Wrapping up</h2>
-<div class="outline-text-2" id="text-org9997b62">
+<div id="outline-container-org17dc7e5" class="outline-2">
+<h2 id="org17dc7e5">Wrapping up</h2>
+<div class="outline-text-2" id="text-org17dc7e5">
 <hr />
 
 <p>

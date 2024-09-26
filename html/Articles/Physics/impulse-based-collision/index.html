@@ -81,7 +81,7 @@ flex-direction: column;
 </head>
 <body>
 <div id="preamble" class="status">
-<header> <a href="http://localhost:8080/">Main</a> :: <a href="http://localhost:8080/Articles/">Articles</a> ::</header></header>
+<header> <a href="https://ianstranathan.github.io/">Main</a> :: <a href="https://ianstranathan.github.io/Articles/">Articles</a> ::</header></header>
 </div>
 <div id="content" class="content">
 <h1 class="title">Impulse Based Collision</h1>
@@ -89,9 +89,9 @@ flex-direction: column;
 <i>While toying around with a small 2D physics project, I was unable to follow a popular online explanation of impulse based collision resolution</i>
 </p>
 
-<div id="outline-container-orgb6a2d15" class="outline-2">
-<h2 id="orgb6a2d15">Overview</h2>
-<div class="outline-text-2" id="text-orgb6a2d15">
+<div id="outline-container-org45d1658" class="outline-2">
+<h2 id="org45d1658">Overview</h2>
+<div class="outline-text-2" id="text-org45d1658">
 <hr />
 <p>
 The change in motion of objects in a collision is caused by the forces generated at the collision point by compression and deformation.
@@ -102,9 +102,9 @@ Thus, the movement after the collision can be calculated from the movement befor
 </div>
 </div>
 
-<div id="outline-container-org744ea6e" class="outline-2">
-<h2 id="org744ea6e">Impulse Derivation</h2>
-<div class="outline-text-2" id="text-org744ea6e">
+<div id="outline-container-org20a681a" class="outline-2">
+<h2 id="org20a681a">Impulse Derivation</h2>
+<div class="outline-text-2" id="text-org20a681a">
 <hr />
 
 <p>
@@ -158,9 +158,9 @@ I tend to use prime notation for after a collision, so let's change that to stay
 </div>
 </div>
 
-<div id="outline-container-org6816338" class="outline-2">
-<h2 id="org6816338">Problem Setup</h2>
-<div class="outline-text-2" id="text-org6816338">
+<div id="outline-container-orgebb329b" class="outline-2">
+<h2 id="orgebb329b">Problem Setup</h2>
+<div class="outline-text-2" id="text-orgebb329b">
 <hr />
 
 <p>
@@ -169,7 +169,7 @@ what's important is that a collision has somehow been detected and that a collis
 </p>
 
 
-<div id="orgfa9988a" class="figure">
+<div id="org26dd90b" class="figure">
 <p><img src="../../../../rsc/img/articles/Physics/impulse_based_collision/one.png" alt="one.png" />
 </p>
 </div>
@@ -184,7 +184,7 @@ From properties of dot products and normalized vectors, the magnitude of the vel
 </p>
 
 
-<div id="orga6d4e0d" class="figure">
+<div id="org3d7f332" class="figure">
 <p><img src="../../../../rsc/img/articles/Physics/impulse_based_collision/two.png" alt="two.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>The magnitudes of the respective velocities along relative position</p>
@@ -237,9 +237,9 @@ It's negation is often used instead, called the seperating velocity \(v_s\) and 
 </div>
 </div>
 
-<div id="outline-container-orgf5337a4" class="outline-2">
-<h2 id="orgf5337a4">Deriving an expression for the velocity after the collision</h2>
-<div class="outline-text-2" id="text-orgf5337a4">
+<div id="outline-container-orgb28065e" class="outline-2">
+<h2 id="orgb28065e">Deriving an expression for the velocity after the collision</h2>
+<div class="outline-text-2" id="text-orgb28065e">
 <hr />
 
 <p>
@@ -346,9 +346,9 @@ This is, by definition of projection with a normalized vector, the part of the i
 </div>
 </div>
 
-<div id="outline-container-org6f6282b" class="outline-2">
-<h2 id="org6f6282b">Code Example</h2>
-<div class="outline-text-2" id="text-org6f6282b">
+<div id="outline-container-orgd63a96b" class="outline-2">
+<h2 id="orgd63a96b">Code Example</h2>
+<div class="outline-text-2" id="text-orgd63a96b">
 <hr />
 <div class="org-src-container">
 <pre class="src src-cpp"><span style="color: #9ac8e0;">/**</span>
@@ -385,9 +385,9 @@ This is, by definition of projection with a normalized vector, the part of the i
 </div>
 </div>
 
-<div id="outline-container-org5d5ae0d" class="outline-2">
-<h2 id="org5d5ae0d">Resources:</h2>
-<div class="outline-text-2" id="text-org5d5ae0d">
+<div id="outline-container-orga365b8b" class="outline-2">
+<h2 id="orga365b8b">Resources:</h2>
+<div class="outline-text-2" id="text-orga365b8b">
 <hr />
 
 <p>
