@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Euler-Lagrange Eqquation</title>
+<meta name="generator" content="Org Mode" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Blah</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+<style>
+
+#preamble > header {
+    background-color: var(--accent-bg);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    /*top, right, bottom, left*/
+    /*padding: 0 0.5rem 2rem 0.5rem; */
+    grid-column: 1 / -1;
+}
+
+#preamble > header > *:only-child {
+    margin-block-start: 2rem;
+}
+
+#preamble > header h1 {
+  max-width: 1200px;
+  margin: 1rem auto;
+}
+
+#preamble > header p {
+  max-width: 40rem;
+  margin: 1rem auto;
+}
+
+#content{
+    display: flex;
+    flex-direction: column;
+}
+
+#content > span{
+    padding-top: 7px;
+}
+
+#postamble > footer {
+    margin-top: 4rem;
+    padding: 2rem 1rem 1.5rem 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+}
+#categories{
+display: flex;
+flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.dir{
+	  width: fit-content;
+	  border-radius: 10px;
+	  background-color: rgb(25, 25, 25);
+          padding: 2%;
+          margin: 1%;
+      }
+.dir h3 {
+	  text-align: center;
+	  padding: 0;
+	  padding-bottom: 7px;
+	  margin: 0;
+      }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous"/>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+<header> <a href="https://ianstranathan.github.io/">Main</a> :: <a href="https://ianstranathan.github.io/Blog/">Blog</a> ::</header></header>
+</div>
+<div id="content" class="content">
+<h1 class="title">Euler-Lagrange Eqquation</h1>
+
+<div id="outline-container-orgb390e06" class="outline-2">
+<h2 id="orgb390e06">Motivation</h2>
+<div class="outline-text-2" id="text-orgb390e06">
+<p>
+I have had to convinve myself that this is true a few times over the years, so now it's here to stay.
+</p>
+
+<hr />
+</div>
+</div>
+<div id="outline-container-org67e6041" class="outline-2">
+<h2 id="org67e6041">Derivation</h2>
+<div class="outline-text-2" id="text-org67e6041">
+<p>
+Consider some arbitrary path of length \(S\) from points \(p_1\) to \(p_2\) denoted as \(y(x)\)
+</p>
+
+<p>
+A variation of that path could be considered, denoted as \(Y(x) = y(x) + {\eta}(x)\) such that 
+its endpoints match exactly those of the original path.
+</p>
+
+<p>
+\({\implies} {\eta}(x_1) = {\eta}(x_2) = 0\)
+</p>
+
+
+<div id="orgd082500" class="figure">
+<p><img src="../../../../rsc/img/articles/Math/euler_lagrange_equation/eulerLagrange1.png" alt="eulerLagrange1.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Our two paths</p>
+</div>
+
+<p>
+For any choice of a constant coefficient <b><b>\(\epsilon\)</b></b> and for any higher power polynomial factor that has the same boundary conditions, there is a path variation.
+Thus, there are infinitely many choices for the additional path.
+\[Y(x) = y(x) + \epsilon{\eta}(x)\]
+To convince yourself of this, here is a <a href="https://www.desmos.com/calculator/nghw0tffo8">Demos visualization</a> to play around with.
+</p>
+
+<p>
+For any such variation, an expression for a differential length of that path is given by:
+</p>
+
+<p>
+\[ dS = {\sqrt{ {dx^2} + {\left({dY(x)} \right)}^2 }}\]
+</p>
+
+<p>
+This is just the pythagorean theorem with hypotenuse \(dS\). Accordingly, the assumption of
+this metric underpins the derivation.
+</p>
+
+<p>
+Distributing out a \(dx^2\)
+</p>
+
+<p>
+\[ dS = dx{\sqrt{ {1} +  {\left({\frac{dY}{dx}} \right)}^2  }}\]
+</p>
+
+<p>
+\[ S = \int_{x_1}^{x_2} dx{\sqrt{ {1} +  {\left({\frac{dY}{dx}} \right)}^2  }}\]
+</p>
+
+<p>
+Nature is continuous and reasonably well behaved most of the time. If our additional path is too, then it's differentiable.
+For a differentiable function, its local minima or maxima (extrema) occur where its first derivative is zero according to Fermat's theorem.
+So, if we differentiate with respect to the variable coefficient, we would find an extremum for an arbitrary additional path function.
+</p>
+
+<p>
+Abstracting out to a general case:
+</p>
+
+<p>
+\[ I = \int_{x_1}^{x_2} F\left(  x, y, {\frac{dY}{dx}} \right) dx\]
+</p>
+
+<p>
+The derivative of this integral is possible assuming the criteria for Leibniz's integral rule holds and is evaluated as:
+</p>
+
+
+<div id="org959503f" class="figure">
+<p><img src="../../../../rsc/img/articles/Math/euler_lagrange_equation/leibnizIntegralRuleOne.png" alt="leibnizIntegralRuleOne.png" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Check out wikipedia: Leibniz integral rule and Fubini's theorem, which it's dependent on</p>
+</div>
+
+<p>
+And since our bounds \(x_1\) &amp; \(x_2\) are constants, it reduces to:
+</p>
+
+
+<div id="org28df6d4" class="figure">
+<p><img src="../../../../rsc/img/articles/Math/euler_lagrange_equation/leibnizIntegralRuleTwo.png" alt="leibnizIntegralRuleTwo.png" />
+</p>
+</div>
+
+<p>
+\[{\frac{dI}{d {\epsilon}}} = \int_{x_1}^{x_2}  \left(
+  \frac{\partial F}{\partial x }\frac{\partial x}{\partial \epsilon } +
+  \frac{\partial F}{\partial Y }\frac{\partial Y}{\partial \epsilon } + 
+  \frac{\partial F}{\partial \frac{dY}{dx} }\frac{\partial \frac{dY}{dx} }{\partial \epsilon }
+  \right) dx = 0\]
+</p>
+
+<p>
+Just taking the partial derivatives of \(Y(x) = y(x) + \epsilon{\eta}(x)\)
+</p>
+
+<p>
+\[\frac{\partial x}{\partial \epsilon } = 0\]
+</p>
+
+<p>
+\[ \frac{ \partial Y(x)}{\partial \epsilon} = \eta (x) \]
+</p>
+
+<p>
+\[\frac{dY(x)}{dx} = \frac{dy(x)}{dx} + \epsilon \frac{d \eta (x)}{dx}\]
+\[ \frac{ \partial \frac{dY(x)}{dx}}{\partial \epsilon} = \frac{d \eta (x)}{dx} \]
+</p>
+
+<p>
+Substituting results into original integral and switching over to prime notation for our eta function to save digital chalk, 
+make it more readable and match convention:
+</p>
+
+<p>
+\[{\frac{dI}{d \epsilon}} = \int_{x_1}^{x_2}
+  \left(
+  0 + 
+  \frac{\partial F}{\partial Y(x) } \eta (x) +
+  \frac{\partial F}{\partial Y^{\prime}(x) } \eta^\prime(x)
+  \right) dx\]
+</p>
+
+<p>
+\(\int_{x_1}^{x_2} \frac{\partial F}{\partial Y^{\prime}(x) } \eta^\prime(x)\) can be reformulated through integration by parts:
+</p>
+
+<p>
+\[\int_{x_1}^{x_2}
+  \left( \frac{\partial F}{\partial Y^{\prime}(x) } \eta^\prime(x) \right) dx
+  = \frac{\partial F}{\partial Y^{\prime}(x) } \eta (x) \bigg\rvert_{x_1}^{x_2} \ -\int_{x_1}^{x_2} 
+  \frac{d}{dx}
+  \frac{\partial F}{\partial Y^{\prime}(x)}  \eta (x) dx\]
+</p>
+
+<p>
+Since our additional path function matches the endpoints of our our original path, 
+\(\eta(x_1) = \eta (x_2) = 0\)
+</p>
+
+<p>
+\[\frac{\partial F}{\partial Y^{\prime}(x) } \eta (x) \bigg\rvert_{x_1}^{x_2} \ = 0\]
+</p>
+
+<p>
+\[\implies \int_{x_1}^{x_2}
+  \left(
+  \frac{\partial F}{\partial Y(x) } \eta (x) +
+  \frac{\partial F}{\partial Y^{\prime}(x) } \eta^\prime(x)
+  \right) dx
+  =
+  \int_{x_1}^{x_2}
+  \left(
+  \frac{\partial F}{\partial Y(x) } \eta (x) +
+  \frac{d}{dx}\frac{\partial F}{\partial Y^{\prime}(x)}  \eta (x)
+  \right) dx = 0
+  \]
+</p>
+
+<p>
+\[ = 
+  \int_{x_1}^{x_2}
+  \left(
+  \frac{\partial F}{\partial Y(x) }+
+  \frac{d}{dx}\frac{\partial F}{\partial Y^{\prime}(x)}
+  \right) \eta (x)dx = 0
+  \]
+</p>
+
+<p>
+This must be true for any arbitrary \(\eta (x)\). The only way for this to be possible is if:
+</p>
+
+<p>
+\[\frac{\partial F}{\partial Y(x) }+
+  \frac{d}{dx}\frac{\partial F}{\partial Y^{\prime}(x)} = 0\]
+</p>
+
+<p>
+This is the Euler-Lagrange equation.
+</p>
+
+<hr />
+
+<p>
+Note that this reasoning only guarantees that the path's
+length is stationary &#x2013; not necessarily a minimum or a maximum.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<footer><p>©Ian Stranathan <script>document.write(new Date().getFullYear())</script></p></footer>
+</div>
+</body>
+</html>

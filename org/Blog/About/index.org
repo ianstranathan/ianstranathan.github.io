@@ -1,0 +1,36 @@
+
+* Education
+- B.S. Physics     (University of Vermont, VT. USA)
+- B.S. Mathematics (University of Vermont, VT. USA)
+- Almost B.S. Mechanical Engineering (University of Akron, OH. USA).
+
+# ([[Thoughts on formal qualifications]])
+
+* Skills
+- Programming
+  * Graphics programming (WebGPU, WebGL, OpenGL), GPGPU
+  * Languages:
+    - proficient/ experience in: Python, C, C++, Lisp (Common Lisp, Emacs Lisp), JavaScript
+    - learning: Clojure, Haskell
+    - have been exposed to at some point previously: Java, C#
+
+- 3D Math
+- Modeling & Simulation
+- Data Analysis
+- Foreign Languages:
+  * German  (C1)
+  * Turkish (B2)
+  * Spanish (A2)
+  * Italian (A2)
+  * [[https://www.duolingo.com/profile/ThisDewDropWorld][Long term Duolingo addict]]
+
+* Hobbies
+- Fitness:
+  Calisthenics and weightlifting mostly with the occasional distance challenge
+  (have completed one marathon and one 24-hour run)
+- Sustainability: sustainable architecture, permaculture, passive energy systems.
+- Demoscene/ Shadertoy
+- Game Development: I've spent a good amount of time developing various indie games. I've yet to release anything unfortunately.
+  # ([[Thoughts on game development][Thoughts on game development]])
+
+

@@ -1,0 +1,9 @@
+#+TITLE: Blog
+
+Collection of tutorials, derivations, stories & blog-flavored thoughts (Mostly reinventing wheels for my own [[https://www.youtube.com/watch?v=NM-zWTU7X-k][understanding]])
+
+# #+BEGIN_EXPORT html
+# <p>Collection of tutorials, derivations, blog-flavored thoughts</p><p>Lots of reinventing wheel for my own understanding.</p><a href="https://www.youtube.com/watch?v=NM-zWTU7X-k">There is a difference between knowing something and understanding it</a><br><p>Hopefully there aren't too many mistakes. Thanks for reading </p>
+# #+END_EXPORT
+
+

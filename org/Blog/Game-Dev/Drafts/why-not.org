@@ -1,0 +1,34 @@
+
+Practical viability mostly comes down accepting a specialized function willingness to participate in the industry for better
+or worse
+
+* A Contradiction in building terms
+I did most of my formative gaming in a transition phase of the games industry. It was right after the paradigm shift between 2D & 3D
+and development was increasing in complexity (stupid to say as this has always been the case)
+
+Polished Nintendo products are low hanging fruit, so check out: [[https://nintendoeverything.com/wp-content/uploads/zelda-chart.png][Zelda development team size + development time in months]]
+
+#+BEGIN_QUOTE
+ Trying to be the best built man in the world demands total seriousness,
+ but in essence the seriousness and the ambition involved is a little silly." -Mike Mentzer
+#+END_QUOTE
+
+# A basic question one shoulder answer early on: Do I want to be involved in engineering games or do I want to make games./
+
+
+In essence, I feel the same about game development
+
+I wish I could find the quote, but I'm reminded of Einstein asking a student, asking him if he finds what he's studying engaing enough
+to occupy his curioity for the rest of his life.
+Similarly, more poetically/ dramatically, I'm also reminded of a (I'm sure misremembered) injuction of Rumi (Mevlana) to love only the eternal.
+
+Games are important in one sense from another illustrative Einsteinian sentiment: Knowledge is limited, imagination becomes the world.
+All intelligent creatures like to play. To be fluid and improvisational, to enter a flow state is a highly pleasurable and commendable thing.
+But that dampening of rigidity to allow dancing in possibility space should be projected onto the substratum of the "eternal".
+
+By eternal, I mean non-arbitrary systems more or less.
+
+Analogous to exotic algebras in mathematics (minus the assumed platonic existence most working mathematicians and physicists assume) games (coded,
+looping systems) don't need to have a basis in reality.
+An element in the set of all games is just as good as any other.
+This leads to infinite regress (moral relativism)

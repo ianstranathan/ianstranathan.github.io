@@ -1,0 +1,14 @@
+(This is from Casey Muratori:
+ Shift the mindset from breaking up things into small pieces of data with associated members -> to -> small
+ pieces of data with external functions that work across multiple pieces of data)
+
+I don't think programming (after the initial hurdle of domain specific knowlegde) is any different from any other technical
+area of human activity.
+
+- be inquisitive
+- be willing to get to the bottom of things (domain specific first principles)
+- practice (program a lot)
+- read programs as well as write them
+
+  Peter Norvig's thoughts on how to learn programming
+ https://norvig.com/21-days.html

@@ -93,7 +93,6 @@ flex-direction: column;
 	  <ul>
 	    <li><a href=\"mailto:email@ianstranathan.com\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></a></li>
 	    <li><a href=\"https://github.com/ianstranathan\"><i class=\"fa-brands fa-github\"></i></a></li>
-            <li><a href=\"https://ianim.itch.io/\"><i class=\"fa-brands fa-itch-io\"></i></a></li>
 	  </ul>
 	</nav>
     </header>"

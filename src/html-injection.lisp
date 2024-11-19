@@ -16,11 +16,14 @@
 ;; Utils
 ;; -----
 (defun index-p (pathspec)
+  ;; true if there is an index.html at the path, other false
   (if pathspec
       (probe-file (merge-pathnames "index.html" pathspec))))
 
+
 (defun all-dirs-ls (pathspec) ; -> ls
   (directory (merge-pathnames "*" pathspec)))
+
 
 (defun pathname-last-dir (pathspec)
   (first (last (pathname-directory pathspec))))

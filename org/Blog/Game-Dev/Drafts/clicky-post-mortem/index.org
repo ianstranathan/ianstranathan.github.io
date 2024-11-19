@@ -1,0 +1,41 @@
+
+This was my first serious project (first game-dev project that went beyond a game-jam scope / was able to maintain development discipline over
+an extended period of time)
+
+A name was never decided.
+- Clicky
+- Petri Pals
+- RTSS (Real time strategy shooter)
+
+Clicky was used all over the codebase, so I'm sticking with that self-referentially.
+
+====================================================================================================
+
+_Lessons Learned:_
+
+1.  Iterate and research more before investing non-renewable resources into a project.
+    The game was born out of my love for the Starcraft and Halo franchises. I remember reading about "Downwell"'s creater describe
+    the nexus of it's development being the desire to make a portable spelunky.
+    I think fusing and cross polination of genres is an interesting design springboard and I wanted to capture the "id" of first person shooters (specifically
+    arena shooters: uniform spawn conditions, reoccuring power weapon locations, ability to recover regardless of weapons status etc.)
+    -- with -- the multitasking and rythmic macro cycles of competive rts.
+    Bluntly: the chances of having a successful competitive multiplayer game are very low. You're competing against an oversaturated market and AAA
+    forces (people stay engaged for years with their multiplayer game of choice.)
+    In this respect it was a *fools* errand.
+    
+2.  Don't spend too much time with juice / polish / assets/ features
+    (Most of them will never see the light of day...)
+    BUT
+    Spend enough time with juice / polish / assets/ features
+    (Looping feedback (i.e. juice) is what a game is at its core and you can't say what's fun before building it)
+    It's a difficult balance to strike... unfortunately, this is where experience (wisdom) pays dividends. You can't know until you know.
+   
+3.  If you're not a company that can throw money at a problem, design has to reflect engineering and art limitations.
+    The project stalled after the other team memeber that was responsible for networking arbitrarily left.
+    
+
+====================================================================================================
+
+Nothing is nothing. I didn't have an artist, so I had to make everything shader/ procedural art. This is a hobby of mine and I got better at it.
+I'm grateful for this experience. It has made me a better programmer and game developer.
+

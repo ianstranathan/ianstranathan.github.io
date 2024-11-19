@@ -1,0 +1,19 @@
+
+* Game Design Resources
+- [[https://www.youtube.com/@sora_sakurai_en][Sakurai]]
+- Game Feel - Steve Swink
+
+* Technical Resources / Engine Development
+- Foundations of Game Engine Development - Eric Lengyel
+  (Volume 1. has some nice Geometric Algebra resources too)
+  
+- Game Engine Development - Jason Gregory
+  
+- Game Physics Engine Development - Ian Millington
+  
+- Real-Time Collision Detection  - Christer Ericson
+
+- Real Time Rendering
+
+- https://engine-programming.github.io/
+

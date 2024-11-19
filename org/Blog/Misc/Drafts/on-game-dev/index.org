@@ -1,0 +1,77 @@
+
+Tl, dr:
+Games are incredibly hard to make. ([[https://www.youtube.com/watch?v=oE1Rm7F7f20][Don't just take my word for it]]).
+There is a fundamental sillyness involved in the effort.
+
+----------------------------------------------------------------------------------------------------
+* Fitness as an analogy
+
+Fitness is one of my main hobbies.
+I've been doing calisthenics and bodybuilding for about 10 years.
+
+I remember at the beginning I was humbled when I first read about protein synthesis rates.
+(It takes a long time).
+
+This lead me to research what I could about upper limits / genetic potential parameters
+(All beginners do this. It's natural to try and project for something that's going to take a long time.)
+
+A more experienced lifter told me not to worry about such things -- that it's overwhelmnigly more
+likely that one reaches their lifestyle potential rather than their genetic potential.
+(Is fitness a thing that you do or /THE/ thing that you do.)
+
+The logical conclusion of this is best said by the legendary Mike Mentzer:
+
+#+BEGIN_QUOTE
+"Trying to be the best built man in the world demands total seriousness,
+but in essence the seriousness and the ambition involved is a little silly.” -- [[https://www.musculardevelopment.com/news/the-mcgough-report/13217-mike-mentzer-the-untold-story-muscular-development.html][Mike Mentzer]]
+#+END_QUOTE
+
+There is only so much time and effort you realistically want to dedicate to this.
+(Law of diminishing returns I guess)
+
+* Generalized Game development or /gaming/ as a way of life
+#+BEGIN_QUOTE
+Computer science is no more about computers than astronomy is about telescopes." - Edsger Dijkstra
+#+END_QUOTE
+
+The thought first occured to me while trying to play "The Witness" years ago.
+There was a contrived series of puzzles in which its connecting principle arbitrarily changed midway through.
+I think the meta-pattern was trying to teach gestalt like reasoning/ critical thinking. (Not a real term)
+Observing and grokking in accordance with "reality".
+This brought to mind something like:
+
+"Why not, regardless of the complexity or detail of this virtual world, just go observe patterns in
+the real world?"
+
+Self aggrandizingly (I'm likely in crank territory now), I think this is a flavor of asking about the foundations of mathematics.
+[[https://www.youtube.com/watch?v=AmySxYHqQCQ][Hackerdashery]]
+
+The physical substratum is mostly irrelevant. Games are Self-expression and improvisation 
+# #+BEGIN_QUOTE
+# "When I was a child, I thought as a child..." - Paul
+# #+END_QUOTE
+
+* On the importance of games
+The emminent game developer Masahiro Sakurai explaining why he chose to dedicate time
+to game design education rather than continued game development:
+
+#+BEGIN_QUOTE
+“The world is constantly seeing new game releases.
+Lots of people are doing their best out there.
+Rather than add one more title to that deluge,
+I thought the channel might give all games a little quality boost and
+I hope from the bottom of my heart that I’ve contributed at least a bit of
+wind to the industry sails.”
+#+END_QUOTE
+
+* Outro
+Developing a game is a search process to find the fun,
+or rather, /designing/ a game is.
+
+Making a game is a painful
+
+
+----------------------------------------------------------------------------------------------------
+
+To channel an Wattsian perspective, maybe this should be recast as a more terpsichorean act.
+♩ ♪ ♫ ♬  "The king was in his counting house, counting out the money" ♩ ♪ ♫ ♬

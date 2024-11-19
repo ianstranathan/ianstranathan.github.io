@@ -1,25 +1,21 @@
-#+TITLE: Was weiss ich?
+#+TITLE: Only the flâneurs are free
 #+OPTIONS: title:nil
 
-Greetings, I'm Ian and this a small archive for things I become interested in.
-
-I studied Physics (B.S.), Math (B.S) and Mechanical Engineering (almost B.S) and I'm a hobbyist graphics programmer & game developer.
-
-I'm motivated by understanding how things work and communicating ideas.
+Greetings, this a small archive for some of the things I work on try to learn about.
+Writing is useful scaffolding for me when I'm trying to understand something or clarify my thoughts-- sometimes that becomes a post here.
 
 #+BEGIN_QUOTE
 Writing doesn't just communicate ideas; it generates them.
 – Paul Graham
 #+END_QUOTE
 
-There is a deep difference between [[https://www.youtube.com/watch?v=NM-zWTU7X-k][knowing something and understanding it]]; writing can be useful scaffolding when trying to understand.
-Sometimes that turns into a full post here.
+The subjects vary (mostly graphics and programming related), but it's always stuff I don't understand and am forced to write
+about to try and ease the [[https://www.youtube.com/watch?v=Uxa1gLt5YKI][confusion]]. 
 
-Writing to help clarify my own thoughts necessarily distills the ideas through an imperfect filter. Hopefully there aren't too many mistakes.
-Feel free to contact me for corrections or otherwise.
+Thanks for stopping by and please feel free to reach out to me; cheers.
 
-Cheers.
-
-**** [[./Articles/][Articles]]
+**** [[./Blog/][Blog]]
 **** [[./Projects-Demos-Tools/][Projects, Demos & Tools]]
-**** [[./Misc/][Misc]]
+
+
+

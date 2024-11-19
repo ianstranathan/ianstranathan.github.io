@@ -1,0 +1,3 @@
+https://news.ycombinator.com/item?id=38384952
+*You don't have to be an engine programmer to work in graphics*
+indie games and a few studios that still do their own engines, but there are a bunch of other industries that hire graphics, for film and effects, for 3d tools, for visualization, for mobile/web/desktop applications, for science & research, for VR/AR, for industrial applications, etc., etc.

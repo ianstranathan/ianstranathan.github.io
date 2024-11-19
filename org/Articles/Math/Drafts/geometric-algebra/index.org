@@ -1,6 +1,0 @@
-
-Proof that the wedge product is distributive over addition of vectors
-https://www.researchgate.net/figure/The-wedge-product-is-distributive-over-the-addition-of-vectors_fig6_323355879
-
-
-
