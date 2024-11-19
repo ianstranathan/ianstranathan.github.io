@@ -1,7 +1,7 @@
 #+TITLE: Only the flâneurs are free
 #+OPTIONS: title:nil
 
-Greetings, this a small archive for some of the things I work on try to learn about.
+Greetings, this a small archive for some things I work on/ try to learn about.
 Writing is useful scaffolding for me when I'm trying to understand something or clarify my thoughts-- sometimes that becomes a post here.
 
 #+BEGIN_QUOTE
@@ -12,7 +12,7 @@ Writing doesn't just communicate ideas; it generates them.
 The subjects vary (mostly graphics and programming related), but it's always stuff I don't understand and am forced to write
 about to try and ease the [[https://www.youtube.com/watch?v=Uxa1gLt5YKI][confusion]]. 
 
-Thanks for stopping by and please feel free to reach out to me; cheers.
+Thanks for stopping by and please feel free to reach out to me. Cheers.
 
 **** [[./Blog/][Blog]]
 **** [[./Projects-Demos-Tools/][Projects, Demos & Tools]]
