@@ -1,8 +1,9 @@
 
 * TODO
-- [ ] Change where github pages is looking for main index file
+- [X] Change where github pages is looking for main index file
       (I just want a single repo that I can rebuild mindlesslessy)
-
+- [ ] Move ray-box intersection to demos page
+  
 ** Articles
 *** GRAPHICS
 - [ ] Raybox intersection

@@ -1,4 +1,41 @@
 
+* RSC
+Eric Lengyel
+https://www.youtube.com/watch?v=WZApQkDBr5o&t=1455s
+
+** To project onto 3D space, find where the 4D vector intersects subspace where w = 1
+#+BEGIN_QUOTE
+The 3-dimensional representation of a homogeneous point is obtained by dividing by the w coordinate
+This is the same as taking the intersection of the direction given by the homogenous point in 4-dimensions
+with the plane or the subspace in 4-dimensions where w = 1
+#+END_QUOTE
+
+
+** Grade
+The grade of an object is the number of vectors wedged to create it.
+- scalars    : 0
+- vectors    : 1
+- bivectors  : 2
+- trivectors : 3
+  etc.
+
+** 3D Multivector algebra
+- 1 scalar element: $$ \alpha $$
+- 3 vector elements: $$ x, y, z $$
+- 3 bivector elements:
+  * $$e_2 \wedge e_3$$
+  * $$e_3 \wedge e_1$$
+  * $$e_1 \wedge e_2$$
+- 1 trivector element:
+  * $$e_1 \wedge e_2 \wedge e_3$$
+
+** Cross product deforms from a matrix, why?
+You're supposed to use the inverse transpose
+
+#+BEGIN_QUOTE
+When we're taking a cross product, we're not actually creating a vecotor like all the textbooks say.
+We're creating a bivector. 
+#+END_QUOTE
 
 Proof that the wedge product is distributive over addition of vectors (Alan Macdonald's text is too terse to include this diagram.)
 https://www.researchgate.net/figure/The-wedge-product-is-distributive-over-the-addition-of-vectors_fig6_323355879

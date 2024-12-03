@@ -1,20 +1,26 @@
 
-* Education
+* Mostly this:
+[[https://t3x.org/whoami.html][Nils Holm's about page]]
+
+* Misc resume stuff
+** Education
 - B.S. Physics     (University of Vermont, VT. USA)
 - B.S. Mathematics (University of Vermont, VT. USA)
 - Almost B.S. Mechanical Engineering (University of Akron, OH. USA).
 
 # ([[Thoughts on formal qualifications]])
 
-* Skills
+** Skills
 - Programming
-  * Graphics programming (WebGPU, WebGL, OpenGL), GPGPU
+  * Graphics programming: WebGPU, WebGL, OpenGL, GLSL,
+    - currently learning or playing around with GPGPU
   * Languages:
-    - proficient/ experience in: Python, C, C++, Lisp (Common Lisp, Emacs Lisp), JavaScript
-    - learning: Clojure, Haskell
-    - have been exposed to at some point previously: Java, C#
-
-- 3D Math
+    - _use more often or just enough to have fun_: Python, Lisp (Common Lisp, Emacs Lisp), JavaScript, C, C++
+    - _currently learning or playing around with_: Clojure, Haskell
+    - _have been exposed to or used at some point previously and have no interest in_: Java, C#
+- Math
+  - Vector Analysis & Geometric Algebra/ Calculus for my graphics stuff
+  - currently learning or playing around with: Tensor Calculus
 - Modeling & Simulation
 - Data Analysis
 - Foreign Languages:
@@ -22,11 +28,11 @@
   * Turkish (B2)
   * Spanish (A2)
   * Italian (A2)
-  * [[https://www.duolingo.com/profile/ThisDewDropWorld][Long term Duolingo addict]]
+  * [[https://www.duolingo.com/profile/ThisDewDropWorld][Long term Duolingo user]]
 
-* Hobbies
+** Hobbies
 - Fitness:
-  Calisthenics and weightlifting mostly with the occasional distance challenge
+  Calisthenics and weightlifting with the occasional distance challenge
   (have completed one marathon and one 24-hour run)
 - Sustainability: sustainable architecture, permaculture, passive energy systems.
 - Demoscene/ Shadertoy
