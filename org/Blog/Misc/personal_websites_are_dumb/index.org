@@ -2,7 +2,7 @@
 #+DATE: <2022-11-21 Mon>
 #+FILETAGS: :Opinion:
 
-This is [[http://number-none.com/blow/blog/][Jonathan Blow's Website]]; need I say more? (Extended commentary can be found [[https://motherfuckingwebsite.com/][here]])
+See [[https://www.vlambeer.com/][Vlambeer's]] or [[http://number-none.com/blow/blog/][Jonathan Blow's Website]] extended commentary can be found [[https://motherfuckingwebsite.com/][here]]
 
 [[https://www.youtube.com/watch?v=tHEOGrkhDp0][Advertizing is almost always bad]] (At a minimum it's unproductive/ unsubstantive/ empty.).
 Most of the time personal websites are just personal advertising. 
@@ -32,7 +32,7 @@ I tend to remake my website about once a year (revist resume, tidy up etc.) and 
 (Emacs has become my editor of choice and so another website iteration using org mode seemed relevant),
 but I'm done doing anything beyond content (anything superfluous that I don't find interesting or care about).
 
-Minimal styling that I can hack ontop of and a small, personal SSG from here on out until societal collapse and I don't have interact with computers anymore.
+Minimal styling that I can hack ontop of and a small, personal SSG from here on out until societal collapse and I don't have to interact with computers anymore.
 (I still want slightly more control and customizable workflow than a standard SSG framework (hugo, jekyll etc) allows otherwise I'd just do that. They can also be
 complicated to maintain and usually have a lot of dependencies that break over time)
 
