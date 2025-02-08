@@ -81,14 +81,23 @@ flex-direction: column;
 </head>
 <body>
 <div id="preamble" class="status">
-<header> <a href="https://ianstranathan.github.io/">Main</a> :: <a href="https://ianstranathan.github.io/Blog/">Blog</a> ::</header></header>
+<header>
+      <h1> Ian Stranathan </h1>
+      <p> Noodling around: Graphics | Programming | Game Dev | Physics | Math </p>
+	</p><nav>
+	  <ul>
+	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
+	    <li><a href="https://github.com/ianstranathan"><i class="fa-brands fa-github"></i></a></li>
+	  </ul>
+	</nav>
+    </header>
 </div>
 <div id="content" class="content">
 <h1 class="title">Model-View-Projection Matrices Derivation</h1>
 
-<div id="outline-container-orge10e8da" class="outline-2">
-<h2 id="orge10e8da">Overview</h2>
-<div class="outline-text-2" id="text-orge10e8da">
+<div id="outline-container-orgbf3acbc" class="outline-2">
+<h2 id="orgbf3acbc">Overview</h2>
+<div class="outline-text-2" id="text-orgbf3acbc">
 <hr />
 
 <p>
@@ -139,9 +148,9 @@ For learning computer graphics in general, please see  <a href="../../Resources/
 </div>
 </div>
 
-<div id="outline-container-org8a4f3db" class="outline-2">
-<h2 id="org8a4f3db">Small Math Primer</h2>
-<div class="outline-text-2" id="text-org8a4f3db">
+<div id="outline-container-orga393bf6" class="outline-2">
+<h2 id="orga393bf6">Small Math Primer</h2>
+<div class="outline-text-2" id="text-orga393bf6">
 <hr />
 
 <p>
@@ -307,15 +316,15 @@ You can see a potentially more interesting further discussion about this <a href
 </div>
 </div>
 
-<div id="outline-container-orgb26cd4b" class="outline-2">
-<h2 id="orgb26cd4b">Model Transform</h2>
-<div class="outline-text-2" id="text-orgb26cd4b">
+<div id="outline-container-orgfced56b" class="outline-2">
+<h2 id="orgfced56b">Model Transform</h2>
+<div class="outline-text-2" id="text-orgfced56b">
 <hr />
 </div>
 
-<div id="outline-container-orgb53caac" class="outline-3">
-<h3 id="orgb53caac">Explanation</h3>
-<div class="outline-text-3" id="text-orgb53caac">
+<div id="outline-container-org4ed45e1" class="outline-3">
+<h3 id="org4ed45e1">Explanation</h3>
+<div class="outline-text-3" id="text-org4ed45e1">
 <hr />
 <p>
 A vertex shader processes vertices, simple enough, but no matter what we do, at the end of the day, we're just turning
@@ -337,14 +346,14 @@ sense to imagine all of these superimposed on each other at the world's origin a
 </p>
 
 
-<div id="org12f202b" class="figure">
+<div id="orgadf076e" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/ModelSpace.png" alt="ModelSpace.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Model Space</p>
 </div>
 
 
-<div id="org5a36ea6" class="figure">
+<div id="orgb28546e" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/ModelSpace.png" alt="ModelSpace.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>World Space</p>
@@ -352,9 +361,9 @@ sense to imagine all of these superimposed on each other at the world's origin a
 </div>
 </div>
 
-<div id="outline-container-org697b566" class="outline-3">
-<h3 id="org697b566">Testing the "Model" transform:</h3>
-<div class="outline-text-3" id="text-org697b566">
+<div id="outline-container-orgb16e675" class="outline-3">
+<h3 id="orgb16e675">Testing the "Model" transform:</h3>
+<div class="outline-text-3" id="text-orgb16e675">
 <p>
 Now for the more interesting part, let's write a simple model matrix to check our understanding in our graphics API.
 The "Hello, World!" for me, a mere mortal, is the screen quad, so two triangles
@@ -380,9 +389,9 @@ I'll color it with shadertoy's default vec3 col to ease the monotony of using a 
 </div>
 </div>
 
-<div id="outline-container-org2fa826d" class="outline-3">
-<h3 id="org2fa826d">Hello Quad</h3>
-<div class="outline-text-3" id="text-org2fa826d">
+<div id="outline-container-org90e51b1" class="outline-3">
+<h3 id="org90e51b1">Hello Quad</h3>
+<div class="outline-text-3" id="text-org90e51b1">
 <hr />
 
 <p>
@@ -396,14 +405,14 @@ I think the circular translation should be pretty obvious, but the rotation matr
 </p>
 
 
-<div id="org93f8863" class="figure">
+<div id="orgc263b64" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/rotationMatrixDerivation.png" alt="rotationMatrixDerivation.png" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Rotation Matrix Around a Principal Axis</p>
 </div>
 
 
-<div id="org4f75b69" class="figure">
+<div id="orga7d8219" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/doubleAngle.png" alt="doubleAngle.png" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Necessary Double Angle Identity</p>
@@ -438,9 +447,9 @@ gl_Position =  model * vec4(vertexPos, 1.0);
 </div>
 </div>
 
-<div id="outline-container-orgcc63f05" class="outline-3">
-<h3 id="orgcc63f05">Model Demo</h3>
-<div class="outline-text-3" id="text-orgcc63f05">
+<div id="outline-container-org8a4b4da" class="outline-3">
+<h3 id="org8a4b4da">Model Demo</h3>
+<div class="outline-text-3" id="text-org8a4b4da">
 <hr />
 <p>
 Here is our <a href="../../../../rsc/projects-tools-demos/Demos/Graphics/model_view_projection/modelTest.html">Model Demo</a>
@@ -459,15 +468,15 @@ This bring us to our next object, how to match our scene geometry to this render
 </div>
 </div>
 
-<div id="outline-container-org51b4999" class="outline-2">
-<h2 id="org51b4999">View Transform</h2>
-<div class="outline-text-2" id="text-org51b4999">
+<div id="outline-container-org58d11b6" class="outline-2">
+<h2 id="org58d11b6">View Transform</h2>
+<div class="outline-text-2" id="text-org58d11b6">
 <hr />
 </div>
 
-<div id="outline-container-org28c405e" class="outline-3">
-<h3 id="org28c405e">Explanation</h3>
-<div class="outline-text-3" id="text-org28c405e">
+<div id="outline-container-org91c0779" class="outline-3">
+<h3 id="org91c0779">Explanation</h3>
+<div class="outline-text-3" id="text-org91c0779">
 <hr />
 
 <p>
@@ -532,9 +541,9 @@ So how and why are we doing this?
 </p>
 </div>
 
-<div id="outline-container-org7db38a3" class="outline-4">
-<h4 id="org7db38a3"><span class="underline">Why do we do this</span>?</h4>
-<div class="outline-text-4" id="text-org7db38a3">
+<div id="outline-container-org06a580a" class="outline-4">
+<h4 id="org06a580a"><span class="underline">Why do we do this</span>?</h4>
+<div class="outline-text-4" id="text-org06a580a">
 <p>
 Very breifly, this is done to simplify and standardize fundamental graphics processes and the math involved, like projection (Which we're coming to next)
 and clipping among other things.
@@ -542,9 +551,9 @@ and clipping among other things.
 </div>
 </div>
 
-<div id="outline-container-org842799c" class="outline-4">
-<h4 id="org842799c"><span class="underline">How do we do this?</span></h4>
-<div class="outline-text-4" id="text-org842799c">
+<div id="outline-container-org8dc7e6c" class="outline-4">
+<h4 id="org8dc7e6c"><span class="underline">How do we do this?</span></h4>
+<div class="outline-text-4" id="text-org8dc7e6c">
 <p>
 The easiest part is to position the camera at the origin. This is nothing but a translation and we know how to translate with homogenous matrices.
 </p>
@@ -620,9 +629,9 @@ It's the process of generating a set of orthogonal vectors using the cross produ
 </div>
 </div>
 
-<div id="outline-container-org87e9a0b" class="outline-4">
-<h4 id="org87e9a0b"><span class="underline">Cross product aside</span>:</h4>
-<div class="outline-text-4" id="text-org87e9a0b">
+<div id="outline-container-orgc2e7f65" class="outline-4">
+<h4 id="orgc2e7f65"><span class="underline">Cross product aside</span>:</h4>
+<div class="outline-text-4" id="text-orgc2e7f65">
 <p>
 (from wikipedia):
 </p>
@@ -638,7 +647,7 @@ There is no amount of the traditional \(y\) that will add to the traditional \(x
 </p>
 
 
-<div id="org0f89172" class="figure">
+<div id="orge68a93f" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/righthandRule.png" alt="righthandRule.png" />
 </p>
 <p><span class="figure-number">Figure 5: </span>Right Hand Rule</p>
@@ -653,7 +662,7 @@ How we generate the set of basis vectors will be different for different coordin
 </p>
 
 
-<div id="org5ed9dfc" class="figure">
+<div id="org2701acc" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/coordSystemWithHands.png" alt="coordSystemWithHands.png" />
 </p>
 </div>
@@ -759,7 +768,7 @@ and "front" cross "right" yields "up".
 </p>
 
 
-<div id="org5bc0f0d" class="figure">
+<div id="orgad28b1b" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/crossProductCircle.png" alt="crossProductCircle.png" />
 </p>
 <p><span class="figure-number">Figure 6: </span>Visual Mnemonic for Right Hand Rule</p>
@@ -771,13 +780,13 @@ But you should always convince yourself, you can just recreate it yourself very 
 </p>
 
 
-<div id="org9f1f05a" class="figure">
+<div id="org8d46af1" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/gramSchmidtCorrected1.png" alt="gramSchmidtCorrected1.png" />
 </p>
 </div>
 
 
-<div id="org4188ea7" class="figure">
+<div id="org3beb0a1" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/gramSchmidtCorrected2.png" alt="gramSchmidtCorrected2.png" />
 </p>
 </div>
@@ -811,9 +820,9 @@ Now for the (slightly) more exciting part. Let's prove it using our graphics API
 </div>
 </div>
 
-<div id="outline-container-org5f71e53" class="outline-4">
-<h4 id="org5f71e53">Testing the "View" transform</h4>
-<div class="outline-text-4" id="text-org5f71e53">
+<div id="outline-container-orgf355ae6" class="outline-4">
+<h4 id="orgf355ae6">Testing the "View" transform</h4>
+<div class="outline-text-4" id="text-orgf355ae6">
 <p>
 Let's create a screen quad like before, but instead of being hardcoded to be in the APIs NDC (normalized device coordinates) range,
 let's make it in front of our camera's position which is very clearly outside
@@ -827,7 +836,7 @@ in a unit length away from in and then go to all the combinations of our right a
 </p>
 
 
-<div id="orga37662c" class="figure">
+<div id="org6d36bd3" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/viewTransformTestQuad.png" alt="viewTransformTestQuad.png" />
 </p>
 </div>
@@ -1046,9 +1055,9 @@ gl_Position =  model * round(view * vec4(vertexPos, 1.0));
 </div>
 
 
-<div id="outline-container-org52e464f" class="outline-3">
-<h3 id="org52e464f">View Demo</h3>
-<div class="outline-text-3" id="text-org52e464f">
+<div id="outline-container-org7c6ab09" class="outline-3">
+<h3 id="org7c6ab09">View Demo</h3>
+<div class="outline-text-3" id="text-org7c6ab09">
 <hr />
 <p>
 Here is our <a href="../../../../rsc/projects-tools-demos/Demos/Graphics/model_view_projection/viewTest.html">View Demo</a>
@@ -1066,22 +1075,22 @@ Note that I've rounded the \(z\) value to its closest integer (one of the vertic
 </div>
 </div>
 
-<div id="outline-container-org473edb2" class="outline-2">
-<h2 id="org473edb2">Projection Transform</h2>
-<div class="outline-text-2" id="text-org473edb2">
+<div id="outline-container-org44615ab" class="outline-2">
+<h2 id="org44615ab">Projection Transform</h2>
+<div class="outline-text-2" id="text-org44615ab">
 <hr />
 </div>
 
-<div id="outline-container-org0c61170" class="outline-3">
-<h3 id="org0c61170">Explanation</h3>
-<div class="outline-text-3" id="text-org0c61170">
+<div id="outline-container-orgb1a248c" class="outline-3">
+<h3 id="orgb1a248c">Explanation</h3>
+<div class="outline-text-3" id="text-orgb1a248c">
 <hr />
 <p>
 A visual summary of what we're going to be doing to help with intuition:
 </p>
 
 
-<div id="org2592391" class="figure">
+<div id="orgbc4e433" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/gl_projectionmatrix01.png" alt="gl_projectionmatrix01.png" />
 </p>
 <p><span class="figure-number">Figure 7: </span>From <a href="http://www.songho.ca/">Song Ho Ahn</a> note that the camera is looking down the negative \(z\) axis in line with OpenGL convention.</p>
@@ -1097,14 +1106,14 @@ All that previous work was to get it along the \(z\) axis to aide in projecting 
 </p>
 
 
-<div id="orgf1546b3" class="figure">
+<div id="org4fdbd13" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/pointInFrustum.png" alt="pointInFrustum.png" />
 </p>
 <p><span class="figure-number">Figure 8: </span>Arbitrary point in a frustum</p>
 </div>
 
 
-<div id="orgf5e1ed7" class="figure">
+<div id="orgf29a184" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/pointInFrustumAlone.png" alt="pointInFrustumAlone.png" />
 </p>
 <p><span class="figure-number">Figure 9: </span>Looking closer, the projected intersection point with the near plane</p>
@@ -1115,21 +1124,21 @@ Deriving the \(x\) and \(y\) coordinates of our projected point
 </p>
 
 
-<div id="org7e06d27" class="figure">
+<div id="org3ab7585" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/similarTriangles.png" alt="similarTriangles.png" />
 </p>
 <p><span class="figure-number">Figure 10: </span><b>Arguments are made via similar right triangles, where \(n\) and \(z\) are known near and far plane values</b></p>
 </div>
 
 
-<div id="org3e237d0" class="figure">
+<div id="org6640e0b" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/similarTrianglesMath.png" alt="similarTrianglesMath.png" />
 </p>
 <p><span class="figure-number">Figure 11: </span><b>Derivation  of \(x\) and \(y\) relative values</b></p>
 </div>
 
 
-<div id="org59c0ecc" class="figure">
+<div id="org9a3bfb7" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/cameraSpaceToUnitCube.png" alt="cameraSpaceToUnitCube.png" />
 </p>
 <p><span class="figure-number">Figure 12: </span><b>Linear mapping from a frustum's projected point to the cannonical view volume</b></p>
@@ -1361,7 +1370,7 @@ but whatever our mapped \(z\) value is will eventually be divided by the \(w\) v
 </p>
 
 
-<div id="orgdbf2750" class="figure">
+<div id="orged8506a" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/model_view_projection/diagrams/cam2CubeZ.png" alt="cam2CubeZ.png" />
 </p>
 </div>
@@ -1465,9 +1474,9 @@ And we have perspective, I've never been more excited about a rectangle in my li
 </div>
 </div>
 
-<div id="outline-container-orgff0da17" class="outline-3">
-<h3 id="orgff0da17">Projection Demo</h3>
-<div class="outline-text-3" id="text-orgff0da17">
+<div id="outline-container-org2a88145" class="outline-3">
+<h3 id="org2a88145">Projection Demo</h3>
+<div class="outline-text-3" id="text-org2a88145">
 <hr />
 <p>
 Our <a href="../../../../rsc/projects-tools-demos/Demos/Graphics/model_view_projection/firstProjectionTest.html">first projection test</a>
@@ -1505,9 +1514,9 @@ Our <a href="../../../../rsc/projects-tools-demos/Demos/Graphics/model_view_proj
 </div>
 </div>
 
-<div id="outline-container-orgb89dd73" class="outline-2">
-<h2 id="orgb89dd73">Wrapping Up</h2>
-<div class="outline-text-2" id="text-orgb89dd73">
+<div id="outline-container-org1a29511" class="outline-2">
+<h2 id="org1a29511">Wrapping Up</h2>
+<div class="outline-text-2" id="text-org1a29511">
 <hr />
 <p>
 And that's it I guess. That was a lot longer than I thought it was going to be.

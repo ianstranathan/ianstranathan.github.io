@@ -5,6 +5,8 @@
 [[https://twitter.com/FabriceNEYRET][Fabrice Neyret]]
 [[https://twitter.com/The_ArtOfCode][Martijn Steinrucken]]
 [[https://blog.demofox.org/][Alan Wolfe]]
+[[www.willusher.io][Will Usher]]
+Alexander Sannikov
 [[https://twitter.com/renderwonk][Naty Hoffman]]
 [[http://mollyrocket.com/casey][Casey Muratori]]
 [[http://www.p1xelcoder.com/links/][Oliver Franzke]]

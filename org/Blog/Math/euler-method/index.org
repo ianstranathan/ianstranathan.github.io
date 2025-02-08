@@ -2,56 +2,62 @@
 #+DATE: <2021-07-02 Wed>
 #+FILETAGS: :Math:
 
-/Derivation of forward euler method for a [[../../../../rsc/projects-tools-demos/Projects/JS-&-WebGL/collision_study/refactor/][small project of mine]]/
+Derivation of forward euler method for a small collision study [[ ../../../../rsc/projects-tools-demos/Projects/JS-&-WebGL/collision_study/refactor/][small collision study]]
+This is the most basic, explicit method for numerically integrating and ODE.
 
 * Derivation
   ---------------------------------
+  Recall the limit definition of a derivative:
 
-  Numerically integrating an ordinary differential equation of motion of a particle using the Euler method:
-
-  The limit representation of a derivative:
-
-  $$ {f(x)}^\prime = \lim_{h \to 0} \frac {f(x + h) - f(x)}{h}$$
+  $$ {f^{\prime}(x)} = \lim_{h \to 0} \frac {f(x + h) - f(x)}{h}$$
 
   Where $h$ is some infinitesimal change in a continuous variable. 
 
-  For an equation of motion in a simulation, $h$ is time $t$,
-  the discrete physics time step or change in time for a physics cycle.
+  For a simulation, $h$ is some small, but
+  discrete time step associated with the physics tick/ cycle.
 
-  $$ {f(t)}^\prime \approx \frac {f(t + {\Delta t}) - f(t)}{\Delta t}$$
+  $$ {f^{\prime}(t) \approx \frac {f(t + {\Delta t}) - f(t)}{\Delta t}$$
 
   Algebraically rearranging for the function at the next time step $f(x + {\Delta t})$:
 
-  $$ f(t + {\Delta t}) \approx {f(t)}^\prime {\Delta t}  + f(t)  $$
+  $$ f(t + {\Delta t}) \approx {f^{\prime}(t) {\Delta t}  + f(t)  $$
 
   That is to say, we can approximate the value of the next step of a function 
-  if we have its value and the value of its derivative
-  at the current time step.
+  if we have its value and its derivative value at the current time step.
 
-  We can apply this in a simnple simulation after resolving the acceleration of a cycle by working backward.
+  We can apply this for the motion in a simulation after
+  resolving the acceleration of a cycle by working backward:
 
-  In general, for position $\vec r$:
+  Given position $\vec r$:
 
+  Velocity:
   $$\vec v = \frac{d}{dt} \vec r$$
+
+  Acceleration:
   $$\vec a = \frac{d}{dt} \vec v$$
-  $$\implies v(t + \Delta t) \approx {v(t)}^\prime {\Delta t}  + v(t)$$
+  
+  $$\implies v(t + \Delta t) \approx {v^{\prime}(t)} {\Delta t}  + v(t)$$
 
   $$v(t + \Delta t) \approx a(t) {\Delta t}  + v(t)$$
 
-  similarly:
-  $$r(t + \Delta t) \approx {r(t)}^\prime {\Delta t}  + r(t)$$
+  Similarly:
+  $$r(t + \Delta t) \approx {r^{\prime}(t)} {\Delta t}  + r(t)$$
   $$r(t + \Delta t) \approx v(t) {\Delta t}  + r(t)$$
 
 
   #+BEGIN_SRC cpp
-    // After resolving acceleration
-
+    // After resolving acceleration from physics constraints
     rigidBody.velocity += acceleration;
     rigidBody.position += velocity;
-
   #+END_SRC
   ---------------------------------
 
   Note:
-  The same result can be found by using a Taylor expansion around the next time step and truncating second order and higher terms.
+  We're using derivatives, so smoothness is implied for whatever we're trying to look at.
+  Thus, the same result can be found by using a Taylor series expansion around the next time step
+  and truncating second order and higher terms.
+  This is also illustrative of the limitations of the Euler method, i.e. stability; error is
+  proportional to the time step squared (second order and greater is dropped)
+  Compare this with an alternative numerical technique such as [[../verlet-integration/][verlet integration]] where the error rate
+  is proportional to the time step quadrupled.
 

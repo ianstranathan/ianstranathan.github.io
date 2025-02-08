@@ -1,0 +1,61 @@
+/Just here to prove it to myself while noodling around with some code./
+
+----------------------------------------------------------------------------------------------------
+
+_Recall_ the definition of a [[https://en.wikipedia.org/wiki/Taylor_series][taylor series expansion]] with the normal caveats of smoothness etc.
+(Also, check out Madhava, Jason Gregory and Newton for historical development; it's also amusing to
+think about the sheer volume of Stigler's law occurences throughout history; its also heady and humbling to
+consider that this was used to calculate Halley's Comet trajectories initially and now it's a back of a napkin exercise )
+
+----------------------------------------------------------------------------------------------------
+# \frac{f^{n}(a)}{n!}
+# \left( x - a \right)^n
+# \sum_{n=0}^{\infty}
+
+$$ \sum_{n=0}^{\infty} \frac{f^{n}(a)}{n!} \left( t - a \right)^n $$
+
+Where $$ a $$ is the point around which we're expanding and $$ t $$ is the variable we're creating
+the expansion for.
+
+For a simulation, with a discrete time step associated with the physics tick/ cycle, $ \Delta{t} $, 
+we need to be careful about/ decide /what/ and /where/ we're expanding.
+
+We want to know what happens at the next time step:  $ x\left( t + \Delta{t} \right) $
+(This means we're creating an expansion for a function that can talk about that point.)
+
+We know what is happening at the current step, so our expansion is expanding around that point: $ a = t $
+
+Subsituting into the Taylor series formula:
+
+$$ \implies
+\sum_{n=0}^{\infty} \frac{f^{n}(t)}{n!} \left( \Delta{t} \right)^n $$
+
+This is if it's a forward time step, notice if it's a backward time step, all that would change is
+that we'd be exanding for $ x\left( t - \Delta{t} \right) $
+
+$$ \implies
+\sum_{n=0}^{\infty} \frac{f^{n}(t)}{n!} \left( -\Delta{t} \right)^n $$
+
+The /trick/ or method is to sum (simple verlet) or take the difference (stoermer-verlet) of the two.
+
+Summing allows the even powers in the expansion to cancel which gives the method
+its stability ($E \propto O^4$).
+
+$$ \implies
+x\left( t + \Delta{t} \right) + x\left( t - \Delta{t} \right) =
+2x\left( t \right) - xleft( t - \Delta{t} \right) + a left( t \right) {left( \Delta{t} \right)}^2
+$$
+
+To talk about the next time step, we need only to know about the current position, the last position and the
+current acceleration resolution.
+
+----------------------------------------------------------------------------------------------------
+
+Misc. Resources:
+
+More detailed article:
+https://www.algorithm-archive.org/contents/verlet_integration/verlet_integration.html
+
+Here's a video to give some intuition by reworking the final Verlet equation into something more familiar:
+https://www.youtube.com/watch?v=lS_qeBy3aQI
+

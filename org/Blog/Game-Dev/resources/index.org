@@ -1,7 +1,9 @@
 
 * Game Design Resources
-- [[https://www.youtube.com/@sora_sakurai_en][Sakurai]]
 - Game Feel - Steve Swink
+- [[https://www.youtube.com/@sora_sakurai_en][Masahiro Sakurai]]
+  (There is very practical, high level lessons to be learned for push/pull or risk/ reward design
+  principles & and tons of miscellaneous polish tips and tricks)
 
 * Technical Resources / Engine Development
 - Foundations of Game Engine Development - Eric Lengyel

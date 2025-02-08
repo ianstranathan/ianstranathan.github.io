@@ -254,7 +254,7 @@ Resources:
 
 Domain Repetition
 ---------------------------------------------------------------------------------------
-
+Johann Korndörfer
 * <a href="https://www.youtube.com/watch?v=s8nFqwOho-s&t=990s" target="_blank">SDF patterns talk by Johann Korndörfer (Mercury demogroup)</a>
 
 Lists of primitives and techniques for SDFs

@@ -9,7 +9,7 @@ Writing doesn't just communicate ideas; it generates them.
 Thanks for stopping & feel free to reach out to me.
 
 **** [[./Blog/][Blog]]
-**** [[./Projects-Demos-Tools/][Projects, Demos & Tools]]
+**** [[./Projects-Demos-Tools/][Projects & Sundry]]
 
 
 

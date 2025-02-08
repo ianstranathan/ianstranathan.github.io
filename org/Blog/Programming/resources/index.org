@@ -1,11 +1,13 @@
 
 * Blog Roll; Guys to learn from & be inspired by
+
 [[https://groups.csail.mit.edu/mac/users/gjs/gjs.html][Gerald Jay Sussman]]
+Casey Muratori
 
 * Literature
 [[https://web.mit.edu/6.001/6.037/sicp.pdf][SICP]]
 - Introduction to the Theory of Computation, Michael Sipser
-- The Practice of Programming, Brian Kernighan, Rob Pike (C & C++ focused, but really good)
+- The Practice of Programming, Brian Kernighan, Rob Pike
 # - Introduction to Formal Languages and Automata, Peter Linz
 # - Nigel Cutland, "Introduction to Computability Theory";
 # - Christos Papadimitriou, "Computational Complexity"
@@ -18,6 +20,9 @@
 [[https://mostly-adequate.gitbook.io/mostly-adequate-guide][Professor Frisby]]
   
 * Lectures & Interviews
+** Casey Muratori
+[[https://www.youtube.com/watch?v=xt1KNDmOYqA][Going from n to n+1 as a programmer]]
+
 ** Rich Hickey
 [[https://www.youtube.com/watch?v=ScEPu1cs4l0&t=2399s][Are we there yet?]]
 [[https://www.youtube.com/watch?v=SxdOUGdseq4&list=PLUFeA6y-5sFkPkTN9Cx5H5pjQjhYKgeVI&index=6][Simple Made Easy]]

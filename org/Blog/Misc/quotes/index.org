@@ -91,6 +91,15 @@ and thence proceed to greater. -- Epictetus
 - Abert Einstein
 #+end_quote
 
+#+begin_quote
+"The truth is that the State is a conspiracy designed not only to exploit, but above all to corrupt its citizens" -- Leo Tolstoy
+#+end_quote
+
+#+begin_quote
+"Part of the fame of the most celebrated people always belongs to the foolishness of their admirers"
+- Georg Christoph Lichtenberg
+#+end_quote
+
 #+BEGIN_QUOTE
 The secret to what anything means to us depends on how we've connected it to other things we know. -- Marvin Minsky
 #+END_QUOTE

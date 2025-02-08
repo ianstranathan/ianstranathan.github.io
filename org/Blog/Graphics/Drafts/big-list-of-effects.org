@@ -1,0 +1,106 @@
+https://www.youtube.com/watch?v=Uc8FEI5bg3w
+
+*GEOMETRY*:
+1:10 Waves Simulations
+1:42 World Curvature
+1:53 Skeletal Animations
+2:23 Decals
+2:43 Volumetric Rendering I (Clouds)
+3:05 Geometry Culling (Frustum Culling)
+3:53 Level of Detail (LOD)
+4:16 Tesselation Shaders
+4:34 Displacement Mapping
+4:39 Geometry Shaders
+5:18 Geometry Buffer
+5:45 Quaternions
+5:56 Realistic Clothes/Hair
+6:18 Wind Simulations
+
+*LIGHTING*:
+6:46 Normal Mapping
+7:13 Light Maps
+7:25 Lens Flare
+7:51 Sky Box (Atmospheric Scattering)
+8:02 Fog
+8:11 Chromatic Aberration
+8:30 Physically Based Rendering (PBR)
+8:58 Image-Based Lighting (IBL)
+9:22 Multiple Scattering Microfacet Model for IBL
+9:47 Global Illumination
+10:12 Spherical Harmonics
+10:36 Light Probes
+10:52 Screen Space Global Illumination (SSGI)
+11:07 Ray Tracing
+11:28 Subsurface Scattering
+11:44 Skin Rendering
+11:51 Volumetric Rendering II (God Rays)
+12:06 Parallax Mapping
+12:32 Reflections
+12:55 Screen Space Reflections
+13:15 Refraction
+13:50 Defraction
+14:06 Screen Space Ambient Occlusion (SSAO)
+14:28 Horizon Based Ambient Occlusion (HBAO)
+14:36 Screen Space Directional Occlusion (SSDO)
+15:12 Bloom
+15:50 High Dynamic Range (HDR)
+16:50 HDR With Auto Exposure (the one used for bloom)
+17:07 ACES Tonemapping HDR
+17:29 Depth of Field (Bokeh)
+17:49 Color Grading
+
+*SHADOWS*:
+18:33 Shadows
+18:46 Percentage Close Filtering (PCF)
+19:10 Static Geometry Caching
+19:28 PCF Optimizations
+20:11 Variance Shadow Mapping (VSM)
+20:29 Rectilinear Texture Wrapping for Adaptive Shadow Mapping
+20:53 Cascaded Shadow Mapping / Parallel Split Shadow Maps
+
+*SPECIAL EFFECTS*:
+21:34 Transparency
+22:26 Order Independent Transparency
+22:42 Depth Peel
+23:09 Weighted Blending
+23:21 Fragment Level Sorting
+23:33 Rendering Many Textures (Mega Texture & Bindless Textures)
+24:31 Anti-Aliasing (SSAA, MSAA & TAA)
+26:00 DLSS
+26:35 Adaptive Resolution
+27:05 Lens Dirt
+27:27 Motion Blur
+27:41 Post-Process Warp
+28:08 Deferred Rendering
+29:29 Tiled Deferred Shading
+29:29 Clustered Deferred Shading
+29:42 Z Pre-Pass
+30:01 Forward+ (Clustered Forward Shading)
+
+
+----------------------------------------------------------------------------------------------------
+
+1 - VSM light leeking and overall quality can be improved. There is an alternative to VSM, called Exponent Shadow Mapping, which uses different moments and calculations. Combination of two - EVSM, has been a standard for many years. If we generate a mip-pyramid, we can also use it for soft shadows.
+2 - In CSM, some games have, say, 5 cascades, but don't render them real-time. Last cascade is precalculated or updated very slowly. Others are more dynamic, but still use 5-10 fps to save frames, and are rendered in between different frames.
+3 - Water, so, there are subsurface scattering approximations, making it look green in certain areas.
+4 - Alexandr Sannikov basically solved GI, both diffuse and specular, with his research, which is implemented in PoE 2 (check their latest livestream). Best use case is screenspace, topdown games.
+5 - Bent normals. Alexandr Sannikov also mentioned it, but the technique is 2 decades old. Basically you just bend your normal vector in the cone direction derived from AO, improving local shadows (if done in texture-space). Can be also precalculated for model-space and baked into vertex buffers. Good not only for diffuse occlusion, but for specular occlussion too (which is not seen very often in games).
+6 - Trees (in Horizon Zero Dawn I think - might be wrong) use similar approach, but use proxy geometry to bend normals in the direction of a tree volume, granting a more realistic lighting.
+7 - SSDO is cool, but there is also GTAO (HBAO with multibounce and color).
+8 - Virtual textures are cool for close-up details.
+9 - Animations with textures instead of skeletal. Basically bake animations in the texture and sample in a vertex shader. Cool for small things like book page flipping and birds flying.
+10 - Impostors with precomputed lighting. Cool for clouds, distance trees. Basic idea is that you bake your object from many directions into an atlas texture, and sample 2-3 times from different corresponding views and grab the one with the closest depth. Usually done with octahedral mapping (which is also used for normal texture compression, 2d to 3d spherical projection if making planets, etc.)
+11 - Outlines is a cool technique too. Best approaches are screenspace ones, which combine normal and depth, processed separately with sobel filter (edge filter), usually 3x3, but scaled up (it will skip, but it's okay) to desired radius. Radius is scaled by distance to the camera. There are other techniques, stencil based, mesh based, wireframe based, SDF based (voxel sdf).
+12 - SDF, of course. The one and only. Cool for UI rendering, text rendering, decal rendering. Vector graphics, basically, without vectors. MSDF can fix the lack of high frequencies.
+13 - Cheap global AO can be achieved with rendering the whole scene, like with shadow mapping, top down, from top to bottom basically, looking down (sky visibility term). EVSM should be good here. Use is with SSAO/texture space AO, choosing min() one. In combination with probes (multiscattering approximation), can be quite good (Ghost of Tsushima).
+14 - Triplanar shading. In general a good way to apply textures without UVs. In practice, can be used to project snow/dust/dirt/sand/moss layer to all geometry, masked by some topdown designer/procedurally authored mask.
+15 - Heightblending. Blending textures using height, basically. Good for splatmaps, decals.
+16 - Roughness could be appxorimated as variance (like in VSM) from high-resolution normal-map. Can be precalculated before runtime. Can be good for realistic water rendering since this approach gives you anisotropic roughness (anisortopy can be it's own separate detail, but I'm feeling lazy).
+17 - Cloth rendering. There are several physically based models for that too. Shadertoy has examples.
+18 - Histogram-preserving blending. Better than alpha blending, good for terrain, when trying to mix textures with different levels of resolution. Basic idea is that you grab low frequencies (sampled from max. lod texture) from highest resolution and subtract them from lower-resolution texture before adding two together. Can be repeated indefinitely amount of times, but usually 3 times. World of tanks uses it iirc.
+19 - Local tonemapping is a thing. Ghost of Tsushima.
+20 - Instancing for large amount of grass. Ghost of Tsushima.
+21 - Motion vectors can be used for better flip-book animations (PoE 2, many other games).
+22 - Dither can be useful for transparency (Witcher 3) and quantization (Rendering of INSIDE). Noise, created by dithering, can be fixed with bilateral blur.
+23 - Directional light is usually a dot, not a circle. So, it's incorrect to use it for sunlight. It also fights with IBL, some games usually remove sun from IBL maps manually. There are some games that fix the dot issue and give you the ability to control the radius. Don't remember the sources, but can be done with analytical area lights.
+24 - Specular lights usually have aliasing due to how they are calculated, there are some approximations to fix them without AA. Final Fantasy 14.
