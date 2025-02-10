@@ -2,8 +2,9 @@
 #+DATE: <2021-07-02 Wed>
 #+FILETAGS: :Math:
 
-Derivation of forward euler method for a [[../../../../rsc/projects-tools-demos/Projects/JS-&-WebGL/collision_study/refactor/][small collision study]]
-This is the most basic, explicit method for numerically integrating and ODE.
+Derivation of forward euler method for a [[../../../Projects-Demos-Tools/Projects/JS-&-WebGL/collision_study/][small collision study]].
+I wanted to start simply and this is the most basic, explicit method
+for numerically integrating an ODE.
 
 * Derivation
   ---------------------------------
@@ -56,8 +57,8 @@ This is the most basic, explicit method for numerically integrating and ODE.
   We're using derivatives, so smoothness is implied for whatever we're trying to look at.
   Thus, the same result can be found by using a Taylor series expansion around the next time step
   and truncating second order and higher terms.
-  This is also illustrative of the limitations of the Euler method, i.e. stability; error is
-  proportional to the time step squared (second order and greater is dropped)
+  This is also illustrative of the _limitations_ of the Euler method, i.e. stability; error is
+  proportional to the time step squared (second order and greater terms are dropped)
   Compare this with an alternative numerical technique such as [[../verlet-integration/][verlet integration]] where the error rate
   is proportional to the time step quadrupled.
 

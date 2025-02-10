@@ -86,13 +86,14 @@ flex-direction: column;
 <div id="content" class="content">
 <h1 class="title">Euler Method</h1>
 <p>
-Derivation of forward euler method for a <a href="../../../../rsc/projects-tools-demos/Projects/JS-&amp;-WebGL/collision_study/refactor/">small collision study</a>
-This is the most basic, explicit method for numerically integrating and ODE.
+Derivation of forward euler method for a <a href="../../../Projects-Demos-Tools/Projects/JS-&amp;-WebGL/collision_study/">small collision study</a>.
+I wanted to start simply and this is the most basic, explicit method
+for numerically integrating an ODE.
 </p>
 
-<div id="outline-container-orgc5a36f3" class="outline-2">
-<h2 id="orgc5a36f3">Derivation</h2>
-<div class="outline-text-2" id="text-orgc5a36f3">
+<div id="outline-container-org2ca523e" class="outline-2">
+<h2 id="org2ca523e">Derivation</h2>
+<div class="outline-text-2" id="text-org2ca523e">
 <hr />
 <p>
 Recall the limit definition of a derivative:
@@ -175,8 +176,8 @@ Note:
 We're using derivatives, so smoothness is implied for whatever we're trying to look at.
 Thus, the same result can be found by using a Taylor series expansion around the next time step
 and truncating second order and higher terms.
-This is also illustrative of the limitations of the Euler method, i.e. stability; error is
-proportional to the time step squared (second order and greater is dropped)
+This is also illustrative of the <span class="underline">limitations</span> of the Euler method, i.e. stability; error is
+proportional to the time step squared (second order and greater terms are dropped)
 Compare this with an alternative numerical technique such as <a href="../verlet-integration/">verlet integration</a> where the error rate
 is proportional to the time step quadrupled.
 </p>

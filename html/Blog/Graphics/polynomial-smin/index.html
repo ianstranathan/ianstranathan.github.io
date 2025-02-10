@@ -89,9 +89,9 @@ flex-direction: column;
 TL;DR: <a href="../../../../rsc/projects-tools-demos/Demos/Graphics/sminLive.html">Live shader here</a>
 </p>
 
-<div id="outline-container-orgd6cf662" class="outline-2">
-<h2 id="orgd6cf662">Motivation</h2>
-<div class="outline-text-2" id="text-orgd6cf662">
+<div id="outline-container-org5493ac3" class="outline-2">
+<h2 id="org5493ac3">Motivation</h2>
+<div class="outline-text-2" id="text-org5493ac3">
 <hr />
 
 <p>
@@ -132,9 +132,9 @@ There is however something deeply fruitful about reinventing the wheel, despite 
 </div>
 </div>
 
-<div id="outline-container-orgb3f8c80" class="outline-2">
-<h2 id="orgb3f8c80">Derivation</h2>
-<div class="outline-text-2" id="text-orgb3f8c80">
+<div id="outline-container-org7a261b3" class="outline-2">
+<h2 id="org7a261b3">Derivation</h2>
+<div class="outline-text-2" id="text-org7a261b3">
 <hr />
 
 <p>
@@ -143,21 +143,21 @@ some decreasing exponential and a sinusoid. That seems a little hard to think ab
 </p>
 
 
-<div id="org01ef90d" class="figure">
+<div id="orgc81c335" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/smin0.png" alt="smin0.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Our functions; \(f(x) = x^2\) and  \(g(x) = e^{-x}\)</p>
 </div>
 
 
-<div id="orgd8500c5" class="figure">
+<div id="orgd10b922" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/smin1.png" alt="smin1.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>The simple union of our two functions</p>
 </div>
 
 
-<div id="org4ed7f5a" class="figure">
+<div id="orga88711a" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/smin2.png" alt="smin2.png" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Our functions with their difference \(d = f(x) - g(x)\)</p>
@@ -184,7 +184,7 @@ which are small, not necessarily identical values.
 </p>
 
 
-<div id="orga32260c" class="figure">
+<div id="org14660d8" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/sminEpsilon.png" alt="sminEpsilon.png" />
 </p>
 </div>
@@ -206,7 +206,7 @@ is smaller than our original epsilon.
 </p>
 
 
-<div id="org75ca694" class="figure">
+<div id="orgde899ab" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/sminEpsilon2.png" alt="sminEpsilon2.png" />
 </p>
 </div>
@@ -293,14 +293,14 @@ Just using a linear interpolation between our functions with the correctly mappe
 </p>
 
 
-<div id="org70855c0" class="figure">
+<div id="org5735d7b" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/firstApproxNaive.png" alt="firstApproxNaive.png" />
 </p>
 <p><span class="figure-number">Figure 4: </span>As expected, our interpolated curve is equal to \(f\) and \(g\) when \(d = -k\) and \(d = k\) respectively.</p>
 </div>
 
 
-<div id="orga506a82" class="figure">
+<div id="org2833989" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/firstApproxWithClamp.png" alt="firstApproxWithClamp.png" />
 </p>
 <p><span class="figure-number">Figure 5: </span>This is improved by limiting our &ell; value to only ever be between \(0\) and \(1\) as reasoned before</p>
@@ -450,7 +450,7 @@ This is exactly iq's function ( <a href="https://www.khronos.org/registry/OpenGL
 </div>
 
 
-<div id="org28a1e6d" class="figure">
+<div id="org25c63d1" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/polynomial_smin/sminFinal.png" alt="sminFinal.png" />
 </p>
 <p><span class="figure-number">Figure 6: </span>Our smooth minimum</p>
@@ -458,9 +458,9 @@ This is exactly iq's function ( <a href="https://www.khronos.org/registry/OpenGL
 </div>
 </div>
 
-<div id="outline-container-org2fa7368" class="outline-2">
-<h2 id="org2fa7368">Wrapping Up:</h2>
-<div class="outline-text-2" id="text-org2fa7368">
+<div id="outline-container-org157a69b" class="outline-2">
+<h2 id="org157a69b">Wrapping Up:</h2>
+<div class="outline-text-2" id="text-org157a69b">
 <hr />
 <p>
 This was a little dive into shader flavored spline interpolation; we took a nice result from an authoritative source and rederived it from first principles.
@@ -484,13 +484,13 @@ Hopefully it's helped someone besides me. Thank you for reading.
 </div>
 </div>
 
-<div id="outline-container-orgc3abf01" class="outline-2">
-<h2 id="orgc3abf01">Annex</h2>
-<div class="outline-text-2" id="text-orgc3abf01">
+<div id="outline-container-org4082b43" class="outline-2">
+<h2 id="org4082b43">Annex</h2>
+<div class="outline-text-2" id="text-org4082b43">
 </div>
-<div id="outline-container-orgd6469fe" class="outline-3">
-<h3 id="orgd6469fe">Shader Source</h3>
-<div class="outline-text-3" id="text-orgd6469fe">
+<div id="outline-container-org7fcb634" class="outline-3">
+<h3 id="org7fcb634">Shader Source</h3>
+<div class="outline-text-3" id="text-org7fcb634">
 <div class="org-src-container">
 <pre class="src src-cpp"><span style="color: #ff7f9f;">#define</span> <span style="color: #00d3d0;">SCALE</span> (2.)
 <span style="color: #ff7f9f;">#define</span> <span style="color: #00d3d0;">PI</span> (3.14159)

@@ -24,9 +24,10 @@ we need to be careful about /what/ and /where/ we're expanding.
 We want to know what happens at the next time step:  $x\left( t + \Delta{t} \right)$
 (This means we're creating an expansion for a function that can talk about that point.)
 
-We know what is happening at the current step, so our expansion is expanding around that point: $ a = t $
+We know what is happening at the current step, so our expansion is expanding around that point: $a = t$
 
 Subsituting into the Taylor series formula:
+(Note: \left( t - a \right) \rightarrow \left( t + \Delta{t} - t \right) = \left( \Delta{t} \right) )
 
 $$ \implies
 \sum_{n=0}^{\infty} \frac{f^{n}(t)}{n!} \left( \Delta{t} \right)^n $$
