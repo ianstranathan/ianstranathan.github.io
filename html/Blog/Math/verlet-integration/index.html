@@ -91,10 +91,10 @@ flex-direction: column;
 <hr />
 
 <p>
-<span class="underline">Recall</span> the definition of a <a href="https://en.wikipedia.org/wiki/Taylor_series">taylor series expansion</a> with the normal caveats of smoothness etc.
+<b>Recall</b> the definition of a <a href="https://en.wikipedia.org/wiki/Taylor_series">taylor series expansion</a> with the normal caveats of smoothness etc.
 (Also, check out Madhava, Jason Gregory and Newton for historical development; it's also amusing to
 think about the sheer volume of Stigler's law occurences throughout history; its also heady and humbling to
-consider that this was used to calculate Halley's Comet trajectories initially and now it's a back of a napkin exercise )
+consider that this was initially used to calculate Halley's Comet trajectories and now it's a back of a napkin exercise )
 </p>
 
 <hr />
@@ -104,17 +104,17 @@ consider that this was used to calculate Halley's Comet trajectories initially a
 </p>
 
 <p>
-Where \[ a \] is the point around which we're expanding and \[ t \] is the variable we're creating
+Where \(a\) is the point around which we're expanding and \(t\) is the variable we're creating
 the expansion for.
 </p>
 
 <p>
-For a simulation, with a discrete time step associated with the physics tick/ cycle, $ &Delta;{t} $, 
-we need to be careful about/ decide <i>what</i> and <i>where</i> we're expanding.
+For a simulation, with a discrete time step associated with the physics tick/ cycle, \(\Delta{t}\), 
+we need to be careful about <i>what</i> and <i>where</i> we're expanding.
 </p>
 
 <p>
-We want to know what happens at the next time step:  $ x\left( t + &Delta;{t} \right) $
+We want to know what happens at the next time step:  \(x\left( t + \Delta{t} \right)\)
 (This means we're creating an expansion for a function that can talk about that point.)
 </p>
 
@@ -132,8 +132,9 @@ Subsituting into the Taylor series formula:
 </p>
 
 <p>
-This is if it's a forward time step, notice if it's a backward time step, all that would change is
-that we'd be exanding for $ x\left( t - &Delta;{t} \right) $
+This is if it's a forward time step.
+If it's a backward time step, all that would change is
+that we'd be expanding for \(x\left( t - \Delta{t} \right)\)
 </p>
 
 <p>
@@ -147,18 +148,23 @@ The <i>trick</i> or method is to sum (simple verlet) or take the difference (sto
 
 <p>
 Summing allows the even powers in the expansion to cancel which gives the method
-its stability (\(E \propto O^4\)).
+its stability (\(E \propto O^4\), i.e. the threshold for ignored higher ordered terms).
 </p>
 
 <p>
-\[ \implies
+Expanded, truncated and summed:
+\[\implies
 x\left( t + \Delta{t} \right) + x\left( t - \Delta{t} \right) =
-2x\left( t \right) - xleft( t - \Delta{t} \right) + a left( t \right) {left( \Delta{t} \right)}^2
-\]
+2x\left( t \right) + a\left( t \right) {\left( \Delta{t} \right)}^2\]
 </p>
 
 <p>
-To talk about the next time step, we need only to know about the current position, the last position and the
+\[\implies x\left( t + \Delta{t} \right) =
+2 x\left(t \right)  - x\left( t - \Delta{t} \right) + a\left( t \right) {\left( \Delta{t} \right)}^2\]
+</p>
+
+<p>
+We can talk about the position at the next time step if we know the current position, the last position and the
 current acceleration resolution.
 </p>
 
@@ -166,14 +172,7 @@ current acceleration resolution.
 
 <p>
 Misc. Resources:
-</p>
-
-<p>
-More detailed article:
-<a href="https://www.algorithm-archive.org/contents/verlet_integration/verlet_integration.html">https://www.algorithm-archive.org/contents/verlet_integration/verlet_integration.html</a>
-</p>
-
-<p>
+More detailed article at the <a href="https://www.algorithm-archive.org/contents/verlet_integration/verlet_integration.html">Algorithm Archive</a>
 Here's a video to give some intuition by reworking the final Verlet equation into something more familiar:
 <a href="https://www.youtube.com/watch?v=lS_qeBy3aQI">https://www.youtube.com/watch?v=lS_qeBy3aQI</a>
 </p>
