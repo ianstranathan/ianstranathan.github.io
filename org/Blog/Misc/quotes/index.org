@@ -82,13 +82,19 @@ and thence proceed to greater. -- Epictetus
 #+END_QUOTE
 
 #+begin_quote
-"Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away."
-- Atoine de Saint-Exupery
+"Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away." -- Atoine de Saint-Exupery
 #+end_quote
 
 #+begin_quote
-"Make things as simple as possible, but no simpler."
-- Abert Einstein
+Give them the third best to go on with; the second best comes too late, the best never comes. -- Robert Alexander Watson-Watt
+#+end_quote
+
+#+begin_quote
+"Make things as simple as possible, but no simpler." -- Abert Einstein
+#+end_quote
+
+#+begin_quote
+There are two ways to write error-free programs; only the third one works. -- Alan Perlis
 #+end_quote
 
 #+begin_quote
@@ -96,8 +102,7 @@ and thence proceed to greater. -- Epictetus
 #+end_quote
 
 #+begin_quote
-"Part of the fame of the most celebrated people always belongs to the foolishness of their admirers"
-- Georg Christoph Lichtenberg
+"Part of the fame of the most celebrated people always belongs to the foolishness of their admirers" -- Georg Christoph Lichtenberg
 #+end_quote
 
 #+BEGIN_QUOTE

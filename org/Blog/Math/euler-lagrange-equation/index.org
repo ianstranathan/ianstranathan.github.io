@@ -121,7 +121,7 @@
   -----------------------------------------
 
   Note that this reasoning only guarantees that the path's
-  length is stationary -- not necessarily a minimum or a maximum.
+  length is stationary -- not necessarily a minimum.
 
   # As the pythagorean theorem was used to start, that the Euler-Lagrange equation gets back a straight
   # line from a minimization of distance (the conventional introductory example in a physics textbook) seems almost circular to me. -->
