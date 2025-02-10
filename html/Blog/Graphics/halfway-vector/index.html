@@ -81,16 +81,7 @@ flex-direction: column;
 </head>
 <body>
 <div id="preamble" class="status">
-<header>
-      <h1> Ian Stranathan </h1>
-      <p> Noodling around: Graphics | Programming | Game Dev | Physics | Math </p>
-	</p><nav>
-	  <ul>
-	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
-	    <li><a href="https://github.com/ianstranathan"><i class="fa-brands fa-github"></i></a></li>
-	  </ul>
-	</nav>
-    </header>
+<header> <a href="https://ianstranathan.github.io/">Main</a> :: <a href="https://ianstranathan.github.io/Blog/">Blog</a> ::</header></header>
 </div>
 <div id="content" class="content">
 <h1 class="title">Halfway Vector</h1>
@@ -102,9 +93,9 @@ flex-direction: column;
 <i>It's a simple thing ultimately, hence no wizard beard interest, but It was good review</i>
 </p>
 
-<div id="outline-container-org3933813" class="outline-2">
-<h2 id="org3933813">Motivation (Why bother)</h2>
-<div class="outline-text-2" id="text-org3933813">
+<div id="outline-container-org8ac597b" class="outline-2">
+<h2 id="org8ac597b">Motivation (Why bother)</h2>
+<div class="outline-text-2" id="text-org8ac597b">
 <hr />
 
 <p>
@@ -124,7 +115,7 @@ If the pixel values between vertices are interpolated (pixel to pixel, done in a
 </p>
 
 
-<div id="orge6633a3" class="figure">
+<div id="org65d29ba" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/halfway_vector/PhongVersusGouraud.jpg" alt="PhongVersusGouraud.jpg" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Gouraud versus Phong shading, from wikipedia</p>
@@ -139,7 +130,7 @@ This turns a discrete vertex normal that was piped in from the vertex shader int
 </p>
 
 
-<div id="orgf1e6fc0" class="figure">
+<div id="org951be24" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/halfway_vector/intermediate_normal_vectors.png" alt="intermediate_normal_vectors.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Interpolated intermediate vertex normals (diagram from <a href="http://learnwebgl.brown37.net/10_surface_properties/smooth_vertex_normals.html">learnwebgl.brown37.net</a>)</p>
@@ -150,7 +141,7 @@ This can then be normalized and dotted with the viewing direction to find a diff
 </p>
 
 
-<div id="org30dee1d" class="figure">
+<div id="org3a4f0dd" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/halfway_vector/learnWebGL.png" alt="learnWebGL.png" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Diffuse Lighting Heuristic Diagram (diagram from <a href="http://learnwebgl.brown37.net/09_lights/lights_diffuse.html">learnwebgl.brown37.net</a>)</p>
@@ -168,7 +159,7 @@ only be ever deal with angles of 90 degrees / \(\frac{\pi}{2}\) or less, but thi
 </p>
 
 
-<div id="org795f9ba" class="figure">
+<div id="org09f9068" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/halfway_vector/learnOpenGL.png" alt="learnOpenGL.png" />
 </p>
 <p><span class="figure-number">Figure 4: </span>The reflection vector can fail (diagram from <a href="https://learnopengl.com/Advanced-Lighting/Advanced-Lighting">learnOpenGL.com</a>)</p>
@@ -184,7 +175,7 @@ how oblique or aligned with the reflection vector the viewing angle is to the no
 </p>
 
 
-<div id="orgbf720df" class="figure">
+<div id="orgb2e1a2b" class="figure">
 <p><img src="../../../../rsc/img/Articles/Graphics/halfway_vector/learnOpenGL2.png" alt="learnOpenGL2.png" />
 </p>
 <p><span class="figure-number">Figure 5: </span>The Halfway Vector (diagram from <a href="https://learnopengl.com/Advanced-Lighting/Advanced-Lighting">learnOpenGL.com</a>)</p>
@@ -192,9 +183,9 @@ how oblique or aligned with the reflection vector the viewing angle is to the no
 </div>
 </div>
 
-<div id="outline-container-org7a50828" class="outline-2">
-<h2 id="org7a50828">Derivation</h2>
-<div class="outline-text-2" id="text-org7a50828">
+<div id="outline-container-org5d6d4a0" class="outline-2">
+<h2 id="org5d6d4a0">Derivation</h2>
+<div class="outline-text-2" id="text-org5d6d4a0">
 <hr />
 
 <p>

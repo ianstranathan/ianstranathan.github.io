@@ -2,7 +2,7 @@
 #+DATE: <2021-07-02 Wed>
 #+FILETAGS: :Math:
 
-Derivation of forward euler method for a small collision study [[ ../../../../rsc/projects-tools-demos/Projects/JS-&-WebGL/collision_study/refactor/][small collision study]]
+Derivation of forward euler method for a [[../../../../rsc/projects-tools-demos/Projects/JS-&-WebGL/collision_study/refactor/][small collision study]]
 This is the most basic, explicit method for numerically integrating and ODE.
 
 * Derivation
