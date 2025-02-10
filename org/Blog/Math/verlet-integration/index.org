@@ -27,7 +27,7 @@ We want to know what happens at the next time step:  $x\left( t + \Delta{t} \rig
 We know what is happening at the current step, so our expansion is expanding around that point: $a = t$
 
 Subsituting into the Taylor series formula:
-(Note: \left( t - a \right) \rightarrow \left( t + \Delta{t} - t \right) = \left( \Delta{t} \right) )
+(Note: $\left( t - a \right) \rightarrow \left( t + \Delta{t} - t \right) = \left( \Delta{t} \right)$ )
 
 $$ \implies
 \sum_{n=0}^{\infty} \frac{f^{n}(t)}{n!} \left( \Delta{t} \right)^n $$
