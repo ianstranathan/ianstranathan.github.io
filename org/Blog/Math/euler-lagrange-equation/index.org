@@ -3,7 +3,7 @@
 #+FILETAGS: :Math:
 
 * Motivation
-  I have had to convinve myself that this is true a few times over the years, so now it's here to stay.
+  I have had to convince myself that this is true a few times over the years, so now it's here to stay.
   
   -----------------------------------------
 * Derivation
@@ -15,7 +15,8 @@
   ${\implies} {\eta}(x_1) = {\eta}(x_2) = 0$
 
   #+CAPTION: Our two paths
-  [[../../../../rsc/img/articles/Math/euler_lagrange_equation/eulerLagrange1.png]]
+  #+NAME:    fig:  1
+  [[../../../../rsc/img/Articles/Math/euler_lagrange_equation/eulerLagrange1.png]]
 
   For any choice of a constant coefficient **$\epsilon$** and for any higher power polynomial factor that has the same boundary conditions, there is a path variation.
   Thus, there are infinitely many choices for the additional path.
@@ -46,11 +47,12 @@
   The derivative of this integral is possible assuming the criteria for Leibniz's integral rule holds and is evaluated as:
 
   #+CAPTION: Check out wikipedia: Leibniz integral rule and Fubini's theorem, which it's dependent on
-  [[../../../../rsc/img/articles/Math/euler_lagrange_equation/leibnizIntegralRuleOne.png]]
+  #+NAME:    fig:  2
+  [[../../../../rsc/img/Articles/Math/euler_lagrange_equation/leibnizIntegralRuleOne.png]]
 
   And since our bounds $x_1$ & $x_2$ are constants, it reduces to:
 
-  [[../../../../rsc/img/articles/Math/euler_lagrange_equation/leibnizIntegralRuleTwo.png]]
+  [[../../../../rsc/img/Articles/Math/euler_lagrange_equation/leibnizIntegralRuleTwo.png]]
    
   $${\frac{dI}{d {\epsilon}}} = \int_{x_1}^{x_2}  \left(
   \frac{\partial F}{\partial x }\frac{\partial x}{\partial \epsilon } +

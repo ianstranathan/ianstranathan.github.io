@@ -17,11 +17,11 @@ for numerically integrating an ODE.
   For a simulation, $h$ is some small, but
   discrete time step associated with the physics tick/ cycle.
 
-  $$ {f^{\prime}(t) \approx \frac {f(t + {\Delta t}) - f(t)}{\Delta t}$$
+  $$f^{\prime}(t) \approx \frac {f(t + {\Delta t}) - f(t)}{\Delta t}$$
 
   Algebraically rearranging for the function at the next time step $f(x + {\Delta t})$:
 
-  $$ f(t + {\Delta t}) \approx {f^{\prime}(t) {\Delta t}  + f(t)  $$
+  $$f( t + \Delta{t}) \approx f(t) + f^{\prime}(t) \Delta{t}$$
 
   That is to say, we can approximate the value of the next step of a function 
   if we have its value and its derivative value at the current time step.

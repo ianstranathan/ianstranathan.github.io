@@ -86,31 +86,31 @@ flex-direction: column;
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org6be99fd">Intro</a></li>
-<li><a href="#org1378e7b">Why?</a>
+<li><a href="#orgcd4f8a2">Intro</a></li>
+<li><a href="#orga41ae60">Why?</a>
 <ul>
-<li><a href="#org8bb8881">REPL/ image based development</a></li>
-<li><a href="#org7a4fc67">Macros</a></li>
-<li><a href="#org7004602">Other's opinions on why bother with Lisp</a></li>
+<li><a href="#org0808047">REPL/ image based development</a></li>
+<li><a href="#orga0630be">Macros</a></li>
+<li><a href="#orgc37a5cd">Other's opinions on why bother with Lisp</a></li>
 </ul>
 </li>
-<li><a href="#orgd824910">Problems</a>
+<li><a href="#org26ae6f4">Problems</a>
 <ul>
-<li><a href="#org37d2162">Why isn't Lisp more popular?</a></li>
+<li><a href="#org890bc01">Why isn't Lisp more popular?</a></li>
 </ul>
 </li>
-<li><a href="#org9fd01bc">Outro</a>
+<li><a href="#orgb9a8a4b">Outro</a>
 <ul>
-<li><a href="#orgc16c4bd">Note on Common Lisp</a></li>
+<li><a href="#org2aa8e76">Note on Common Lisp</a></li>
 </ul>
 </li>
-<li><a href="#orgc4b5670">Resources</a>
+<li><a href="#orgd1d880d">Resources</a>
 <ul>
-<li><a href="#orgfefab23">Setup:</a></li>
-<li><a href="#org3c8bd55">Reading</a></li>
-<li><a href="#orgc429011">Misc</a></li>
-<li><a href="#orgd76c819">Videos</a></li>
-<li><a href="#org49a761f">Collected Opinions of others</a></li>
+<li><a href="#org511cfb9">Setup:</a></li>
+<li><a href="#org87fdda7">Reading</a></li>
+<li><a href="#orgeafd4f7">Misc</a></li>
+<li><a href="#org4febd79">Videos</a></li>
+<li><a href="#orgd4fffda">Collected Opinions of others</a></li>
 </ul>
 </li>
 </ul>
@@ -124,9 +124,9 @@ These are your father's parentheses, elegant weapons for a more civilized age - 
 
 <hr />
 
-<div id="outline-container-org6be99fd" class="outline-2">
-<h2 id="org6be99fd">Intro</h2>
-<div class="outline-text-2" id="text-org6be99fd">
+<div id="outline-container-orgcd4f8a2" class="outline-2">
+<h2 id="orgcd4f8a2">Intro</h2>
+<div class="outline-text-2" id="text-orgcd4f8a2">
 <p>
 I've spent about a year with Lisp, specifically Common Lisp. 
 </p>
@@ -179,7 +179,7 @@ I was very close to calling it quits, but the army of intelligent people talking
 </p>
 
 <p>
-I understand now, after a lot of <a href="#org3c8bd55">reading</a> (Practical Common Lisp, ANSI Common Lisp, On Lisp mostly) and no small amount of suffering.
+I understand now, after a lot of <a href="#org87fdda7">reading</a> (Practical Common Lisp, ANSI Common Lisp, On Lisp mostly) and no small amount of suffering.
 Maybe this small article can lessen some of that for the uninitiated and curious
 </p>
 
@@ -190,13 +190,13 @@ I'm deeply impressed with the language and the lessons I've learned from it.
 </div>
 
 
-<div id="outline-container-org1378e7b" class="outline-2">
-<h2 id="org1378e7b">Why?</h2>
-<div class="outline-text-2" id="text-org1378e7b">
+<div id="outline-container-orga41ae60" class="outline-2">
+<h2 id="orga41ae60">Why?</h2>
+<div class="outline-text-2" id="text-orga41ae60">
 </div>
-<div id="outline-container-org8bb8881" class="outline-3">
-<h3 id="org8bb8881">REPL/ image based development</h3>
-<div class="outline-text-3" id="text-org8bb8881">
+<div id="outline-container-org0808047" class="outline-3">
+<h3 id="org0808047">REPL/ image based development</h3>
+<div class="outline-text-3" id="text-org0808047">
 <p>
 The REPL (read-eval-print-loop) based environment is really something special. It's a highly ergonomic style of coding and lends itself to rapid idea iteration / maintaining flow.
 </p>
@@ -211,9 +211,9 @@ or rewind the stack to undo an exception.
 </div>
 </div>
 
-<div id="outline-container-org7a4fc67" class="outline-3">
-<h3 id="org7a4fc67">Macros</h3>
-<div class="outline-text-3" id="text-org7a4fc67">
+<div id="outline-container-orga0630be" class="outline-3">
+<h3 id="orga0630be">Macros</h3>
+<div class="outline-text-3" id="text-orga0630be">
 <p>
 Lisp is called the programmable programming language.
 It's fundamentally different from other languages because it runs in the same context it's written in,
@@ -319,9 +319,9 @@ Lisp (see <a href="https://www.paulgraham.com/icad.html">Paul Graham</a>) was or
 </div>
 
 
-<div id="outline-container-orge0c6a6e" class="outline-4">
-<h4 id="orge0c6a6e">Practically speaking macros allow:</h4>
-<div class="outline-text-4" id="text-orge0c6a6e">
+<div id="outline-container-org48e83a7" class="outline-4">
+<h4 id="org48e83a7">Practically speaking macros allow:</h4>
+<div class="outline-text-4" id="text-org48e83a7">
 <ul class="org-ul">
 <li>Domain specific languages (<a href="https://www.paulgraham.com/progbot.html">bottom-up design</a> in the words of Paul Graham)
 Lisp makes no assumption how to orient to this. Through its macro system, Lisp does not assume what syntax, features or functions will be necessary for the problem domain.
@@ -358,9 +358,9 @@ Creating an OO extension to Lisp using something like message-passing is a singl
 </div>
 </div>
 
-<div id="outline-container-org7004602" class="outline-3">
-<h3 id="org7004602">Other's opinions on why bother with Lisp</h3>
-<div class="outline-text-3" id="text-org7004602">
+<div id="outline-container-orgc37a5cd" class="outline-3">
+<h3 id="orgc37a5cd">Other's opinions on why bother with Lisp</h3>
+<div class="outline-text-3" id="text-orgc37a5cd">
 <p>
 <a href="https://gigamonkeys.com/book/introduction-why-Lisp.html">Peter Seibel, my first introduction to Common Lisp</a>
 <a href="https://atlas.engineer/technical-article/why-Lisp.org">https://atlas.engineer/technical-article/why-Lisp.org</a>
@@ -372,9 +372,9 @@ Creating an OO extension to Lisp using something like message-passing is a singl
 </div>
 </div>
 
-<div id="outline-container-orgd824910" class="outline-2">
-<h2 id="orgd824910">Problems</h2>
-<div class="outline-text-2" id="text-orgd824910">
+<div id="outline-container-org26ae6f4" class="outline-2">
+<h2 id="org26ae6f4">Problems</h2>
+<div class="outline-text-2" id="text-org26ae6f4">
 <p>
 Lisp remains an unpopular language (<a href="https://www.tiobe.com/tiobe-index/">relatively speaking</a>). It will never be a good career move to invest in this language as far as I can tell.
 I cannot understand why, save for a black swan event, Python is so popular and Common Lisp (or any industrial strength Lisp) is so fringe.
@@ -382,9 +382,9 @@ I cannot understand why, save for a black swan event, Python is so popular and C
 </p>
 </div>
 
-<div id="outline-container-org37d2162" class="outline-3">
-<h3 id="org37d2162">Why isn't Lisp more popular?</h3>
-<div class="outline-text-3" id="text-org37d2162">
+<div id="outline-container-org890bc01" class="outline-3">
+<h3 id="org890bc01">Why isn't Lisp more popular?</h3>
+<div class="outline-text-3" id="text-org890bc01">
 <ul class="org-ul">
 <li><span class="underline"><a href="https://www.youtube.com/watch?v=_J3x5yvQ8yc">The curse of Lisp</a></span></li>
 
@@ -413,9 +413,9 @@ commuinity aren't freshly minted devs from a coding bootcamped looking for their
 </div>
 </div>
 
-<div id="outline-container-org9fd01bc" class="outline-2">
-<h2 id="org9fd01bc">Outro</h2>
-<div class="outline-text-2" id="text-org9fd01bc">
+<div id="outline-container-orgb9a8a4b" class="outline-2">
+<h2 id="orgb9a8a4b">Outro</h2>
+<div class="outline-text-2" id="text-orgb9a8a4b">
 <blockquote>
 <p>
 Lisp has assisted a number of our most gifted fellow humans in thinking previously impossible thoughts.
@@ -476,9 +476,9 @@ Good luck, have fun!
 </p>
 </div>
 
-<div id="outline-container-orgc16c4bd" class="outline-3">
-<h3 id="orgc16c4bd">Note on Common Lisp</h3>
-<div class="outline-text-3" id="text-orgc16c4bd">
+<div id="outline-container-org2aa8e76" class="outline-3">
+<h3 id="org2aa8e76">Note on Common Lisp</h3>
+<div class="outline-text-3" id="text-org2aa8e76">
 <p>
 I chose to learn Common Lisp between the dominant Lisps (e.g. Common Lisp, scheme, Emacs Lisp, clojure) and would retrospectively recommend against it (at least initially) for a beginner.
 Common Lisp is a language designed around being able to write macros (Lisp-1 vs. Lisp-2)
@@ -495,13 +495,13 @@ To this end, Scheme seems like a much better choice to learn. The syntax carry-o
 </div>
 </div>
 
-<div id="outline-container-orgc4b5670" class="outline-2">
-<h2 id="orgc4b5670">Resources</h2>
-<div class="outline-text-2" id="text-orgc4b5670">
+<div id="outline-container-orgd1d880d" class="outline-2">
+<h2 id="orgd1d880d">Resources</h2>
+<div class="outline-text-2" id="text-orgd1d880d">
 </div>
-<div id="outline-container-orgfefab23" class="outline-3">
-<h3 id="orgfefab23">Setup:</h3>
-<div class="outline-text-3" id="text-orgfefab23">
+<div id="outline-container-org511cfb9" class="outline-3">
+<h3 id="org511cfb9">Setup:</h3>
+<div class="outline-text-3" id="text-org511cfb9">
 <p>
 <span class="underline">Emacs + SLIME + SBCL</span>
 Emacs is a text editor that is itself a Lisp system (Lisp intepreter that just happens to emphasize text editing)
@@ -516,13 +516,13 @@ The two halves communicate via a protocol called SWANK and provide lots of helpf
 </div>
 </div>
 
-<div id="outline-container-org3c8bd55" class="outline-3">
-<h3 id="org3c8bd55">Reading</h3>
-<div class="outline-text-3" id="text-org3c8bd55">
+<div id="outline-container-org87fdda7" class="outline-3">
+<h3 id="org87fdda7">Reading</h3>
+<div class="outline-text-3" id="text-org87fdda7">
 </div>
-<div id="outline-container-org72b9677" class="outline-4">
-<h4 id="org72b9677">My recommended learning resources (in order)</h4>
-<div class="outline-text-4" id="text-org72b9677">
+<div id="outline-container-orgf4b319f" class="outline-4">
+<h4 id="orgf4b319f">My recommended learning resources (in order)</h4>
+<div class="outline-text-4" id="text-orgf4b319f">
 <ul class="org-ul">
 <li>Practical Common Lisp</li>
 <li>ANSI Common Lisp</li>
@@ -534,9 +534,9 @@ The two halves communicate via a protocol called SWANK and provide lots of helpf
 </div>
 </div>
 
-<div id="outline-container-org1754cfd" class="outline-4">
-<h4 id="org1754cfd">Collected learning resources</h4>
-<div class="outline-text-4" id="text-org1754cfd">
+<div id="outline-container-org988e664" class="outline-4">
+<h4 id="org988e664">Collected learning resources</h4>
+<div class="outline-text-4" id="text-org988e664">
 <ul class="org-ul">
 <li>The Structure and Interpretation of Computer Programs</li>
 <li>Paradigms of Artificial Intelligence</li>
@@ -547,9 +547,9 @@ The two halves communicate via a protocol called SWANK and provide lots of helpf
 </div>
 </div>
 
-<div id="outline-container-orgbf8f899" class="outline-4">
-<h4 id="orgbf8f899">Lisp compilers and interpreters</h4>
-<div class="outline-text-4" id="text-orgbf8f899">
+<div id="outline-container-org46ec452" class="outline-4">
+<h4 id="org46ec452">Lisp compilers and interpreters</h4>
+<div class="outline-text-4" id="text-org46ec452">
 <ul class="org-ul">
 <li>Lisp in Small Pieces</li>
 <li>Lisp from Nothing</li>
@@ -558,9 +558,9 @@ The two halves communicate via a protocol called SWANK and provide lots of helpf
 </div>
 </div>
 
-<div id="outline-container-orgc429011" class="outline-3">
-<h3 id="orgc429011">Misc</h3>
-<div class="outline-text-3" id="text-orgc429011">
+<div id="outline-container-orgeafd4f7" class="outline-3">
+<h3 id="orgeafd4f7">Misc</h3>
+<div class="outline-text-3" id="text-orgeafd4f7">
 <p>
 <a href="https://www.grammarly.com/blog/engineering/running-Lisp-in-production/">Vsevold Dyomkin</a> (Author of "Programming Algorithms in Lisp" above)
 </p>
@@ -590,9 +590,9 @@ Lisp in 99 lines of C
 </p>
 </div>
 
-<div id="outline-container-orge4ba9ef" class="outline-4">
-<h4 id="orge4ba9ef">Erik Naggum: man, myth, legend.</h4>
-<div class="outline-text-4" id="text-orge4ba9ef">
+<div id="outline-container-orgfe0eb35" class="outline-4">
+<h4 id="orgfe0eb35">Erik Naggum: man, myth, legend.</h4>
+<div class="outline-text-4" id="text-orgfe0eb35">
 <p>
 <a href="https://www.xach.com/naggum/articles/3092837184154309@naggum.no.html">On the primacy of the list</a>
 </p>
@@ -600,9 +600,9 @@ Lisp in 99 lines of C
 </div>
 </div>
 
-<div id="outline-container-orgd76c819" class="outline-3">
-<h3 id="orgd76c819">Videos</h3>
-<div class="outline-text-3" id="text-orgd76c819">
+<div id="outline-container-org4febd79" class="outline-3">
+<h3 id="org4febd79">Videos</h3>
+<div class="outline-text-3" id="text-org4febd79">
 <p>
 <a href="https://www.youtube.com/watch?v=5Kg7gC1YcWs">Exercism recap of Lisp and various Lisp dialects</a>
 <a href="https://www.youtube.com/@CBaggers/videos">Baggers</a>
@@ -617,9 +617,9 @@ Lisp in 99 lines of C
 </div>
 </div>
 
-<div id="outline-container-org49a761f" class="outline-3">
-<h3 id="org49a761f">Collected Opinions of others</h3>
-<div class="outline-text-3" id="text-org49a761f">
+<div id="outline-container-orgd4fffda" class="outline-3">
+<h3 id="orgd4fffda">Collected Opinions of others</h3>
+<div class="outline-text-3" id="text-orgd4fffda">
 <p>
 <a href="https://insearchofsecrets.com/2014/08/04/Lisp-smalltalk-and-the-power-of-symmetry/">Lisp, Smalltalk &amp; the power of Symmetry</a>
 </p>

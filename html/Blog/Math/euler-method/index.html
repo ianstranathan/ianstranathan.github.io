@@ -91,9 +91,9 @@ I wanted to start simply and this is the most basic, explicit method
 for numerically integrating an ODE.
 </p>
 
-<div id="outline-container-org9f7362b" class="outline-2">
-<h2 id="org9f7362b">Derivation</h2>
-<div class="outline-text-2" id="text-org9f7362b">
+<div id="outline-container-org7748627" class="outline-2">
+<h2 id="org7748627">Derivation</h2>
+<div class="outline-text-2" id="text-org7748627">
 <hr />
 <p>
 Recall the limit definition of a derivative:
@@ -113,7 +113,7 @@ discrete time step associated with the physics tick/ cycle.
 </p>
 
 <p>
-\[ {f^{\prime}(t) \approx \frac {f(t + {\Delta t}) - f(t)}{\Delta t}\]
+\[f^{\prime}(t) \approx \frac {f(t + {\Delta t}) - f(t)}{\Delta t}\]
 </p>
 
 <p>
@@ -121,7 +121,7 @@ Algebraically rearranging for the function at the next time step \(f(x + {\Delta
 </p>
 
 <p>
-\[ f(t + {\Delta t}) \approx {f^{\prime}(t) {\Delta t}  + f(t)  \]
+\[f( t + \Delta{t}) \approx f(t) + f^{\prime}(t) \Delta{t}\]
 </p>
 
 <p>
