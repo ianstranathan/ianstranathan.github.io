@@ -1,0 +1,805 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A Lispy Interlude</title>
+<meta name="generator" content="Org Mode" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Blah</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+<style>
+  /* Add a little padding to ensure spacing is correct between content and header nav */
+
+  #preamble {   
+      color: var(--text);
+      background-color: var(--bg);
+      font-size: 1.15rem;
+      line-height: 1.5;
+      display: grid;
+      grid-template-columns: 1fr min(45rem, 90%) 1fr;
+      margin: 0;
+  }
+
+  header {
+      background-color: var(--accent-bg);
+      border-bottom: var(--border-width) solid var(--border);
+      text-align: center;
+      padding: 0 0.5rem 2rem 0.5rem;
+      grid-column: 1 / -1;
+  }
+
+  header > *:only-child {
+      margin-block-start: 2rem;
+  }
+
+  header h1 {
+      max-width: 1200px;
+      margin: 1rem auto;
+  }
+
+  header p {
+      max-width: 40rem;
+      margin: 1rem auto;
+  }
+  
+  #content {
+      padding-top: 1.5rem;
+  }
+  #content a {
+      display: block;
+  }
+  
+
+  footer {
+      margin-top: 4rem;
+      padding: 2rem 1rem 1.5rem 1rem;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      text-align: center;
+      border-top: var(--border-width) solid var(--border);
+  }
+
+  #content > #folder_depth_0 {
+      /* Font properties */
+      /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
+      font-size: 1.25rem; /* Slightly larger than body text, but not too big */
+      font-weight: 700; /* Bold */
+      /*color: #333; /* Dark gray for good contrast */ */
+      /*color: #E0E0E0;*/
+      text-transform: uppercase; /* Makes it look more like a category */
+      letter-spacing: 0.08em; /* Spreads out letters slightly for a refined look */
+
+      /* Spacing and layout */
+      margin-top: 2.5rem; /* Ample space above to separate from previous content */
+      margin-bottom: 1rem; /* Space below before the items start */
+      padding-bottom: 0.5rem; /* Little padding at the bottom */
+      border-bottom: 2px solid #eee; /* A subtle separator line */
+
+      /* Optional: Small accent line for more distinction */
+      /* position: relative; /* Needed for pseudo-elements */ */
+      /* display: inline-block; /* Or block, depending on desired width */ */
+  }
+
+  #content > #folder_depth_1 {
+      /* Font properties */
+      /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
+      font-size: 1.10rem; /* Slightly larger than body text, but not too big */
+      font-weight: 500; /* Bold */
+      color: gold; /* Dark gray for good contrast */ */
+      text-transform: uppercase; /* Makes it look more like a category */
+    letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
+  }
+</style>
+</head>
+<body>
+<div id="preamble" class="status">
+<header>
+      <h1> Ian Stranathan </h1>
+        <nav>
+	  <ul>
+	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
+	    <li><a href="https://github.com/ianstranathan"><i class="fa-brands fa-github"></i></a></li>
+	  </ul>
+	</nav>
+    </header>
+</div>
+<div id="content" class="content">
+<h1 class="title">A Lispy Interlude</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orga127202">Intro</a></li>
+<li><a href="#orgd56637b">Why?</a>
+<ul>
+<li><a href="#orga1df223">REPL &amp; image based development</a></li>
+<li><a href="#org272159d">Macros</a></li>
+<li><a href="#orgcddb0e7">Other's opinions on why bother with Lisp</a></li>
+</ul>
+</li>
+<li><a href="#org4e6cd3d">Problems</a>
+<ul>
+<li><a href="#orga0d7b58">Why isn't Lisp more popular?</a></li>
+</ul>
+</li>
+<li><a href="#orgca39c18">Outro</a>
+<ul>
+<li><a href="#org6ca387d">Note on Common Lisp</a></li>
+</ul>
+</li>
+<li><a href="#org08ae561">Resources</a>
+<ul>
+<li><a href="#org01d856d">Setup:</a></li>
+<li><a href="#org0277526">Reading</a></li>
+<li><a href="#org03a2c16">Misc</a></li>
+<li><a href="#org686965c">Videos</a></li>
+<li><a href="#org783beec">Collected Opinions of others</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+TL;DR:
+Lisp is a fascinating family of languages.
+Claims of enlightenment are overblowm, but it seems to approach an upper limit in language design if expressiveness and metaprogramming are primary goals.
+It exposed me to lambda calculus and broadened my programming purview beyond the algol descendants which was all I'd known previously.
+I still use common lisp and clojure on a regular basis and programming in lisp remains a pleasure.
+</p>
+
+<hr />
+
+<div id="outline-container-orga127202" class="outline-2">
+<h2 id="orga127202">Intro</h2>
+<div class="outline-text-2" id="text-orga127202">
+<p>
+(Obligatory xkcd quote)
+</p>
+<blockquote>
+<p>
+These are your father's parentheses, elegant weapons for a more civilized age - <a href="https://xkcd.com/297/">xkcd</a>
+</p>
+</blockquote>
+
+<p>
+I came to Lisp quite by accident.
+By chance I chose to try out Emacs (cargo cult style because Casey Muratori and Jonathan Blow use Emacs &amp; I wanted to use a different system than programmers around me, i.e. Vim).
+</p>
+
+<p>
+After the initial leap of faith, I stayed due to the lindy effect and the purported ability to completely extend/ customize Emacs.
+(Who doesn't <b>hate</b> learning arbitrary pieces of software/ being dependent on mutable toolchains?)
+As such, while trying to come to terms with the steep learning curve and starting to slowly customize my Emacs, I was exposed to Emacs Lisp.
+</p>
+
+<p>
+This, combined with a burgeoning interest in functional programming (FP) at the time (I was motivated to pickup another language to try out a different paradigm in general) led me to look into Lisp. (My lisp of choice, Common lisp, turned out to be paradigm agnostic)
+</p>
+
+<p>
+Of the standard set of recommended languages to learn FP, Lisp sounded compelling if only from the way people talked about it:
+</p>
+<blockquote>
+<p>
+Lisp is worth learning for the profound enlightenment experience you will have when you finally get it; that experience will make you a better programmer for the rest of your days, even if you never actually use Lisp itself a lot."
+-Eric Raymond
+</p>
+</blockquote>
+
+<p>
+After considering which Lisp (Lisp is a family of languages) to jump into, I settled on Common Lisp (CL), see <a href="#org6ca387d">Note on Common Lisp</a>.
+</p>
+
+<p>
+Well, I assumed I had a pretty strong foundation in programming. I had a few languages under my belt and been exposed to a variety of languages and programming subdisciplines like graphics for many years.
+</p>
+
+<p>
+To my surprise and frustration, I couldn't understand the syntax at all.
+(A very common first reaction to Lisp; such reactions have even given rise to the joke that lisp stands for <i>lots of irritating superfluous parentheses</i> )
+In a very basic way, I couldn't even declare or assign simple variables or understand how to return something from a function.
+There seemed to be an overwhelming amount of specialized verbiage/ specialized syntax (Lisp actually has almost no syntax like the lambda caluclus at its core)
+and anytime I messed around in a REPL I got compilation errors that I couldn't follow
+</p>
+
+<p>
+It felt like I was touching C++ or OpenGL again for the first time. Some convoluted, black box that didn't seem worth the effort.
+I was very close to calling it quits, but the army of intelligent people talking about englightenment kept me going.
+</p>
+
+<p>
+I understand now, after quite a bit of fumbling <a href="#org0277526">(save yourself the effort)</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd56637b" class="outline-2">
+<h2 id="orgd56637b">Why?</h2>
+<div class="outline-text-2" id="text-orgd56637b">
+</div>
+<div id="outline-container-orga1df223" class="outline-3">
+<h3 id="orga1df223">REPL &amp; image based development</h3>
+<div class="outline-text-3" id="text-orga1df223">
+<p>
+The REPL (read-eval-print-loop) is excellent for incremental / exploratory development.
+It's a highly ergonomic style of coding and lends itself to rapid idea iteration / maintaining flow.
+</p>
+
+<p>
+Instead of write-compile-debug cycle, you can incrementally build interactively. You can compile functions,
+redefine classes, etc. all while the program is running via
+hot reloads/ changing the internal state of the image. (all compiled code, data, sybol table, environment state)
+</p>
+
+<p>
+You don't have to restart a process and then re-create objects.
+Compile the bit that you want or is not working and get instant feedback.
+If something isn't working or you don't understand something, just hop over to your REPL and fix it or prove it to yourself. You can inspect trees of live values,
+or rewind the stack to undo an exception.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org272159d" class="outline-3">
+<h3 id="org272159d">Macros</h3>
+<div class="outline-text-3" id="text-org272159d">
+<p>
+Lisp is called the programmable programming language.
+It's fundamentally different from other languages because it runs in the same context it's written in,
+i.e. it's written in the same form as running Lisp code which is the same as Lisp data (the so called s-expression).
+Lisp's syntax, the hated parens, are a necessary result of this. (its source code is already in a form that is directly
+interpretable as an AST, the s-expression is the AST, this correspondence is what enables homoiconicity, i.e. code as data / data as code duality)
+</p>
+
+<p>
+"you express programs directly in the parse trees that get built behind the scenes when other languages are parsed,
+and these trees are made of lists, which are Lisp data structures."
+</p>
+
+<p>
+It's ironic that Lisp's syntax is such a sticking point as it's actually a lack of syntax.
+Everything is an expression, every expression gets evaluated, if you don't want it evaluated, you
+put a quote on it.
+</p>
+
+<p>
+Lisp is powerful because all Lisp programs are also Lisp data -– everything that can be run can be written (and read) in an s-expression.
+This makes it possible to write Lisp code that reliably generates and transforms source code through the metaprogramming facility of macros:
+programs that write programs, that write programs&#x2026; s-expressions all the way down.
+</p>
+
+<blockquote>
+<p>
+The whole language is there all the time. There is no real distinction between read-time, compile-time, and runtime.
+You can compile or run code while reading, read or run code while compiling, and read or compile code at runtime.
+Running code at read-time lets users reprogram Lisp's syntax; running code at compile-time is the basis of macros;
+compiling at runtime is the basis of Lisp's use as an extension language in programs like Emacs;
+and reading at runtime enables programs to communicate using s-expressions, an idea recently reinvented as XML. - <a href="https://www.paulgraham.com/icad.html">Paul Graham</a>
+</p>
+</blockquote>
+
+<p>
+This aspect is what people are talking about when they use hyperbolic terms like "enlightenment", or about the necessity of Lisp, that Lisp
+isn't quite an invention, but rather is closer to a discovery.
+</p>
+
+<blockquote>
+<p>
+Lisp isn't a language, it's a building material."
+</p>
+<ul class="org-ul">
+<li>Alan Kay</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+"Lisp's core occupies some kind of local optimum in the space of programming languages"
+</p>
+<ul class="org-ul">
+<li>John McCarthy</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+"Lisp is a minimal fixed point amongst programming languages.
+It's not an invention, but a discovery.
+That's why it won't just go away."
+</p>
+<ul class="org-ul">
+<li>Brian Beckman</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+Part of what makes Lisp distinctive is that it is designed to evolve. As new abstractions become popular (object-oriented programming, for example),
+it always turns out to be easy to implement them in Lisp. Like DNA, such a language does not go out of style.
+</p>
+<ul class="org-ul">
+<li>Pual Graham</li>
+</ul>
+</blockquote>
+
+<p>
+See these two articles for extended explaination (Short cut enlightenment! Life's too short)
+<a href="https://dl.acm.org/doi/10.1145/3386330">https://dl.acm.org/doi/10.1145/3386330</a>
+<a href="https://stopa.io/post/265">https://stopa.io/post/265</a>
+<a href="https://www.defmacro.org/ramblings/Lisp.html">https://www.defmacro.org/ramblings/Lisp.html</a>
+</p>
+
+<p>
+It would seem that Lisp is an expressiveness limit that a language can approach. Whether through s-expressions or <a href="https://medium.com/smalltalk-talk/Lisp-smalltalk-and-the-power-of-symmetry-8bd96aaa0c0c">not</a>
+Lisp transcends language features, by having a single language feature that lets you define language features
+</p>
+
+<p>
+Lisp's strange syntax (lack of syntax), and its concomitant homoiconicity (expressing the language in its own data structures) creates this limiting behavior.
+<a href="https://www.paulgraham.com/icad.html">One could argue</a> that if you add this facility to a language, you can no longer claim to have invented a new language, but only a new dialect of Lisp.
+Analogous maybe, but more funadamental, to how C is often described as a portable assembly language. If you change the abstraction layer at that low level, it's more
+or less a syntactic isomorphism, you haven't really gained anything. A reason C is ubiquitous and hasn't really been replaced.
+</p>
+
+<p>
+More fundamental, I think, because just like the Lambda Calculus it's based on, it exists in the abstract.
+Lisp (see <a href="https://www.paulgraham.com/icad.html">Paul Graham</a>) was originally intended as a theoretical exercise to "define a more convenient alternative to the Turing Machine".
+"Lisp was a piece of theory that unexpectedly got turned into a programming language."
+</p>
+</div>
+
+
+<div id="outline-container-orgce3177c" class="outline-4">
+<h4 id="orgce3177c">Practically speaking macros allow:</h4>
+<div class="outline-text-4" id="text-orgce3177c">
+<ul class="org-ul">
+<li>Domain specific languages (<a href="https://www.paulgraham.com/progbot.html">bottom-up design</a> in the words of Paul Graham)
+Lisp makes no assumption how to orient to this. Through its macro system, Lisp does not assume what syntax, features or functions will be necessary for the problem domain.
+Like list comprehensions from Python or Haskell, <a href="https://stackoverflow.com/questions/267862/what-makes-Lisp-macros-so-special">write a macro</a>
+No need to wait for syntax extensions (e.g. waiting for Oracle to add for each semantics to Java) the language is naturally scultped to the problem.</li>
+
+<li><p>
+design patterns, higher levels of abstraction
+</p>
+<blockquote>
+<p>
+Patterns mean "I have run out of language." - Rich Hickey
+</p>
+</blockquote></li>
+<li><p>
+compile time computing / metaprogramming/ code generation &amp; transformation
+Other languages have metaprogramming techniques, but they're neither as reliable nor powerful as Lisp (C and C++ examples
+<a href="http://lists.warhead.org.uk/pipermail/iwe/2005-July/000130.html">here</a>; indeed, if they were as good, they would actually have to be a Lisp!)
+"To add object-orientation to C, Bjarne Stroustrup had to write a whole front-end called cfront which processed C++ into a mess of C
+that could be compiled.
+Lispers could do the same thing with macros (CLOS), without having to do the kind of parsing cfront had to do.
+Creating an OO extension to Lisp using something like message-passing is a single chapter textbook exercise using macros." (<a href="https://www.reddit.com/r/Lisp/comments/18823uj/i_dont_think_i_get_macros/">link</a>)
+</p>
+<blockquote>
+<p>
+"Common Lisp macros are to C++ templates what poetry is to IRS tax forms."
+</p>
+<ul class="org-ul">
+<li>Christian Schafmeister</li>
+</ul>
+</blockquote></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcddb0e7" class="outline-3">
+<h3 id="orgcddb0e7">Other's opinions on why bother with Lisp</h3>
+<div class="outline-text-3" id="text-orgcddb0e7">
+<p>
+<a href="https://gigamonkeys.com/book/introduction-why-Lisp.html">Peter Seibel, my first introduction to Common Lisp</a>
+<a href="https://atlas.engineer/technical-article/why-Lisp.org">https://atlas.engineer/technical-article/why-Lisp.org</a>
+<a href="http://ivy.io/common-Lisp/2015/03/03/guerilla-Lisp-opus.html">http://ivy.io/common-Lisp/2015/03/03/guerilla-Lisp-opus.html</a>
+</p>
+
+<hr />
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4e6cd3d" class="outline-2">
+<h2 id="org4e6cd3d">Problems</h2>
+<div class="outline-text-2" id="text-org4e6cd3d">
+<p>
+Lisp remains an unpopular language (<a href="https://www.tiobe.com/tiobe-index/">relatively speaking</a>). It will never be a good career move to invest in this language as far as I can tell.
+I cannot understand why, save for a black swan event, Python is so popular and Common Lisp (or any industrial strength Lisp) is so fringe.
+(See some old speed comparisons, among other things, from <a href="https://www.norvig.com/python-Lisp.html">Peter Norvig</a>)
+</p>
+</div>
+
+<div id="outline-container-orga0d7b58" class="outline-3">
+<h3 id="orga0d7b58">Why isn't Lisp more popular?</h3>
+<div class="outline-text-3" id="text-orga0d7b58">
+<ul class="org-ul">
+<li><span class="underline"><a href="https://www.youtube.com/watch?v=_J3x5yvQ8yc">The curse of Lisp</a></span></li>
+
+<li><span class="underline">No advocating group</span> (Benevolent Dictator For Life, Oracle like company, etc.)</li>
+
+<li><span class="underline"><a href="https://www.dreamsongs.com/WorseIsBetter.html">Worse is better</a></span></li>
+
+<li><span class="underline">Linguistic imperialism</span> (ALGOL descendence)
+Why is English the lingua franca of our time? (Why is the by-word for such a thing called lingua franca)</li>
+
+<li><span class="underline">The Mathew principle</span> (Libraries, learning resources):
+The ecosystem is worse than the dominating languages =&gt; Vicious cycle, not enough resources (libraries, learning resources etc.) exist because not enough people are using the language;
+no one wants to use the language because there aren't enough resources.
+Everything is give and take however &#x2013; an advantage of this situation is that the resources that do exist are very high quality. The people who are active in the
+commuinity aren't freshly minted devs from a coding bootcamped looking for their senior position in JS.</li>
+
+<li><b>Not everyone can be Jedis</b></li>
+</ul>
+
+<p>
+<a href="https://norvig.com/Lisp-retro.html">Peter Norvig's take</a>
+</p>
+
+<hr />
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgca39c18" class="outline-2">
+<h2 id="orgca39c18">Outro</h2>
+<div class="outline-text-2" id="text-orgca39c18">
+<blockquote>
+<p>
+Lisp has assisted a number of our most gifted fellow humans in thinking previously impossible thoughts.
+</p>
+<ul class="org-ul">
+<li>Edsger Dijkstra</li>
+</ul>
+</blockquote>
+
+<p>
+As talked about in more detail in the already referenced essay <a href="https://www.paulgraham.com/icad.html">Revenge of the Nerds</a> by Paul Graham,
+"Over time, the default language, embodied in a succession of popular languages, has gradually evolved toward Lisp"
+Most modern languages (or the predominately used subsets of those languages) look more like Lisp than not.
+Python, despite its Algol inherited syntax is more Lisp-like than its actual ancestor.
+(Even more on the nose, as discussed in the above essay, modern Fortran is more Lisp like than Fortan like; Fortran and Lisp representing the big evolutionary
+bifurcation in programming languages)
+</p>
+
+<p>
+Lisp hasn't so much died out as melded with modern languages (I think this is the more common evolutionary trajectory rather than extinction.
+eurasian humans are 1-4% Neanderthal supposedly, the original Blub languages (Fortran) being the Neanderthals of course).
+Still, macros, as discussed toward the beginning, are a structural dilineation.
+Many languages have higher order functions, garbage collection, recursion and so on (see "Revenge of the Nerds"), but they can't cross that threshold without
+becoming and isomorphism to lisp, another dialect.
+</p>
+
+<p>
+As such, there are still unique rewards to studying Lisp (philosophical and technical).
+There are also associated costs to be paid for using uncommon/ non-"standard" technologes, emphatically, <b>there is no practical or commerical application to learning Lisp.</b>
+Hoever, for me the juice was worth the sequeeze:
+</p>
+
+<ul class="org-ul">
+<li>A different perspective / breaking out of the ALGOL world (C, C++, Java, C# and Python personally)
+Beyond syntax, macro/ metaprogramming is so different than the paradigms I had seen before.</li>
+
+<li>A better ability to code using recursion as an iterative technique.</li>
+</ul>
+<p>
+(As long as a compiler is tail call optimized (See this <a href="https://www.youtube.com/watch?v=SPri4PTUY_8">excellent explaination</a> if TCO is confusing to you), I think recursion should be used more often;
+it often fits the problem better, is smaller, less mental/ complexity management and is almost always more elegant)
+</p>
+
+<ul class="org-ul">
+<li>Deeper understanding of functional programming/ closure oriented programming
+(Lisp is <span class="underline">not</span> strictly functional. But there is a reason why s-expressions resemble Lambda calculus so much and a lot of resources are written
+in a fucntional style)</li>
+
+<li>Life long Emacs</li>
+</ul>
+
+<p>
+These points won't spin the world the other way, but they have <span class="underline">made me a better programmer</span> and this was the goal all along.
+</p>
+
+<p>
+Good luck, have fun!
+</p>
+</div>
+
+<div id="outline-container-org6ca387d" class="outline-3">
+<h3 id="org6ca387d">Note on Common Lisp</h3>
+<div class="outline-text-3" id="text-org6ca387d">
+<p>
+My main reasons for choosing CL between the dominant Lisps available (i.e. Common Lisp, Clojure, Scheme and Emacs Lisp) as it was the easiest to set up &amp; seemed to have most resources (libraries, learning materials etc.).
+I think Scheme would have been better to start with in hindsight.
+</p>
+
+<p>
+CL is a language explicitly designed around being able to write macros (Lisp-1 vs. Lisp-2), and this is an initial
+complexity hurdle coming from the Algol/C/Java world.
+CL is also an industrial grade languae with a lot of batteries included. 
+The CL standard library is built up using macros and macros can superficially violate syntax rules (or the lack of syntax rules).
+When you're told while learning that everything is a function return (s-expression)/ basically lambda calculus, it seems
+initially inexplicable to see standard library functions in CL.
+</p>
+
+<p>
+Clojure carries some FP complexities (laziness, immutable data etc) that adds to the cognitive overhead of strictly trying to learn a lisp
+</p>
+
+<p>
+Thus, Scheme seems like the optimal first lisp. The syntax carry-over will be fairly seamless after the initial hurdle of s-expressions, then the additional, dialect specific complexities can be added incrementally
+</p>
+
+<hr />
+</div>
+</div>
+</div>
+
+<div id="outline-container-org08ae561" class="outline-2">
+<h2 id="org08ae561">Resources</h2>
+<div class="outline-text-2" id="text-org08ae561">
+</div>
+<div id="outline-container-org01d856d" class="outline-3">
+<h3 id="org01d856d">Setup:</h3>
+<div class="outline-text-3" id="text-org01d856d">
+<p>
+<span class="underline">Emacs + SLIME + SBCL</span>
+Emacs is a text editor that is itself a Lisp system (Lisp intepreter that just happens to emphasize text editing)
+This makes the editor as customizable and programmable as any other Lisp system; and most editor extensions are in fact Emacs Lisp programs that get loaded into a running editor to add their functionalit
+</p>
+
+<p>
+SLIME is a Lisp development tool that comes in two parts: one is an Emacs Lisp program, the other is a Common Lisp program.
+The two halves communicate via a protocol called SWANK and provide lots of helpful features that make Lisp development easier (function signature completions for exmaple)
+(SLIME: Emacs addon, a client that sends commands from Emacs to a Common Lisp language server (SWANK); SWANK executes client commands, running on your chosen Common Lisp e.g. SBCL)
+</p>
+
+<p>
+(Clojure has an equivalent environment in the form of CIDER)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0277526" class="outline-3">
+<h3 id="org0277526">Reading</h3>
+<div class="outline-text-3" id="text-org0277526">
+</div>
+<div id="outline-container-orgefedc10" class="outline-4">
+<h4 id="orgefedc10">My recommended learning resources</h4>
+<div class="outline-text-4" id="text-orgefedc10">
+<ul class="org-ul">
+<li>Programming Algorithms in Lisp (probably start with this, crash course at beginning)</li>
+<li>Practical Common Lisp (then this)</li>
+<li>ANSI Common Lisp (then this, feel free to swim around)</li>
+<li>Common Lisp Recipes</li>
+<li>On Lisp (Recommended to start understanding macros)</li>
+<li>Let over Lambda (Pretty intense, "On Lisp" is a prerequisite)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5998790" class="outline-4">
+<h4 id="org5998790">Collected learning resources</h4>
+<div class="outline-text-4" id="text-org5998790">
+<ul class="org-ul">
+<li>The Structure and Interpretation of Computer Programs</li>
+<li>Paradigms of Artificial Intelligence</li>
+<li>The Schemer Series (Little, Seasoned, Reasoned)</li>
+<li>Essentials of Programming Languages</li>
+<li>Concrete Abstractions</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgffbf979" class="outline-4">
+<h4 id="orgffbf979">Lisp compilers and interpreters</h4>
+<div class="outline-text-4" id="text-orgffbf979">
+<ul class="org-ul">
+<li>Lisp in Small Pieces</li>
+<li>Lisp from Nothing</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org03a2c16" class="outline-3">
+<h3 id="org03a2c16">Misc</h3>
+<div class="outline-text-3" id="text-org03a2c16">
+<p>
+<a href="https://www.grammarly.com/blog/engineering/running-Lisp-in-production/">Vsevold Dyomkin</a> (Author of "Programming Algorithms in Lisp" above)
+</p>
+
+<p>
+<a href="https://github.com/CodyReichert/awesome-cl">awsome-cl</a>
+</p>
+
+<p>
+Great collection of articles on macros
+<a href="https://malisper.me/">https://malisper.me/</a>
+</p>
+
+<p>
+Compile time computing
+<a href="https://medium.com/@MartinCracauer/a-gentle-introduction-to-compile-time-computing-part-1-d4d96099cea0">https://medium.com/@MartinCracauer/a-gentle-introduction-to-compile-time-computing-part-1-d4d96099cea0</a>
+</p>
+
+<p>
+The Roots of Lisp
+<a href="https://www.paulgraham.com/rootsofLisp.html">https://www.paulgraham.com/rootsofLisp.html</a>
+</p>
+
+<p>
+Lisp in 99 lines of C
+<a href="https://github.com/Robert-van-Engelen/tinyLisp">https://github.com/Robert-van-Engelen/tinyLisp</a>
+</p>
+</div>
+
+<div id="outline-container-org7fd95cc" class="outline-4">
+<h4 id="org7fd95cc">Erik Naggum: man, myth, legend.</h4>
+<div class="outline-text-4" id="text-org7fd95cc">
+<p>
+<a href="https://www.xach.com/naggum/articles/3092837184154309@naggum.no.html">On the primacy of the list</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org686965c" class="outline-3">
+<h3 id="org686965c">Videos</h3>
+<div class="outline-text-3" id="text-org686965c">
+<p>
+<a href="https://www.youtube.com/watch?v=5Kg7gC1YcWs">Exercism recap of Lisp and various Lisp dialects</a>
+<a href="https://www.youtube.com/@CBaggers/videos">Baggers</a>
+<a href="https://www.youtube.com/playlist?list=PL2VAYZE_4wRKKr5pJzfYD1w4tKCXARs5y">Bagger's Lispy OpenGL &#x2013; CEPL</a>
+(These videos, specifically "Little bits of Lisp" were what initially got me over the setup/ starting hurdle. Thank you baggers)
+</p>
+
+<p>
+<a href="https://www.youtube.com/watch?v=_B_4vhsmRRI">Slime Tutorial</a>
+<a href="https://vimeo.com/77004324">Debugging Tutorial</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org783beec" class="outline-3">
+<h3 id="org783beec">Collected Opinions of others</h3>
+<div class="outline-text-3" id="text-org783beec">
+<p>
+<a href="https://beautifulracket.com/appendix/why-racket-why-lisp.html">https://beautifulracket.com/appendix/why-racket-why-lisp.html</a>
+<a href="https://www.reddit.com/r/lisp/comments/maagi2/main_reasons_for_a_programmer_to_try_their_hand/">https://www.reddit.com/r/lisp/comments/maagi2/main_reasons_for_a_programmer_to_try_their_hand/</a>
+</p>
+
+<p>
+<a href="https://insearchofsecrets.com/2014/08/04/Lisp-smalltalk-and-the-power-of-symmetry/">Lisp, Smalltalk &amp; the power of Symmetry</a>
+</p>
+
+  <details>
+  <summary><a href="https://www.reddit.com/r/Lisp/comments/vogjl2/Lisp_didnt_add_any_value_to_my_life/">Giga-post from reddit</a></summary>
+  <p>
+  https://groups.google.com/g/comp.lang.Lisp/c/oSslA8mJdho?pli=1
+  Google for Lisp at the JPL, https://news.ycombinator.com/item?id=2212211 https://thenewstack.io/nasa-programmer-remembers-debugging-Lisp-in-deep-space/
+
+  A Lisp implementation running on a spacecraft where a bug was debugged live on the craft using a remote repl
+
+guerilla Lisp opus.
+https://groups.google.com/g/comp.lang.Lisp/c/HULKDUj_mBA/m/-UKK60tFz4YJ Characterize your problem in an abstract syntax that you make up as you go and suddenly you end up with a powerful compiler
+
+Google cbaggers and cepl Live coding open GL graphics programming. He even wrote his slide presentation software in it so that he can live code in front of you while giving presentations
+
+https://youtu.be/PqwuIfl-G1w Live coding with music
+
+I've heard that in Lisp environments of old you were able to live code a GUI. So imagine while you're developing an application it gets complicated enough that you load a database and make changes to the data and click all these menus and now you want to debug some function. With Lisp you can load the whole state of the application get to that menu and experiment with and debug the dialog you're clicking on. You can keep the application state alive while iterating on your dialog without having to close the program and open it again and set up the state each time you want to make a change and test. You can even get live feedback from stakeholders as you demonstrate your app.
+
+This extends from the idea that you have a terminal that allows you to make changes to a running program. Imagine that you have a code path that turns out to be begging for memoization. You can iterate and test live in the app with A copy of production data, and when you're satisfied with your memoization implementation you can swap the functions definition with yours that calls the original whenever it needs a new value while the program is running and suddenly your change is live. Is this a great way to develop software at scale? Maybe not, there is a trade-off to be made when it is easy to make changes in a rebel that you forget to capture, it can be a little confusing to back your way out and save the changes you tested. Getting around this is just a matter of learning good practices. Try doing this in any other language.
+
+When you consider that it took languages like C++ and Java years and years and years to add things like foreach loops, not only was it out of the box in Lisp to begin with but it becomes a simple macro. You can build object oriented language support using macros alone, and while it might not necessarily be fast, look what happened when someone added object oriented programming support for C. It became the abortion you see today.
+
+Along the same lines, since common list has a standard and the standard hasn't been updated since it was released, you don't have to worry about the Python 2 to Python 3 problem, you don't have to wait for a new standard to come out to support some new functionality, you don't have to deal with the various versions of C++, code that was written 20 years ago will just work.
+
+https://atlas.engineer/technical-article/why-Lisp.org
+
+C++ template meta programming is truly contrived and dizzying. It is a powerful tool that is very complex. And it basically constitutes a whole new syntax for compile time optimization and programming. Meanwhile in Lisp the language of compile time computing is the same as runtime computing. It's the same language, it just runs at a different time. Once you're familiar with programming and Lisp you are then familiar with how to program code that runs a compile time, yes they're slightly more involved in understanding the mental model however the learning curve is significantly less steep.
+
+How many different languages do you need in order to write a C++ program? Make/cmake/catkin/colcon/Conan/ninja just to get it to build in link, The language itself, The m4 macro pre-processor, and the cluster that is template metaprogramming.
+
+In Common Lisp, it is Lisp all the way down.
+
+Try writing a binary serialization framework in C++ without resorting to code generation in Python. I think this was only finally possible in C++ 17 if that.
+
+This is why I love this language
+
+Edit: I forgot to mention syntax. In JavaScript do you frequently use every closing brace and semicolon when ending a function that has a lambda callback.
+
+A long time ago I asked Ron Garret, the author of the JPL article, about his experience in more depth. To paraphrase he said I don't consider myself a very strong programmer, so with Lisp I was able to do great things with reduced cognitive load.
+
+2nd Edit: oh! And typing! If you turn on optimization support, SBCL will give you very relevant hints about what it can and cannot optimize for you and how you can go about rewriting things and specifying types so that it can do the optimization for you. Every Common Lisp implementation supports generating disassembly for a given function so you can see the effects of your changes. You can put types where you need them, when you need them, and don't have to worry about potentially getting stuck later down the road because you had to decide about types before you knew more about your domain problems.
+
+Oh, and multiple inheritance with multiple dispatch. Design and object hierarchy that allows you to represent the sound that is made between two objects that are struck together. Does one object take the other in a "clap" method? If you have a drum, a table, and a door on one side, and a drumstick, a drinking glass, and your knuckles on the other, try to write something that allows you to represent the sound between all of the combinations of these. Maybe you can work something out like that, but then what happens when you want to combine the sound of three different objects?....
+
+With multiple dispatch you can design the objects independently and have a method that dispatches on the types of both inputs. Write one generic function, clap, that takes two arguments. The method that is called is dispatched on the types of both arguments. So you have (clap drum hand) and (clap knuckle door). None of these classes needs to know anything about the others. And frankly don't necessarily need to have a unified interface among them either, each method combination can use the specific implementations of those objects,. The objects don't need to be related in any way shape or form although they often would be because of the nature of the domain. If you suddenly have a new object somebody wrote from some other library that isn't related to your class hierarchy, as long as it gives you the information necessary to determine how to resolve the clap, just write that specific method.
+
+Can't do that in C++
+
+Edit 3:. When you've got the running image the way you want, you can dump the image to disk. This saves the data you've been messing with, functions and variables etc. Os resource handles go away of course. But if you have a lot of compile time code that makes startup take a while, your can do this work once and save the image. When you want too use it again you load it up and everything is the way you left it (with exceptions).
+
+Going beyond this, your can change the function the is called at image startup. Instead of being the repl, it can be for own "main" function. Suddenly, you have a self contained shippable binary.
+
+Can't do that in Python
+
+Edit 4: when you can bring all of the above to bear as a configuration language for your editor (Emacs) you get wonders like magit mode for git and org mode etc. I mean come on! Every editor can be extended in some way. But the fact that Emacs is basically itself an (Emacs) Lisp program means that it reads Lisp code as both configuration state as well as functionality. You even get a repl, where you can modify the state of the editor by evaluating Lisp code. And guess what? You can DEBUG Emacs as you use it! Add breakpoints on a specific function on exit, or error, and you land in a back trace you can step through, navigate to relevant code, etc,. WHILE USING THE APP.
+
+That's the power of Lisp baby
+
+Edit X: I was trying to process a large amount of data on a server and the link was slow. I ended up pushing ccl to the server and fired up swank over ssh. I connected slime to the ssh tunnel and coded up my processing remotely. I read small bits of the data stream in, experimented with how I wanted to process it. Once I realized I needed to pull in some Lisp libraries from quickLisp, I issued Quickload on my machine, configured swank to start, dumped image, shipped it, and then connected over ssh. All the dependencies are in the image. I got my reports, and just for fun, dumped the image so that the main report loop ran when executed, and viola, my coworkers could rerun my program themselves.
+
+Do this in any other language. In Python the furthest you get are virtual envs to match specific dependencies between systems, but forget about the rest
+
+This experience is unparalleled as far as I know. I'm happy to be proven wrong.
+
+Edit: and SIMD just landed on SBCL! https://www.sbcl.org/manual/index.html#sb_002dsimd
+
+Edit: added links
+
+Edit: How can I forget DART https://en.wikipedia.org/wiki/Dynamic_Analysis_and_Replanning_Tool 10 weeks from 0 to working prototype to revamp Army logistics leading up to Operation Desert Storm. I remember reading somewhere that it can be argued that the operation was delayed until the working prototype was successfully demonstrated, due to the fact that there had been disastrous logistics issues driving the need for the tool. The development process alone looks like an early version of agile done right, and also within 4 years the cost savings to the DoD had already more than paid back the investment in AI made over the prior 30 years.
+</p>
+</details>
+
+<details>
+<summary><strong> Gary Hollis via Quora</strong></summary>
+<p>
+I started learning C++ to do physics research.
+While learning C++, I explored computer science in general and came across lots of praise and advice to try functional
+programming and Common Lisp specifically.
+I read Paul Graham’s articles, got one of his books, and started excitedly exploring Common Lisp.
+What I found was that the learning curve of Common Lisp for me as beginner programmer was so steep
+that I quit studying it fairly quickly and went back to focusing on C++ to get work done.
+
+After a few years of getting skilled at C++, I became interested in functional programming again and
+stumbled on Haskell, which I excitedly studied and used to solve some interesting mathematical problems and
+play with competitive programming challenges. I then got the idea to use Haskell for physics research, since
+it had some clear advantages and the potential for easy parallelization, and my physics research was full
+of embarrassingly parallel problems that would be easy to write as reduction-map-filter combinations. However, at
+the time I was exploring Haskell, my benchmarks put Haskell a few factors too slow
+for practical use in analyzing data.
+No doubt an expert could have massaged Haskell into running in an acceptable time, but
+from the stats I saw at the time it would have cost at least 2x run time performance, and
+when it already took a weekend to get back results, I did not like the
+prospect of a 4-day wait time to get results back just so I could use a cool new language.
+
+So yet again I was back to C++, and I used it until I stumbled on the old Lisp book I bought years ago. I had the idea to explore Common Lisp again, having reached a higher level of programming ability, and this time it stuck. I was using Lisp to solve problems and even get below the 2x performance gap with C++, which incentivized more exploration. Ultimately I built a data analysis framework that leveraged Lisp’s metaprogramming and code-as-data features to a good degree, leading to a kind of Make-like programming environment where targets can be defined separately and then merged into parallel computing tasks. Once I ran into a final performance wall, I added a module to this Make-like system that would generate, compile, and run C++ code for those combinations of tasks that needed to run on a compute cluster with high efficiency. This system included automatic job submission, download, and resubmit in the case of errors with the compute cluster job management system, so that to me, it didn’t matter that C++ code was generated and sent remotely to execute; it might as well have been executed locally as some kind of Lisp operation.
+To conclude, I highly recommend Common Lisp as a language.
+It provides abilities that no other language has yet to fully emulate, but it also has a very steep learning curve compared to other options. I don’t recommend committing to scaling that learning curve for a beginner for the same reason I don’t recommend a new hiker trying to climb Everest. Take a look at it, and explore the base of the summit as much as you like when you’re not training to climb progressively higher hills and take longer hikes. You’ll have a better feeling about Everest once you’ve trained adequately for it.
+  </p>
+</details>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<footer>
+    <p>All content on this site is © Ian Stranathan,
+      <span id="current-year"></span>.
+      <br>Use of this content for training AI or machine learning models is <em>not allowed</em>.
+    </p>
+  </footer>
+<script>document.addEventListener('DOMContentLoaded', function() {
+    const yearSpan     = document.getElementById('current-year');
+    const h1_name_link = document.getElementById('name-link');
+    if (yearSpan) { // Check if the element exists before trying to update it
+      yearSpan.textContent = new Date().getFullYear();
+    }
+    if (h1_name_link) { // Check if the element exists before trying to update it
+	h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
+    }
+  });
+</script>
+</div>
+</body>
+</html>

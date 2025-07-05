@@ -2,9 +2,17 @@
 https://github.com/souramoo/commentoplusplus
 
 * TODO
+
+** Refactor because it's terrible
+- [ ] Org articles should have link aliases to make referencing less fragile
+
+- [ ] html injection cleanup
+
+# ----------------------------------------------------------------------------------------------------
+
 - [X] Change where github pages is looking for main index file
       (I just want a single repo that I can rebuild mindlesslessy)
-- [ ] Move ray-box intersection to demos page
+- [X] Move ray-box intersection to demos page
   
 ** Articles
 *** GRAPHICS

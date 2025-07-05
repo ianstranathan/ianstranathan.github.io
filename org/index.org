@@ -1,15 +1,9 @@
 #+TITLE: Only the flâneurs are free
 #+OPTIONS: title:nil
 
-#+BEGIN_QUOTE
-Writing doesn't just communicate ideas; it generates them.
-– Paul Graham
-#+END_QUOTE
 
 Thanks for stopping & feel free to reach out to me.
 
-**** [[./Blog/][Blog]]
-**** [[./Projects-Demos-Tools/][Projects & Sundry]]
 
 
 

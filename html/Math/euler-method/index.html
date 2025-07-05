@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Only the flâneurs are free</title>
+<title>Euler Method</title>
 <meta name="generator" content="Org Mode" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,6 +96,9 @@
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous"/>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -110,41 +113,105 @@
     </header>
 </div>
 <div id="content" class="content">
-<p id="folder_depth_0">Demos</p>
-<a href="ianstranathan.com/Demos/ray-box-intersection/">ray-box-intersection</a>
-<p id="folder_depth_0">Doodles</p>
-<a href="ianstranathan.com/Doodles/WebGL-Doodles/">WebGL-Doodles</a>
-<p id="folder_depth_0">Game-Dev</p>
-<a href="ianstranathan.com/Game-Dev/resources/">resources</a>
-<p id="folder_depth_0">Graphics</p>
-<a href="ianstranathan.com/Graphics/halfway-vector/">halfway-vector</a>
-<a href="ianstranathan.com/Graphics/model-view-projection/">model-view-projection</a>
-<a href="ianstranathan.com/Graphics/polynomial-smin/">polynomial-smin</a>
-<a href="ianstranathan.com/Graphics/ray-sphere-intersection/">ray-sphere-intersection</a>
-<a href="ianstranathan.com/Graphics/reflection-and-refraction-in-a-raytracer/">reflection-and-refraction-in-a-raytracer</a>
-<a href="ianstranathan.com/Graphics/resources/">resources</a>
-<p id="folder_depth_0">Math</p>
-<a href="ianstranathan.com/Math/euler-lagrange-equation/">euler-lagrange-equation</a>
-<a href="ianstranathan.com/Math/euler-method/">euler-method</a>
-<a href="ianstranathan.com/Math/verlet-integration/">verlet-integration</a>
-<p id="folder_depth_0">Misc</p>
-<a href="ianstranathan.com/Misc/about/">about</a>
-<a href="ianstranathan.com/Misc/cargo-cult-computing/">cargo-cult-computing</a>
-<a href="ianstranathan.com/Misc/personal-websites-are-dumb/">personal-websites-are-dumb</a>
-<a href="ianstranathan.com/Misc/quotes/">quotes</a>
-<a href="ianstranathan.com/Misc/short-stories/">short-stories</a>
-<a href="ianstranathan.com/Misc/website_refactor_ad_infinitum/">website_refactor_ad_infinitum</a>
-<p id="folder_depth_0">Physics</p>
-<a href="ianstranathan.com/Physics/impulse-based-collision/">impulse-based-collision</a>
-<a href="ianstranathan.com/Physics/snells-law/">snells-law</a>
-<p id="folder_depth_0">Programming</p>
-<a href="ianstranathan.com/Programming/a-lispy-interlude/">a-lispy-interlude</a>
-<a href="ianstranathan.com/Programming/resources/">resources</a>
-<p id="folder_depth_0">Projects</p>
-<p id="folder_depth_1">JS-&-WebGL</p>
-<a href="ianstranathan.com/Projects/JS-&-WebGL/collision_study/">collision_study</a>
-<a href="ianstranathan.com/Projects/JS-&-WebGL/learning_to_relax/">learning_to_relax</a>
-<a href="ianstranathan.com/Projects/JS-&-WebGL/rubiks_cube/">rubiks_cube</a>
+<h1 class="title">Euler Method</h1>
+<p>
+Derivation of forward euler method for a <a href="../../../rsc/projects-tools-demos/Projects/JS-&amp;-WebGL/collision_study/">small collision study</a>
+I wanted to start simply and this is the most basic, explicit method
+for numerically integrating an ODE.
+</p>
+
+<div id="outline-container-orgac27eb2" class="outline-2">
+<h2 id="orgac27eb2">Derivation</h2>
+<div class="outline-text-2" id="text-orgac27eb2">
+<hr />
+<p>
+Recall the limit definition of a derivative:
+</p>
+
+<p>
+\[ {f^{\prime}(x)} = \lim_{h \to 0} \frac {f(x + h) - f(x)}{h}\]
+</p>
+
+<p>
+Where \(h\) is some infinitesimal change in a continuous variable. 
+</p>
+
+<p>
+For a simulation, \(h\) is some small, but
+discrete time step associated with the physics tick/ cycle.
+</p>
+
+<p>
+\[f^{\prime}(t) \approx \frac {f(t + {\Delta t}) - f(t)}{\Delta t}\]
+</p>
+
+<p>
+Algebraically rearranging for the function at the next time step \(f(x + {\Delta t})\):
+</p>
+
+<p>
+\[f( t + \Delta{t}) \approx f(t) + f^{\prime}(t) \Delta{t}\]
+</p>
+
+<p>
+That is to say, we can approximate the value of the next step of a function 
+if we have its value and its derivative value at the current time step.
+</p>
+
+<p>
+We can apply this for the motion in a simulation after
+resolving the acceleration of a cycle by working backward:
+</p>
+
+<p>
+Given position \(\vec r\):
+</p>
+
+<p>
+Velocity:
+\[\vec v = \frac{d}{dt} \vec r\]
+</p>
+
+<p>
+Acceleration:
+\[\vec a = \frac{d}{dt} \vec v\]
+</p>
+
+<p>
+\[\implies v(t + \Delta t) \approx {v^{\prime}(t)} {\Delta t}  + v(t)\]
+</p>
+
+<p>
+\[v(t + \Delta t) \approx a(t) {\Delta t}  + v(t)\]
+</p>
+
+<p>
+Similarly:
+\[r(t + \Delta t) \approx {r^{\prime}(t)} {\Delta t}  + r(t)\]
+\[r(t + \Delta t) \approx v(t) {\Delta t}  + r(t)\]
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-cpp"><span style="color: #7f7f7f;">// </span><span style="color: #989898;">After resolving acceleration from physics constraints</span>
+rigidBody.velocity += acceleration;
+rigidBody.position += velocity;
+</pre>
+</div>
+<hr />
+
+<p>
+Note:
+We're using derivatives, so smoothness is implied for whatever we're trying to look at.
+Thus, the same result can be found by using a Taylor series expansion around the next time step
+and truncating second order and higher terms.
+This is also illustrative of the <span class="underline">limitations</span> of the Euler method, i.e. stability; error is
+proportional to the time step squared (second order and greater terms are dropped)
+Compare this with an alternative numerical technique such as <a href="../verlet-integration/">verlet integration</a> where the error rate
+is proportional to the time step quadrupled.
+</p>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <footer>

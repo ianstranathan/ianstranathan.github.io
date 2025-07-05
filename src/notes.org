@@ -1,0 +1,37 @@
+#+TODO: TODO DESIGN GOALS
+
+* TODO
+** LISP
+- [-] Refactor
+  - [X] -> get files -> concat matching higher dirs -> link versus p
+  - [ ] if i'm so inclined, probably replace some lables functionality with maplist or something
+  
+** JS
+- [ ] randomized quote at beginning of content?
+
+** CSS
+- [-] I'm id'ing the heirarchy of folders using the word div which is bad for obvious reasons -> folder
+  - [X] change in .lisp
+  - [ ] change in org-mode css
+
+    
+** HTML
+- [X] All content on this site is © [Name], [Year]. Use of this content for training AI or machine learning models is expressly prohibited without prior written consent.
+
+** MISC
+- [X] Add robot.txt and AI notice in footer
+
+* DESIGN
+Just a block of articles that follow nested details/ summary structure
+
+<details>
+<summry>
+</detals>
+
+There can be a randomized quote (JS) on front page from quotes
+
+
+* GOALS
+- I should be able to start a document (alias the directory I'm working out of in rsc) and just write
+- The lisp code should be as portable as possible
+- No AI

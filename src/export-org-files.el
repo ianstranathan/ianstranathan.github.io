@@ -1,14 +1,6 @@
-;; html as a folder name should be made into a variable (maybe I'll change it to 'site' or 'build'
-
-;;<link rel=\"icon\" href=\"http://example.com/favicon.png\">
-
-;;(defvar icon-url "https://ianstranathan.github.io/../img/hello.ico"
-
-;; Load the publishing system
 (require 'ox-publish)
 
 ;; ----------------------------------------------------------------------------------------------------
-;; Customize the HTML output
 (setq org-html-validation-link nil            
       org-html-head-include-scripts nil       ; Use our own scripts
       org-html-head-include-default-style nil ; Use our own styles)
@@ -19,67 +11,89 @@
 <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css\" integrity=\"sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\">
 <link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\">
 <style>
+  /* Add a little padding to ensure spacing is correct between content and header nav */
 
-#preamble > header {
-    background-color: var(--accent-bg);
-    border-bottom: 1px solid var(--border);
-    text-align: center;
-    /*top, right, bottom, left*/
-    /*padding: 0 0.5rem 2rem 0.5rem; */
-    grid-column: 1 / -1;
-}
+  #preamble {   
+      color: var(--text);
+      background-color: var(--bg);
+      font-size: 1.15rem;
+      line-height: 1.5;
+      display: grid;
+      grid-template-columns: 1fr min(45rem, 90%) 1fr;
+      margin: 0;
+  }
 
-#preamble > header > *:only-child {
-    margin-block-start: 2rem;
-}
+  header {
+      background-color: var(--accent-bg);
+      border-bottom: var(--border-width) solid var(--border);
+      text-align: center;
+      padding: 0 0.5rem 2rem 0.5rem;
+      grid-column: 1 / -1;
+  }
 
-#preamble > header h1 {
-  max-width: 1200px;
-  margin: 1rem auto;
-}
+  header > *:only-child {
+      margin-block-start: 2rem;
+  }
 
-#preamble > header p {
-  max-width: 40rem;
-  margin: 1rem auto;
-}
+  header h1 {
+      max-width: 1200px;
+      margin: 1rem auto;
+  }
 
-#content{
-    display: flex;
-    flex-direction: column;
-}
+  header p {
+      max-width: 40rem;
+      margin: 1rem auto;
+  }
+  
+  #content {
+      padding-top: 1.5rem;
+  }
+  #content a {
+      display: block;
+  }
+  
 
-#content > span{
-    padding-top: 7px;
-}
+  footer {
+      margin-top: 4rem;
+      padding: 2rem 1rem 1.5rem 1rem;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      text-align: center;
+      border-top: var(--border-width) solid var(--border);
+  }
 
-#postamble > footer {
-    margin-top: 4rem;
-    padding: 2rem 1rem 1.5rem 1rem;
-    color: var(--text-light);
-    font-size: 0.9rem;
-    text-align: center;
-    border-top: 1px solid var(--border);
-}
-#categories{
-display: flex;
-flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.dir{
-	  width: fit-content;
-	  border-radius: 10px;
-	  background-color: rgb(25, 25, 25);
-          padding: 2%;
-          margin: 1%;
-      }
-.dir h3 {
-	  text-align: center;
-	  padding: 0;
-	  padding-bottom: 7px;
-	  margin: 0;
-      }
-</style>"
+  #content > #folder_depth_0 {
+      /* Font properties */
+      /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
+      font-size: 1.25rem; /* Slightly larger than body text, but not too big */
+      font-weight: 700; /* Bold */
+      /*color: #333; /* Dark gray for good contrast */ */
+      /*color: #E0E0E0;*/
+      text-transform: uppercase; /* Makes it look more like a category */
+      letter-spacing: 0.08em; /* Spreads out letters slightly for a refined look */
+
+      /* Spacing and layout */
+      margin-top: 2.5rem; /* Ample space above to separate from previous content */
+      margin-bottom: 1rem; /* Space below before the items start */
+      padding-bottom: 0.5rem; /* Little padding at the bottom */
+      border-bottom: 2px solid #eee; /* A subtle separator line */
+
+      /* Optional: Small accent line for more distinction */
+      /* position: relative; /\* Needed for pseudo-elements *\/ */
+      /* display: inline-block; /\* Or block, depending on desired width *\/ */
+  }
+
+  #content > #folder_depth_1 {
+      /* Font properties */
+      /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
+      font-size: 1.10rem; /* Slightly larger than body text, but not too big */
+      font-weight: 500; /* Bold */
+      color: gold; /* Dark gray for good contrast */ */
+      text-transform: uppercase; /* Makes it look more like a category */
+    letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
+  }
+</style>
+"
       org-html-mathjax-template
       "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css\" integrity=\"sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y\" crossorigin=\"anonymous\"/>
 <script defer=\"defer\" src=\"https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js\" integrity=\"sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx\" crossorigin=\"anonymous\"></script>
@@ -88,24 +102,39 @@ flex-direction: column;
       org-html-preamble
       "<header>
       <h1> Ian Stranathan </h1>
-      <p> Noodling around: Graphics | Programming | Game Dev | Physics | Math </p>
-	</p><nav>
+        <nav>
 	  <ul>
 	    <li><a href=\"mailto:email@ianstranathan.com\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></a></li>
 	    <li><a href=\"https://github.com/ianstranathan\"><i class=\"fa-brands fa-github\"></i></a></li>
 	  </ul>
 	</nav>
     </header>"
-      org-html-postamble "<footer><p>©Ian Stranathan <script>document.write(new Date().getFullYear())</script></p></footer>")
-
+      org-html-postamble "<footer>
+    <p>All content on this site is © Ian Stranathan,
+      <span id=\"current-year\"></span>.
+      <br>Use of this content for training AI or machine learning models is <em>not allowed</em>.
+    </p>
+  </footer>
+<script>document.addEventListener('DOMContentLoaded', function() {
+    const yearSpan     = document.getElementById('current-year');
+    const h1_name_link = document.getElementById('name-link');
+    if (yearSpan) { // Check if the element exists before trying to update it
+      yearSpan.textContent = new Date().getFullYear();
+    }
+    if (h1_name_link) { // Check if the element exists before trying to update it
+	h1_name_link.innerHTML = window.location.href === \"https://www.ianstranathan.com/\" ? \"<h1>Ian Stranathan</h1>\" : '<h1><a href=\"https://www.ianstranathan.com/\">Ian Stranathan</a></h1>'
+    }
+  });
+</script>"
+)
 
 ;; Define the publishing project
 (setq org-publish-project-alist
       (list
        (list "org-site:main"
              :recursive t
-	     :exclude ".*/drafts/.*"
-             :base-directory "../org"
+	     :exclude ".*/drafts/.*"    ; to be exluded from export
+             :base-directory "../org"   ;
              :publishing-function 'org-html-publish-to-html
              :publishing-directory "../html"
              :with-author nil
@@ -115,11 +144,11 @@ flex-direction: column;
              :time-stamp-file nil)))    ; Don't include time stamp in file
 
 (delete-directory  "../html" t)
-
-;; Generate the site output
 (org-publish-all t)
+(shell-command "sbcl --load refactor.lisp")
+;; (copy-file FILE NEWNAME &optional ok-if-the-file-is-already-there (overwrites it))
+(copy-file "../rsc/misc/robots.txt" "../html/robots.txt" t)
+;; (copy-directory "../rsc" "../html/")
 
-(shell-command "sbcl --load html-injection.lisp")
 
-(copy-directory "../rsc" "../html/")
 

@@ -39,7 +39,7 @@
 	      site-root-url
 	      (subseq (namestring pathspec) ; offset into pathname by root url
 		      (length (namestring root-pathname))))))
-7
+
 (defun remove-file-from-path-pathname (file-pathspec)
   (make-pathname :directory (pathname-directory file-pathspec)
 		 :name nil :type nil))

@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Only the flâneurs are free</title>
+<title>&lrm;</title>
 <meta name="generator" content="Org Mode" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,6 +96,9 @@
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous"/>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -110,41 +113,99 @@
     </header>
 </div>
 <div id="content" class="content">
-<p id="folder_depth_0">Demos</p>
-<a href="ianstranathan.com/Demos/ray-box-intersection/">ray-box-intersection</a>
-<p id="folder_depth_0">Doodles</p>
-<a href="ianstranathan.com/Doodles/WebGL-Doodles/">WebGL-Doodles</a>
-<p id="folder_depth_0">Game-Dev</p>
-<a href="ianstranathan.com/Game-Dev/resources/">resources</a>
-<p id="folder_depth_0">Graphics</p>
-<a href="ianstranathan.com/Graphics/halfway-vector/">halfway-vector</a>
-<a href="ianstranathan.com/Graphics/model-view-projection/">model-view-projection</a>
-<a href="ianstranathan.com/Graphics/polynomial-smin/">polynomial-smin</a>
-<a href="ianstranathan.com/Graphics/ray-sphere-intersection/">ray-sphere-intersection</a>
-<a href="ianstranathan.com/Graphics/reflection-and-refraction-in-a-raytracer/">reflection-and-refraction-in-a-raytracer</a>
-<a href="ianstranathan.com/Graphics/resources/">resources</a>
-<p id="folder_depth_0">Math</p>
-<a href="ianstranathan.com/Math/euler-lagrange-equation/">euler-lagrange-equation</a>
-<a href="ianstranathan.com/Math/euler-method/">euler-method</a>
-<a href="ianstranathan.com/Math/verlet-integration/">verlet-integration</a>
-<p id="folder_depth_0">Misc</p>
-<a href="ianstranathan.com/Misc/about/">about</a>
-<a href="ianstranathan.com/Misc/cargo-cult-computing/">cargo-cult-computing</a>
-<a href="ianstranathan.com/Misc/personal-websites-are-dumb/">personal-websites-are-dumb</a>
-<a href="ianstranathan.com/Misc/quotes/">quotes</a>
-<a href="ianstranathan.com/Misc/short-stories/">short-stories</a>
-<a href="ianstranathan.com/Misc/website_refactor_ad_infinitum/">website_refactor_ad_infinitum</a>
-<p id="folder_depth_0">Physics</p>
-<a href="ianstranathan.com/Physics/impulse-based-collision/">impulse-based-collision</a>
-<a href="ianstranathan.com/Physics/snells-law/">snells-law</a>
-<p id="folder_depth_0">Programming</p>
-<a href="ianstranathan.com/Programming/a-lispy-interlude/">a-lispy-interlude</a>
-<a href="ianstranathan.com/Programming/resources/">resources</a>
-<p id="folder_depth_0">Projects</p>
-<p id="folder_depth_1">JS-&-WebGL</p>
-<a href="ianstranathan.com/Projects/JS-&-WebGL/collision_study/">collision_study</a>
-<a href="ianstranathan.com/Projects/JS-&-WebGL/learning_to_relax/">learning_to_relax</a>
-<a href="ianstranathan.com/Projects/JS-&-WebGL/rubiks_cube/">rubiks_cube</a>
+<p>
+<i>Just here to prove it to myself while noodling around with some code.</i>
+</p>
+
+<hr />
+
+<p>
+<b>Recall</b> the definition of a <a href="https://en.wikipedia.org/wiki/Taylor_series">taylor series expansion</a> with the normal caveats of smoothness etc.
+(Also, check out Madhava, Jason Gregory and Newton for historical development; it's also amusing to
+think about the sheer volume of Stigler's law occurences throughout history; its also heady and humbling to
+consider that this was initially used to calculate Halley's Comet trajectories and now it's a back of a napkin exercise )
+</p>
+
+<hr />
+
+<p>
+\[ \sum_{n=0}^{\infty} \frac{f^{n}(a)}{n!} \left( t - a \right)^n \]
+</p>
+
+<p>
+Where \(a\) is the point around which we're expanding and \(t\) is the variable we're creating
+the expansion for.
+</p>
+
+<p>
+For a simulation, with a discrete time step associated with the physics tick/ cycle, \(\Delta{t}\), 
+we need to be careful about <i>what</i> and <i>where</i> we're expanding.
+</p>
+
+<p>
+We want to know what happens at the next time step:  \(x\left( t + \Delta{t} \right)\)
+(This means we're creating an expansion for a function that can talk about that point.)
+</p>
+
+<p>
+We know what is happening at the current step, so our expansion is expanding around that point: \(a = t\)
+</p>
+
+<p>
+Subsituting into the Taylor series formula:
+(Note: \(\left( t - a \right) \rightarrow \left( t + \Delta{t} - t \right) = \left( \Delta{t} \right)\) )
+</p>
+
+<p>
+\[ \implies
+\sum_{n=0}^{\infty} \frac{f^{n}(t)}{n!} \left( \Delta{t} \right)^n \]
+</p>
+
+<p>
+This is if it's a forward time step.
+If it's a backward time step, all that would change is
+that we'd be expanding for \(x\left( t - \Delta{t} \right)\)
+</p>
+
+<p>
+\[ \implies
+\sum_{n=0}^{\infty} \frac{f^{n}(t)}{n!} \left( -\Delta{t} \right)^n \]
+</p>
+
+<p>
+The <i>trick</i> or method is to sum (simple verlet) or take the difference (stoermer-verlet) of the two.
+</p>
+
+<p>
+Summing allows the even powers in the expansion to cancel which gives the method
+its stability (\(E \propto O^4\), i.e. the threshold for ignored higher ordered terms).
+</p>
+
+<p>
+Expanded, truncated and summed:
+\[\implies
+x\left( t + \Delta{t} \right) + x\left( t - \Delta{t} \right) =
+2x\left( t \right) + a\left( t \right) {\left( \Delta{t} \right)}^2\]
+</p>
+
+<p>
+\[\implies x\left( t + \Delta{t} \right) =
+2 x\left(t \right)  - x\left( t - \Delta{t} \right) + a\left( t \right) {\left( \Delta{t} \right)}^2\]
+</p>
+
+<p>
+We can talk about the position at the next time step if we know the current position, the last position and the
+current acceleration resolution.
+</p>
+
+<hr />
+
+<p>
+Misc. Resources:
+More detailed article at the <a href="https://www.algorithm-archive.org/contents/verlet_integration/verlet_integration.html">Algorithm Archive</a>
+Here's a video to give some intuition by reworking the final Verlet equation into something more familiar:
+<a href="https://www.youtube.com/watch?v=lS_qeBy3aQI">https://www.youtube.com/watch?v=lS_qeBy3aQI</a>
+</p>
 </div>
 <div id="postamble" class="status">
 <footer>

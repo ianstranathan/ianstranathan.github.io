@@ -1,0 +1,19 @@
+
+Mostly this: [[https://t3x.org/whoami.html][Nils Holm's about page]]
+
+Lots of reinventing wheels for my own [[https://www.youtube.com/watch?v=NM-zWTU7X-k][understanding]]
+
+#+BEGIN_CENTER
+And you may ask yourself,
+"How do I work this?"
+
+And you may ask yourself,
+"Where is that large automobile?"
+
+And you may tell yourself,
+"This is not my beautiful house"
+
+And you may tell yourself,
+"This is not my beautiful wife"
+#+END_CENTER
+

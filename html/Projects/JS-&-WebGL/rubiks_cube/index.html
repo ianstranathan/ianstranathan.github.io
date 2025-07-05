@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rubik's Cube Simulation</title>
+<meta name="generator" content="Org Mode" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Blah</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+<style>
+  /* Add a little padding to ensure spacing is correct between content and header nav */
+
+  #preamble {   
+      color: var(--text);
+      background-color: var(--bg);
+      font-size: 1.15rem;
+      line-height: 1.5;
+      display: grid;
+      grid-template-columns: 1fr min(45rem, 90%) 1fr;
+      margin: 0;
+  }
+
+  header {
+      background-color: var(--accent-bg);
+      border-bottom: var(--border-width) solid var(--border);
+      text-align: center;
+      padding: 0 0.5rem 2rem 0.5rem;
+      grid-column: 1 / -1;
+  }
+
+  header > *:only-child {
+      margin-block-start: 2rem;
+  }
+
+  header h1 {
+      max-width: 1200px;
+      margin: 1rem auto;
+  }
+
+  header p {
+      max-width: 40rem;
+      margin: 1rem auto;
+  }
+  
+  #content {
+      padding-top: 1.5rem;
+  }
+  #content a {
+      display: block;
+  }
+  
+
+  footer {
+      margin-top: 4rem;
+      padding: 2rem 1rem 1.5rem 1rem;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      text-align: center;
+      border-top: var(--border-width) solid var(--border);
+  }
+
+  #content > #folder_depth_0 {
+      /* Font properties */
+      /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
+      font-size: 1.25rem; /* Slightly larger than body text, but not too big */
+      font-weight: 700; /* Bold */
+      /*color: #333; /* Dark gray for good contrast */ */
+      /*color: #E0E0E0;*/
+      text-transform: uppercase; /* Makes it look more like a category */
+      letter-spacing: 0.08em; /* Spreads out letters slightly for a refined look */
+
+      /* Spacing and layout */
+      margin-top: 2.5rem; /* Ample space above to separate from previous content */
+      margin-bottom: 1rem; /* Space below before the items start */
+      padding-bottom: 0.5rem; /* Little padding at the bottom */
+      border-bottom: 2px solid #eee; /* A subtle separator line */
+
+      /* Optional: Small accent line for more distinction */
+      /* position: relative; /* Needed for pseudo-elements */ */
+      /* display: inline-block; /* Or block, depending on desired width */ */
+  }
+
+  #content > #folder_depth_1 {
+      /* Font properties */
+      /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
+      font-size: 1.10rem; /* Slightly larger than body text, but not too big */
+      font-weight: 500; /* Bold */
+      color: gold; /* Dark gray for good contrast */ */
+      text-transform: uppercase; /* Makes it look more like a category */
+    letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
+  }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous"/>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+<header>
+      <h1> Ian Stranathan </h1>
+        <nav>
+	  <ul>
+	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
+	    <li><a href="https://github.com/ianstranathan"><i class="fa-brands fa-github"></i></a></li>
+	  </ul>
+	</nav>
+    </header>
+</div>
+<div id="content" class="content">
+<h1 class="title">Rubik's Cube Simulation</h1>
+<p>
+<i>A small project postmortem</i>
+</p>
+
+<p>
+Tl;dr: Try it out <a href="../../../../rsc/projects-tools-demos/Projects/JS-&amp;-WebGL/rubiks_cube/">here</a>
+</p>
+
+<div id="outline-container-org1e1ca86" class="outline-2">
+<h2 id="org1e1ca86">Overview</h2>
+<div class="outline-text-2" id="text-org1e1ca86">
+<hr />
+
+<p>
+This is a simple Rubik's cube simulation from scratch. It has a trackball camera + point &amp; click controls.
+My goal was to have intuitive controls that reflected a faithful simulation and to make it as pretty as possible.
+</p>
+
+<p>
+These design goals naturally lead to some technical constraints and necessary pattern implementations.
+</p>
+
+<p>
+Everything (model, rendering system, model i/o, raycast, aabb-ray intersection, ray-quad intersection, etc) was handmade for educational purposes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcee4dce" class="outline-2">
+<h2 id="orgcee4dce">Rendering side of things</h2>
+<div class="outline-text-2" id="text-orgcee4dce">
+<hr />
+</div>
+
+<div id="outline-container-org0b95261" class="outline-3">
+<h3 id="org0b95261">Making a model</h3>
+<div class="outline-text-3" id="text-org0b95261">
+<hr />
+
+<p>
+Making a Rubik's cube is a pretty popular 3D modeling project and there are a large amount of 
+<a href="https://www.youtube.com/results?search_query=rubiks+cube+blender">tutorials available online</a> (mine mirrors the first search result) by
+much more competent people than me.
+I'm not a 3D artist and have just used blender off and on for a few years as the
+occasional indie game dev project has called for it.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge51441d" class="outline-3">
+<h3 id="orge51441d">Loading the mesh</h3>
+<div class="outline-text-3" id="text-orge51441d">
+<hr />
+
+<p>
+Importing a mesh seems daunting at first, but if you've messed around with graphics enough, at the end of the day you
+know that it's just big arrays representing vertex data (positions, normals, colors etc). I imported with the .ply format and parsed it accordingly.
+</p>
+
+<p>
+In practice this can be a little arduous and debugging this kind of thing is painful, eye bleeding work. To quote a programming superior:
+</p>
+
+<blockquote>
+<p>
+The model I/O is the worst and almost everybody tries to get somebody else’s code to do this.
+&#x2013; Peter Shirley, Raytracing in One Weekend 
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orge715a15" class="outline-3">
+<h3 id="orge715a15">Instancing</h3>
+<div class="outline-text-3" id="text-orge715a15">
+<hr />
+
+<p>
+Given that my unoptimized model (a single "cubie") is on the order of \(5\) x \(10^4\) triangles (retopologyy is a thing for a reason)
+I needed to speed things up by instancing them.
+</p>
+
+<p>
+I highly recommend this <a href="https://webgl2fundamentals.org/webgl/lessons/webgl-instanced-drawing.html">tutorial</a> by webggl2fundamentals.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgfb78442" class="outline-3">
+<h3 id="orgfb78442">Lighting Model</h3>
+<div class="outline-text-3" id="text-orgfb78442">
+<hr />
+
+<p>
+I'm using the traditional Blinn-Phong lighting model. Check out my article on the <a href="../../../Graphics//halfwayVector.html">half-way vector</a> if you're derivation curious and/ or need a review.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgeb544bd" class="outline-2">
+<h2 id="orgeb544bd">Programming side of things</h2>
+<div class="outline-text-2" id="text-orgeb544bd">
+<hr />
+</div>
+
+<div id="outline-container-org19e5e46" class="outline-3">
+<h3 id="org19e5e46">Selecting the cube - Ray-Box Intersection</h3>
+<div class="outline-text-3" id="text-org19e5e46">
+<hr />
+
+<p>
+I wanted intuitive controls that reflected a faithful simulation e.g. <a href="https://rubikscu.be/">rubikscu.be</a>
+</p>
+
+<p>
+<b>But where to start?</b>
+</p>
+
+<p>
+When I first started on this project, I happened to also have been working on some small raytracing projects and was fortunate to have Peter Shirley as a resource.
+Raytracing methods often use axis aligned bounding boxes in Oct-trees as a broadphase check using the slab method. If you're interested in learning how that works, check out this little <a href="../../../Demos/ray-box-intersection/">demo</a> I made to debug/ understand my own convoluted slab method
+implementation.
+</p>
+
+<p>
+I opted for a broadphase check of a camera ray and an AABB representing the entire cube, if that passes an AABB of each cubie's bounds is checked with the ray
+taking an early out if the maximum possible, diagonal cross section is collected. The minimum distance of of those selections is our clicked cubie.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc5aaa91" class="outline-3">
+<h3 id="orgc5aaa91">Getting a direction for a rotation</h3>
+<div class="outline-text-3" id="text-orgc5aaa91">
+<hr />
+
+<p>
+This was by far the stickiest part of the project, I eventually came up with, what I think is a standard solution for this kind of thing: 
+take the relative difference vector of two different surface intersections and project them onto the plane's basis vectors (of course culling them with the 2D quad bounds of the cubie surface),
+Some edge cases ( quite literally, say if the first first intersection was exactly on an edge) and bugs were definitely in this one.
+</p>
+
+<p>
+<a href="../../../../rsc/img/Projects/rubiks_cube/turnSelection.png">turn selection</a>
+</p>
+
+<p>
+Please see the <a href="https://en.wikipedia.org/wiki/Line%E2%80%93plane_intersection">wikipedia article</a> or my own <a href="../../Math\distance_to_plane_and_ray_plane_intersection/">article</a> for a line-plane intersection derivation for further discussion.
+</p>
+
+<p>
+(This is another good reminder of the importance of asking for help/ avoiding reinventing the wheel&#x2026;
+this was all for educational purposes however and deeper understanding is impossible
+without error and redudancy)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2cfc56a" class="outline-3">
+<h3 id="org2cfc56a">Rotating a plane of the Cube</h3>
+<div class="outline-text-3" id="text-org2cfc56a">
+<hr />
+
+<p>
+This is kind of where programming and graphics programming meet each other in the project.
+</p>
+
+<p>
+Recall that for a homogenous transformation matrix used in rendering, the translation component is contained in the 12th, 13th and 14th index. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-cpp"><span style="color: #6ae4b9;">mat4</span> <span style="color: #00d3d0;">aMat4</span> = mat4(1.0, 0.0, 0.0, 0.0,  <span style="color: #7f7f7f;">// </span><span style="color: #989898;">1. column</span>
+                  0.0, 1.0, 0.0, 0.0,  <span style="color: #7f7f7f;">// </span><span style="color: #989898;">2. column</span>
+                  0.0, 0.0, 1.0, 0.0,  <span style="color: #7f7f7f;">// </span><span style="color: #989898;">3. column</span>
+                  T_x, T_y, T_z, 1.0); <span style="color: #7f7f7f;">// </span><span style="color: #989898;">4. column</span>
+</pre>
+</div>
+
+<p>
+If you're curious or confused and want to take a deeper dive into that, check out my
+<a href="../../../Graphics/model-view-projection/">article on the matrix math of the rasterization process</a>
+</p>
+
+<p>
+So far in the input handling cycle, a specific cubie (and associated rendering object) has been selected and the axis of rotation has been decided with the mouse.
+To affect a rotation, each cubie is looped over and if their translation component that corresponds with the axis of rotation matches the selected cubie, 
+it's transform is hit with a rotation matrix. 
+But the GPU buffer also must be changed to see any corresponding change:
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-cpp"><span style="color: #7f7f7f;">// </span><span style="color: #989898;">update a substitue float32 array and then offset into buffer correctly, replacing 9 matrices instead of 27</span>
+<span style="color: #b6a0ff;">for</span>(<span style="color: #6ae4b9;">let</span> <span style="color: #00d3d0;">j</span> = 0; j &lt; 16; ++j)
+{
+    <span style="color: #b6a0ff;">this</span>.theSubArr[j] = <span style="color: #b6a0ff;">this</span>.renderer.renderables[0].cubieTransforms[i][j];
+}
+gl.bufferSubData(<span style="color: #b6a0ff;">this</span>.gl.ARRAY_BUFFER, i * 16 * 4, <span style="color: #b6a0ff;">this</span>.theSubArr);
+</pre>
+</div>
+
+<p>
+Floating point errors in the cubie's transformation matrix will accrue over time and its basis vectors and affine translation should be rounded after a rotation.
+(as a small optimization this need only be done on the final, corrective rotation to nearest \(\frac {\pi}{2}\))
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgb85891b" class="outline-2">
+<h2 id="orgb85891b">Wrapping up</h2>
+<div class="outline-text-2" id="text-orgb85891b">
+<hr />
+
+<p>
+To riff on a famous quote, projects are never finished only abandonded.
+While this was a great project for me to cement some programming and graphics fundamentals, there are many ways it could be improved.
+Beyond the obvious stuff (less terrible code: reduce the size and responsibility of some classes &amp; functions, make things a little more SOLID / DRY; use a lower level language)
+I think the biggest boost in performance and visuals would come in reducing the size of the cubie model (retopologize)
+and using a better/ more sophisticated lighting model (energy conserving, PBR, raytracing etc)
+or alter the current lighting model to account for certain glaring gaps / artifacts (shadow mapping - the cubies that are covered are still being shaded currently).
+</p>
+
+<p>
+It's always humbling how much is required for so little (how complicated even seemingly very simple things turn our to be /  how coarse our proconceptions perpetually are).
+To do these projects that the world doesn't need continues to be a confusing balance between unproductivity and educational value for me. 
+</p>
+
+<p>
+Cheers.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<footer>
+    <p>All content on this site is © Ian Stranathan,
+      <span id="current-year"></span>.
+      <br>Use of this content for training AI or machine learning models is <em>not allowed</em>.
+    </p>
+  </footer>
+<script>document.addEventListener('DOMContentLoaded', function() {
+    const yearSpan     = document.getElementById('current-year');
+    const h1_name_link = document.getElementById('name-link');
+    if (yearSpan) { // Check if the element exists before trying to update it
+      yearSpan.textContent = new Date().getFullYear();
+    }
+    if (h1_name_link) { // Check if the element exists before trying to update it
+	h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
+    }
+  });
+</script>
+</div>
+</body>
+</html>

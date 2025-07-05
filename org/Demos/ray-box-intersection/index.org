@@ -1,0 +1,16 @@
+#+LINK: rsc ../../../rsc/
+
+These are some visualizations I made to help understand the intersection of a ray with an axis aligned bounding box — the slab method.
+
+TL;DR:
+
+2D demo [[rsc:projects-tools-demos/Demos/Graphics/rayBoxIntersection/2D/][here]]
+
+3D demo [[rsc:projects-tools-demos/Demos/Graphics/rayBoxIntersection/3D/][here]]
+
+Algorithm:
+
+Resources:
+- [[https://www.realtimerendering.com/intersections.html][Exhaustive list]] for ray-object intersections collected by the guys from real time rendering:
+- [[https://raytracing.github.io/books/RayTracingTheNextWeek.html#boundingvolumehierarchies/axis-alignedboundingboxes(aabbs)][Peter Shirley]] (& Andrew Kensler at Pixar)
+- [[https://www.codercorner.com/RayAABB.cpp][old code from “Graphics Gems”]]
