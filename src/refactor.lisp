@@ -127,7 +127,8 @@
 
 (defun make-link-element (link-name link-path-ls)
   (format nil 
-	  "<a href=\"ianstranathan.com/~A\">~A</a>"
+	  ;; "<a href=\"ianstranathan.com/~A\">~A</a>"
+	  "<a href=\"~A\">~A</a>"
 	  (format nil "~{~A/~}" link-path-ls)
 	  link-name))
 
