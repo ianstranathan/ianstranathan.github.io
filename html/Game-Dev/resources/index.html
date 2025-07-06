@@ -91,7 +91,7 @@
       /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
       font-size: 1.10rem; /* Slightly larger than body text, but not too big */
       font-weight: 500; /* Bold */
-      color: gold; /* Dark gray for good contrast */ */
+      color: silver; /* Dark gray for good contrast */ */
       text-transform: uppercase; /* Makes it look more like a category */
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
@@ -100,7 +100,7 @@
 <body>
 <div id="preamble" class="status">
 <header>
-      <h1> Ian Stranathan </h1>
+      <span id="name-link"></span>
         <nav>
 	  <ul>
 	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
@@ -110,9 +110,9 @@
     </header>
 </div>
 <div id="content" class="content">
-<div id="outline-container-org413b2f7" class="outline-2">
-<h2 id="org413b2f7">Game Design Resources</h2>
-<div class="outline-text-2" id="text-org413b2f7">
+<div id="outline-container-org1482e1c" class="outline-2">
+<h2 id="org1482e1c">Game Design Resources</h2>
+<div class="outline-text-2" id="text-org1482e1c">
 <ul class="org-ul">
 <li>Game Feel - Steve Swink</li>
 <li><a href="https://www.youtube.com/@sora_sakurai_en">Masahiro Sakurai</a>
@@ -122,9 +122,9 @@ principles &amp; and tons of miscellaneous polish tips and tricks)</li>
 </div>
 </div>
 
-<div id="outline-container-org57a4651" class="outline-2">
-<h2 id="org57a4651">Technical Resources / Engine Development</h2>
-<div class="outline-text-2" id="text-org57a4651">
+<div id="outline-container-orgd36bd4b" class="outline-2">
+<h2 id="orgd36bd4b">Technical Resources / Engine Development</h2>
+<div class="outline-text-2" id="text-orgd36bd4b">
 <ul class="org-ul">
 <li>Foundations of Game Engine Development - Eric Lengyel
 (Volume 1. has some nice Geometric Algebra resources too)</li>
@@ -152,11 +152,14 @@ principles &amp; and tons of miscellaneous polish tips and tricks)</li>
 <script>document.addEventListener('DOMContentLoaded', function() {
     const yearSpan     = document.getElementById('current-year');
     const h1_name_link = document.getElementById('name-link');
-    if (yearSpan) { // Check if the element exists before trying to update it
+    if (yearSpan)
+    {
       yearSpan.textContent = new Date().getFullYear();
     }
-    if (h1_name_link) { // Check if the element exists before trying to update it
-	h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
+    if (h1_name_link)
+    {
+      // if the page is the main page, h1, else link to main page
+      h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
     }
   });
 </script>

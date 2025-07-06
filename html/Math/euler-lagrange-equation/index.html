@@ -91,7 +91,7 @@
       /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
       font-size: 1.10rem; /* Slightly larger than body text, but not too big */
       font-weight: 500; /* Bold */
-      color: gold; /* Dark gray for good contrast */ */
+      color: silver; /* Dark gray for good contrast */ */
       text-transform: uppercase; /* Makes it look more like a category */
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
@@ -103,7 +103,7 @@
 <body>
 <div id="preamble" class="status">
 <header>
-      <h1> Ian Stranathan </h1>
+      <span id="name-link"></span>
         <nav>
 	  <ul>
 	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
@@ -114,9 +114,9 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Euler-Lagrange Eqquation</h1>
-<div id="outline-container-org8835c6a" class="outline-2">
-<h2 id="org8835c6a">Motivation</h2>
-<div class="outline-text-2" id="text-org8835c6a">
+<div id="outline-container-org3581f12" class="outline-2">
+<h2 id="org3581f12">Motivation</h2>
+<div class="outline-text-2" id="text-org3581f12">
 <p>
 I have had to convince myself that this is true a few times over the years, so now it's here to stay.
 </p>
@@ -124,9 +124,9 @@ I have had to convince myself that this is true a few times over the years, so n
 <hr />
 </div>
 </div>
-<div id="outline-container-org12f9fae" class="outline-2">
-<h2 id="org12f9fae">Derivation</h2>
-<div class="outline-text-2" id="text-org12f9fae">
+<div id="outline-container-org41adf7f" class="outline-2">
+<h2 id="org41adf7f">Derivation</h2>
+<div class="outline-text-2" id="text-org41adf7f">
 <p>
 Consider some arbitrary path of length \(S\) from points \(p_1\) to \(p_2\) denoted as \(y(x)\)
 </p>
@@ -141,7 +141,7 @@ its endpoints match exactly those of the original path.
 </p>
 
 
-<div id="orge03c73d" class="figure">
+<div id="org6a19163" class="figure">
 <p><img src="../../../rsc/img/Articles/Math/euler_lagrange_equation/eulerLagrange1.png" alt="eulerLagrange1.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Our two paths</p>
@@ -198,7 +198,7 @@ The derivative of this integral is possible assuming the criteria for Leibniz's 
 </p>
 
 
-<div id="org09973ec" class="figure">
+<div id="orgd8f9921" class="figure">
 <p><img src="../../../rsc/img/Articles/Math/euler_lagrange_equation/leibnizIntegralRuleOne.png" alt="leibnizIntegralRuleOne.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Check out wikipedia: Leibniz integral rule and Fubini's theorem, which it's dependent on</p>
@@ -209,7 +209,7 @@ And since our bounds \(x_1\) &amp; \(x_2\) are constants, it reduces to:
 </p>
 
 
-<div id="org37c4580" class="figure">
+<div id="org83ba37b" class="figure">
 <p><img src="../../../rsc/img/Articles/Math/euler_lagrange_equation/leibnizIntegralRuleTwo.png" alt="leibnizIntegralRuleTwo.png" />
 </p>
 </div>
@@ -331,11 +331,14 @@ length is stationary &#x2013; not necessarily a minimum.
 <script>document.addEventListener('DOMContentLoaded', function() {
     const yearSpan     = document.getElementById('current-year');
     const h1_name_link = document.getElementById('name-link');
-    if (yearSpan) { // Check if the element exists before trying to update it
+    if (yearSpan)
+    {
       yearSpan.textContent = new Date().getFullYear();
     }
-    if (h1_name_link) { // Check if the element exists before trying to update it
-	h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
+    if (h1_name_link)
+    {
+      // if the page is the main page, h1, else link to main page
+      h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
     }
   });
 </script>

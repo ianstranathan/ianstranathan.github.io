@@ -91,7 +91,7 @@
       /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
       font-size: 1.10rem; /* Slightly larger than body text, but not too big */
       font-weight: 500; /* Bold */
-      color: gold; /* Dark gray for good contrast */ */
+      color: silver; /* Dark gray for good contrast */ */
       text-transform: uppercase; /* Makes it look more like a category */
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
@@ -103,7 +103,7 @@
 <body>
 <div id="preamble" class="status">
 <header>
-      <h1> Ian Stranathan </h1>
+      <span id="name-link"></span>
         <nav>
 	  <ul>
 	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
@@ -118,9 +118,9 @@
 TL;DR: Real time shader can be found <a href="../../../rsc/projects-tools-demos/Demos/Graphics/raySphereIntersection.html">here</a>
 </p>
 
-<div id="outline-container-org3da27c9" class="outline-2">
-<h2 id="org3da27c9">Motivation</h2>
-<div class="outline-text-2" id="text-org3da27c9">
+<div id="outline-container-org34bc5c9" class="outline-2">
+<h2 id="org34bc5c9">Motivation</h2>
+<div class="outline-text-2" id="text-org34bc5c9">
 <hr />
 
 <p>
@@ -131,9 +131,9 @@ This is supposed to be an analytical exercise on paper, but let's use that as a 
 </div>
 </div>
 
-<div id="outline-container-orgcb37277" class="outline-2">
-<h2 id="orgcb37277">Derivation</h2>
-<div class="outline-text-2" id="text-orgcb37277">
+<div id="outline-container-orga7f3844" class="outline-2">
+<h2 id="orga7f3844">Derivation</h2>
+<div class="outline-text-2" id="text-orga7f3844">
 <hr />
 <p>
 Getting something in your head is always the hardest part, so what are we trying to do exactly?
@@ -144,7 +144,7 @@ Let's draw a picture to help our thoughts. We all understand what a line interse
 </p>
 
 
-<div id="orgf4c681a" class="figure">
+<div id="org0907806" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/ray_sphere_intersection/sketch0.png" alt="sketch0.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>The three possible ray-sphere intersections</p>
@@ -173,7 +173,7 @@ If we were just doing this on paper, we would be set with our choice of any numb
 </p>
 
 
-<div id="orgbaf5137" class="figure">
+<div id="orgb942b8e" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/ray_sphere_intersection/sketch01.png" alt="sketch01.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Our two paths</p>
@@ -194,7 +194,7 @@ Let \(\vec{ro}\), \(\vec{s}\) and \(\vec{uv}\) be the camera, sphere, and screen
 </p>
 
 
-<div id="org5404fd8" class="figure">
+<div id="orgfe5ac41" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/ray_sphere_intersection/sketch1.png" alt="sketch1.png" />
 </p>
 </div>
@@ -205,7 +205,7 @@ A ray, \(\vec{r}\), from the ray origin, the "camera", that is incident with the
 </p>
 
 
-<div id="org2dcc965" class="figure">
+<div id="orgf82be67" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/ray_sphere_intersection/sketch2.png" alt="sketch2.png" />
 </p>
 </div>
@@ -215,7 +215,7 @@ It's difficult to think about initially, but this is all done in parallel, so th
 </p>
 
 
-<div id="orgca5badc" class="figure">
+<div id="org743c1f8" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/ray_sphere_intersection/sketch3.png" alt="sketch3.png" />
 </p>
 <p><span class="figure-number">Figure 3: </span>All possible incident rays form a frustum</p>
@@ -245,7 +245,7 @@ Looking at a zx-plane cross section, we can find an intermediary distance inside
 </p>
 
 
-<div id="org1371cc2" class="figure">
+<div id="orge083dfe" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/ray_sphere_intersection/sketch4.png" alt="sketch4.png" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Top down view of scene</p>
@@ -273,7 +273,7 @@ Dropping the norm symbol to save some digital chalk.
 </p>
 
 
-<div id="org6cd1600" class="figure">
+<div id="org6add48f" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/ray_sphere_intersection/sketch6.png" alt="sketch6.png" />
 </p>
 </div>
@@ -319,7 +319,7 @@ That was a lot of drawing for so little return. The algebraic approach is much c
 </p>
 
 
-<div id="org0acbecd" class="figure">
+<div id="org0b2d6ae" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/ray_sphere_intersection/sketch7.png" alt="sketch7.png" />
 </p>
 </div>
@@ -331,7 +331,7 @@ Written in vector notation with a little manipulation using properties of dot pr
 </p>
 
 
-<div id="orga4ef759" class="figure">
+<div id="org3e0f034" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/ray_sphere_intersection/sketch8.jpg" alt="sketch8.jpg" />
 </p>
 </div>
@@ -393,9 +393,9 @@ This is a distance field from the line segment. We can mimic a ray by making thi
 </div>
 </div>
 
-<div id="outline-container-org9decc20" class="outline-2">
-<h2 id="org9decc20">Wrapping Up</h2>
-<div class="outline-text-2" id="text-org9decc20">
+<div id="outline-container-orgeb70916" class="outline-2">
+<h2 id="orgeb70916">Wrapping Up</h2>
+<div class="outline-text-2" id="text-orgeb70916">
 <hr />
 <p>
 Let's put it all together in a shader:
@@ -412,13 +412,13 @@ Thank you for reading.
 </div>
 </div>
 
-<div id="outline-container-orga19e410" class="outline-2">
-<h2 id="orga19e410">Annex</h2>
-<div class="outline-text-2" id="text-orga19e410">
+<div id="outline-container-org5015edf" class="outline-2">
+<h2 id="org5015edf">Annex</h2>
+<div class="outline-text-2" id="text-org5015edf">
 </div>
-<div id="outline-container-orge91a277" class="outline-3">
-<h3 id="orge91a277">Extras</h3>
-<div class="outline-text-3" id="text-orge91a277">
+<div id="outline-container-orgf8ee95d" class="outline-3">
+<h3 id="orgf8ee95d">Extras</h3>
+<div class="outline-text-3" id="text-orgf8ee95d">
 <hr />
 <p>
 For knowledge's sake, here are two other derivations that I came across while trying to understand this problem:
@@ -432,9 +432,9 @@ Here is a derivation by Ronald Goldman from the book "Graphics Gems by Andrew S.
 </div>
 </div>
 
-<div id="outline-container-orgad29d3c" class="outline-3">
-<h3 id="orgad29d3c">Resources</h3>
-<div class="outline-text-3" id="text-orgad29d3c">
+<div id="outline-container-org1176728" class="outline-3">
+<h3 id="org1176728">Resources</h3>
+<div class="outline-text-3" id="text-org1176728">
 <hr />
 <ul class="org-ul">
 <li><a href="https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection">Wikipedia</a>:        Algebraic line-sphere intersection derivation.</li>
@@ -445,9 +445,9 @@ Here is a derivation by Ronald Goldman from the book "Graphics Gems by Andrew S.
 </div>
 </div>
 
-<div id="outline-container-org652db5b" class="outline-3">
-<h3 id="org652db5b">Shader Source</h3>
-<div class="outline-text-3" id="text-org652db5b">
+<div id="outline-container-org6c24331" class="outline-3">
+<h3 id="org6c24331">Shader Source</h3>
+<div class="outline-text-3" id="text-org6c24331">
 <hr />
 <div class="org-src-container">
 <pre class="src src-cpp">uniform <span style="color: #6ae4b9;">vec2</span> <span style="color: #00d3d0;">resolution</span>;
@@ -586,11 +586,14 @@ out <span style="color: #6ae4b9;">vec4</span> <span style="color: #00d3d0;">frag
 <script>document.addEventListener('DOMContentLoaded', function() {
     const yearSpan     = document.getElementById('current-year');
     const h1_name_link = document.getElementById('name-link');
-    if (yearSpan) { // Check if the element exists before trying to update it
+    if (yearSpan)
+    {
       yearSpan.textContent = new Date().getFullYear();
     }
-    if (h1_name_link) { // Check if the element exists before trying to update it
-	h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
+    if (h1_name_link)
+    {
+      // if the page is the main page, h1, else link to main page
+      h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
     }
   });
 </script>

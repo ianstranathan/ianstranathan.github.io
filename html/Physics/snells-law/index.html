@@ -91,7 +91,7 @@
       /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
       font-size: 1.10rem; /* Slightly larger than body text, but not too big */
       font-weight: 500; /* Bold */
-      color: gold; /* Dark gray for good contrast */ */
+      color: silver; /* Dark gray for good contrast */ */
       text-transform: uppercase; /* Makes it look more like a category */
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
@@ -103,7 +103,7 @@
 <body>
 <div id="preamble" class="status">
 <header>
-      <h1> Ian Stranathan </h1>
+      <span id="name-link"></span>
         <nav>
 	  <ul>
 	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
@@ -118,9 +118,9 @@
 <i>Reference derivation for Reflection and Refraction in a Raytracer</i>
 </p>
 
-<div id="outline-container-org823a4e4" class="outline-2">
-<h2 id="org823a4e4">Overview</h2>
-<div class="outline-text-2" id="text-org823a4e4">
+<div id="outline-container-org595f9c6" class="outline-2">
+<h2 id="org595f9c6">Overview</h2>
+<div class="outline-text-2" id="text-org595f9c6">
 <hr />
 
 <p>
@@ -137,15 +137,15 @@ Snell's law is a an <a href="https://en.wikipedia.org/wiki/Snell%27s_law#History
 </div>
 </div>
 
-<div id="outline-container-orgd7bab01" class="outline-2">
-<h2 id="orgd7bab01">Ray model &amp; Fermat's principle with calculus</h2>
-<div class="outline-text-2" id="text-orgd7bab01">
+<div id="outline-container-orgc198d8f" class="outline-2">
+<h2 id="orgc198d8f">Ray model &amp; Fermat's principle with calculus</h2>
+<div class="outline-text-2" id="text-orgc198d8f">
 <hr />
 </div>
 
-<div id="outline-container-orgad71ef5" class="outline-3">
-<h3 id="orgad71ef5">Fermat's principle definition</h3>
-<div class="outline-text-3" id="text-orgad71ef5">
+<div id="outline-container-org6a72e64" class="outline-3">
+<h3 id="org6a72e64">Fermat's principle definition</h3>
+<div class="outline-text-3" id="text-org6a72e64">
 <hr />
 <p>
 The path taken by a ray between two given points is the path that can be traversed in the least amount of time.
@@ -158,12 +158,12 @@ behavior to nature and it was quite controversial in its time.
 </div>
 </div>
 
-<div id="outline-container-orge629041" class="outline-3">
-<h3 id="orge629041">Problem Setup</h3>
-<div class="outline-text-3" id="text-orge629041">
+<div id="outline-container-orgdacf208" class="outline-3">
+<h3 id="orgdacf208">Problem Setup</h3>
+<div class="outline-text-3" id="text-orgdacf208">
 <hr />
 
-<div id="orgc67e7b9" class="figure">
+<div id="org07518f8" class="figure">
 <p><img src="../../../../rsc/img/articles/Physics/snells_law/setup1.png" alt="setup1.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Refraction of light at the interface between two media of different refractive indices</p>
@@ -192,9 +192,9 @@ The total time taken for the ray: \[T_{total} = t_1 + t_2\]
 </div>
 </div>
 
-<div id="outline-container-org792b4a7" class="outline-3">
-<h3 id="org792b4a7">Derivation</h3>
-<div class="outline-text-3" id="text-org792b4a7">
+<div id="outline-container-org5c0a376" class="outline-3">
+<h3 id="org5c0a376">Derivation</h3>
+<div class="outline-text-3" id="text-org5c0a376">
 <hr />
 
 <p>
@@ -247,9 +247,9 @@ Referencing our preliminary trig expressions, substitute with \(\sin{\alpha}\) a
 </div>
 </div>
 
-<div id="outline-container-orgb69a773" class="outline-2">
-<h2 id="orgb69a773">Wavefront model &amp; Huygen's princple with geometry</h2>
-<div class="outline-text-2" id="text-orgb69a773">
+<div id="outline-container-orgfb8695c" class="outline-2">
+<h2 id="orgfb8695c">Wavefront model &amp; Huygen's princple with geometry</h2>
+<div class="outline-text-2" id="text-orgfb8695c">
 <hr />
 
 <p>
@@ -263,9 +263,9 @@ It's also very elegant in that Snell's law pops out as a purely geometrical argu
 </p>
 </div>
 
-<div id="outline-container-org0bc79f7" class="outline-3">
-<h3 id="org0bc79f7">Huygen's principle definition</h3>
-<div class="outline-text-3" id="text-org0bc79f7">
+<div id="outline-container-org6f63153" class="outline-3">
+<h3 id="org6f63153">Huygen's principle definition</h3>
+<div class="outline-text-3" id="text-org6f63153">
 <hr />
 <p>
 Every point on a wavefront is itself the source of spherical wavelets, and 
@@ -280,9 +280,9 @@ Here is a picture of a wavefront as originally conceived by Huygen from Wikipedi
 </div>
 
 
-<div id="outline-container-org87eb5c1" class="outline-3">
-<h3 id="org87eb5c1">Derivation</h3>
-<div class="outline-text-3" id="text-org87eb5c1">
+<div id="outline-container-org0fb1f77" class="outline-3">
+<h3 id="org0fb1f77">Derivation</h3>
+<div class="outline-text-3" id="text-org0fb1f77">
 <hr />
 
 <p>
@@ -302,11 +302,14 @@ Here is a <a href="https://www.youtube.com/watch?v=1GcW9jWj4FM">well explained a
 <script>document.addEventListener('DOMContentLoaded', function() {
     const yearSpan     = document.getElementById('current-year');
     const h1_name_link = document.getElementById('name-link');
-    if (yearSpan) { // Check if the element exists before trying to update it
+    if (yearSpan)
+    {
       yearSpan.textContent = new Date().getFullYear();
     }
-    if (h1_name_link) { // Check if the element exists before trying to update it
-	h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
+    if (h1_name_link)
+    {
+      // if the page is the main page, h1, else link to main page
+      h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
     }
   });
 </script>

@@ -1,4 +1,4 @@
-#+LINK: rsc ../../../../rsc/
+#+LINK: rsc ../../../rsc/
 
 These are some visualizations I made to help understand the intersection of a ray with an axis aligned bounding box — the slab method.
 

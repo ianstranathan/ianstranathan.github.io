@@ -91,7 +91,7 @@
       /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
       font-size: 1.10rem; /* Slightly larger than body text, but not too big */
       font-weight: 500; /* Bold */
-      color: gold; /* Dark gray for good contrast */ */
+      color: silver; /* Dark gray for good contrast */ */
       text-transform: uppercase; /* Makes it look more like a category */
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
@@ -100,7 +100,7 @@
 <body>
 <div id="preamble" class="status">
 <header>
-      <h1> Ian Stranathan </h1>
+      <span id="name-link"></span>
         <nav>
 	  <ul>
 	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
@@ -119,15 +119,15 @@
 Tl;dr: check it out <a href="../../../../rsc/projects-tools-demos/Projects/JS-&amp;-WebGL/collision_study/refactor/">here</a>
 </p>
 
-<div id="outline-container-orga94fc72" class="outline-2">
-<h2 id="orga94fc72">Overview:</h2>
-<div class="outline-text-2" id="text-orga94fc72">
+<div id="outline-container-org11ed749" class="outline-2">
+<h2 id="org11ed749">Overview:</h2>
+<div class="outline-text-2" id="text-org11ed749">
 <hr />
 </div>
 
-<div id="outline-container-orgff48e76" class="outline-3">
-<h3 id="orgff48e76">Motivation</h3>
-<div class="outline-text-3" id="text-orgff48e76">
+<div id="outline-container-org7b2a83d" class="outline-3">
+<h3 id="org7b2a83d">Motivation</h3>
+<div class="outline-text-3" id="text-org7b2a83d">
 <hr />
 <p>
 I wanted to make a simple physics "engine" (equations of motion, basic collision) as an exercise 
@@ -165,9 +165,9 @@ In the future, time/ interest willing, I hope to improve upon this first stab an
 </div>
 </div>
 
-<div id="outline-container-org6cbfcbc" class="outline-2">
-<h2 id="org6cbfcbc">Rendering Side of Things:</h2>
-<div class="outline-text-2" id="text-org6cbfcbc">
+<div id="outline-container-orgdd73cf9" class="outline-2">
+<h2 id="orgdd73cf9">Rendering Side of Things:</h2>
+<div class="outline-text-2" id="text-orgdd73cf9">
 <hr />
 <ul class="org-ul">
 <li>Vanilla WebGL with some boilerplate code and glMatrix as my vector and matrix library.</li>
@@ -183,9 +183,9 @@ Also, if I were to do this as a fuller project I'd like to add instancing/ batch
 </div>
 </div>
 
-<div id="outline-container-orgea590f0" class="outline-2">
-<h2 id="orgea590f0">Programming Side of Things:</h2>
-<div class="outline-text-2" id="text-orgea590f0">
+<div id="outline-container-orgfe53073" class="outline-2">
+<h2 id="orgfe53073">Programming Side of Things:</h2>
+<div class="outline-text-2" id="text-orgfe53073">
 <hr />
 <p>
 Visualization tests or articles for each main component:
@@ -207,9 +207,9 @@ Visualization tests or articles for each main component:
 </div>
 </div>
 
-<div id="outline-container-org1901d01" class="outline-2">
-<h2 id="org1901d01">Resources:</h2>
-<div class="outline-text-2" id="text-org1901d01">
+<div id="outline-container-org5fecd3d" class="outline-2">
+<h2 id="org5fecd3d">Resources:</h2>
+<div class="outline-text-2" id="text-org5fecd3d">
 <hr />
 
 <ul class="org-ul">
@@ -250,11 +250,14 @@ Visualization tests or articles for each main component:
 <script>document.addEventListener('DOMContentLoaded', function() {
     const yearSpan     = document.getElementById('current-year');
     const h1_name_link = document.getElementById('name-link');
-    if (yearSpan) { // Check if the element exists before trying to update it
+    if (yearSpan)
+    {
       yearSpan.textContent = new Date().getFullYear();
     }
-    if (h1_name_link) { // Check if the element exists before trying to update it
-	h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
+    if (h1_name_link)
+    {
+      // if the page is the main page, h1, else link to main page
+      h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
     }
   });
 </script>

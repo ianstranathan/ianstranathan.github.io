@@ -91,7 +91,7 @@
       /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
       font-size: 1.10rem; /* Slightly larger than body text, but not too big */
       font-weight: 500; /* Bold */
-      color: gold; /* Dark gray for good contrast */ */
+      color: silver; /* Dark gray for good contrast */ */
       text-transform: uppercase; /* Makes it look more like a category */
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
@@ -103,7 +103,7 @@
 <body>
 <div id="preamble" class="status">
 <header>
-      <h1> Ian Stranathan </h1>
+      <span id="name-link"></span>
         <nav>
 	  <ul>
 	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
@@ -122,9 +122,9 @@
 Tl;dr: Try it out <a href="../../../../rsc/projects-tools-demos/Projects/JS-&amp;-WebGL/rubiks_cube/">here</a>
 </p>
 
-<div id="outline-container-org56a3524" class="outline-2">
-<h2 id="org56a3524">Overview</h2>
-<div class="outline-text-2" id="text-org56a3524">
+<div id="outline-container-org83697ca" class="outline-2">
+<h2 id="org83697ca">Overview</h2>
+<div class="outline-text-2" id="text-org83697ca">
 <hr />
 
 <p>
@@ -142,15 +142,15 @@ Everything (model, rendering system, model i/o, raycast, aabb-ray intersection, 
 </div>
 </div>
 
-<div id="outline-container-orgd7c11e0" class="outline-2">
-<h2 id="orgd7c11e0">Rendering side of things</h2>
-<div class="outline-text-2" id="text-orgd7c11e0">
+<div id="outline-container-orgbe6d9e6" class="outline-2">
+<h2 id="orgbe6d9e6">Rendering side of things</h2>
+<div class="outline-text-2" id="text-orgbe6d9e6">
 <hr />
 </div>
 
-<div id="outline-container-orgf56471e" class="outline-3">
-<h3 id="orgf56471e">Making a model</h3>
-<div class="outline-text-3" id="text-orgf56471e">
+<div id="outline-container-org3b5df3a" class="outline-3">
+<h3 id="org3b5df3a">Making a model</h3>
+<div class="outline-text-3" id="text-org3b5df3a">
 <hr />
 
 <p>
@@ -163,9 +163,9 @@ occasional indie game dev project has called for it.
 </div>
 </div>
 
-<div id="outline-container-org6fb78f4" class="outline-3">
-<h3 id="org6fb78f4">Loading the mesh</h3>
-<div class="outline-text-3" id="text-org6fb78f4">
+<div id="outline-container-orga565302" class="outline-3">
+<h3 id="orga565302">Loading the mesh</h3>
+<div class="outline-text-3" id="text-orga565302">
 <hr />
 
 <p>
@@ -186,9 +186,9 @@ The model I/O is the worst and almost everybody tries to get somebody else’s c
 </div>
 </div>
 
-<div id="outline-container-org911fb15" class="outline-3">
-<h3 id="org911fb15">Instancing</h3>
-<div class="outline-text-3" id="text-org911fb15">
+<div id="outline-container-org3cf26ef" class="outline-3">
+<h3 id="org3cf26ef">Instancing</h3>
+<div class="outline-text-3" id="text-org3cf26ef">
 <hr />
 
 <p>
@@ -203,9 +203,9 @@ I highly recommend this <a href="https://webgl2fundamentals.org/webgl/lessons/we
 </div>
 
 
-<div id="outline-container-orga95cb8c" class="outline-3">
-<h3 id="orga95cb8c">Lighting Model</h3>
-<div class="outline-text-3" id="text-orga95cb8c">
+<div id="outline-container-orge6a8bc4" class="outline-3">
+<h3 id="orge6a8bc4">Lighting Model</h3>
+<div class="outline-text-3" id="text-orge6a8bc4">
 <hr />
 
 <p>
@@ -215,15 +215,15 @@ I'm using the traditional Blinn-Phong lighting model. Check out my article on th
 </div>
 </div>
 
-<div id="outline-container-orga06ad03" class="outline-2">
-<h2 id="orga06ad03">Programming side of things</h2>
-<div class="outline-text-2" id="text-orga06ad03">
+<div id="outline-container-org271dfd6" class="outline-2">
+<h2 id="org271dfd6">Programming side of things</h2>
+<div class="outline-text-2" id="text-org271dfd6">
 <hr />
 </div>
 
-<div id="outline-container-org7ec57e1" class="outline-3">
-<h3 id="org7ec57e1">Selecting the cube - Ray-Box Intersection</h3>
-<div class="outline-text-3" id="text-org7ec57e1">
+<div id="outline-container-org19a7d33" class="outline-3">
+<h3 id="org19a7d33">Selecting the cube - Ray-Box Intersection</h3>
+<div class="outline-text-3" id="text-org19a7d33">
 <hr />
 
 <p>
@@ -247,9 +247,9 @@ taking an early out if the maximum possible, diagonal cross section is collected
 </div>
 </div>
 
-<div id="outline-container-orgfe286c9" class="outline-3">
-<h3 id="orgfe286c9">Getting a direction for a rotation</h3>
-<div class="outline-text-3" id="text-orgfe286c9">
+<div id="outline-container-org202795b" class="outline-3">
+<h3 id="org202795b">Getting a direction for a rotation</h3>
+<div class="outline-text-3" id="text-org202795b">
 <hr />
 
 <p>
@@ -274,9 +274,9 @@ without error and redudancy)
 </div>
 </div>
 
-<div id="outline-container-org3873318" class="outline-3">
-<h3 id="org3873318">Rotating a plane of the Cube</h3>
-<div class="outline-text-3" id="text-org3873318">
+<div id="outline-container-orgd1ce064" class="outline-3">
+<h3 id="orgd1ce064">Rotating a plane of the Cube</h3>
+<div class="outline-text-3" id="text-orgd1ce064">
 <hr />
 
 <p>
@@ -327,9 +327,9 @@ Floating point errors in the cubie's transformation matrix will accrue over time
 </div>
 
 
-<div id="outline-container-org3cfcc1d" class="outline-2">
-<h2 id="org3cfcc1d">Wrapping up</h2>
-<div class="outline-text-2" id="text-org3cfcc1d">
+<div id="outline-container-org4befce3" class="outline-2">
+<h2 id="org4befce3">Wrapping up</h2>
+<div class="outline-text-2" id="text-org4befce3">
 <hr />
 
 <p>
@@ -362,11 +362,14 @@ Cheers.
 <script>document.addEventListener('DOMContentLoaded', function() {
     const yearSpan     = document.getElementById('current-year');
     const h1_name_link = document.getElementById('name-link');
-    if (yearSpan) { // Check if the element exists before trying to update it
+    if (yearSpan)
+    {
       yearSpan.textContent = new Date().getFullYear();
     }
-    if (h1_name_link) { // Check if the element exists before trying to update it
-	h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
+    if (h1_name_link)
+    {
+      // if the page is the main page, h1, else link to main page
+      h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
     }
   });
 </script>

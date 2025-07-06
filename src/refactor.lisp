@@ -26,7 +26,9 @@
 
 (defun collect-index-files ()
   ;; script always spins up in the same directory as src
-  ;; ../src ->/html
+  ;; default pathname is always where the elisp fires script
+  ;; merging ../html with this gets us to the html folder (where everything was exported)
+  ;; after that it's just recursing through for the index files
   (let ((root (merge-pathnames "../html/" *default-pathname-defaults*)))
     (labels ((single-dir-fn (p accl)
 	       (list-of-dirs-fn (uiop:subdirectories p)
@@ -60,23 +62,33 @@
 
 
 (defun site-relative-strs (&optional no-index
-			             no-root)
+			             no-root
+			             is-hosted-from-generated-folder)
   "
   Returns lists of all index files as formated strings
   (relative to where site is hosted, i.e. html folder)
   most of the LOC here are just for accomodating
   optional formatting (no-index, no-root)
+
+
+  It's probably best to remove is-hosted-from-generated-folder
+  other functions (namely, process-pages) are assuming that there's it's not being
+  deployed from /html
   "
   (let ((_files (collect-index-files))
 	(site-root-str "/ianstranathan.github.io" ))
     (labels ((to-where-site-is-hosted-fn (p)
-	       ;; site dumps to /html folder
+	       ;; if site dumps to /html folder (deployed from this folder)
 	       ;; hosted from this folder, so html needs to be removed
                ;; cut str to where site starts
-	       (remove-substring (remove-substring (namestring p)
-						   site-root-str
-						   :keep-second-half t)
-				 "/html"))
+	       (if is-hosted-from-generated-folder
+		   (remove-substring (remove-substring (namestring p)
+						       site-root-str
+						       :keep-second-half t)
+				     "/html")
+		   (remove-substring (namestring p)
+				     site-root-str
+				     :keep-second-half t)))
 	     (no-index-fn (p)
 	       (remove-substring (to-where-site-is-hosted-fn p)
 				 "index.html"))
@@ -134,16 +146,25 @@
 
 
 (defun make-p-element (elem-name link-path-ls)
+  ;; position has to be offset by one to account for the /html folder
   (format nil 
 	  "<p id=\"folder_depth_~D\">~A</p>"
-	  (position elem-name link-path-ls :test #'equal)
+	  (- (position elem-name link-path-ls :test #'equal) 1)
 	  elem-name))
 
 
 (defun process-pages-ls ()
-  ""
+  "two lists: the formatted ls, i.e. repeating categories are removed
+              full ls, i.e list whose elements represent the actual link
+   --> this is removing the html as the first element in the formatted links
+  (mapcar #'(lambda (x)
+             (cdr x))
+          list-of-pages)
+  " 
   (let* ((list-of-pages (ls-of-links-as-ls))
-	 (formatted-ls (category-formatting-ls list-of-pages))
+	 (formatted-ls (category-formatting-ls (mapcar #'(lambda (x)
+							   (cdr x))
+							   list-of-pages)))
          (full-ls      list-of-pages))
     (mapcar #'(lambda (formatted-ls-elem
 		       full-ls-elem)
@@ -165,7 +186,7 @@
 
 
 (defun inject-into-homepage ()
-  (let* ((p (merge-pathnames "../html/index.html" *default-pathname-defaults*))
+  (let* ((p (merge-pathnames "../html/index.html" *default-pathname-defaults*));;(p (merge-pathnames "../html/index.html" *default-pathname-defaults*))
 	 (homepage-content-str (uiop:read-file-string p))
 	 (content-div-str "<div id=\"content\" class=\"content\">")
 	 (to-content-index (search content-div-str

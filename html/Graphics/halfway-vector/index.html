@@ -91,7 +91,7 @@
       /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
       font-size: 1.10rem; /* Slightly larger than body text, but not too big */
       font-weight: 500; /* Bold */
-      color: gold; /* Dark gray for good contrast */ */
+      color: silver; /* Dark gray for good contrast */ */
       text-transform: uppercase; /* Makes it look more like a category */
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
@@ -103,7 +103,7 @@
 <body>
 <div id="preamble" class="status">
 <header>
-      <h1> Ian Stranathan </h1>
+      <span id="name-link"></span>
         <nav>
 	  <ul>
 	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
@@ -122,9 +122,9 @@
 <i>It's a simple thing ultimately, hence no wizard beard interest, but It was good review</i>
 </p>
 
-<div id="outline-container-orga7c613f" class="outline-2">
-<h2 id="orga7c613f">Motivation (Why bother)</h2>
-<div class="outline-text-2" id="text-orga7c613f">
+<div id="outline-container-orga3f0d29" class="outline-2">
+<h2 id="orga3f0d29">Motivation (Why bother)</h2>
+<div class="outline-text-2" id="text-orga3f0d29">
 <hr />
 
 <p>
@@ -144,7 +144,7 @@ If the pixel values between vertices are interpolated (pixel to pixel, done in a
 </p>
 
 
-<div id="org15f4785" class="figure">
+<div id="org9612e90" class="figure">
 <p><img src="../../../rscimg/Articles/Graphics/halfway_vector/PhongVersusGouraud.jpg" alt="PhongVersusGouraud.jpg" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Gouraud versus Phong shading, from wikipedia</p>
@@ -159,7 +159,7 @@ This turns a discrete vertex normal that was piped in from the vertex shader int
 </p>
 
 
-<div id="org70d46a5" class="figure">
+<div id="orgd395f01" class="figure">
 <p><img src="../../../rscimg/Articles/Graphics/halfway_vector/intermediate_normal_vectors.png" alt="intermediate_normal_vectors.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Interpolated intermediate vertex normals (diagram from <a href="http://learnwebgl.brown37.net/10_surface_properties/smooth_vertex_normals.html">learnwebgl.brown37.net</a>)</p>
@@ -171,7 +171,7 @@ This can then be normalized and dotted with the viewing direction to find a diff
 </p>
 
 
-<div id="org65828a0" class="figure">
+<div id="org43db32a" class="figure">
 <p><img src="../../../rscimg/Articles/Graphics/halfway_vector/learnWebGL.png" alt="learnWebGL.png" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Diffuse Lighting Heuristic Diagram (diagram from <a href="http://learnwebgl.brown37.net/09_lights/lights_diffuse.html">learnwebgl.brown37.net</a>)</p>
@@ -192,7 +192,7 @@ only be ever deal with angles of 90 degrees / \(\frac{\pi}{2}\) or less, but thi
 </p>
 
 
-<div id="org94f49fd" class="figure">
+<div id="org5b5d0fc" class="figure">
 <p><img src="../../../rscimg/Articles/Graphics/halfway_vector/learnOpenGL.png" alt="learnOpenGL.png" />
 </p>
 <p><span class="figure-number">Figure 4: </span>The reflection vector can fail (diagram from <a href="https://learnopengl.com/Advanced-Lighting/Advanced-Lighting">learnOpenGL.com</a>)</p>
@@ -213,9 +213,9 @@ how oblique or aligned with the reflection vector the viewing angle is to the no
 </div>
 </div>
 
-<div id="outline-container-org5bc4ced" class="outline-2">
-<h2 id="org5bc4ced">Derivation</h2>
-<div class="outline-text-2" id="text-org5bc4ced">
+<div id="outline-container-org7e48a84" class="outline-2">
+<h2 id="org7e48a84">Derivation</h2>
+<div class="outline-text-2" id="text-org7e48a84">
 <hr />
 
 <p>
@@ -260,11 +260,14 @@ The halfway vector as presented in literature is just the unit version of this v
 <script>document.addEventListener('DOMContentLoaded', function() {
     const yearSpan     = document.getElementById('current-year');
     const h1_name_link = document.getElementById('name-link');
-    if (yearSpan) { // Check if the element exists before trying to update it
+    if (yearSpan)
+    {
       yearSpan.textContent = new Date().getFullYear();
     }
-    if (h1_name_link) { // Check if the element exists before trying to update it
-	h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
+    if (h1_name_link)
+    {
+      // if the page is the main page, h1, else link to main page
+      h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
     }
   });
 </script>

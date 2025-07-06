@@ -91,7 +91,7 @@
       /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
       font-size: 1.10rem; /* Slightly larger than body text, but not too big */
       font-weight: 500; /* Bold */
-      color: gold; /* Dark gray for good contrast */ */
+      color: silver; /* Dark gray for good contrast */ */
       text-transform: uppercase; /* Makes it look more like a category */
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
@@ -103,7 +103,7 @@
 <body>
 <div id="preamble" class="status">
 <header>
-      <h1> Ian Stranathan </h1>
+      <span id="name-link"></span>
         <nav>
 	  <ul>
 	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
@@ -118,9 +118,9 @@
 TL;DR: <a href="../../../rsc/projects-tools-demos/Demos/Graphics/sminLive.html">Live shader here</a>
 </p>
 
-<div id="outline-container-orgcf0447a" class="outline-2">
-<h2 id="orgcf0447a">Motivation</h2>
-<div class="outline-text-2" id="text-orgcf0447a">
+<div id="outline-container-org40a19d3" class="outline-2">
+<h2 id="org40a19d3">Motivation</h2>
+<div class="outline-text-2" id="text-org40a19d3">
 <hr />
 
 <p>
@@ -161,9 +161,9 @@ There is however something deeply fruitful about reinventing the wheel, despite 
 </div>
 </div>
 
-<div id="outline-container-org4792c89" class="outline-2">
-<h2 id="org4792c89">Derivation</h2>
-<div class="outline-text-2" id="text-org4792c89">
+<div id="outline-container-org27d3ac7" class="outline-2">
+<h2 id="org27d3ac7">Derivation</h2>
+<div class="outline-text-2" id="text-org27d3ac7">
 <hr />
 
 <p>
@@ -172,21 +172,21 @@ some decreasing exponential and a sinusoid. That seems a little hard to think ab
 </p>
 
 
-<div id="org2751fba" class="figure">
+<div id="org7d263e2" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/polynomial_smin/smin0.png" alt="smin0.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Our functions; \(f(x) = x^2\) and  \(g(x) = e^{-x}\)</p>
 </div>
 
 
-<div id="org543b888" class="figure">
+<div id="orgef00f07" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/polynomial_smin/smin1.png" alt="smin1.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>The simple union of our two functions</p>
 </div>
 
 
-<div id="org0db0192" class="figure">
+<div id="org31c1117" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/polynomial_smin/smin2.png" alt="smin2.png" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Our functions with their difference \(d = f(x) - g(x)\)</p>
@@ -213,7 +213,7 @@ which are small, not necessarily identical values.
 </p>
 
 
-<div id="org9cabaef" class="figure">
+<div id="orga656f65" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/polynomial_smin/sminEpsilon.png" alt="sminEpsilon.png" />
 </p>
 </div>
@@ -235,7 +235,7 @@ is smaller than our original epsilon.
 </p>
 
 
-<div id="orga877cb0" class="figure">
+<div id="orgc406459" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/polynomial_smin/sminEpsilon2.png" alt="sminEpsilon2.png" />
 </p>
 </div>
@@ -322,14 +322,14 @@ Just using a linear interpolation between our functions with the correctly mappe
 </p>
 
 
-<div id="orgafdb711" class="figure">
+<div id="orge952745" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/polynomial_smin/firstApproxNaive.png" alt="firstApproxNaive.png" />
 </p>
 <p><span class="figure-number">Figure 4: </span>As expected, our interpolated curve is equal to \(f\) and \(g\) when \(d = -k\) and \(d = k\) respectively.</p>
 </div>
 
 
-<div id="org5a98fac" class="figure">
+<div id="org6b8d8bd" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/polynomial_smin/firstApproxWithClamp.png" alt="firstApproxWithClamp.png" />
 </p>
 <p><span class="figure-number">Figure 5: </span>This is improved by limiting our &ell; value to only ever be between \(0\) and \(1\) as reasoned before</p>
@@ -479,7 +479,7 @@ This is exactly iq's function ( <a href="https://www.khronos.org/registry/OpenGL
 </div>
 
 
-<div id="orgf3512c4" class="figure">
+<div id="org4a40b01" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/polynomial_smin/sminFinal.png" alt="sminFinal.png" />
 </p>
 <p><span class="figure-number">Figure 6: </span>Our smooth minimum</p>
@@ -487,9 +487,9 @@ This is exactly iq's function ( <a href="https://www.khronos.org/registry/OpenGL
 </div>
 </div>
 
-<div id="outline-container-orgd2ca590" class="outline-2">
-<h2 id="orgd2ca590">Wrapping Up:</h2>
-<div class="outline-text-2" id="text-orgd2ca590">
+<div id="outline-container-orgbdb690a" class="outline-2">
+<h2 id="orgbdb690a">Wrapping Up:</h2>
+<div class="outline-text-2" id="text-orgbdb690a">
 <hr />
 <p>
 This was a little dive into shader flavored spline interpolation; we took a nice result from an authoritative source and rederived it from first principles.
@@ -513,13 +513,13 @@ Hopefully it's helped someone besides me. Thank you for reading.
 </div>
 </div>
 
-<div id="outline-container-orgd0c8840" class="outline-2">
-<h2 id="orgd0c8840">Annex</h2>
-<div class="outline-text-2" id="text-orgd0c8840">
+<div id="outline-container-org798630e" class="outline-2">
+<h2 id="org798630e">Annex</h2>
+<div class="outline-text-2" id="text-org798630e">
 </div>
-<div id="outline-container-org1ed0875" class="outline-3">
-<h3 id="org1ed0875">Shader Source</h3>
-<div class="outline-text-3" id="text-org1ed0875">
+<div id="outline-container-org7298b87" class="outline-3">
+<h3 id="org7298b87">Shader Source</h3>
+<div class="outline-text-3" id="text-org7298b87">
 <div class="org-src-container">
 <pre class="src src-cpp"><span style="color: #ff7f9f;">#define</span> <span style="color: #00d3d0;">SCALE</span> (2.)
 <span style="color: #ff7f9f;">#define</span> <span style="color: #00d3d0;">PI</span> (3.14159)
@@ -606,11 +606,14 @@ Hopefully it's helped someone besides me. Thank you for reading.
 <script>document.addEventListener('DOMContentLoaded', function() {
     const yearSpan     = document.getElementById('current-year');
     const h1_name_link = document.getElementById('name-link');
-    if (yearSpan) { // Check if the element exists before trying to update it
+    if (yearSpan)
+    {
       yearSpan.textContent = new Date().getFullYear();
     }
-    if (h1_name_link) { // Check if the element exists before trying to update it
-	h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
+    if (h1_name_link)
+    {
+      // if the page is the main page, h1, else link to main page
+      h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
     }
   });
 </script>

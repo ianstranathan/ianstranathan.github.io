@@ -88,7 +88,7 @@
       /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
       font-size: 1.10rem; /* Slightly larger than body text, but not too big */
       font-weight: 500; /* Bold */
-      color: gold; /* Dark gray for good contrast */ */
+      color: silver; /* Dark gray for good contrast */ */
       text-transform: uppercase; /* Makes it look more like a category */
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
@@ -148,10 +148,20 @@
 
 (delete-directory  "../html" t)
 (org-publish-all t)
+
+;; inject the html into the front page
 (shell-command "sbcl --load refactor.lisp")
-;; (copy-file FILE NEWNAME &optional ok-if-the-file-is-already-there (overwrites it))
+
+;; Need to move the base index file to root, so that rsc is available to site
+;; this will overrite if it's already there
+(copy-file "../html/index.html" "../index.html" t)
+(delete-file "../html/index.html")
+
+;; ask web crawlers to avoid me
 (copy-file "../rsc/misc/robots.txt" "../html/robots.txt" t)
-;; (copy-directory "../rsc" "../html/")
+
+;; sin
+;; (copy-directory "../rsc" "../html/")  
 
 
 

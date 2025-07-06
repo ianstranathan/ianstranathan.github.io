@@ -91,7 +91,7 @@
       /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
       font-size: 1.10rem; /* Slightly larger than body text, but not too big */
       font-weight: 500; /* Bold */
-      color: gold; /* Dark gray for good contrast */ */
+      color: silver; /* Dark gray for good contrast */ */
       text-transform: uppercase; /* Makes it look more like a category */
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
@@ -103,7 +103,7 @@
 <body>
 <div id="preamble" class="status">
 <header>
-      <h1> Ian Stranathan </h1>
+      <span id="name-link"></span>
         <nav>
 	  <ul>
 	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
@@ -118,9 +118,9 @@
 <i>While toying around with a small 2D physics project, I was unable to follow a popular online explanation of impulse based collision resolution</i>
 </p>
 
-<div id="outline-container-orge278b51" class="outline-2">
-<h2 id="orge278b51">Overview</h2>
-<div class="outline-text-2" id="text-orge278b51">
+<div id="outline-container-orgd4ffb99" class="outline-2">
+<h2 id="orgd4ffb99">Overview</h2>
+<div class="outline-text-2" id="text-orgd4ffb99">
 <hr />
 <p>
 The change in motion of objects in a collision is caused by the forces generated at the collision point by compression and deformation.
@@ -131,9 +131,9 @@ Thus, the movement after the collision can be calculated from the movement befor
 </div>
 </div>
 
-<div id="outline-container-org0891768" class="outline-2">
-<h2 id="org0891768">Impulse Derivation</h2>
-<div class="outline-text-2" id="text-org0891768">
+<div id="outline-container-org156b6ae" class="outline-2">
+<h2 id="org156b6ae">Impulse Derivation</h2>
+<div class="outline-text-2" id="text-org156b6ae">
 <hr />
 
 <p>
@@ -187,9 +187,9 @@ I tend to use prime notation for after a collision, so let's change that to stay
 </div>
 </div>
 
-<div id="outline-container-org3199c0f" class="outline-2">
-<h2 id="org3199c0f">Problem Setup</h2>
-<div class="outline-text-2" id="text-org3199c0f">
+<div id="outline-container-orgc629bb8" class="outline-2">
+<h2 id="orgc629bb8">Problem Setup</h2>
+<div class="outline-text-2" id="text-orgc629bb8">
 <hr />
 
 <p>
@@ -198,7 +198,7 @@ what's important is that a collision has somehow been detected and that a collis
 </p>
 
 
-<div id="org1ed682b" class="figure">
+<div id="orgae3bd5b" class="figure">
 <p><img src="../../../../rsc/img/articles/Physics/impulse_based_collision/one.png" alt="one.png" />
 </p>
 </div>
@@ -213,7 +213,7 @@ From properties of dot products and normalized vectors, the magnitude of the vel
 </p>
 
 
-<div id="org5430d38" class="figure">
+<div id="org08c1b7b" class="figure">
 <p><img src="../../../../rsc/img/articles/Physics/impulse_based_collision/two.png" alt="two.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>The magnitudes of the respective velocities along relative position</p>
@@ -266,9 +266,9 @@ It's negation is often used instead, called the seperating velocity \(v_s\) and 
 </div>
 </div>
 
-<div id="outline-container-orge37e0ad" class="outline-2">
-<h2 id="orge37e0ad">Deriving an expression for the velocity after the collision</h2>
-<div class="outline-text-2" id="text-orge37e0ad">
+<div id="outline-container-org777f9a5" class="outline-2">
+<h2 id="org777f9a5">Deriving an expression for the velocity after the collision</h2>
+<div class="outline-text-2" id="text-org777f9a5">
 <hr />
 
 <p>
@@ -375,9 +375,9 @@ This is, by definition of projection with a normalized vector, the part of the i
 </div>
 </div>
 
-<div id="outline-container-org4aab579" class="outline-2">
-<h2 id="org4aab579">Code Example</h2>
-<div class="outline-text-2" id="text-org4aab579">
+<div id="outline-container-org74a653b" class="outline-2">
+<h2 id="org74a653b">Code Example</h2>
+<div class="outline-text-2" id="text-org74a653b">
 <hr />
 <div class="org-src-container">
 <pre class="src src-cpp"><span style="color: #9ac8e0;">/**</span>
@@ -414,9 +414,9 @@ This is, by definition of projection with a normalized vector, the part of the i
 </div>
 </div>
 
-<div id="outline-container-org72c66c0" class="outline-2">
-<h2 id="org72c66c0">Resources:</h2>
-<div class="outline-text-2" id="text-org72c66c0">
+<div id="outline-container-org65f5476" class="outline-2">
+<h2 id="org65f5476">Resources:</h2>
+<div class="outline-text-2" id="text-org65f5476">
 <hr />
 
 <p>
@@ -443,11 +443,14 @@ This is, by definition of projection with a normalized vector, the part of the i
 <script>document.addEventListener('DOMContentLoaded', function() {
     const yearSpan     = document.getElementById('current-year');
     const h1_name_link = document.getElementById('name-link');
-    if (yearSpan) { // Check if the element exists before trying to update it
+    if (yearSpan)
+    {
       yearSpan.textContent = new Date().getFullYear();
     }
-    if (h1_name_link) { // Check if the element exists before trying to update it
-	h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
+    if (h1_name_link)
+    {
+      // if the page is the main page, h1, else link to main page
+      h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
     }
   });
 </script>

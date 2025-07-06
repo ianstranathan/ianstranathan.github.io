@@ -91,7 +91,7 @@
       /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
       font-size: 1.10rem; /* Slightly larger than body text, but not too big */
       font-weight: 500; /* Bold */
-      color: gold; /* Dark gray for good contrast */ */
+      color: silver; /* Dark gray for good contrast */ */
       text-transform: uppercase; /* Makes it look more like a category */
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
@@ -100,7 +100,7 @@
 <body>
 <div id="preamble" class="status">
 <header>
-      <h1> Ian Stranathan </h1>
+      <span id="name-link"></span>
         <nav>
 	  <ul>
 	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
@@ -111,40 +111,40 @@
 </div>
 <div id="content" class="content">
 <p id="folder_depth_0">Demos</p>
-<a href="Demos/ray-box-intersection/">ray-box-intersection</a>
+<a href="html/Demos/ray-box-intersection/">ray-box-intersection</a>
 <p id="folder_depth_0">Doodles</p>
-<a href="Doodles/WebGL-Doodles/">WebGL-Doodles</a>
+<a href="html/Doodles/WebGL-Doodles/">WebGL-Doodles</a>
 <p id="folder_depth_0">Game-Dev</p>
-<a href="Game-Dev/resources/">resources</a>
+<a href="html/Game-Dev/resources/">resources</a>
 <p id="folder_depth_0">Graphics</p>
-<a href="Graphics/halfway-vector/">halfway-vector</a>
-<a href="Graphics/model-view-projection/">model-view-projection</a>
-<a href="Graphics/polynomial-smin/">polynomial-smin</a>
-<a href="Graphics/ray-sphere-intersection/">ray-sphere-intersection</a>
-<a href="Graphics/reflection-and-refraction-in-a-raytracer/">reflection-and-refraction-in-a-raytracer</a>
-<a href="Graphics/resources/">resources</a>
+<a href="html/Graphics/halfway-vector/">halfway-vector</a>
+<a href="html/Graphics/model-view-projection/">model-view-projection</a>
+<a href="html/Graphics/polynomial-smin/">polynomial-smin</a>
+<a href="html/Graphics/ray-sphere-intersection/">ray-sphere-intersection</a>
+<a href="html/Graphics/reflection-and-refraction-in-a-raytracer/">reflection-and-refraction-in-a-raytracer</a>
+<a href="html/Graphics/resources/">resources</a>
 <p id="folder_depth_0">Math</p>
-<a href="Math/euler-lagrange-equation/">euler-lagrange-equation</a>
-<a href="Math/euler-method/">euler-method</a>
-<a href="Math/verlet-integration/">verlet-integration</a>
+<a href="html/Math/euler-lagrange-equation/">euler-lagrange-equation</a>
+<a href="html/Math/euler-method/">euler-method</a>
+<a href="html/Math/verlet-integration/">verlet-integration</a>
 <p id="folder_depth_0">Misc</p>
-<a href="Misc/about/">about</a>
-<a href="Misc/cargo-cult-computing/">cargo-cult-computing</a>
-<a href="Misc/personal-websites-are-dumb/">personal-websites-are-dumb</a>
-<a href="Misc/quotes/">quotes</a>
-<a href="Misc/short-stories/">short-stories</a>
-<a href="Misc/website_refactor_ad_infinitum/">website_refactor_ad_infinitum</a>
+<a href="html/Misc/about/">about</a>
+<a href="html/Misc/cargo-cult-computing/">cargo-cult-computing</a>
+<a href="html/Misc/personal-websites-are-dumb/">personal-websites-are-dumb</a>
+<a href="html/Misc/quotes/">quotes</a>
+<a href="html/Misc/short-stories/">short-stories</a>
+<a href="html/Misc/website_refactor_ad_infinitum/">website_refactor_ad_infinitum</a>
 <p id="folder_depth_0">Physics</p>
-<a href="Physics/impulse-based-collision/">impulse-based-collision</a>
-<a href="Physics/snells-law/">snells-law</a>
+<a href="html/Physics/impulse-based-collision/">impulse-based-collision</a>
+<a href="html/Physics/snells-law/">snells-law</a>
 <p id="folder_depth_0">Programming</p>
-<a href="Programming/a-lispy-interlude/">a-lispy-interlude</a>
-<a href="Programming/resources/">resources</a>
+<a href="html/Programming/a-lispy-interlude/">a-lispy-interlude</a>
+<a href="html/Programming/resources/">resources</a>
 <p id="folder_depth_0">Projects</p>
 <p id="folder_depth_1">JS-&-WebGL</p>
-<a href="Projects/JS-&-WebGL/collision_study/">collision_study</a>
-<a href="Projects/JS-&-WebGL/learning_to_relax/">learning_to_relax</a>
-<a href="Projects/JS-&-WebGL/rubiks_cube/">rubiks_cube</a>
+<a href="html/Projects/JS-&-WebGL/collision_study/">collision_study</a>
+<a href="html/Projects/JS-&-WebGL/learning_to_relax/">learning_to_relax</a>
+<a href="html/Projects/JS-&-WebGL/rubiks_cube/">rubiks_cube</a>
 </div>
 <div id="postamble" class="status">
 <footer>
@@ -156,11 +156,14 @@
 <script>document.addEventListener('DOMContentLoaded', function() {
     const yearSpan     = document.getElementById('current-year');
     const h1_name_link = document.getElementById('name-link');
-    if (yearSpan) { // Check if the element exists before trying to update it
+    if (yearSpan)
+    {
       yearSpan.textContent = new Date().getFullYear();
     }
-    if (h1_name_link) { // Check if the element exists before trying to update it
-	h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
+    if (h1_name_link)
+    {
+      // if the page is the main page, h1, else link to main page
+      h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
     }
   });
 </script>

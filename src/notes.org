@@ -1,5 +1,16 @@
 #+TODO: TODO DESIGN GOALS
 
+* DESIGN
+- Need to be able to deploy locally to test to remove the friction of pushing to github
+
+- [ ] remove github workflows and manage directory manually
+
+- Just a block of articles that follow nested details/ summary structure
+
+<details>
+<summry>
+</detals>
+
 * TODO
 ** LISP
 - [-] Refactor
@@ -20,15 +31,6 @@
 
 ** MISC
 - [X] Add robot.txt and AI notice in footer
-
-* DESIGN
-Just a block of articles that follow nested details/ summary structure
-
-<details>
-<summry>
-</detals>
-
-There can be a randomized quote (JS) on front page from quotes
 
 
 * GOALS

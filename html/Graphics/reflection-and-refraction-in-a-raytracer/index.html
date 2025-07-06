@@ -91,7 +91,7 @@
       /* font-family: 'Montserrat', sans-serif; /* A modern, clean sans-serif font */ */
       font-size: 1.10rem; /* Slightly larger than body text, but not too big */
       font-weight: 500; /* Bold */
-      color: gold; /* Dark gray for good contrast */ */
+      color: silver; /* Dark gray for good contrast */ */
       text-transform: uppercase; /* Makes it look more like a category */
     letter-spacing: 0.05em; /* Spreads out letters slightly for a refined look */
   }
@@ -103,7 +103,7 @@
 <body>
 <div id="preamble" class="status">
 <header>
-      <h1> Ian Stranathan </h1>
+      <span id="name-link"></span>
         <nav>
 	  <ul>
 	    <li><a href="mailto:email@ianstranathan.com"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
@@ -118,9 +118,9 @@
 <i>While working through Peter Shirley's <a href="https://raytracing.github.io/books/RayTracingInOneWeekend.html">"Raytracing in One Weekend"</a> I had trouble justifying the handwaved expression for a refracted ray and had to derive it for myself</i>
 </p>
 
-<div id="outline-container-org80aaa58" class="outline-2">
-<h2 id="org80aaa58">Overview</h2>
-<div class="outline-text-2" id="text-org80aaa58">
+<div id="outline-container-org6e587ae" class="outline-2">
+<h2 id="org6e587ae">Overview</h2>
+<div class="outline-text-2" id="text-org6e587ae">
 <hr />
 
 <p>
@@ -160,9 +160,9 @@ Using the ray model forces us to account for refraction and reflection (Fresnel 
 </div>
 </div>
 
-<div id="outline-container-org8deb770" class="outline-2">
-<h2 id="org8deb770">Reflection</h2>
-<div class="outline-text-2" id="text-org8deb770">
+<div id="outline-container-org4b46bef" class="outline-2">
+<h2 id="org4b46bef">Reflection</h2>
+<div class="outline-text-2" id="text-org4b46bef">
 <hr />
 
 <p>
@@ -170,7 +170,7 @@ I think Shirley's derivation is good with just some small (probably obvious depe
 </p>
 
 
-<div id="orgb3c5a40" class="figure">
+<div id="org3002c98" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/reflection_and_refraction_in_a_raytracer/shirleyReflection.png" alt="shirleyReflection.png" />
 </p>
 </div>
@@ -235,12 +235,12 @@ Another good, alternative derivation for the reflected vector, in this case for 
 </div>
 </div>
 
-<div id="outline-container-org86bd666" class="outline-2">
-<h2 id="org86bd666">Refraction</h2>
-<div class="outline-text-2" id="text-org86bd666">
+<div id="outline-container-orgf139f29" class="outline-2">
+<h2 id="orgf139f29">Refraction</h2>
+<div class="outline-text-2" id="text-orgf139f29">
 <hr />
 
-<div id="org300ea46" class="figure">
+<div id="orgdfc5038" class="figure">
 <p><img src="../../../rsc/img/Articles/Graphics/reflection_and_refraction_in_a_raytracer/bramDeGreve.png" alt="bramDeGreve.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Diagram from <a href="https://graphics.stanford.edu/courses/cs148-10-summer/docs/2006--degreve--reflection_refraction.pdf">Bram De Greve</a></p>
@@ -377,9 +377,9 @@ I'm still very thankful for his free and very well written resource despite the 
 </div>
 </div>
 
-<div id="outline-container-org13d7723" class="outline-2">
-<h2 id="org13d7723">Resources</h2>
-<div class="outline-text-2" id="text-org13d7723">
+<div id="outline-container-orgae85af6" class="outline-2">
+<h2 id="orgae85af6">Resources</h2>
+<div class="outline-text-2" id="text-orgae85af6">
 <hr />
 
 <ul class="org-ul">
@@ -400,11 +400,14 @@ I'm still very thankful for his free and very well written resource despite the 
 <script>document.addEventListener('DOMContentLoaded', function() {
     const yearSpan     = document.getElementById('current-year');
     const h1_name_link = document.getElementById('name-link');
-    if (yearSpan) { // Check if the element exists before trying to update it
+    if (yearSpan)
+    {
       yearSpan.textContent = new Date().getFullYear();
     }
-    if (h1_name_link) { // Check if the element exists before trying to update it
-	h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
+    if (h1_name_link)
+    {
+      // if the page is the main page, h1, else link to main page
+      h1_name_link.innerHTML = window.location.href === "https://www.ianstranathan.com/" ? "<h1>Ian Stranathan</h1>" : '<h1><a href="https://www.ianstranathan.com/">Ian Stranathan</a></h1>'
     }
   });
 </script>
