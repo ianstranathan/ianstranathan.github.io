@@ -101,7 +101,7 @@
 
       org-html-preamble
       "<header>
-      <h1> Ian Stranathan </h1>
+      <span id=\"name-link\"></span>
         <nav>
 	  <ul>
 	    <li><a href=\"mailto:email@ianstranathan.com\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></a></li>
@@ -118,11 +118,14 @@
 <script>document.addEventListener('DOMContentLoaded', function() {
     const yearSpan     = document.getElementById('current-year');
     const h1_name_link = document.getElementById('name-link');
-    if (yearSpan) { // Check if the element exists before trying to update it
+    if (yearSpan)
+    {
       yearSpan.textContent = new Date().getFullYear();
     }
-    if (h1_name_link) { // Check if the element exists before trying to update it
-	h1_name_link.innerHTML = window.location.href === \"https://www.ianstranathan.com/\" ? \"<h1>Ian Stranathan</h1>\" : '<h1><a href=\"https://www.ianstranathan.com/\">Ian Stranathan</a></h1>'
+    if (h1_name_link)
+    {
+      // if the page is the main page, h1, else link to main page
+      h1_name_link.innerHTML = window.location.href === \"https://www.ianstranathan.com/\" ? \"<h1>Ian Stranathan</h1>\" : '<h1><a href=\"https://www.ianstranathan.com/\">Ian Stranathan</a></h1>'
     }
   });
 </script>"
